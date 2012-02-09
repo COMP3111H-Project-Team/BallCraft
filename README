@@ -1,0 +1,36 @@
+COMP3111H Project Proposal
+
+Group leader:
+    JIANG Yuxiang
+Group members:
+    JIANG Yuxiang
+    DAI Zuozhuo
+    LI Ligeng
+    ZHAO Guanlun
+
+Roles of members:
+    JIANG Yuxiang: Project architect, AI
+    DAI Zuozhuo: Network
+    LI Ligeng: Physical engine
+    ZHAO Guanlun: Graphics
+
+Project Name:
+    BallCraft
+
+Project Description:
+    BallCraft is a 3D Android game. In this game, the player controls a ball using Android gravity sensors and tries to knock the opponents' balls off a table. This game consists of both single and multi player mode.
+    In the single player mode, the player will finish the levels one by one and earn experience in the process, which enables them to unlock new features and skills.
+    In the multi-player mode, bluetooth connection will be established among several players, one of them being the server player.
+
+Distinguishing Features:
+    Gravity control: Android accelerometer will be applied for game control.
+    3D graphics: Android OpenGL will be used to implement the 3D graphics and effects.
+    Diversity in roles and skills: Different types of balls and corresponding special skills.
+    A variety of maps: Different maps have different properties that may have different effects on different roles.
+    Experience, achievement and leader board system: Players gain experience and achievements through the game and a leader board system will be built accordingly.
+
+Development tools:
+    UML: Project architecture
+    Eclipse: Programming
+    Github: 
+    Photoshop:
