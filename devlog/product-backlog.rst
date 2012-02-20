@@ -15,10 +15,11 @@ Game play (empty level)
         - skills
             + casted with mana
             + E.g., a water ball
-                * water shooting: aoe, 推人，指向，需要手指来划
-                * water aura: 一段时间降低敌人摩擦
-                * fire immutability: 无视火球的喷火
-                * waterfall: 有几率放技能之后立刻冷却
+                * water shooting: aoe, pushes enemy，direction
+                * water aura: decrease enemy friction for a while
+                * fire immunity
+                * waterfall: have a n% chance that one cast will
+                  instantly clear the cd of all the skills.
     * enemy ball:
         not controled
     * map:
