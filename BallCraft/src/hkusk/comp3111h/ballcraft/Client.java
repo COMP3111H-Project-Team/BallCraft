@@ -19,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.threed.jpct.Logger;
+import com.threed.jpct.SimpleVector;
 
 public class Client extends Activity implements SensorEventListener
 {
@@ -27,7 +28,8 @@ public class Client extends Activity implements SensorEventListener
 	public static Client master = null;
 	private MyRenderer renderer = null;
 	
-
+	private GameInput input;
+	
 	private SensorManager sensorManager;
 	private GLSurfaceView mGLView;
 	
@@ -60,7 +62,7 @@ public class Client extends Activity implements SensorEventListener
 			}
 		});
 		
-		renderer = new MyRenderer();
+		renderer = new MyRenderer(this);
 		mGLView.setRenderer(renderer);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
@@ -72,6 +74,8 @@ public class Client extends Activity implements SensorEventListener
 		sensorManager.registerListener(this, 
 				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 				SensorManager.SENSOR_DELAY_NORMAL);
+		
+		input = new GameInput(new SimpleVector(0f, 0f, 0f));
     }
 
 	@Override
@@ -113,7 +117,12 @@ public class Client extends Activity implements SensorEventListener
 	@Override
 	public void onSensorChanged(SensorEvent event) 
 	{
-		// TODO Auto-generated method stub
-		
+		input.acceleration.x = - event.values[SensorManager.DATA_X];
+		input.acceleration.y = event.values[SensorManager.DATA_Y];		
+	}
+	
+	public GameInput getInput()
+	{
+		return input;
 	}
 }

@@ -15,9 +15,11 @@ public class MyRenderer implements GLSurfaceView.Renderer
 	private FrameBuffer fb = null;
 	private World world = null;
 	private RGBColor back = new RGBColor(50, 50, 100);
+	private Client client;
 	
-	public MyRenderer() 
+	public MyRenderer(Client client) 
 	{
+		this.client = client;
 	}
 
 	public void onSurfaceChanged(GL10 gl, int w, int h) {
@@ -33,7 +35,7 @@ public class MyRenderer implements GLSurfaceView.Renderer
 	public void onDrawFrame(GL10 gl)
 	{		
 		fb.clear(back);
-		world = Server.process(1, null).getWorld();
+		world = Server.process(0, client.getInput()).getWorld();
 		world.renderScene(fb);
 		world.draw(fb);
 		fb.display();		

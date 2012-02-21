@@ -14,21 +14,24 @@ public class GameState
 {
 	private World world = null;
 	ArrayList<Unit> units;
+	ArrayList<Ball> balls;
 	
-	public GameState(World world, ArrayList<Unit> units)
+	public GameState(World world, ArrayList<Unit> units, ArrayList<Ball> balls)
 	{
 		this.world = world;
 		this.units = units;
+		this.balls = balls;
 	}
 	
     public void processPlayerInput(int playerId, GameInput input)
     {
-    	//TODO:implement
+    	balls.get(playerId).setAcceleration(input.acceleration);
     }
     
     static GameState createTestGameState()
     {
     	ArrayList<Unit> units = new ArrayList<Unit>();
+    	ArrayList<Ball> balls = new ArrayList<Ball>();
 		
 		World world = new World();
 		world.setAmbientLight(20, 20, 20);
@@ -48,12 +51,13 @@ public class GameState
 		sphere.setOrigin(new SimpleVector(0, 0, 0));
 		world.addObject(sphere);
 		units.add(sphere);		
+		balls.add(sphere);		
 
 		Camera cam = world.getCamera();
 		cam.setPosition(-100, 0, -150);
 		cam.lookAt(sphere.getTransformedCenter());
 		
-		GameState test = new GameState(world, units);
+		GameState test = new GameState(world, units, balls);
 		return test;
     }
     

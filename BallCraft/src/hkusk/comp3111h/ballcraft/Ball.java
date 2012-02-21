@@ -1,5 +1,7 @@
 package hkusk.comp3111h.ballcraft;
 
+import android.util.Log;
+
 import com.threed.jpct.SimpleVector;
 
 public class Ball extends Unit
@@ -21,8 +23,29 @@ public class Ball extends Unit
 	@Override
 	public void move(int msecElapsed) 
 	{
-		// TODO Auto-generated method stub
-		this.translate(1f, 1f, 0f);
+		float rate = msecElapsed / 36;
+		SimpleVector addition = new SimpleVector(acceleration);
+		addition.scalarMul(rate);
+		velocity.add(addition);
+		SimpleVector displacement = new SimpleVector(velocity); 
+		displacement.scalarMul(rate);
+		this.translate(0.5f, 0.3f, 0);
+				
+		SimpleVector friction = new SimpleVector(velocity);
+		if (u * rate > velocity.length())
+		{
+			friction.scalarMul(-u * rate / velocity.length());			
+		}
+		else
+		{
+			friction.scalarMul(-1f);				
+		}
+		velocity.add(friction);
+	}
+	
+	public void setAcceleration(SimpleVector acceleration)
+	{
+		this.acceleration = acceleration;
 	}
 }
 
