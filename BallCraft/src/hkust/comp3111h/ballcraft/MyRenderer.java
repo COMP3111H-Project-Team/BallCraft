@@ -1,4 +1,4 @@
-package hkusk.comp3111h.ballcraft;
+package hkust.comp3111h.ballcraft;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

@@ -1,4 +1,4 @@
-package hkusk.comp3111h.ballcraft;
+package hkust.comp3111h.ballcraft;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,6 +9,7 @@ import com.threed.jpct.Object3D;
 import com.threed.jpct.Primitives;
 import com.threed.jpct.SimpleVector;
 import com.threed.jpct.World;
+import com.threed.jpct.util.MemoryHelper;
 
 public class GameState 
 {
@@ -38,12 +39,21 @@ public class GameState
 
 		Light sun = new Light(world);
 		sun.setIntensity(250, 250, 250);
+		sun.setPosition(new SimpleVector(-100, -100, -100));
 
 		Object3D plane = Primitives.getPlane(10, 20);
 		plane.strip();
 		plane.build();
 		plane.setOrigin(new SimpleVector(0, 0, 10));
 		world.addObject(plane);
+		
+		Object3D wall = Primitives.getPlane(10, 20);
+		wall.strip();
+		wall.build();
+		wall.setCollisionMode(Object3D.COLLISION_CHECK_OTHERS);
+		wall.setOrigin(new SimpleVector(100, 0, 10));
+		wall.setOrientation(new SimpleVector(1, 0, 0), new SimpleVector(0, 0, 1));
+		world.addObject(wall);
 		
 		Ball sphere = new Ball(10, 5, 0.4f);
 		sphere.strip();
@@ -56,7 +66,8 @@ public class GameState
 		Camera cam = world.getCamera();
 		cam.setPosition(-100, 0, -150);
 		cam.lookAt(sphere.getTransformedCenter());
-		
+
+		MemoryHelper.compact(); // What is this???
 		GameState test = new GameState(world, units, balls);
 		return test;
     }

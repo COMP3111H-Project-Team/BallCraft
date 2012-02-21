@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package hkusk.comp3111h.ballcraft;
+package hkust.comp3111h.ballcraft;
 
 public final class R {
     public static final class attr {

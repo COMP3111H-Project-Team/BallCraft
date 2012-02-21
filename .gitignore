@@ -1,8 +1,7 @@
 *.class
-bin/*
-*.png
-*.jpg
-*.gif
+BallCraft/bin/*
+*/bin/*
 *.apk
+*.ap_
 *.dex
 .*.swp

@@ -1,7 +1,8 @@
-package hkusk.comp3111h.ballcraft;
+package hkust.comp3111h.ballcraft;
 
 import android.util.Log;
 
+import com.threed.jpct.Object3D;
 import com.threed.jpct.SimpleVector;
 
 public class Ball extends Unit
@@ -14,6 +15,7 @@ public class Ball extends Unit
 	public Ball(float size, float mass, float u) 
 	{
 		super(size);
+		this.setCollisionMode(Object3D.COLLISION_CHECK_SELF);
 		this.mass = mass;
 		this.u = u;
 		velocity = new SimpleVector(0f, 0f, 0f);
@@ -23,24 +25,24 @@ public class Ball extends Unit
 	@Override
 	public void move(int msecElapsed) 
 	{
-		float rate = msecElapsed / 36;
+		float rate = (float)msecElapsed / 30;
 		SimpleVector addition = new SimpleVector(acceleration);
 		addition.scalarMul(rate);
 		velocity.add(addition);
 		SimpleVector displacement = new SimpleVector(velocity); 
 		displacement.scalarMul(rate);
-		this.translate(0.5f, 0.3f, 0);
-				
-		SimpleVector friction = new SimpleVector(velocity);
-		if (u * rate > velocity.length())
+		this.translate(checkForCollisionSpherical(displacement, 10)); //TODO: why getscale doesn't work?
+		
+		if (velocity.length() != 0f && u * rate > velocity.length())
 		{
-			friction.scalarMul(-u * rate / velocity.length());			
+			SimpleVector friction = new SimpleVector(velocity);
+			friction.scalarMul(-u * rate / velocity.length());		
+			velocity.add(friction);	
 		}
 		else
-		{
-			friction.scalarMul(-1f);				
+		{			
+			velocity.set(0f, 0f , 0f);
 		}
-		velocity.add(friction);
 	}
 	
 	public void setAcceleration(SimpleVector acceleration)

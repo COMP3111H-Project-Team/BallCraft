@@ -1,8 +1,7 @@
-package hkusk.comp3111h.ballcraft;
+package hkust.comp3111h.ballcraft;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.util.Log;
 
 public class Server extends IntentService
 {
@@ -34,7 +33,7 @@ public class Server extends IntentService
 				long sleep = 30 + time - System.currentTimeMillis();
 				lastRun = System.currentTimeMillis();
 				if (sleep < 0 ) sleep = 0;
-				Log.d("sleeping", "" + sleep + " ms");
+				//Log.d("sleeping", "" + sleep + " ms");
 				Thread.sleep(sleep);
 			}
 			catch (InterruptedException e) 

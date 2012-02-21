@@ -1,4 +1,4 @@
-package hkusk.comp3111h.ballcraft;
+package hkust.comp3111h.ballcraft;
 
 import com.threed.jpct.SimpleVector;
 
