@@ -2,7 +2,7 @@
 The first sprint
 ================
 
-Totally we need 101 hours.
+Totally we need 103 hours.
     * Learn physics engine and write API for PhysicEngine.
         - 24 hours
     * Learn graphics engine and write API for Renderer.
@@ -17,4 +17,6 @@ Totally we need 101 hours.
         - 24 hours
     * Write GameLoop and OfflineServer.
         - 4 hours
+    * Integrate sensor input with game engine
+        - 2 hours
 

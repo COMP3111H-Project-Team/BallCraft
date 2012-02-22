@@ -1,7 +1,5 @@
 package hkust.comp3111h.ballcraft;
 
-import android.util.Log;
-
 import com.threed.jpct.Object3D;
 import com.threed.jpct.SimpleVector;
 

@@ -49,6 +49,4 @@ public class Server extends IntentService
 	{
 		run();
 	}
-	
-	
 }
