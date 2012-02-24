@@ -12,7 +12,7 @@ public class Map implements Serializable{
 	private int tileSize;
 	private int widthCount;
 	private int heightCount;
-	
+	private int[][][] layer;
 	
 	public String getName() {
 		return mapName;
@@ -54,4 +54,11 @@ public class Map implements Serializable{
 		return heightCount;
 	}
 	
+	public void setLayer(int id,int[][] array){
+		layer[id] = array;
+	}
+	
+	public int[][] getLayer(int id){
+		return layer[id];
+	}
 }
