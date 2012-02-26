@@ -14,13 +14,11 @@ import com.threed.jpct.util.MemoryHelper;
 public class GameState 
 {
 	private World world = null;
-	ArrayList<Unit> units;
 	ArrayList<Ball> balls;
 	
-	public GameState(World world, ArrayList<Unit> units, ArrayList<Ball> balls)
+	public GameState(World world, ArrayList<Ball> balls)
 	{
 		this.world = world;
-		this.units = units;
 		this.balls = balls;
 	}
 	
@@ -31,7 +29,6 @@ public class GameState
     
     static GameState createTestGameState()
     {
-    	ArrayList<Unit> units = new ArrayList<Unit>();
     	ArrayList<Ball> balls = new ArrayList<Ball>();
 		
 		World world = new World();
@@ -45,37 +42,46 @@ public class GameState
 		plane.strip();
 		plane.build();
 		plane.setOrigin(new SimpleVector(0, 0, 10));
+		Unit.setWorld(100, -100, 100, -100);
 		world.addObject(plane);
 		
-		Object3D wall = Primitives.getPlane(10, 20);
-		wall.strip();
-		wall.build();
-		wall.setCollisionMode(Object3D.COLLISION_CHECK_OTHERS);
-		wall.setOrigin(new SimpleVector(100, 0, 10));
-		wall.setOrientation(new SimpleVector(1, 0, 0), new SimpleVector(0, 0, 1));
-		world.addObject(wall);
+//		Object3D wall = Primitives.getPlane(10, 20);
+//		wall.strip();
+//		wall.build();
+//		wall.setCollisionMode(Object3D.COLLISION_CHECK_OTHERS);
+//		wall.setOrigin(new SimpleVector(100, 0, 10));
+//		wall.setOrientation(new SimpleVector(1, 0, 0), new SimpleVector(0, 0, 1));
+//		world.addObject(wall);
 		
-		Ball sphere = new Ball(10, 5, 0.4f);
+		Ball sphere = new Ball(5, 5, 0.6f);
 		sphere.strip();
 		sphere.build();
 		sphere.setOrigin(new SimpleVector(0, 0, 0));
 		world.addObject(sphere);
-		units.add(sphere);		
 		balls.add(sphere);		
 
+		Ball sphere2 = new Ball(5, 5, 0.1f);
+		sphere.translate(30, 30, 0);
+		sphere2.strip();
+		sphere2.build();
+		sphere2.setOrigin(new SimpleVector(0, 0, 0));
+		world.addObject(sphere2);	
+		balls.add(sphere2);		
+
+		
 		Camera cam = world.getCamera();
-		cam.setPosition(-100, 0, -150);
+		cam.setPosition(200, 0, -600);
 		cam.lookAt(sphere.getTransformedCenter());
 
 		MemoryHelper.compact(); // What is this???
-		GameState test = new GameState(world, units, balls);
+		GameState test = new GameState(world, balls);
 		return test;
     }
     
     
     public void onEveryFrame(int msecElapsed)
     {
-    	Iterator<Unit> i = units.iterator();
+    	Iterator<Unit> i = Unit.units.iterator();
     	while(i.hasNext())
     	{
     	    i.next().move(msecElapsed); 

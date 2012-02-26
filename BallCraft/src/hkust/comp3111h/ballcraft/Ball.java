@@ -5,19 +5,18 @@ import com.threed.jpct.SimpleVector;
 
 public class Ball extends Unit
 {
-	private SimpleVector velocity;
-	private SimpleVector acceleration;
-	private float mass;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private float u; // miu
 	
 	public Ball(float size, float mass, float u) 
 	{
-		super(size);
+		super(size, mass);
 		this.setCollisionMode(Object3D.COLLISION_CHECK_SELF);
-		this.mass = mass;
-		this.u = u;
-		velocity = new SimpleVector(0f, 0f, 0f);
-		acceleration = new SimpleVector(0f, 0f, 0f);
+		this.u = u * 5;
 	}
 
 	@Override
@@ -29,23 +28,22 @@ public class Ball extends Unit
 		velocity.add(addition);
 		SimpleVector displacement = new SimpleVector(velocity); 
 		displacement.scalarMul(rate);
-		this.translate(checkForCollisionSpherical(displacement, 10)); //TODO: why getscale doesn't work?
+		this.translate(checkCollision(displacement));
 		
-		if (velocity.length() != 0f && u * rate > velocity.length())
-		{
-			SimpleVector friction = new SimpleVector(velocity);
-			friction.scalarMul(-u * rate / velocity.length());		
-			velocity.add(friction);	
-		}
-		else
-		{			
-			velocity.set(0f, 0f , 0f);
-		}
-	}
-	
-	public void setAcceleration(SimpleVector acceleration)
-	{
-		this.acceleration = acceleration;
+		//Log.e("x,y", "" + this.getTransformedCenter().x + "  " + this.getTransformedCenter().y);		
+		
+		velocity.scalarMul(0.8f);
+		
+//		if (velocity.length() != 0f && u * rate < velocity.length())
+//		{
+//			SimpleVector friction = new SimpleVector(velocity);
+//			friction.scalarMul(-u * rate / velocity.length());		
+//			velocity.add(friction);	
+//		}
+//		else
+//		{	
+//			velocity.set(0f, 0f , 0f);
+//		}
 	}
 }
 
