@@ -15,6 +15,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -76,6 +77,13 @@ public class Client extends Activity implements SensorEventListener
 				SensorManager.SENSOR_DELAY_NORMAL);
 		
 		input = new GameInput(new SimpleVector(0f, 0f, 0f));
+		
+		MapParser mapParser = new MapParser(this);
+		Log.i("map", "load map");
+		Map map = mapParser.getMapFromXML("map01.xml");
+		Log.i("map", "after load map");
+		Log.i("map", map.getName());
+	
     }
 
 	@Override

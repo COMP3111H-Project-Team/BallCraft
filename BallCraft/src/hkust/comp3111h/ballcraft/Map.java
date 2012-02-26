@@ -2,6 +2,10 @@ package hkust.comp3111h.ballcraft;
 
 import java.io.Serializable;
 
+import android.graphics.Bitmap;
+
+//Map is composed of widthCount*hegihtCount small tiles.
+//You can get a immutable tile by calling function map.getTile(layer id,width,height);
 public class Map implements Serializable{
 	/**
 	 * 
@@ -13,6 +17,11 @@ public class Map implements Serializable{
 	private int widthCount;
 	private int heightCount;
 	private int[][][] layer;
+	private Bitmap bitmap;
+	
+	public Map(){
+		layer = new int[2][][];
+	}
 	
 	public String getName() {
 		return mapName;
@@ -34,8 +43,8 @@ public class Map implements Serializable{
         return imageurl;
     }
     
-	public void setImageurl(String imageurl) {
-        this.imageurl = imageurl;
+	public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 	
 	public void setWidthCount(int width) {
@@ -60,5 +69,14 @@ public class Map implements Serializable{
 	
 	public int[][] getLayer(int id){
 		return layer[id];
+	}
+	
+	public Bitmap getTile(int layerId,int X, int Y) {
+		int id = layer[layerId][X][Y];
+		id --;
+		int count = id /widthCount;
+        int bitmapX = (id - (count * widthCount)) * tileSize;
+        int bitmapY = count * tileSize;
+        return Bitmap.createBitmap(bitmap, bitmapX, bitmapY, tileSize, tileSize); 
 	}
 }

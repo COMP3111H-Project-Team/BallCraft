@@ -12,6 +12,9 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 
 public class MapParser{
 	private Context context;
@@ -27,21 +30,26 @@ public class MapParser{
 	    Document document=null;
 	    InputStream inputStream=null;
 	    
-	    //find the xml file first
+	    //find the xml file first,just two layers now
 	    factory = DocumentBuilderFactory.newInstance();
 	    try {
 	    	//load file
 	    	builder = factory.newDocumentBuilder();
 	    	inputStream = context.getResources().getAssets().open(fileName);
 	    	document = builder.parse(inputStream);
+	    	Log.d("map", "load document");
 	    	//get root
 	    	Element root = document.getDocumentElement();
 	    	//get map name
 	    	Element mapName = (Element)root.getElementsByTagName("name").item(0);
+	    	String msg = mapName.getFirstChild().getNodeValue();
+	    	Log.d("map", msg);
 	    	map.setName(mapName.getFirstChild().getNodeValue());
-	    	//get image URL
+	    	//get image URL and set Bitmap
 	    	Element imageUrl = (Element)root.getElementsByTagName("imageUrl").item(0);
-	    	map.setImageurl(imageUrl.getFirstChild().getNodeValue());
+	    	String imageUrlString = (imageUrl.getFirstChild().getNodeValue());
+	    	Log.i("map", imageUrlString);
+	    	map.setBitmap(readBitmap(imageUrlString));
 	    	//get height count
 	    	Element height = (Element)root.getElementsByTagName("height").item(0);
 	    	map.setHeightCount(Integer.parseInt(height.getFirstChild().getNodeValue()));
@@ -54,28 +62,12 @@ public class MapParser{
 	    	//get layer01 string value and transfer it to 2D array.
 	    	Element layer1 = (Element) root.getElementsByTagName("layer1").item(0);
 	    	String layer1String = layer1.getFirstChild().getNodeValue();
-	    	layer1String = layer1String.replace("[{} ]","");
-	    	String[] parts = layer1String.split(",");
-			System.out.println(parts.length);
-			int[][] array = new int[map.getWidthCount()][map.getHeightCount()];
-			for(int i = 0; i < map.getWidthCount(); i++) {
-				for(int j = 0; j < map.getHeightCount(); j++) {
-					array[i][j]= Integer.parseInt(parts[i*map.getHeightCount()+j]);
-				}
-			}
-			//get layer02 string value and transfer it to 2D array.
+	    	map.setLayer(1, layerToArray(layer1String,map.getWidthCount(),map.getHeightCount()));
+	    	//get layer02 string value and transfer it to 2D array
 	    	Element layer2 = (Element) root.getElementsByTagName("layer2").item(0);
-	    	String layer2String = layer1.getFirstChild().getNodeValue();
-	    	layer2String = layer2String.replace("[{} ]","");
-	    	String[] parts2 = layer2String.split(",");
-			System.out.println(parts2.length);
-			int[][] array2 = new int[map.getWidthCount()][map.getHeightCount()];
-			for(int i = 0; i < map.getWidthCount(); i++) {
-				for(int j = 0; j < map.getHeightCount(); j++) {
-					array2[i][j]= Integer.parseInt(parts[i*map.getHeightCount()+j]);
-				}
-			}
-			map.setLayer(1, array2);
+	    	String layer2String = layer2.getFirstChild().getNodeValue();
+	    	map.setLayer(1, layerToArray(layer2String,map.getWidthCount(),map.getHeightCount()));
+	    	
 	    }catch (IOException e){
             e.printStackTrace();
         } catch (SAXException e) {
@@ -86,4 +78,30 @@ public class MapParser{
 	    }
 	    return map;
 	}
+
+
+	public int[][] layerToArray(String original,int width, int height) { 
+    	original = original.replaceAll("[^\\d,]", "");
+    	String[] parts = original.split(",");
+		int[][] array = new int[width][height];
+		for(int i = 0; i < width; i++) {
+			for(int j = 0; j < height; j++) {
+				array[i][j]= Integer.parseInt(parts[i*height+j]);
+			}
+		}
+		return array;
+	}
+	
+	public Bitmap readBitmap(String imageUrl){  
+        BitmapFactory.Options opt = new BitmapFactory.Options();  
+        opt.inPreferredConfig = Bitmap.Config.RGB_565;   
+        opt.inPurgeable = true;  
+        opt.inInputShareable = true;
+        Bitmap bitmap = null;
+        Log.e("map", imageUrl);
+        if(imageUrl == "tree.png") {
+        	bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.tree,opt);
+        }  
+        return bitmap;
+    }  
 }
