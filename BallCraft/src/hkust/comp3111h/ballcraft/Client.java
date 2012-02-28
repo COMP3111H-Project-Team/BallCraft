@@ -37,6 +37,7 @@ public class Client extends Activity implements SensorEventListener
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+    	getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		if (master != null) {
 			copy(master);
 		}

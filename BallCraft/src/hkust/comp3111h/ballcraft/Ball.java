@@ -10,13 +10,12 @@ public class Ball extends Unit
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private float u; // miu
-	
-	public Ball(float size, float mass, float u) 
+	public Ball(float size, float mass, float friction) 
 	{
 		super(size, mass);
 		this.setCollisionMode(Object3D.COLLISION_CHECK_SELF);
-		this.u = u * 5;
+		this.friction = friction;
+		this.identity = type.BALL;
 	}
 
 	@Override
@@ -32,7 +31,7 @@ public class Ball extends Unit
 		
 		//Log.e("x,y", "" + this.getTransformedCenter().x + "  " + this.getTransformedCenter().y);		
 		
-		velocity.scalarMul(0.8f);
+		velocity.scalarMul(friction);
 		
 //		if (velocity.length() != 0f && u * rate < velocity.length())
 //		{

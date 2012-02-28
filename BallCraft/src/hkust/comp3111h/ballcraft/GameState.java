@@ -53,24 +53,26 @@ public class GameState
 //		wall.setOrientation(new SimpleVector(1, 0, 0), new SimpleVector(0, 0, 1));
 //		world.addObject(wall);
 		
-		Ball sphere = new Ball(5, 5, 0.6f);
+		Ball sphere = new Ball(10, 5, 0.6f);
 		sphere.strip();
 		sphere.build();
 		sphere.setOrigin(new SimpleVector(0, 0, 0));
 		world.addObject(sphere);
 		balls.add(sphere);		
 
-		Ball sphere2 = new Ball(5, 5, 0.1f);
-		sphere.translate(30, 30, 0);
-		sphere2.strip();
-		sphere2.build();
-		sphere2.setOrigin(new SimpleVector(0, 0, 0));
-		world.addObject(sphere2);	
-		balls.add(sphere2);		
+		for (int i = 0; i < 10; i++)
+		{
+			Ball sphere2 = new Ball(3, 5, 0.99f);
+			sphere2.translate(30, 10 * i - 50, 0);
+			sphere2.strip();
+			sphere2.build();
+			sphere2.setOrigin(new SimpleVector(0, 0, 0));
+			world.addObject(sphere2);	
+		}	
 
 		
 		Camera cam = world.getCamera();
-		cam.setPosition(200, 0, -600);
+		cam.setPosition(0, 0, -600);
 		cam.lookAt(sphere.getTransformedCenter());
 
 		MemoryHelper.compact(); // What is this???

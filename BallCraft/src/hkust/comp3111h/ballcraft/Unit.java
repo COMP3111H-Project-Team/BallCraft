@@ -11,6 +11,7 @@ import com.threed.jpct.SimpleVector;
 
 public abstract class Unit extends Object3D
 {
+    public enum type {BALL}
 	/**
 	 * 
 	 */
@@ -23,9 +24,14 @@ public abstract class Unit extends Object3D
 	private static int minX;
 	private static int minY;
 	
-	private float mass;
+	private float mass;	
+	protected float friction;
 	protected SimpleVector velocity;
 	protected SimpleVector acceleration;
+	protected type identity;
+	
+	protected int leanX;
+	protected int leanY;
 	
 	public static ArrayList<Unit> units = new ArrayList<Unit>();
 	
@@ -45,6 +51,8 @@ public abstract class Unit extends Object3D
 		this.mass = mass;
 		velocity = new SimpleVector(0f, 0f, 0f);
 		acceleration = new SimpleVector(0f, 0f, 0f);
+		leanX = 0;
+		leanY = 0;
 		units.add(this);
 	}
 	
@@ -98,14 +106,35 @@ public abstract class Unit extends Object3D
     	} 
     	
     	//collision with walls
-    	//TODO: reflection
     	if (dest.x - scale < minX || dest.x + scale> maxX)
     	{
-    		acceleration.z = 10;
+    		if (identity == type.BALL && acceleration.x * velocity.x > 0f)
+    		{
+    			leanX = velocity.x > 0 ? 1 : -1;
+    			velocity.x = 0;
+    			if (dest.x - scale < minX) translate(minX + scale - getTransformedCenter().x, 0f, 0f);
+    			else translate(maxX - scale - getTransformedCenter().x, 0f, 0f);
+    		}
+    		else 
+    		{
+        		velocity.x = -velocity.x * 0.75f;
+    		}
+    		return collisionRecursion(velocity, recursion + 1);
     	}
     	else if (dest.y - scale< minY || dest.y + scale> maxY)
     	{
-    		acceleration.z = 10;
+    		if (identity == type.BALL && acceleration.y * velocity.y > 0f)
+    		{
+    			leanY = velocity.y > 0 ? 1 : -1;
+    			velocity.y = 0;
+    			if (dest.y - scale < minY) translate(0f, minY + scale - getTransformedCenter().y, 0f);
+    			else translate(0f, maxY - scale - getTransformedCenter().y, 0f);
+    		}
+    		else 
+    		{
+        		velocity.y = -velocity.y * 0.75f;
+    		}
+    		return collisionRecursion(velocity, recursion + 1);
     	}
     	
     	// no collision found
@@ -115,6 +144,12 @@ public abstract class Unit extends Object3D
 	public void setAcceleration(SimpleVector acceleration)
 	{
 		this.acceleration = acceleration;
+		
+		if (leanX * acceleration.x > 0) acceleration.x = 0;
+		else if (acceleration.x != 0) leanX = 0;
+		
+		if (leanY * acceleration.y > 0) acceleration.y = 0;
+		else if (acceleration.y != 0) leanY = 0;
 	}	
 	
 }
