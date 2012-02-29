@@ -70,7 +70,7 @@ public abstract class Unit extends Object3D
 	{
 		if (recursion == maxRecursion) 
 		{
-			Log.e("collision", "Max recursion reached");
+			// Log.e("collision", "Max recursion reached");
 			return new SimpleVector(0, 0, 0);		
 		}
 		

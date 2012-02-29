@@ -4,6 +4,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 
 import com.threed.jpct.Camera;
 import com.threed.jpct.FrameBuffer;
@@ -20,6 +21,8 @@ public class MyRenderer implements GLSurfaceView.Renderer
 	private Client client;
 	private Light sun;
 	private Camera cam;
+	
+	// private long lastTime = 0;
 	
 	public MyRenderer(Client client) 
 	{
@@ -43,11 +46,15 @@ public class MyRenderer implements GLSurfaceView.Renderer
 	}
 
 	public void onDrawFrame(GL10 gl)
-	{		
+	{	
+		gl.glEnable(GL10.GL_DITHER);
 		fb.clear(back);
 		world = Server.process(0, client.getInput()).getWorld();
 		world.renderScene(fb);
 		world.draw(fb);
-		fb.display();		
+		fb.display();	
+		
+		// Log.i("time", System.currentTimeMillis() - lastTime + "");
+		// lastTime = System.currentTimeMillis();
 	}
 }

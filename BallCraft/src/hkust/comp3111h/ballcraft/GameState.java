@@ -3,6 +3,8 @@ package hkust.comp3111h.ballcraft;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.microedition.khronos.opengles.GL10;
+
 import com.threed.jpct.Camera;
 import com.threed.jpct.Light;
 import com.threed.jpct.Object3D;
@@ -60,7 +62,7 @@ public class GameState
 		world.addObject(sphere);
 		balls.add(sphere);		
 
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 3; i++)
 		{
 			Ball sphere2 = new Ball(3, 5, 0.99f);
 			sphere2.translate(30, 10 * i - 50, 0);
@@ -68,11 +70,11 @@ public class GameState
 			sphere2.build();
 			sphere2.setOrigin(new SimpleVector(0, 0, 0));
 			world.addObject(sphere2);	
-		}	
+		}
 
 		
 		Camera cam = world.getCamera();
-		cam.setPosition(0, 0, -600);
+		cam.setPosition(0, 0, -200);
 		cam.lookAt(sphere.getTransformedCenter());
 
 		MemoryHelper.compact(); // What is this???
