@@ -3,8 +3,6 @@ package hkust.comp3111h.ballcraft;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.microedition.khronos.opengles.GL10;
-
 import com.threed.jpct.Camera;
 import com.threed.jpct.Light;
 import com.threed.jpct.Object3D;
@@ -17,6 +15,7 @@ public class GameState
 {
 	private World world = null;
 	ArrayList<Ball> balls;
+	ArrayList<Skill> activeSkills;
 	
 	public GameState(World world, ArrayList<Ball> balls)
 	{
@@ -27,6 +26,7 @@ public class GameState
     public void processPlayerInput(int playerId, GameInput input)
     {
     	balls.get(playerId).setAcceleration(input.acceleration);
+    	activeSkills.addAll(input.getSkills());
     }
     
     static GameState createTestGameState()
@@ -77,7 +77,7 @@ public class GameState
 		cam.setPosition(0, 0, -200);
 		cam.lookAt(sphere.getTransformedCenter());
 
-		MemoryHelper.compact(); // What is this???
+		MemoryHelper.compact(); // What is this??? 膜拜耕哥给耕哥跪了
 		GameState test = new GameState(world, balls);
 		return test;
     }

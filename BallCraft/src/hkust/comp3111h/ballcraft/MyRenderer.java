@@ -4,7 +4,6 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLSurfaceView;
-import android.util.Log;
 
 import com.threed.jpct.Camera;
 import com.threed.jpct.FrameBuffer;
@@ -20,11 +19,8 @@ public class MyRenderer implements GLSurfaceView.Renderer
 	private RGBColor back = new RGBColor(50, 50, 100);
 	private Client client;
 	private Light sun;
-	private Camera cam;
 	
-	// private long lastTime = 0;
-	
-	public MyRenderer(Client client) 
+	public MyRenderer(Client client)
 	{
 		this.client = client;
 	}
@@ -53,8 +49,5 @@ public class MyRenderer implements GLSurfaceView.Renderer
 		world.renderScene(fb);
 		world.draw(fb);
 		fb.display();	
-		
-		// Log.i("time", System.currentTimeMillis() - lastTime + "");
-		// lastTime = System.currentTimeMillis();
 	}
 }
