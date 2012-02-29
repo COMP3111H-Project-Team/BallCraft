@@ -98,7 +98,6 @@ public class MapParser{
         opt.inPurgeable = true;  
         opt.inInputShareable = true;
         Bitmap bitmap = null;
-        Log.e("map", imageUrl);
         if(imageUrl == "tree.png") {
         	bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.tree,opt);
         }  
