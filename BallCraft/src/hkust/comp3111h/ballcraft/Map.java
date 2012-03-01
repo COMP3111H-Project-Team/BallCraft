@@ -1,16 +1,13 @@
 package hkust.comp3111h.ballcraft;
 
-import java.io.Serializable;
-
 import android.graphics.Bitmap;
 
 //Map is composed of widthCount*hegihtCount small tiles.
 //You can get a immutable tile by calling function map.getTile(layer id,width,height);
-public class Map implements Serializable{
+public class Map {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	private String mapName;
 	private String imageurl;
 	private int tileSize;

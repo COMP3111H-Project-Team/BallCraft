@@ -82,9 +82,11 @@ public class Client extends Activity implements SensorEventListener
 		MapParser mapParser = new MapParser(this);
 		Log.i("map", "load map");
 		Map map = mapParser.getMapFromXML("map01.xml");
-		Log.i("map", "after load map");
-		Log.i("map", map.getName());
 	
+		Log.i("map", map.getName());
+		Intent bluetooth = new Intent(this,Bluetooth.class);
+		Log.i("bluetooth", "start bluetooth");
+		startActivity(bluetooth);
     }
 
 	@Override
