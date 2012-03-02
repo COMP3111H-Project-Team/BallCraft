@@ -25,7 +25,8 @@ public class Bluetooth extends Activity
 	private GameInput remote_input;
 	private BluetoothAdapter mBluetoothAdapter;
 	private BluetoothService mBluetoothService;
-    // Message types sent from the BluetoothChatService Handler
+    
+	// Message types sent from the BluetoothChatService Handler
     public static final int MESSAGE_STATE_CHANGE = 1;
     public static final int MESSAGE_READ = 2;
     public static final int MESSAGE_WRITE = 3;
@@ -35,8 +36,10 @@ public class Bluetooth extends Activity
 	// Key names received from the BluetoothChatService Handler
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST = "toast";
-	// Intent request codes
+	
+    // Intent request codes
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
+    private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
     private static final int REQUEST_ENABLE_BT = 3;
 	
     public void onCreate(Bundle savedInstanceState){
@@ -50,12 +53,17 @@ public class Bluetooth extends Activity
     public void onStart() {
     	super.onStart();
     	 // If BT is not on, request that it be enabled.
-        // setupChat() will then be called during onActivityResult
         if (!mBluetoothAdapter.isEnabled()) {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
         }
-        
+        //ensure discoverable
+        if (mBluetoothAdapter.getScanMode() !=
+            BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
+            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+            startActivity(discoverableIntent);
+        }
     	Intent serverIntent = new Intent(this, DeviceListActivity.class);
     	Log.d(TAG, "startActivityForResult");
 		startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
@@ -66,6 +74,8 @@ public class Bluetooth extends Activity
          // When DeviceListActivity returns with a device to connect
          if (resultCode == Activity.RESULT_OK) {
              connectDevice(data);
+         }else {
+        	 finish();
          }
 	}
 	
