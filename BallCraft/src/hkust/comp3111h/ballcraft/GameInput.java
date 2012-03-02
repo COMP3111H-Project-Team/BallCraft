@@ -1,22 +1,17 @@
 package hkust.comp3111h.ballcraft;
 
-import java.util.ArrayList;
-
-import com.threed.jpct.SimpleVector;
 
 public class GameInput 
 {
-	public SimpleVector acceleration;
-	
-	private ArrayList<Skill> skills;
-	
+	public Vector2f acceleration;
 	//ArrayList<int> keysPressed;
-	public GameInput(SimpleVector acceleration)
+	GameInput(Vector2f acceleration)
 	{
 		this.acceleration = acceleration;
-		skills = new ArrayList<Skill>();
+		// skills = new ArrayList<Skill>();
 	}
-	
+
+	/*
 	public void addSkill(Skill skill) {
 		skills.add(skill);
 	}
@@ -28,4 +23,5 @@ public class GameInput
 	public void clearSkill() {
 		skills.clear();
 	}
+	*/
 }

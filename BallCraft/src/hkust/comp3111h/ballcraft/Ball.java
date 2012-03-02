@@ -1,33 +1,25 @@
 package hkust.comp3111h.ballcraft;
 
-import com.threed.jpct.Object3D;
-import com.threed.jpct.SimpleVector;
 
 public class Ball extends Unit
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	
-	public Ball(float size, float mass, float friction) 
+	public Ball(float size, float mass, float friction, Vector2f position) 
 	{
-		super(size, mass);
-		this.setCollisionMode(Object3D.COLLISION_CHECK_SELF);
+		super(size, mass, position, type.BALL);
 		this.friction = friction;
-		this.identity = type.BALL;
 	}
 
 	@Override
 	public void move(int msecElapsed) 
 	{
 		float rate = (float)msecElapsed / 30;
-		SimpleVector addition = new SimpleVector(acceleration);
+		Vector2f addition = new Vector2f(acceleration);
 		addition.scalarMul(rate);
 		velocity.add(addition);
-		SimpleVector displacement = new SimpleVector(velocity); 
+		Vector2f displacement = new Vector2f(velocity); 
 		displacement.scalarMul(rate);
-		this.translate(checkCollision(displacement));
+		unitdata.position.add(checkCollision(displacement));
 		
 		//Log.e("x,y", "" + this.getTransformedCenter().x + "  " + this.getTransformedCenter().y);		
 		

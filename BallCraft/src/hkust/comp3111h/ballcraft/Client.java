@@ -16,15 +16,14 @@ import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.threed.jpct.Logger;
-import com.threed.jpct.SimpleVector;
 
 public class Client extends Activity implements SensorEventListener
 {
@@ -83,7 +82,7 @@ public class Client extends Activity implements SensorEventListener
 				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 				SensorManager.SENSOR_DELAY_NORMAL);
 		
-		input = new GameInput(new SimpleVector(0f, 0f, 0f));
+		input = new GameInput(new Vector2f(0f, 0f));
     }
     
     /**
@@ -107,7 +106,7 @@ public class Client extends Activity implements SensorEventListener
 			@Override
 			public void onClick(View v) {
 				if (input != null) {
-					input.addSkill(new Skill(BallCraft.Skill.TEST_SKILL_1));
+					// input.addSkill(new Skill(BallCraft.Skill.TEST_SKILL_1));
 				}
 			}
 		});
@@ -154,7 +153,7 @@ public class Client extends Activity implements SensorEventListener
 	
 	private void copy(Object src) {
 		try {
-			Logger.log("Copying data from master Activity!");
+			// Logger.log("Copying data from master Activity!");
 			Field[] fs = src.getClass().getDeclaredFields();
 			for (Field f : fs) {
 				f.setAccessible(true);
