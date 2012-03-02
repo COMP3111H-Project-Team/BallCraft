@@ -1,5 +1,9 @@
 package hkust.comp3111h.ballcraft;
 
+<<<<<<< HEAD
+public class Vector2f 
+{
+=======
 import java.io.Serializable;
 
 public class Vector2f implements Serializable
@@ -9,6 +13,7 @@ public class Vector2f implements Serializable
 	 */
 	private static final long serialVersionUID = 7481119251470929286L;
 	
+>>>>>>> origin/master
 	public float x;
 	public float y;
 	
