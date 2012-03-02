@@ -55,32 +55,28 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		
 		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
 		ObjectInput in;
-		try
-		{
+		
+		try {
 			in = new ObjectInputStream(bis);
 			data = (ArrayList<UnitData>) in.readObject();
 			bis.close();
 			in.close();
-		} 
-		catch (StreamCorruptedException e)
-		{
-			// TODO Auto-generated catch block
+		} catch (StreamCorruptedException e) {
 			e.printStackTrace();
-		} 
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
+		} catch (IOException e) {
 			e.printStackTrace();
-		} 
-		catch (ClassNotFoundException e) 
-		{
-			// TODO Auto-generated catch block
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity();
 		gl.glTranslatef(0, 0, -300);
+		
+		/*
+		gl.glEnable(GL10.GL_LIGHTING);
+		gl.glEnable(GL10.GL_COLOR_MATERIAL);
+		*/
 		
 		gl.glPushMatrix();
 			gl.glColor4f(0.3f, 0.3f, 0.3f, 1f);

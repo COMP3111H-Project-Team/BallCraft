@@ -1,5 +1,7 @@
 package hkust.comp3111h.ballcraft;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
@@ -19,7 +21,9 @@ public class Sphere {
     public Sphere( float radius, double step) {
         this.mRaduis = radius;
         this.mStep = step;
-        sphereVertex = FloatBuffer.allocate(40000);
+        ByteBuffer bb = ByteBuffer.allocateDirect(40000);
+        bb.order(ByteOrder.nativeOrder());
+        sphereVertex = bb.asFloatBuffer();
         mPoints = build();
     }
 
