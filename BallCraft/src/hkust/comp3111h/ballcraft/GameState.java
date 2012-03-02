@@ -1,5 +1,9 @@
 package hkust.comp3111h.ballcraft;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -23,7 +27,7 @@ public class GameState
     {
     	ArrayList<Ball> balls = new ArrayList<Ball>();
 		
-		Ball sphere = new Ball(10, 5, 0.6f, new Vector2f(0, 0));
+		Ball sphere = new Ball(10, 50, 0.6f, new Vector2f(0, 0));
 		balls.add(sphere);		
 
 		for (int i = 0; i < 10; i++)
@@ -38,15 +42,42 @@ public class GameState
     
     public void onEveryFrame(int msecElapsed)
     {
+    	Unit.msecElapsed = msecElapsed;
     	Iterator<Unit> i = Unit.units.iterator();
     	while(i.hasNext())
     	{
-    	    i.next().move(msecElapsed); 
+    	    i.next().moved = false; 
+    	} 
+    	
+    	i = Unit.units.iterator();
+    	while(i.hasNext())
+    	{
+    	    Unit temp = i.next();
+    		if (!temp.moved) temp.move(); 
     	} 
     }
     
-    public ArrayList<UnitData> getUnitData()
+    public byte[] getUnitData()
     {
-    	return Unit.data;
+    	ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    	ObjectOutput out;
+    	byte[] bytes = null;
+		try 
+		{
+			out = new ObjectOutputStream(bos);
+	    	out.writeObject(Unit.data);
+	    	
+	    	bytes = bos.toByteArray(); 
+
+	    	out.close();
+	    	return bytes;
+	    	//bos.close();
+		}
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}   
+    	return bytes;
+		//return Unit.data;
     }
 }
