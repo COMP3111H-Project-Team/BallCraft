@@ -14,16 +14,16 @@ import javax.microedition.khronos.opengles.GL10;
  */
 class ParticleSystem {
 	private Particle [] mParticles;
-	private int COUNT = 200;
+	private int COUNT = 300;
 	
 	private FloatBuffer mVertexBuffer;
 	private ShortBuffer mIndexBuffer;
 	
-	public ParticleSystem() {
+	public ParticleSystem(float x, float y, float z) {
 		mParticles = new Particle [COUNT];
 		Random gen = new Random(System.currentTimeMillis());
 		for (int i = 0; i < COUNT; i++) {
-			mParticles[i] = new Particle(gen);
+			mParticles[i] = new Particle(x, y, z, gen);
 		}
 		
 		float [] coords = {
