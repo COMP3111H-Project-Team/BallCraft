@@ -98,8 +98,8 @@ public class MapParser{
         opt.inPurgeable = true;  
         opt.inInputShareable = true;
         Bitmap bitmap = null;
-        if(imageUrl == "tree.png") {
-        	bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.tree,opt);
+        if(imageUrl == "redbird.png") {
+        	bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.redbird,opt);
         }  
         return bitmap;
     }  
