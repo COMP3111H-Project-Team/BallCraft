@@ -2,13 +2,16 @@ package hkust.comp3111h.ballcraft;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import android.util.Log;
 
 public abstract class Unit
 {
-    public enum type {BALL}
+	
+	public enum type {BALL}
 
+    public static int msecElapsed;
 	private static int maxRecursion = 5;
 	
 	private static int maxX;
@@ -25,8 +28,10 @@ public abstract class Unit
 	protected int leanX;
 	protected int leanY;
 	
+	public boolean moved;
+	
 	public static ArrayList<Unit> units = new ArrayList<Unit>();
-	public static ArrayList<UnitData> data = new ArrayList<UnitData>();
+	public static List<UnitData> data = new ArrayList<UnitData>();
 	
 	
 	static public void setWorld(int maxX, int minX, int maxY, int minY)
@@ -49,7 +54,7 @@ public abstract class Unit
 		data.add(unitdata);
 	}
 	
-	public void move(int msecElapsed)
+	public void move()
 	{
 		
 	}
@@ -63,11 +68,11 @@ public abstract class Unit
 	{
 		if (recursion == maxRecursion) 
 		{
-			// Log.e("collision", "Max recursion reached");
+			Log.e("collision", "Max recursion reached");
 			return new Vector2f(0, 0);		
 		}
 		
-		Vector2f dest = unitdata.position;
+		Vector2f dest = new Vector2f(unitdata.position);
 		dest.add(displacement);
 		
 		Unit temp;
@@ -91,8 +96,10 @@ public abstract class Unit
     	    	temp.velocity.y = (temp.velocity.y * (temp.mass - mass) + 2 * mass * velocity.y) / (mass + temp.mass);
     	    	velocity.x = vx; 
     	    	velocity.y = vy;
-    	    	//approximation
-        		return collisionRecursion(velocity, recursion + 1);
+    	    	if (!temp.moved) temp.move();
+    	    	Vector2f result = new Vector2f(velocity);
+    	    	result.scalarMul(msecElapsed/30);
+        		return collisionRecursion(result, recursion + 1);
     	    }
     	} 
     	
@@ -103,14 +110,16 @@ public abstract class Unit
     		{
     			leanX = velocity.x > 0 ? 1 : -1;
     			velocity.x = 0;
-    			if (dest.x - unitdata.size < minX) unitdata.position.x  = minX + unitdata.size - unitdata.position.x;
-    			else unitdata.position.x= maxX - unitdata.size - unitdata.position.x;
+    			if (dest.x - unitdata.size < minX) unitdata.position.x = minX + unitdata.size;
+    			else unitdata.position.x = maxX - unitdata.size;
     		}
     		else 
     		{
         		velocity.x = -velocity.x * 0.75f;
     		}
-    		return collisionRecursion(velocity, recursion + 1);
+	    	Vector2f result = new Vector2f(velocity);
+	    	result.scalarMul(msecElapsed/30);
+    		return collisionRecursion(result, recursion + 1);
     	}
     	else if (dest.y - unitdata.size < minY || dest.y + unitdata.size > maxY)
     	{
@@ -118,14 +127,16 @@ public abstract class Unit
     		{
     			leanY = velocity.y > 0 ? 1 : -1;
     			velocity.y = 0;
-    			if (dest.y - unitdata.size < minY) unitdata.position.y = minY + unitdata.size - unitdata.position.y;
-    			else unitdata.position.y = maxY - unitdata.size - unitdata.position.y;
+    			if (dest.y - unitdata.size < minY) unitdata.position.y = minY + unitdata.size;
+    			else unitdata.position.y = maxY - unitdata.size;
     		}
     		else 
     		{
         		velocity.y = -velocity.y * 0.75f;
     		}
-    		return collisionRecursion(velocity, recursion + 1);
+	    	Vector2f result = new Vector2f(velocity);
+	    	result.scalarMul(msecElapsed/30);
+    		return collisionRecursion(result, recursion + 1);
     	}
     	
     	// no collision found

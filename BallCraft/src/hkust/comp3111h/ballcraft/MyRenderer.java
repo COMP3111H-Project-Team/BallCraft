@@ -1,5 +1,10 @@
 package hkust.comp3111h.ballcraft;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -42,7 +47,37 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void onDrawFrame(GL10 gl) {
+
+		ArrayList<UnitData> data = null;
+		byte[] bytes = Server.process(0, client.getInput()).getUnitData();
+		
+		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+		ObjectInput in;
+		try
+		{
+			in = new ObjectInputStream(bis);
+			data = (ArrayList<UnitData>) in.readObject();
+			bis.close();
+			in.close();
+		} 
+		catch (StreamCorruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		catch (ClassNotFoundException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity();
 		gl.glTranslatef(0, 0, -300);
@@ -51,9 +86,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 			gl.glColor4f(0.3f, 0.3f, 0.3f, 1f);
 			gamePlane.draw(gl);
 		gl.glPopMatrix();
-		
-		ArrayList<UnitData> data = Server.process(0, client.getInput()).getUnitData();
-		
+				
 		for (int i = 0; i < data.size(); i++) {
 			UnitData datum = data.get(i);
 			if (datum.identity == Unit.type.BALL) {
