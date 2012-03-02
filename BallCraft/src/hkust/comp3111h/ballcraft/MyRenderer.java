@@ -1,5 +1,7 @@
 package hkust.comp3111h.ballcraft;
 
+import java.util.ArrayList;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -45,7 +47,7 @@ public class MyRenderer implements GLSurfaceView.Renderer
 	public void onDrawFrame(GL10 gl)
 	{		
 		fb.clear(back);
-		world = Server.process(0, client.getInput()).getWorld();
+		ArrayList<UnitData> data = Server.process(0, client.getInput()).getUnitData();
 		world.renderScene(fb);
 		world.draw(fb);
 		fb.display();		
