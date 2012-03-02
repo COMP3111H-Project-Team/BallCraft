@@ -15,10 +15,10 @@ public class Server extends IntentService
 		lastRun = System.currentTimeMillis();
 	}
 	
-	public static GameState process(int playerID, GameInput input)
+	public static byte[] process(int playerID, GameInput input)
 	{
 		gamestate.processPlayerInput(playerID, input);
-		return gamestate;
+		return gamestate.getUnitData();		
 	}
 
 	public void run() 
@@ -30,7 +30,7 @@ public class Server extends IntentService
 			
 			try
 			{
-				long sleep = 30 + time - System.currentTimeMillis();
+				long sleep = 20 + time - System.currentTimeMillis();
 				lastRun = System.currentTimeMillis();
 				if (sleep < 0 ) sleep = 0;
 				//Log.d("sleeping", "" + sleep + " ms");

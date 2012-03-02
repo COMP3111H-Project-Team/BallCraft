@@ -53,7 +53,11 @@ public class GameState
     	while(i.hasNext())
     	{
     	    Unit temp = i.next();
-    		if (!temp.moved) temp.move(); 
+    		if (!temp.moved) 
+    		{
+        		temp.moved = true;
+    			temp.move(); 
+    		}
     	} 
     }
     
