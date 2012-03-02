@@ -1,5 +1,9 @@
 package hkust.comp3111h.ballcraft;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -27,7 +31,7 @@ public class GameState
 
 		for (int i = 0; i < 10; i++)
 		{
-			Ball sphere2 = new Ball(3, 5, 0.99f, new Vector2f(30, 10 * i - 50));
+			//Ball sphere2 = new Ball(3, 5, 0.99f, new Vector2f(30, 10 * i - 50));
 		}	
 		
 		GameState test = new GameState(balls);
@@ -46,6 +50,24 @@ public class GameState
     
     public ArrayList<UnitData> getUnitData()
     {
-    	return Unit.data;
+    	ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    	ObjectOutput out;
+    	byte[] bytes = null;
+		try 
+		{
+			out = new ObjectOutputStream(bos);
+	    	out.writeObject(Unit.data);
+	    	
+	    	bytes = bos.toByteArray(); 
+
+	    	out.close();
+	    	bos.close();
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}   
+    	//return bytes;
+		return Unit.data;
     }
 }

@@ -1,5 +1,10 @@
 package hkust.comp3111h.ballcraft;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -44,10 +49,38 @@ public class MyRenderer implements GLSurfaceView.Renderer
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 	}
 
+	@SuppressWarnings("unchecked")
 	public void onDrawFrame(GL10 gl)
 	{		
 		fb.clear(back);
-		ArrayList<UnitData> data = Server.process(0, client.getInput()).getUnitData();
+		ArrayList<UnitData> data = null;
+		/*byte[] bytes = Server.process(0, client.getInput()).getUnitData();
+		
+		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+		ObjectInput in;
+		try
+		{
+			in = new ObjectInputStream(bis);
+			data = (ArrayList<UnitData>) in.readObject();
+			bis.close();
+			in.close();
+		} 
+		catch (StreamCorruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		catch (ClassNotFoundException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+
 		world.renderScene(fb);
 		world.draw(fb);
 		fb.display();		
