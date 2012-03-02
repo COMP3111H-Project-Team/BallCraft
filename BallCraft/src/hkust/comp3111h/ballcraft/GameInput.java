@@ -1,12 +1,11 @@
 package hkust.comp3111h.ballcraft;
 
-import com.threed.jpct.SimpleVector;
 
 public class GameInput 
 {
-	public SimpleVector acceleration;
+	public Vector2f acceleration;
 	//ArrayList<int> keysPressed;
-	GameInput(SimpleVector acceleration)
+	GameInput(Vector2f acceleration)
 	{
 		this.acceleration = acceleration;
 	}

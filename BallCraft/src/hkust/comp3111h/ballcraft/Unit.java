@@ -5,17 +5,9 @@ import java.util.Iterator;
 
 import android.util.Log;
 
-import com.threed.jpct.Object3D;
-import com.threed.jpct.Primitives;
-import com.threed.jpct.SimpleVector;
-
-public abstract class Unit extends Object3D
+public abstract class Unit
 {
     public enum type {BALL}
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
 	private static int maxRecursion = 5;
 	
@@ -24,16 +16,17 @@ public abstract class Unit extends Object3D
 	private static int minX;
 	private static int minY;
 	
-	private float mass;	
+	protected UnitData unitdata;
+	protected float mass;	
 	protected float friction;
-	protected SimpleVector velocity;
-	protected SimpleVector acceleration;
-	protected type identity;
+	protected Vector2f velocity;
+	protected Vector2f acceleration;
 	
 	protected int leanX;
 	protected int leanY;
 	
 	public static ArrayList<Unit> units = new ArrayList<Unit>();
+	public static ArrayList<UnitData> data = new ArrayList<UnitData>();
 	
 	
 	static public void setWorld(int maxX, int minX, int maxY, int minY)
@@ -44,16 +37,16 @@ public abstract class Unit extends Object3D
 		Unit.minY = minY;
 	}
 	
-	public Unit(float size, float mass)
+	public Unit(float size, float mass, Vector2f position, type identity)
 	{
-		super(Primitives.getSphere(1f));
-		this.scale(size);
+		unitdata = new UnitData(position, size, identity);
 		this.mass = mass;
-		velocity = new SimpleVector(0f, 0f, 0f);
-		acceleration = new SimpleVector(0f, 0f, 0f);
+		velocity = new Vector2f(0f, 0f);
+		acceleration = new Vector2f(0f, 0f);
 		leanX = 0;
 		leanY = 0;
 		units.add(this);
+		data.add(unitdata);
 	}
 	
 	public void move(int msecElapsed)
@@ -61,26 +54,24 @@ public abstract class Unit extends Object3D
 		
 	}
 	
-	protected SimpleVector checkCollision(SimpleVector displacement)
+	protected Vector2f checkCollision(Vector2f displacement)
 	{
 		return collisionRecursion(displacement, 1);
 	}
 	
-	private SimpleVector collisionRecursion(SimpleVector displacement, int recursion)
+	private Vector2f collisionRecursion(Vector2f displacement, int recursion)
 	{
 		if (recursion == maxRecursion) 
 		{
 			Log.e("collision", "Max recursion reached");
-			return new SimpleVector(0, 0, 0);		
+			return new Vector2f(0, 0);		
 		}
 		
-		SimpleVector dest = getTransformedCenter();
+		Vector2f dest = unitdata.position;
 		dest.add(displacement);
 		
 		Unit temp;
-		
-		float scale = getScale();
-		
+				
 		//collsion with other units
     	Iterator<Unit> i = Unit.units.iterator();
     	while(i.hasNext())
@@ -92,7 +83,7 @@ public abstract class Unit extends Object3D
     	    	continue;
     	    }
     	    
-    	    if (dest.distance(temp.getTransformedCenter()) < scale + temp.getScale())
+    	    if (dest.distanceSqured(temp.unitdata.position) < (unitdata.size + temp.unitdata.size) * (unitdata.size + temp.unitdata.size))
     	    {
     	    	float vx = (velocity.x * (mass - temp.mass) + 2 * temp.mass * temp.velocity.x) / (mass + temp.mass);
     	    	float vy = (velocity.y * (mass - temp.mass) + 2 * temp.mass * temp.velocity.y) / (mass + temp.mass);
@@ -106,14 +97,14 @@ public abstract class Unit extends Object3D
     	} 
     	
     	//collision with walls
-    	if (dest.x - scale < minX || dest.x + scale> maxX)
+    	if (dest.x - unitdata.size < minX || dest.x + unitdata.size > maxX)
     	{
-    		if (identity == type.BALL && acceleration.x * velocity.x > 0f)
+    		if (unitdata.identity == type.BALL && acceleration.x * velocity.x > 0f)
     		{
     			leanX = velocity.x > 0 ? 1 : -1;
     			velocity.x = 0;
-    			if (dest.x - scale < minX) translate(minX + scale - getTransformedCenter().x, 0f, 0f);
-    			else translate(maxX - scale - getTransformedCenter().x, 0f, 0f);
+    			if (dest.x - unitdata.size < minX) unitdata.position.x  = minX + unitdata.size - unitdata.position.x;
+    			else unitdata.position.x= maxX - unitdata.size - unitdata.position.x;
     		}
     		else 
     		{
@@ -121,14 +112,14 @@ public abstract class Unit extends Object3D
     		}
     		return collisionRecursion(velocity, recursion + 1);
     	}
-    	else if (dest.y - scale< minY || dest.y + scale> maxY)
+    	else if (dest.y - unitdata.size < minY || dest.y + unitdata.size > maxY)
     	{
-    		if (identity == type.BALL && acceleration.y * velocity.y > 0f)
+    		if (unitdata.identity == type.BALL && acceleration.y * velocity.y > 0f)
     		{
     			leanY = velocity.y > 0 ? 1 : -1;
     			velocity.y = 0;
-    			if (dest.y - scale < minY) translate(0f, minY + scale - getTransformedCenter().y, 0f);
-    			else translate(0f, maxY - scale - getTransformedCenter().y, 0f);
+    			if (dest.y - unitdata.size < minY) unitdata.position.y = minY + unitdata.size - unitdata.position.y;
+    			else unitdata.position.y = maxY - unitdata.size - unitdata.position.y;
     		}
     		else 
     		{
@@ -141,7 +132,7 @@ public abstract class Unit extends Object3D
     	return displacement;
 	}
 	
-	public void setAcceleration(SimpleVector acceleration)
+	public void setAcceleration(Vector2f acceleration)
 	{
 		this.acceleration = acceleration;
 		
@@ -151,5 +142,10 @@ public abstract class Unit extends Object3D
 		if (leanY * acceleration.y > 0) acceleration.y = 0;
 		else if (acceleration.y != 0) leanY = 0;
 	}	
+	
+	public Vector2f getPosition()
+	{
+		return unitdata.position;
+	}
 	
 }

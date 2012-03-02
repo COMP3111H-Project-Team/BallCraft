@@ -76,7 +76,7 @@ public class Client extends Activity implements SensorEventListener
 				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 				SensorManager.SENSOR_DELAY_NORMAL);
 		
-		input = new GameInput(new SimpleVector(0f, 0f, 0f));
+		input = new GameInput(new Vector2f(0f, 0f));
     }
 
 	@Override
