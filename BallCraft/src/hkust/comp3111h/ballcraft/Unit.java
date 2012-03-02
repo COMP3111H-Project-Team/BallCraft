@@ -82,7 +82,7 @@ public abstract class Unit
     	while(i.hasNext())
     	{
     	    temp = i.next();
-    	    if (temp == this)
+    	    if (temp.moved || temp == this)
     	    {
     	    	// a object do not have collision with itself
     	    	continue;
@@ -96,7 +96,8 @@ public abstract class Unit
     	    	temp.velocity.y = (temp.velocity.y * (temp.mass - mass) + 2 * mass * velocity.y) / (mass + temp.mass);
     	    	velocity.x = vx; 
     	    	velocity.y = vy;
-    	    	if (!temp.moved) temp.move();
+        	    temp.moved = true;
+    	    	temp.move();
     	    	Vector2f result = new Vector2f(velocity);
     	    	result.scalarMul(msecElapsed/30);
         		return collisionRecursion(result, recursion + 1);
@@ -115,9 +116,10 @@ public abstract class Unit
     		}
     		else 
     		{
-        		velocity.x = -velocity.x * 0.75f;
+        		velocity.x = -velocity.x * 0.55f;
     		}
 	    	Vector2f result = new Vector2f(velocity);
+	    	result.x = 0;
 	    	result.scalarMul(msecElapsed/30);
     		return collisionRecursion(result, recursion + 1);
     	}
