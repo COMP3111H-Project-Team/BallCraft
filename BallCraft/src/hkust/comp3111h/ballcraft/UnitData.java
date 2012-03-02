@@ -8,7 +8,7 @@ public class UnitData
 	public float size;
 	public type identity;
 	
-	public UnitData(Vector2f position, float size, type identiy)
+	public UnitData(Vector2f position, float size, type identity)
 	{
 		this.position = position;
 		this.size = size;

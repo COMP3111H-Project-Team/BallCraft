@@ -63,7 +63,7 @@ public abstract class Unit
 	{
 		if (recursion == maxRecursion) 
 		{
-			Log.e("collision", "Max recursion reached");
+			// Log.e("collision", "Max recursion reached");
 			return new Vector2f(0, 0);		
 		}
 		

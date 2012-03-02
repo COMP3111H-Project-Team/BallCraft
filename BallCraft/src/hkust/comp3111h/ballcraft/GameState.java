@@ -16,6 +16,7 @@ public class GameState
     public void processPlayerInput(int playerId, GameInput input)
     {
     	balls.get(playerId).setAcceleration(input.acceleration);
+    	// input.clearSkill();
     }
     
     static GameState createTestGameState()
@@ -29,7 +30,7 @@ public class GameState
 		{
 			Ball sphere2 = new Ball(3, 5, 0.99f, new Vector2f(30, 10 * i - 50));
 		}	
-		
+		Unit.setWorld(100, -100, 100, -100);
 		GameState test = new GameState(balls);
 		return test;
     }
