@@ -15,18 +15,18 @@ class Particle {
 	
 	public float xSpeed, ySpeed, zSpeed;
 	
-	public Particle(Random gen) {
+	public Particle(float x, float y, float z, Random gen) {
 		this.x = gen.nextFloat();
 		this.y = gen.nextFloat();
 		this.z = gen.nextFloat();
 		
-		this.xSpeed = gen.nextFloat() / 40.f - 0.0125f;
-		this.ySpeed = gen.nextFloat() / 40.f;
-		this.zSpeed = gen.nextFloat() / 40.f;
+		this.xSpeed = gen.nextFloat() - 0.5f;
+		this.ySpeed = gen.nextFloat() - 0.5f;
+		this.zSpeed = gen.nextFloat();
 	}
 	
 	public void move(long elapse) {
-		ySpeed -= 0.001f;
+		zSpeed -= 0.001f;
 		this.x += xSpeed;
 		this.y += ySpeed;
 		this.z += zSpeed;
