@@ -3,7 +3,7 @@ package hkust.comp3111h.ballcraft;
 
 public class Ball extends Unit
 {
-	
+
 	public Ball(float size, float mass, float friction, Vector2f position) 
 	{
 		super(size, mass, position, type.BALL);
@@ -11,7 +11,7 @@ public class Ball extends Unit
 	}
 
 	@Override
-	public void move(int msecElapsed) 
+	public void move() 
 	{
 		float rate = (float)msecElapsed / 30;
 		Vector2f addition = new Vector2f(acceleration);

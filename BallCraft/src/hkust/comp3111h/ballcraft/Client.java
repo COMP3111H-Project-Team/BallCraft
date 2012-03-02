@@ -15,11 +15,15 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.threed.jpct.Logger;
-import com.threed.jpct.SimpleVector;
 
 public class Client extends Activity implements SensorEventListener
 {
@@ -33,6 +37,8 @@ public class Client extends Activity implements SensorEventListener
 	private SensorManager sensorManager;
 	private GLSurfaceView mGLView;
 	
+	private RelativeLayout rLayout;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -44,12 +50,13 @@ public class Client extends Activity implements SensorEventListener
 		
 		super.onCreate(savedInstanceState);
 
-//		Log.e("Run", "start");
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+        		WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
         startService(new Intent(this, Server.class));
-//		Log.e("Run", "running");
 		
 		mGLView = new GLSurfaceView(getApplication());
-
 
 		mGLView.setEGLConfigChooser(new GLSurfaceView.EGLConfigChooser() {
 			public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display) {
@@ -63,13 +70,12 @@ public class Client extends Activity implements SensorEventListener
 			}
 		});
 		
+		initLayout();
+		
 		renderer = new MyRenderer(this);
 		mGLView.setRenderer(renderer);
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
-        		WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
-		setContentView(mGLView);
+		setContentView(rLayout);
 		
 		sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
 		sensorManager.registerListener(this, 
@@ -77,6 +83,52 @@ public class Client extends Activity implements SensorEventListener
 				SensorManager.SENSOR_DELAY_NORMAL);
 		
 		input = new GameInput(new Vector2f(0f, 0f));
+    }
+    
+    /**
+     * Initialize the main layout of the game view,
+     * including buttons, MUD, etc.
+     */
+    protected void initLayout() {
+		rLayout = new RelativeLayout(this);
+		rLayout.setLayoutParams(new ViewGroup.LayoutParams(
+				ViewGroup.LayoutParams.FILL_PARENT,
+				ViewGroup.LayoutParams.FILL_PARENT));
+		
+		Button castBtn = new Button(this);
+		castBtn.setLayoutParams(new RelativeLayout.LayoutParams(
+				RelativeLayout.LayoutParams.WRAP_CONTENT,
+				RelativeLayout.LayoutParams.WRAP_CONTENT));
+		castBtn.setPadding(60, 50, 60, 50);
+		castBtn.getBackground().setAlpha(80);
+		castBtn.setText("Function 1");
+		castBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (input != null) {
+					// input.addSkill(new Skill(BallCraft.Skill.TEST_SKILL_1));
+				}
+			}
+		});
+		
+		Button accBtn = new Button(this);
+		RelativeLayout.LayoutParams accParams = new RelativeLayout.LayoutParams(
+				RelativeLayout.LayoutParams.WRAP_CONTENT,
+				RelativeLayout.LayoutParams.WRAP_CONTENT);
+		accParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		accBtn.setLayoutParams(accParams);
+		accBtn.setPadding(60, 50, 60, 50);
+		accBtn.getBackground().setAlpha(80);
+		accBtn.setText("Function 2");
+		accBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+			}
+		});
+		
+		rLayout.addView(mGLView);
+		rLayout.addView(castBtn);
+		rLayout.addView(accBtn);
     }
 
 	@Override
@@ -101,7 +153,7 @@ public class Client extends Activity implements SensorEventListener
 	
 	private void copy(Object src) {
 		try {
-			Logger.log("Copying data from master Activity!");
+			// Logger.log("Copying data from master Activity!");
 			Field[] fs = src.getClass().getDeclaredFields();
 			for (Field f : fs) {
 				f.setAccessible(true);
