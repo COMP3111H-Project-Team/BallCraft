@@ -10,4 +10,8 @@ public class Skill {
 	public Skill(int id) {
 		this.id = id;
 	}
+	
+	public int getID() {
+		return id;
+	}
 }

@@ -3,6 +3,8 @@ package hkust.comp3111h.ballcraft;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import android.util.Log;
+
 import com.threed.jpct.Camera;
 import com.threed.jpct.Light;
 import com.threed.jpct.Object3D;
@@ -14,19 +16,23 @@ import com.threed.jpct.util.MemoryHelper;
 public class GameState 
 {
 	private World world = null;
-	ArrayList<Ball> balls;
-	ArrayList<Skill> activeSkills;
+	private ArrayList<Ball> balls;
+	private ArrayList<Skill> activeSkills;
+	
+	ParticleSystem system;
 	
 	public GameState(World world, ArrayList<Ball> balls)
 	{
 		this.world = world;
 		this.balls = balls;
+		activeSkills = new ArrayList<Skill>();
 	}
 	
     public void processPlayerInput(int playerId, GameInput input)
     {
     	balls.get(playerId).setAcceleration(input.acceleration);
     	activeSkills.addAll(input.getSkills());
+    	input.clearSkill();
     }
     
     static GameState createTestGameState()
@@ -46,21 +52,13 @@ public class GameState
 		plane.setOrigin(new SimpleVector(0, 0, 10));
 		Unit.setWorld(100, -100, 100, -100);
 		world.addObject(plane);
-		
-//		Object3D wall = Primitives.getPlane(10, 20);
-//		wall.strip();
-//		wall.build();
-//		wall.setCollisionMode(Object3D.COLLISION_CHECK_OTHERS);
-//		wall.setOrigin(new SimpleVector(100, 0, 10));
-//		wall.setOrientation(new SimpleVector(1, 0, 0), new SimpleVector(0, 0, 1));
-//		world.addObject(wall);
-		
+
 		Ball sphere = new Ball(10, 5, 0.6f);
 		sphere.strip();
 		sphere.build();
 		sphere.setOrigin(new SimpleVector(0, 0, 0));
 		world.addObject(sphere);
-		balls.add(sphere);		
+		balls.add(sphere);	
 
 		for (int i = 0; i < 3; i++)
 		{
@@ -77,7 +75,7 @@ public class GameState
 		cam.setPosition(0, 0, -200);
 		cam.lookAt(sphere.getTransformedCenter());
 
-		MemoryHelper.compact(); // What is this??? 膜拜耕哥给耕哥跪了
+		MemoryHelper.compact();
 		GameState test = new GameState(world, balls);
 		return test;
     }
@@ -89,7 +87,14 @@ public class GameState
     	while(i.hasNext())
     	{
     	    i.next().move(msecElapsed); 
-    	} 
+    	}
+    	// particle testing code:
+    	if (!activeSkills.isEmpty()) {
+    		Iterator<Skill> is = activeSkills.iterator();
+			system = new ParticleSystem();
+    		
+    		activeSkills.clear();
+    	}
     }
     
     public World getWorld()

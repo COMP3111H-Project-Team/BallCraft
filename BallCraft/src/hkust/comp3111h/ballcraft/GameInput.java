@@ -24,4 +24,8 @@ public class GameInput
 	public ArrayList<Skill> getSkills() {
 		return skills;
 	}
+	
+	public void clearSkill() {
+		skills.clear();
+	}
 }

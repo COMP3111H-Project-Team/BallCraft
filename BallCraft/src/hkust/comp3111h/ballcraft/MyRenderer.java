@@ -48,6 +48,6 @@ public class MyRenderer implements GLSurfaceView.Renderer
 		world = Server.process(0, client.getInput()).getWorld();
 		world.renderScene(fb);
 		world.draw(fb);
-		fb.display();	
+		fb.display();
 	}
 }
