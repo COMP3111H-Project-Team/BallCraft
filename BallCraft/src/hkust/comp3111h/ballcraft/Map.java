@@ -5,9 +5,7 @@ import android.graphics.Bitmap;
 //Map is composed of widthCount*hegihtCount small tiles.
 //You can get a immutable tile by calling function map.getTile(layer id,width,height);
 public class Map {
-	/**
-	 * 
-	 */
+
 	private String mapName;
 	private String imageurl;
 	private int tileSize;
