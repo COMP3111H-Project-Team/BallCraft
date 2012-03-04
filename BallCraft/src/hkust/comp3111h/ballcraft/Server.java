@@ -33,7 +33,6 @@ public class Server extends IntentService
 				long sleep = 20 + time - System.currentTimeMillis();
 				lastRun = System.currentTimeMillis();
 				if (sleep < 0 ) sleep = 0;
-				//Log.d("sleeping", "" + sleep + " ms");
 				Thread.sleep(sleep);
 			}
 			catch (InterruptedException e) 
