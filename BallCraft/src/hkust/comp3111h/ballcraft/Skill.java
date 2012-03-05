@@ -14,4 +14,12 @@ public class Skill {
 	public int getID() {
 		return id;
 	}
+	
+	public boolean isActive() {
+		return id != BallCraft.Skill.DEACTIVATED;
+	}
+	
+	public void deactivate() {
+		id = BallCraft.Skill.DEACTIVATED;
+	}
 }
