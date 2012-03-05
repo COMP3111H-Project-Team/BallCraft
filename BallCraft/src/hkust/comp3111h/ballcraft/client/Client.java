@@ -3,7 +3,7 @@ package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.graphics.MyRenderer;
-import hkust.comp3111h.ballcraft.server.Server;
+import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.Vector2f;
 
 import java.lang.reflect.Field;
@@ -27,8 +27,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-
-import com.threed.jpct.Logger;
 
 public class Client extends Activity implements SensorEventListener
 {
@@ -59,7 +57,7 @@ public class Client extends Activity implements SensorEventListener
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
         		WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
-        startService(new Intent(this, Server.class));
+        startService(new Intent(this, ServerAdapter.class));
 		
 		mGLView = new GLSurfaceView(getApplication());
 
@@ -111,7 +109,7 @@ public class Client extends Activity implements SensorEventListener
 			@Override
 			public void onClick(View v) {
 				if (input != null) {
-					input.setSkill(BallCraft.Skill.TEST_SKILL_1);
+					input.addSkill(new Skill(BallCraft.Skill.TEST_SKILL_1));
 				}
 			}
 		});
@@ -128,7 +126,7 @@ public class Client extends Activity implements SensorEventListener
 		accBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-					input.setSkill(BallCraft.Skill.TEST_SKILL_2);
+				input.addSkill(new Skill(BallCraft.Skill.TEST_SKILL_2));
 			}
 		});
 		

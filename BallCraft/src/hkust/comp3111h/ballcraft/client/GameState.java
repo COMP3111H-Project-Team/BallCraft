@@ -27,6 +27,10 @@ public class GameState
     	// input.clearSkill();
     }
     
+    public void applyUpdate(GameUpdater updater) {
+    	// TODO
+    }
+    
     public static GameState createTestGameState()
     {
     	ArrayList<Ball> balls = new ArrayList<Ball>();
@@ -36,9 +40,9 @@ public class GameState
 
 		for (int i = 0; i < 3; i++)
 		{
-			Ball sphere2 = new Ball(3, 5, 0.99f, new Vector2f(30, 10 * i - 50));
+			Ball sphere2 = new Ball(10, 5, 0.99f, new Vector2f(30, 50 * i - 50));
 		}	
-		Unit.setWorld(100, -100, 100, -100);
+		Unit.setWorld(200, -200, 200, -200);
 		GameState test = new GameState(balls);
 		return test;
     }
