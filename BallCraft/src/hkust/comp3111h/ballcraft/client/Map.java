@@ -3,6 +3,7 @@ package hkust.comp3111h.ballcraft.client;
 import android.graphics.Bitmap;
 
 //Map is composed of widthCount*hegihtCount small tiles.
+//notice :: width>height
 //You can get a immutable tile by calling function map.getTile(layer id,width,height);
 public class Map {
 
