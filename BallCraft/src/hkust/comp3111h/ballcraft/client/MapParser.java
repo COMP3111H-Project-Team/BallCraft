@@ -87,9 +87,9 @@ public class MapParser{
     	original = original.replaceAll("[^\\d,]", "");
     	String[] parts = original.split(",");
 		int[][] array = new int[width][height];
-		for(int i = 0; i < width; i++) {
-			for(int j = 0; j < height; j++) {
-				array[i][j]= Integer.parseInt(parts[i*height+j]);
+		for(int i = 0; i < height; i++) {
+			for(int j = 0; j < width; j++) {
+				array[i][j]= Integer.parseInt(parts[i*width+j]);
 			}
 		}
 		return array;
