@@ -20,6 +20,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -88,6 +89,12 @@ public class Client extends Activity implements SensorEventListener
 				SensorManager.SENSOR_DELAY_NORMAL);
 		
 		input = new GameInput(new Vector2f(0f, 0f));
+		MapParser mapParser = new MapParser(this);
+		Map map = mapParser.getMapFromXML("redbird.xml");
+		int [][] stable = map.getLayer(0);
+		for(int i = 0; i < map.getHeightCount(); i++){
+			Log.i("map", Integer.toString(stable[i][8]));
+		}
     }
     
     /**
