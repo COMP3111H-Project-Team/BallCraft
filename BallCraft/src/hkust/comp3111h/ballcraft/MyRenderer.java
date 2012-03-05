@@ -94,7 +94,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 					gl.glTranslatef(datum.position.x, - datum.position.y, 5);
 					gl.glColor4f(1f, 0f, 0f, 1f);
 					gl.glScalef(datum.size / 15, datum.size / 15, datum.size / 15);
-					sphere.draw(gl);
+					cube.draw(gl);
 				gl.glPopMatrix();
 			}
 		}

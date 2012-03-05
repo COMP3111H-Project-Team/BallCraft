@@ -1,6 +1,7 @@
 package hkust.comp3111h.ballcraft;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 
 public class Server extends IntentService
@@ -8,10 +9,10 @@ public class Server extends IntentService
 	static private GameState gamestate = null;
 	static private long lastRun;
 	
-	public Server()
+	public Server(Context context)
 	{
 		super("ServerService");
-		gamestate = GameState.createTestGameState();
+		gamestate = GameState.createTestGameState(context);
 		lastRun = System.currentTimeMillis();
 	}
 	

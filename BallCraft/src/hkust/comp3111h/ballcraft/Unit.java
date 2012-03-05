@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import android.content.Context;
 import android.util.Log;
 
 public abstract class Unit
@@ -18,7 +19,7 @@ public abstract class Unit
 	private static int maxY;
 	private static int minX;
 	private static int minY;
-	
+	private static Context context;
 	protected UnitData unitdata;
 	protected float mass;	
 	protected float friction;
@@ -34,8 +35,9 @@ public abstract class Unit
 	public static List<UnitData> data = new ArrayList<UnitData>();
 	
 	
-	static public void setWorld(int maxX, int minX, int maxY, int minY)
+	static public void setWorld(Context context,int maxX, int minX, int maxY, int minY)
 	{
+		Unit.context = context;
 		Unit.maxX = maxX;
 		Unit.minX = minX;
 		Unit.maxY = maxY;
@@ -76,7 +78,6 @@ public abstract class Unit
 		dest.add(displacement);
 		
 		Unit temp;
-				
 		//collsion with other units
     	Iterator<Unit> i = Unit.units.iterator();
     	while(i.hasNext())
@@ -90,6 +91,7 @@ public abstract class Unit
     	    
     	    if (dest.distanceSqured(temp.unitdata.position) < (unitdata.size + temp.unitdata.size) * (unitdata.size + temp.unitdata.size))
     	    {
+    	    	
     	    	float vx = (velocity.x * (mass - temp.mass) + 2 * temp.mass * temp.velocity.x) / (mass + temp.mass);
     	    	float vy = (velocity.y * (mass - temp.mass) + 2 * temp.mass * temp.velocity.y) / (mass + temp.mass);
     	    	temp.velocity.x = (temp.velocity.x * (temp.mass - mass) + 2 * mass * velocity.x) / (mass + temp.mass);

@@ -7,13 +7,16 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import android.content.Context;
+
 
 public class GameState 
 {
 	ArrayList<Ball> balls;
-	
-	public GameState(ArrayList<Ball> balls)
+	private Context context;
+	public GameState(Context context,ArrayList<Ball> balls)
 	{
+		this.context = context;
 		this.balls = balls;
 	}
 	
@@ -23,7 +26,7 @@ public class GameState
     	// input.clearSkill();
     }
     
-    static GameState createTestGameState()
+    static GameState createTestGameState(Context context)
     {
     	ArrayList<Ball> balls = new ArrayList<Ball>();
 		
@@ -34,8 +37,8 @@ public class GameState
 		{
 			Ball sphere2 = new Ball(3, 5, 0.99f, new Vector2f(30, 10 * i - 50));
 		}	
-		Unit.setWorld(100, -100, 100, -100);
-		GameState test = new GameState(balls);
+		Unit.setWorld(context,100, -100, 100, -100);
+		GameState test = new GameState(context,balls);
 		return test;
     }
     

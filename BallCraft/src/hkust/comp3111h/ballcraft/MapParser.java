@@ -83,6 +83,7 @@ public class MapParser{
 	public int[][] layerToArray(String original,int width, int height) { 
     	original = original.replaceAll("[^\\d,]", "");
     	String[] parts = original.split(",");
+    	Log.e("map",Integer.toString(parts.length));
 		int[][] array = new int[width][height];
 		for(int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++) {
