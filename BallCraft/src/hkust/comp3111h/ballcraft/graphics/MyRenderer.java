@@ -130,11 +130,11 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	@SuppressWarnings("unchecked")
 	public void onDrawFrame(GL10 gl) {
 		
-		/*
+		
 		long elapsed = System.currentTimeMillis() - time;
 		Log.d("fps", "" + 1000 / elapsed);
 		time = System.currentTimeMillis();
-		*/
+		
 
 		ArrayList<UnitData> data = null;
 		byte[] bytes = Server.process(0, client.getInput());
