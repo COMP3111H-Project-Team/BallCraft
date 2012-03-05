@@ -1,4 +1,10 @@
-package hkust.comp3111h.ballcraft;
+package hkust.comp3111h.ballcraft.graphics;
+
+import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.client.Client;
+import hkust.comp3111h.ballcraft.server.Server;
+import hkust.comp3111h.ballcraft.server.Unit;
+import hkust.comp3111h.ballcraft.server.UnitData;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -24,6 +30,9 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	private Sphere sphere = null;
 	
 	private long time = 0;
+	
+	private boolean skillActivated = false;
+	private ParticleSystem system = null;
 	
 	public MyRenderer(Client client) {
 		this.client = client;
@@ -148,7 +157,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity();
-		gl.glTranslatef(0, 0, -300);
+		gl.glTranslatef(-data.get(0).position.x, data.get(0).position.y, -300);
 		
 		/*
 		gl.glEnable(GL10.GL_LIGHTING);
@@ -170,6 +179,20 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 					sphere.draw(gl);
 				gl.glPopMatrix();
 			}
+		}
+		
+		if (Server.skillActive()) {
+			skillActivated = true;
+			if (Server.getSkill() == BallCraft.Skill.TEST_SKILL_1) {
+				system = new ParticleSystem1(data.get(0).position.x, -data.get(0).position.y, 0);
+			} else if (Server.getSkill() == BallCraft.Skill.TEST_SKILL_2) {
+				system = new ParticleSystem2(data.get(0).position.x, -data.get(0).position.y, 0);
+			}
+		}
+		
+		if (skillActivated) {
+			system.move();
+			system.draw(gl);
 		}
 	}
 }

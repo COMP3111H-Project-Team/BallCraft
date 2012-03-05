@@ -7,8 +7,11 @@ public class Vector2f implements Serializable
 	/**
 	 * 
 	 */
+<<<<<<< HEAD
+=======
 	private static final long serialVersionUID = 7481119251470929286L;
 	
+>>>>>>> fc650c53111e9339c9acaecf798b27203da5d37c
 	public float x;
 	public float y;
 	

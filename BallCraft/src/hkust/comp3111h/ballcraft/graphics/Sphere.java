@@ -1,4 +1,4 @@
-package hkust.comp3111h.ballcraft;
+package hkust.comp3111h.ballcraft.graphics;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
