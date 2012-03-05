@@ -3,6 +3,10 @@ package hkust.comp3111h.ballcraft.client;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.R.drawable;
 
+import java.io.DataInputStream;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -65,11 +69,11 @@ public class MapParser{
 	    	//get layer01 string value and transfer it to 2D array.
 	    	Element layer1 = (Element) root.getElementsByTagName("layer1").item(0);
 	    	String layer1String = layer1.getFirstChild().getNodeValue();
-	    	map.setLayer(1, layerToArray(layer1String,map.getWidthCount(),map.getHeightCount()));
+	    	map.setLayer(0, readLayer(layer1String,map.getWidthCount(),map.getHeightCount()));
 	    	//get layer02 string value and transfer it to 2D array
 	    	Element layer2 = (Element) root.getElementsByTagName("layer2").item(0);
 	    	String layer2String = layer2.getFirstChild().getNodeValue();
-	    	map.setLayer(1, layerToArray(layer2String,map.getWidthCount(),map.getHeightCount()));
+	    	map.setLayer(1, readLayer(layer2String,map.getWidthCount(),map.getHeightCount()));
 	    	
 	    }catch (IOException e){
             e.printStackTrace();
@@ -83,16 +87,31 @@ public class MapParser{
 	}
 
 
-	public int[][] layerToArray(String original,int width, int height) { 
-    	original = original.replaceAll("[^\\d,]", "");
-    	String[] parts = original.split(",");
-		int[][] array = new int[width][height];
-		for(int i = 0; i < height; i++) {
-			for(int j = 0; j < width; j++) {
-				array[i][j]= Integer.parseInt(parts[i*width+j]);
-			}
-		}
-		return array;
+	public int[][] readLayer(String fileName,int width, int height){
+		int [][] layer = new int[height][width];
+	    int    i_data = 0; 
+	    try {
+	      InputStream   inputStream = context.getResources().getAssets().open(fileName);
+	      // Wrap the FileInputStream with a DataInputStream
+	      DataInputStream data_in    = new DataInputStream (inputStream);
+	     
+	      for(int i = 0; i < height; i++){
+	    	  for (int j = 0; j < width; j++){
+	    		  try {
+	    	          i_data = data_in.readInt ();
+	    	        }
+	    	        catch (EOFException eof) {
+	    	          break;
+	    	        }
+	    	        // Print out the integer, double data pairs.
+	    	        layer[i][j] = i_data;
+	    	  }
+	      }
+	      data_in.close ();
+	    } catch  (IOException e) {
+	       System.out.println ( "IO Exception =: " + e );
+	    }
+		return layer;
 	}
 	
 	public Bitmap readBitmap(String imageUrl){  
