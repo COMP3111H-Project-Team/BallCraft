@@ -16,6 +16,7 @@ public class BallCraft {
 	}
 	
 	public static final class Skill {
+		public static final int DEACTIVATED = 0;
 		public static final int TEST_SKILL_1 = 1;
 		public static final int TEST_SKILL_2 = 2;
 	}
