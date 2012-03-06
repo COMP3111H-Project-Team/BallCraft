@@ -202,8 +202,8 @@ public class Client extends Activity implements SensorEventListener
 	@Override
 	public void onSensorChanged(SensorEvent event) 
 	{
-		input.acceleration.x = event.values[SensorManager.DATA_X];
-		input.acceleration.y = event.values[SensorManager.DATA_Y];
+		input.acceleration.x = event.values[SensorManager.DATA_Y];
+		input.acceleration.y = event.values[SensorManager.DATA_X];
 	}
 	
 	public GameInput getInput()

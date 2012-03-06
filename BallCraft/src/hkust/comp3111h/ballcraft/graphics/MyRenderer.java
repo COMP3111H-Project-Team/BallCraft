@@ -117,9 +117,9 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity();
-		gl.glTranslatef(-self.position.x, self.position.y, -300);
 		
-		/*
+		// gl.glTranslatef(-self.position.x, self.position.y, -300);
+		
 		float xPos = self.position.x;
 		float yPos = - self.position.y;
 		float xVel = self.velocity.x;
@@ -141,7 +141,6 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		} else {
 			gl.glTranslatef(-self.position.x, self.position.y, -300);
 		}
-		*/
 		
 		gl.glPushMatrix();
 			gl.glColor4f(0.6f, 0.6f, 0.6f, 1f);
