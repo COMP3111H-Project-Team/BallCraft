@@ -11,7 +11,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
 public class GameState 
 {
 	ArrayList<Ball> balls;

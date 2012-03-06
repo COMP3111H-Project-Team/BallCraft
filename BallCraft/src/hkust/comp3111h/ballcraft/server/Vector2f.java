@@ -2,12 +2,7 @@ package hkust.comp3111h.ballcraft.server;
 
 import java.io.Serializable;
 
-public class Vector2f implements Serializable
-{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7481119251470929286L;
+public class Vector2f implements Serializable {
 	
 	public float x;
 	public float y;
@@ -46,5 +41,16 @@ public class Vector2f implements Serializable
 		y *= rate;
 	}
 	
-
+	public void addToXY(Vector2f vec) {
+		if (vec.y != 0) {
+			double angleTan = Math.atan(this.x / this.y);
+			vec.x += Math.sin(angleTan) * vec.x;
+			vec.y += Math.cos(angleTan) * vec.x;
+			vec.x += Math.cos(angleTan) * vec.y;
+			vec.y += Math.sin(angleTan) * vec.y;
+		} else {
+			vec.y = 0.1f;
+		}
+	}
+	
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_menu_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+	<TextView
+	    android:id="@+id/main_menu_single_player"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_x="50dp"
+	    android:layout_y="60dp"
+	    android:text="SINGLE PLAYER"
+	    android:textSize="12pt"/>
+	    
+	<TextView
+	    android:id="@+id/main_menu_multi_player"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_x="260dp"
+	    android:layout_y="120dp"
+	    android:text="MULTI-PLAYER"
+	    android:textSize="12pt"/>
+	
+	<TextView
+	    android:id="@+id/main_menu_settings"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_x="120dp"
+	    android:layout_y="180dp"
+	    android:text="SETTINGS"
+	    android:textSize="12pt"/>
+	
+	<TextView
+	    android:id="@+id/main_menu_credits"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_x="240dp"
+	    android:layout_y="240dp"
+	    android:text="CREDITS"
+	    android:textSize="12pt"/>
+</AbsoluteLayout>

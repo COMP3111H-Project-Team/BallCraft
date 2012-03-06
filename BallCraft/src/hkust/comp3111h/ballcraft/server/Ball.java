@@ -17,6 +17,14 @@ public class Ball extends Unit
 		float rate = (float)msecElapsed / 30;
 		Vector2f addition = new Vector2f(acceleration);
 		addition.scalarMul(rate);
+		
+		/*
+		double tanAngle = Math.atan(velocity.x / velocity.y);
+		velocity.x += (-addition.y) * Math.sin(tanAngle);
+		velocity.y += (-addition.y) * Math.cos(tanAngle);
+		*/
+		
+		// velocity.add(addition);
 		velocity.add(addition);
 		Vector2f displacement = new Vector2f(velocity); 
 		displacement.scalarMul(rate);

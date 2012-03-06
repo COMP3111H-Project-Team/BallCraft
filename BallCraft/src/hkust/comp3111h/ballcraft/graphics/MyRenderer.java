@@ -18,7 +18,6 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
-import android.util.Log;
 
 public class MyRenderer implements GLSurfaceView.Renderer {
 	
@@ -46,22 +45,54 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 1000.0f);
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
 		gl.glLoadIdentity();
+		
+		/*
+		gl.glEnable(GL10.GL_LIGHTING);
+		gl.glEnable(GL10.GL_LIGHT0);
+		
+		float lightAmbient [] = { 0.2f, 0.2f, 0.2f, 1.0f };
+		float lightDiffuse [] = { 0.9f, 0.9f, 0.9f, 1.0f };
+		float lightSpecular [] = { 0.9f, 0.9f, 0.9f, 1.0f };
+		float lightPosition [] = { 0f, 0f, 100f, 1f };
+		
+		float matSpecular [] = { 1f, 1f, 1f, 1f };
+		float matShininess [] = { 5.0f };
+		float matAmbient [] = { 1f, 1f, 1f, 1f };
+		float matDiffuse [] = { 1f, 1f, 1f, 1f };
+		
+		gl.glShadeModel(GL10.GL_SMOOTH);
+		
+		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SPECULAR, matSpecular, 0);
+		// gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, matShininess, 0);
+		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_AMBIENT, matAmbient, 0);
+		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_DIFFUSE, matDiffuse, 0);
+		
+		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, lightSpecular, 0);
+		// gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPosition, 0);
+		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, lightAmbient, 0);
+		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, lightDiffuse, 0);
+		*/
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+		gamePlane.loadTexture(gl, client); // tex
+		gl.glEnable(GL10.GL_TEXTURE_2D); //tex
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
-		gl.glShadeModel(GL10.GL_SMOOTH); gl.glClearDepthf(1.0f);
+		gl.glShadeModel(GL10.GL_SMOOTH);
+		gl.glClearDepthf(1.0f);
 		gl.glEnable(GL10.GL_DEPTH_TEST);
 		gl.glDepthFunc(GL10.GL_LEQUAL);
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public void onDrawFrame(GL10 gl) {
 		
+		/*
 		long elapsed = System.currentTimeMillis() - time;
 		Client.display("fps: " + 1000 / elapsed);
 		time = System.currentTimeMillis();
+		*/
 		
 		ArrayList<UnitData> data = null;
 		byte[] bytes = ServerAdapter.process(0, client.getInput());
@@ -86,13 +117,14 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity();
-		// gl.glTranslatef(-self.position.x, self.position.y, -300);
+		gl.glTranslatef(-self.position.x, self.position.y, -300);
 		
+		/*
 		float xPos = self.position.x;
 		float yPos = - self.position.y;
 		float xVel = self.velocity.x;
 		float yVel = - self.velocity.y;
-		double vel = Math.sqrt(xVel * xVel + yVel * yVel) * 100;
+		double vel = 200; // Math.sqrt(xVel * xVel + yVel * yVel) * 100;
 		double tanAngle = xVel / yVel;
 		double angle = Math.atan(tanAngle);
 		float xDiff = (float) (Math.sin(angle) * vel);
@@ -109,6 +141,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		} else {
 			gl.glTranslatef(-self.position.x, self.position.y, -300);
 		}
+		*/
 		
 		gl.glPushMatrix();
 			gl.glColor4f(0.6f, 0.6f, 0.6f, 1f);
