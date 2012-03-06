@@ -45,12 +45,12 @@ public abstract class Unit
 	
 	public Unit(float size, float mass, Vector2f position, type identity)
 	{
-		unitdata = new UnitData(position, size, identity);
 		this.mass = mass;
 		velocity = new Vector2f(0f, 0f);
 		acceleration = new Vector2f(0f, 0f);
 		leanX = 0;
 		leanY = 0;
+		unitdata = new UnitData(position, velocity, size, identity);
 		units.add(this);
 		data.add(unitdata);
 	}
@@ -160,6 +160,10 @@ public abstract class Unit
 	public Vector2f getPosition()
 	{
 		return unitdata.position;
+	}
+	
+	public Vector2f getVelocity() {
+		return unitdata.velocity;
 	}
 	
 }

@@ -4,7 +4,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
-import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -21,10 +20,11 @@ class ParticleSystem1 extends ParticleSystem {
 	
 	public ParticleSystem1(float x, float y, float z) {
 		mParticles = new Particle [COUNT];
-		Random gen = new Random(System.currentTimeMillis());
+		// Random gen = new Random(System.currentTimeMillis());
 		for (int i = 0; i < COUNT; i++) {
 			float xs = (float) (20f * Math.cos(Math.toRadians(i)));
 			float ys = (float) (20f * Math.sin(Math.toRadians(i)));
+			
 			mParticles[i] = new Particle(x, y, z, xs, ys, 0f);
 			// mParticles[i] = new Particle(x, y, z, gen);
 		}
@@ -73,7 +73,6 @@ class ParticleSystem1 extends ParticleSystem {
 			gl.glPushMatrix();
 			gl.glTranslatef(mParticles[i].x, mParticles[i].y, mParticles[i].z);
 			gl.glDrawElements(GL10.GL_TRIANGLES, 3, GL10.GL_UNSIGNED_SHORT, mIndexBuffer);
-			// gl.glDrawElements(GL10.GL_POINTS, 1, GL10.GL_UNSIGNED_SHORT, mIndexBuffer);
 			gl.glPopMatrix();
 		}
 	}
