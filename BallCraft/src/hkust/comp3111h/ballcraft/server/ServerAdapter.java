@@ -3,6 +3,7 @@ package hkust.comp3111h.ballcraft.server;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.GameState;
+import hkust.comp3111h.ballcraft.client.Map;
 import android.app.IntentService;
 import android.content.Intent;
 
@@ -21,6 +22,7 @@ public class ServerAdapter extends IntentService
 		lastRun = System.currentTimeMillis();
 	}
 	
+	// TODO To be changed
 	public static byte[] process(int playerID, GameInput input)
 	{
 		gamestate.processPlayerInput(playerID, input);
@@ -38,6 +40,14 @@ public class ServerAdapter extends IntentService
 			activeSkillExists = false;
 		}
 		return gamestate.getUnitData();	
+	}
+	
+	/**
+	 * Set the game map, at server side it is only used by the physical 
+	 * engine to detect collisions
+	 * @param map 
+	 */
+	public static void setMap(Map map) {
 	}
 	
 	public static boolean skillActive() {

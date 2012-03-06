@@ -18,6 +18,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
+import android.util.Log;
 
 public class MyRenderer implements GLSurfaceView.Renderer {
 	
@@ -45,73 +46,6 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 1000.0f);
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
 		gl.glLoadIdentity();
-		
-		/*
-		gl.glEnable(GL10.GL_LIGHTING);
-		gl.glEnable(GL10.GL_LIGHT0);
-		
-		float lightAmbient [] = { 0.7f, 0.7f, 0.7f, 1.0f };
-		float lightDiffuse [] = { 0.7f, 0.7f, 0.7f, 1.0f };
-		float matSpecular [] = { 1f, 1f, 1f, 1f };
-		float matShininess [] = { 5.0f };
-		float matAmbient [] = { 1f, 1f, 1f, 1f };
-		float matDiffuse [] = { 1f, 1f, 1f, 1f };
-		float lightPosition [] = { 100f, 100f, 100f, 0f };
-		
-		gl.glShadeModel(GL10.GL_SMOOTH);
-		gl.glMaterialfv(GL10.GL_FRONT, GL10.GL_SPECULAR, matSpecular, 0);
-		gl.glMaterialfv(GL10.GL_FRONT, GL10.GL_SHININESS, matShininess, 0);
-		gl.glMaterialfv(GL10.GL_FRONT, GL10.GL_AMBIENT, matAmbient, 0);
-		gl.glMaterialfv(GL10.GL_FRONT, GL10.GL_DIFFUSE, matDiffuse, 0);
-		
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPosition, 0);
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, lightAmbient, 0);
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, lightDiffuse, 0);
-		gl.glEnable(GL10.GL_DEPTH_TEST);
-		gl.glDepthFunc(GL10.GL_LEQUAL);
-		*/
-		
-		/*
-		gl.glEnable(GL10.GL_LIGHTING);
-		gl.glEnable(GL10.GL_LIGHT0);
-		gl.glShadeModel(GL10.GL_SMOOTH);
-		
-		float lightAmbient [] = { 0.2f, 0.2f, 0.2f, 1.0f };
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, lightAmbient, 0);
-		
-		float lightDiffuse [] = { 0.7f, 0.7f, 0.7f, 1.0f };
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, lightDiffuse, 0);
-		
-		float lightSpecular [] = { 0.7f, 0.7f, 0.7f, 1.0f };
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, lightSpecular, 0);
-		
-		float lightPos [] = { 10f, 10f, 50f, 0f };
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPos, 0);
-		
-		float lightDir [] = { 0f, 0f, -1f };
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPOT_DIRECTION, lightDir, 0);
-		*/
-		
-		// gl.glLightf(GL10.GL_LIGHT0, GL10.GL_SPOT_CUTOFF, 45.0f);
-		
-		// gl.glLoadIdentity();
-		
-		
-		/*
-		float matAmbient [] = { 1.0f, 1.0f, 1.0f, 1.0f };
-		float matDiffuse [] = { 1.0f, 1.0f, 1.0f, 1.0f };
-
-		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_AMBIENT, matAmbient, 0);
-		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_DIFFUSE, matDiffuse, 0);
-
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, lightAmbient, 0);
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, lightDiffuse, 0);
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPos, 0);
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, lightSpecular, 0);
-
-		gl.glEnable(GL10.GL_DEPTH_TEST);
-		gl.glShadeModel(GL10.GL_SMOOTH);
-		*/
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -125,11 +59,9 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	@SuppressWarnings("unchecked")
 	public void onDrawFrame(GL10 gl) {
 		
-		/*
 		long elapsed = System.currentTimeMillis() - time;
-		Log.d("fps", "" + 1000 / elapsed);
+		Client.display("fps: " + 1000 / elapsed);
 		time = System.currentTimeMillis();
-		*/
 		
 		ArrayList<UnitData> data = null;
 		byte[] bytes = ServerAdapter.process(0, client.getInput());
@@ -150,9 +82,33 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 			e.printStackTrace();
 		}
 		
+		UnitData self = data.get(0);
+		
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity();
-		gl.glTranslatef(-data.get(0).position.x, data.get(0).position.y, -300);
+		// gl.glTranslatef(-self.position.x, self.position.y, -300);
+		
+		float xPos = self.position.x;
+		float yPos = - self.position.y;
+		float xVel = self.velocity.x;
+		float yVel = - self.velocity.y;
+		double vel = Math.sqrt(xVel * xVel + yVel * yVel) * 100;
+		double tanAngle = xVel / yVel;
+		double angle = Math.atan(tanAngle);
+		float xDiff = (float) (Math.sin(angle) * vel);
+		float yDiff = (float) (Math.cos(angle) * vel);
+	
+		if (xVel > 0 && yVel > 0) { // first quadrant
+			GLU.gluLookAt(gl, xPos - xDiff, yPos - yDiff, 300, xPos, yPos, 5f, 0, 0, 1f);
+		} else if (xVel < 0 && yVel > 0) { // second quadrant
+			GLU.gluLookAt(gl, xPos - xDiff, yPos - yDiff, 300, xPos, yPos, 5f, 0, 0, 1f);
+		} else if (xVel < 0 && yVel < 0) { // third quadrant
+			GLU.gluLookAt(gl, xPos + xDiff, yPos + yDiff, 300, xPos, yPos, 5f, 0, 0, 1f);
+		} else if (xVel > 0 && yVel < 0) { // fourth quadrant
+			GLU.gluLookAt(gl, xPos + xDiff, yPos + yDiff, 300, xPos, yPos, 5f, 0, 0, 1f);
+		} else {
+			gl.glTranslatef(-self.position.x, self.position.y, -300);
+		}
 		
 		gl.glPushMatrix();
 			gl.glColor4f(0.6f, 0.6f, 0.6f, 1f);

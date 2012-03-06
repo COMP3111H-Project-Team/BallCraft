@@ -14,12 +14,15 @@ import javax.microedition.khronos.egl.EGLDisplay;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -27,6 +30,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class Client extends Activity implements SensorEventListener
 {
@@ -41,6 +45,10 @@ public class Client extends Activity implements SensorEventListener
 	private GLSurfaceView mGLView;
 	
 	private RelativeLayout rLayout;
+	
+	// For debug use only
+	private static TextView debugView = null;
+	private static String debugMsg = null;
 	
     /** Called when the activity is first created. */
     @Override
@@ -86,6 +94,15 @@ public class Client extends Activity implements SensorEventListener
 				SensorManager.SENSOR_DELAY_NORMAL);
 		
 		input = new GameInput(new Vector2f(0f, 0f));
+		
+		MapParser mapParser = new MapParser(this);
+		Map map = mapParser.getMapFromXML("redbird.xml");
+		int [][] stable = map.getLayer(0);
+		/*
+		for(int i = 0; i < map.getHeightCount(); i++){
+			Log.i("map", Integer.toString(stable[i][8]));
+		}
+		*/
     }
     
     /**
@@ -130,9 +147,20 @@ public class Client extends Activity implements SensorEventListener
 			}
 		});
 		
+		debugView = new TextView(this);
+		RelativeLayout.LayoutParams debugParams = new RelativeLayout.LayoutParams(
+				RelativeLayout.LayoutParams.WRAP_CONTENT,
+				RelativeLayout.LayoutParams.WRAP_CONTENT);
+		debugParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		debugView.setLayoutParams(debugParams);
+		debugView.setPadding(10, 10, 10, 10);
+		debugView.setTextColor(Color.GREEN);
+		debugView.setText("Debug Message Display");
+		
 		rLayout.addView(mGLView);
 		rLayout.addView(castBtn);
 		rLayout.addView(accBtn);
+		rLayout.addView(debugView);
     }
 
 	@Override
@@ -181,5 +209,40 @@ public class Client extends Activity implements SensorEventListener
 	public GameInput getInput()
 	{
 		return input;
+	}
+	
+	
+	/**
+	 * Used for displaying a debug message at the bottom of the screen
+	 */
+	public static void displayDebugMsg() {
+		debugView.setText(debugMsg);
+	}
+	
+	private static Handler debugMsgHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			displayDebugMsg();
+		}
+	};
+	
+	public static void display(String msg) {
+		debugMsg = msg;
+		debugMsgHandler.sendEmptyMessage(0);
+	}
+	
+	public static void display(float msg) {
+		debugMsg = "" + msg;
+		debugMsgHandler.sendEmptyMessage(0);
+	}
+	
+	public static void display(double msg) {
+		debugMsg = "" + msg;
+		debugMsgHandler.sendEmptyMessage(0);
+	}
+	
+	public static void display(int msg) {
+		debugMsg = "" + msg;
+		debugMsgHandler.sendEmptyMessage(0);
 	}
 }
