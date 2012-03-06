@@ -57,7 +57,6 @@ public class Cube implements Drawable {
 		gl.glDisable(GL10.GL_CULL_FACE);
 	}
 	
-	@Override
 	public FloatBuffer makeFloatBuffer() {
 		ByteBuffer bb = ByteBuffer.allocateDirect(vertices.length * 4);
 		bb.order(ByteOrder.nativeOrder());
@@ -67,7 +66,6 @@ public class Cube implements Drawable {
 		return buffer;
 	}
 	
-	@Override
 	public ShortBuffer makeShortBuffer() {
 		ByteBuffer bb = ByteBuffer.allocateDirect(indices.length * 2);
 		bb.order(ByteOrder.nativeOrder());

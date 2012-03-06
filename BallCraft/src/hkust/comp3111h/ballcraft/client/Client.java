@@ -3,7 +3,7 @@ package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.graphics.MyRenderer;
-import hkust.comp3111h.ballcraft.server.Server;
+import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.Vector2f;
 
 import java.lang.reflect.Field;
@@ -14,13 +14,15 @@ import javax.microedition.khronos.egl.EGLDisplay;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -28,8 +30,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-
-import com.threed.jpct.Logger;
+import android.widget.TextView;
 
 public class Client extends Activity implements SensorEventListener
 {
@@ -44,6 +45,10 @@ public class Client extends Activity implements SensorEventListener
 	private GLSurfaceView mGLView;
 	
 	private RelativeLayout rLayout;
+	
+	// For debug use only
+	private static TextView debugView = null;
+	private static String debugMsg = null;
 	
     /** Called when the activity is first created. */
     @Override
@@ -60,7 +65,7 @@ public class Client extends Activity implements SensorEventListener
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
         		WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
-        startService(new Intent(this, Server.class));
+        startService(new Intent(this, ServerAdapter.class));
 		
 		mGLView = new GLSurfaceView(getApplication());
 
@@ -89,12 +94,15 @@ public class Client extends Activity implements SensorEventListener
 				SensorManager.SENSOR_DELAY_NORMAL);
 		
 		input = new GameInput(new Vector2f(0f, 0f));
+		
 		MapParser mapParser = new MapParser(this);
 		Map map = mapParser.getMapFromXML("redbird.xml");
 		int [][] stable = map.getLayer(0);
+		/*
 		for(int i = 0; i < map.getHeightCount(); i++){
 			Log.i("map", Integer.toString(stable[i][8]));
 		}
+		*/
     }
     
     /**
@@ -118,7 +126,7 @@ public class Client extends Activity implements SensorEventListener
 			@Override
 			public void onClick(View v) {
 				if (input != null) {
-					input.setSkill(BallCraft.Skill.TEST_SKILL_1);
+					input.addSkill(new Skill(BallCraft.Skill.TEST_SKILL_1));
 				}
 			}
 		});
@@ -135,13 +143,24 @@ public class Client extends Activity implements SensorEventListener
 		accBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-					input.setSkill(BallCraft.Skill.TEST_SKILL_2);
+				input.addSkill(new Skill(BallCraft.Skill.TEST_SKILL_2));
 			}
 		});
+		
+		debugView = new TextView(this);
+		RelativeLayout.LayoutParams debugParams = new RelativeLayout.LayoutParams(
+				RelativeLayout.LayoutParams.WRAP_CONTENT,
+				RelativeLayout.LayoutParams.WRAP_CONTENT);
+		debugParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		debugView.setLayoutParams(debugParams);
+		debugView.setPadding(10, 10, 10, 10);
+		debugView.setTextColor(Color.GREEN);
+		debugView.setText("Debug Message Display");
 		
 		rLayout.addView(mGLView);
 		rLayout.addView(castBtn);
 		rLayout.addView(accBtn);
+		rLayout.addView(debugView);
     }
 
 	@Override
@@ -190,5 +209,40 @@ public class Client extends Activity implements SensorEventListener
 	public GameInput getInput()
 	{
 		return input;
+	}
+	
+	
+	/**
+	 * Used for displaying a debug message at the bottom of the screen
+	 */
+	public static void displayDebugMsg() {
+		debugView.setText(debugMsg);
+	}
+	
+	private static Handler debugMsgHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			displayDebugMsg();
+		}
+	};
+	
+	public static void display(String msg) {
+		debugMsg = msg;
+		debugMsgHandler.sendEmptyMessage(0);
+	}
+	
+	public static void display(float msg) {
+		debugMsg = "" + msg;
+		debugMsgHandler.sendEmptyMessage(0);
+	}
+	
+	public static void display(double msg) {
+		debugMsg = "" + msg;
+		debugMsgHandler.sendEmptyMessage(0);
+	}
+	
+	public static void display(int msg) {
+		debugMsg = "" + msg;
+		debugMsgHandler.sendEmptyMessage(0);
 	}
 }

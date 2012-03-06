@@ -4,45 +4,50 @@ package hkust.comp3111h.ballcraft.graphics;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
-import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public class Plane implements Drawable {
+import android.R;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+public class Plane {
 	
-	private float size = 100f;
+	private float size = 200f;
+	
 	private float [] vertices = {
-				-size,  size, 0.0f,  // 0, Top Left
-				-size, -size, 0.0f,  // 1, Bottom Left
-				size, -size, 0.0f,  // 2, Bottom Right
-				size,  size, 0.0f,  // 3, Top Right
+			-size, -size, 0.0f,  // 0, Top Left
+			-size, size, 0.0f,  // 1, Bottom Left
+			size, -size, 0.0f,  // 2, Bottom Right
+			size, size, 0.0f,  // 3, Top Right
 	};
 	
-	private short [] indices = { 0, 1, 2, 0, 2, 3 };
+	private float [] texture = {
+			0.0f, size, 
+			0.0f, 0.0f,
+			size, size,
+			1.0f, 1.0f
+	};
 	
-	private FloatBuffer fBuffer = null;
-	private ShortBuffer sBuffer = null;
+	private FloatBuffer vertexBuffer = null;
+	private FloatBuffer textureBuffer = null;
+	
+	private int [] textures = new int[1];
 	
 	public Plane() {
-		fBuffer = makeFloatBuffer();
-		sBuffer = makeShortBuffer();
+		vertexBuffer = makeVertexBuffer();
+		textureBuffer = makeTextureBuffer();
 	}
 	
-	@Override
 	public void draw(GL10 gl) {
-		gl.glFrontFace(GL10.GL_CCW);
-		gl.glEnable(GL10.GL_CULL_FACE);
-		gl.glCullFace(GL10.GL_BACK);
-		
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, fBuffer);
-		gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, GL10.GL_UNSIGNED_SHORT, sBuffer);
+		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
+		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
-		gl.glDisable(GL10.GL_CULL_FACE);
 	}
 	
-	@Override
-	public FloatBuffer makeFloatBuffer() {
+	public FloatBuffer makeVertexBuffer() {
 		ByteBuffer bb = ByteBuffer.allocateDirect(vertices.length * 4);
 		bb.order(ByteOrder.nativeOrder());
 		FloatBuffer buffer = bb.asFloatBuffer();
@@ -51,13 +56,15 @@ public class Plane implements Drawable {
 		return buffer;
 	}
 	
-	@Override
-	public ShortBuffer makeShortBuffer() {
-		ByteBuffer bb = ByteBuffer.allocateDirect(indices.length * 2);
+	public FloatBuffer makeTextureBuffer() {
+		ByteBuffer bb = ByteBuffer.allocateDirect(vertices.length * 4);
 		bb.order(ByteOrder.nativeOrder());
-		ShortBuffer buffer = bb.asShortBuffer();
-		buffer.put(indices);
+		FloatBuffer buffer = bb.asFloatBuffer();
+		buffer.put(texture);
 		buffer.position(0);
 		return buffer;
+	}
+	
+	public void loadTexture(GL10 gl, Context context) {
 	}
 }
