@@ -5,6 +5,7 @@ import hkust.comp3111h.ballcraft.client.Client;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.server.UnitData;
+import hkust.comp3111h.ballcraft.server.Vector2f;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -26,6 +27,8 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	private Plane gamePlane = null;
 	private Sphere sphere = null;
 	
+	private Wall wall = null;
+	
 	private long time = 0;
 	
 	private boolean skillActivated = false;
@@ -36,6 +39,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		
 		gamePlane = new Plane();
 		sphere = new Sphere(30, 30, 1);
+		wall = new Wall(new Vector2f(0, 0), new Vector2f(100, 100));
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -158,6 +162,9 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 				gl.glPopMatrix();
 			}
 		}
+		
+		gl.glColor4f(1f, 1f, 0f, 1f);
+		wall.draw(gl);
 		
 		if (ServerAdapter.skillActive()) {
 			skillActivated = true;
