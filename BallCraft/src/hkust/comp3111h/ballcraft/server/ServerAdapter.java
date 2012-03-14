@@ -2,7 +2,6 @@ package hkust.comp3111h.ballcraft.server;
 
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.client.GameInput;
-import hkust.comp3111h.ballcraft.client.GameState;
 import hkust.comp3111h.ballcraft.client.Map;
 import android.app.IntentService;
 import android.content.Intent;
