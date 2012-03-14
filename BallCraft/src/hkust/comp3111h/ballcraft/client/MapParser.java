@@ -1,12 +1,9 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.R;
-import hkust.comp3111h.ballcraft.R.drawable;
 
 import java.io.DataInputStream;
 import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 

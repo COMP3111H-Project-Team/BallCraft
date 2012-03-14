@@ -29,8 +29,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.threed.jpct.Logger;
-
 public class Client extends Activity implements SensorEventListener
 {
 
