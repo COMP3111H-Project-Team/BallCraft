@@ -4,20 +4,20 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-import hkust.comp3111h.ballcraft.server.Vector2f;
-
 import javax.microedition.khronos.opengles.GL10;
+
+import org.jbox2d.common.Vec2;
 
 public class Wall {
 
-	public Vector2f start;
-	public Vector2f end;
+	public Vec2 start;
+	public Vec2 end;
 	
 	private float [] vertices;
 	
 	private FloatBuffer vertexBuffer = null;
 	
-	public Wall(Vector2f start, Vector2f end) {
+	public Wall(Vec2 start, Vec2 end) {
 		this.start = start;
 		this.end = end;
 		vertices = new float [12];
