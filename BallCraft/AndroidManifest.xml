@@ -22,7 +22,7 @@
         </activity>
         
         <activity
-            android:name=".client.Client"
+            android:name=".client.GameActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape">
         </activity>
