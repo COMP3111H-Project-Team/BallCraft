@@ -6,7 +6,7 @@ import android.content.Intent;
 
 public class Server extends IntentService
 {
-	static private GameState gamestate = null;
+	static private ServerGameState gamestate = null;
 	static private long lastRun;
 	
 	static boolean activeSkillExists = false;
@@ -15,7 +15,7 @@ public class Server extends IntentService
 	public Server()
 	{
 		super("ServerService");
-		gamestate = GameState.createTestGameState();
+		gamestate = ServerGameState.createTestGameState();
 		lastRun = System.currentTimeMillis();
 	}
 	

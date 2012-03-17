@@ -33,6 +33,7 @@ public class Plane {
 	
 	private FloatBuffer vertexBuffer = null;
 	private FloatBuffer textureBuffer = null;
+	private FloatBuffer normalBuffer = null;
 	
 	private int [] textures = new int[1];
 	
@@ -42,15 +43,15 @@ public class Plane {
 	}
 	
 	public void draw(GL10 gl) {
-		// gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]); // tex
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-		// gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY); // tex
-		// gl.glFrontFace(GL10.GL_CW); // tex
+		gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
+		gl.glEnable(GL10.GL_NORMALIZE);
+		gl.glEnable(GL10.GL_RESCALE_NORMAL);
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
-		// gl.glVertexPointer(2, GL10.GL_FLOAT, 0, textureBuffer); // tex
+		// gl.glNormalPointer(3, GL10.GL_FLOAT, pointer)
 		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
+		gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
-		// gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY); // tex
 	}
 	
 	public FloatBuffer makeVertexBuffer() {

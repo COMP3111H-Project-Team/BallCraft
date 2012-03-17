@@ -1,7 +1,7 @@
 package hkust.comp3111h.ballcraft.ui;
 
 import hkust.comp3111h.ballcraft.R;
-import hkust.comp3111h.ballcraft.client.Client;
+import hkust.comp3111h.ballcraft.client.GameActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,7 +40,7 @@ public class MainMenu extends Activity {
         singlePlayerText.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(MainMenu.this, Client.class);
+				Intent intent = new Intent(MainMenu.this, GameActivity.class);
 				startActivity(intent);
 			}
         });
