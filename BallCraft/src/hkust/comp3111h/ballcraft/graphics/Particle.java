@@ -1,8 +1,5 @@
 package hkust.comp3111h.ballcraft.graphics;
 
-import java.util.Random;
-
-import android.util.Log;
 
 /**
  * This class is an super class for particles.

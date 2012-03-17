@@ -1,38 +1,41 @@
 package hkust.comp3111h.ballcraft.client;
 
 
-import hkust.comp3111h.ballcraft.server.Vector2f;
+import java.util.ArrayList;
+
+import org.jbox2d.common.Vec2;
 
 
-public class GameInput 
-{
-	public Vector2f acceleration;
-	private Skill currSkill = new Skill(0);
-	GameInput(Vector2f acceleration)
+public class GameInput {
+	
+	public Vec2 acceleration;
+	
+	private ArrayList<Skill> activeSkills = null;
+	
+	GameInput(Vec2 acceleration)
 	{
 		this.acceleration = acceleration;
-		// skills = new ArrayList<Skill>();
+		activeSkills = new ArrayList<Skill>();
 	}
 	
-	public void setSkill(int skillId) {
-		currSkill = new Skill(skillId);
+	public String serialize() {
+		return null;
 	}
 	
-	public Skill getSkill() {
-		return currSkill;
-	}
-
-	/*
-	public void addSkill(Skill skill) {
-		skills.add(skill);
+	public static GameInput decodeSerializedInput(String serialized) {
+		return null;
 	}
 	
 	public ArrayList<Skill> getSkills() {
-		return skills;
+		return activeSkills;
+	}
+	
+	public void addSkill(Skill skill) {
+		activeSkills.add(skill);
 	}
 	
 	public void clearSkill() {
-		skills.clear();
+		activeSkills.clear();
 	}
-	*/
+	
 }

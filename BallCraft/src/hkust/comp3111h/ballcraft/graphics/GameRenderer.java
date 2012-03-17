@@ -4,26 +4,18 @@ import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.client.Client;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.Unit;
-import hkust.comp3111h.ballcraft.server.UnitData;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.StreamCorruptedException;
-import java.util.ArrayList;
+import hkust.comp3111h.ballcraft.server.InternalUnitData;
+import hkust.comp3111h.ballcraft.server.Vector2f;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import org.jbox2d.common.Vec2;
-
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 
-public class MyRenderer implements GLSurfaceView.Renderer {
+public class GameRenderer implements GLSurfaceView.Renderer {
 	
-	private Client client = null;
+	// private Client client = null;
 	
 	private Plane gamePlane = null;
 	private Sphere sphere = null;
@@ -35,19 +27,19 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	private boolean skillActivated = false;
 	private ParticleSystem system = null;
 	
-	public MyRenderer(Client client) {
-		this.client = client;
+	public GameRenderer() {
+		// this.client = client;
 		
 		gamePlane = new Plane();
 		sphere = new Sphere(30, 30, 1);
-		wall = new Wall(new Vec2(0, 0), new Vec2(100, 100));
+		wall = new Wall(new Vector2f(0, 0), new Vector2f(100, 100));
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		gl.glViewport(0, 0, width, height);
 		gl.glMatrixMode(GL10.GL_PROJECTION);
 		gl.glLoadIdentity();
-		GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 1000.0f);
+		GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 800f);
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
 		gl.glLoadIdentity();
 		
@@ -80,7 +72,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		gamePlane.loadTexture(gl, client); // tex
+		// gamePlane.loadTexture(gl, client); // tex
 		gl.glEnable(GL10.GL_TEXTURE_2D); //tex
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 		gl.glShadeModel(GL10.GL_SMOOTH);
@@ -99,6 +91,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		time = System.currentTimeMillis();
 		*/
 		
+		/*
 		ArrayList<UnitData> data = null;
 		byte[] bytes = ServerAdapter.process(0, client.getInput());
 		
@@ -123,7 +116,12 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity();
 		
-		gl.glTranslatef(-self.position.x, self.position.y, -300);
+		GLU.gluLookAt(gl, 
+				self.position.x, -self.position.y - 200, 300, 
+				self.position.x, -self.position.y, 5, 
+				0, 0, 1);
+		*/
+		
 		/*
 		float xPos = self.position.x;
 		float yPos = - self.position.y;
@@ -148,6 +146,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		}
 		*/
 		
+		/*
 		gl.glPushMatrix();
 			gl.glColor4f(0.6f, 0.6f, 0.6f, 1f);
 			gamePlane.draw(gl);
@@ -157,7 +156,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 			UnitData datum = data.get(i);
 			if (datum.identity == Unit.type.BALL) {
 				gl.glPushMatrix();
-					gl.glTranslatef(datum.position.x, - datum.position.y, 5);
+					gl.glTranslatef(datum.position.x, - datum.position.y, 10);
 					gl.glColor4f(0f, 0f, 1f, 1f);
 					gl.glScalef(datum.size, datum.size, datum.size);
 					sphere.draw(gl);
@@ -167,6 +166,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		
 		gl.glColor4f(1f, 1f, 0f, 1f);
 		wall.draw(gl);
+		
 		
 		if (ServerAdapter.skillActive()) {
 			skillActivated = true;
@@ -181,5 +181,6 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 			system.move();
 			system.draw(gl);
 		}
+		*/
 	}
 }

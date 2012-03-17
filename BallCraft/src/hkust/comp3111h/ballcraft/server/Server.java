@@ -1,14 +1,12 @@
 package hkust.comp3111h.ballcraft.server;
 
-import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.client.GameInput;
-import hkust.comp3111h.ballcraft.client.GameState;
 import android.app.IntentService;
 import android.content.Intent;
 
 public class Server extends IntentService
 {
-	static private GameState gamestate = null;
+	static private ServerGameState gamestate = null;
 	static private long lastRun;
 	
 	static boolean activeSkillExists = false;
@@ -17,14 +15,14 @@ public class Server extends IntentService
 	public Server()
 	{
 		super("ServerService");
-		gamestate = GameState.createTestGameState();
+		gamestate = ServerGameState.createTestGameState();
 		lastRun = System.currentTimeMillis();
 	}
 	
 	public static byte[] process(int playerID, GameInput input)
 	{
 		gamestate.processPlayerInput(playerID, input);
-		if (input.getSkill().getID() == BallCraft.Skill.TEST_SKILL_1) {
+		/*if (input.getSkill().getID() == BallCraft.Skill.TEST_SKILL_1) {
 			activeSkillExists = true;
 			skill = BallCraft.Skill.TEST_SKILL_1;
 			input.setSkill(0);
@@ -34,7 +32,7 @@ public class Server extends IntentService
 			input.setSkill(0);
 		} else {
 			activeSkillExists = false;
-		}
+		}*/
 		return gamestate.getUnitData();	
 	}
 	

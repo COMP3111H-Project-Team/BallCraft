@@ -1,21 +1,23 @@
 package hkust.comp3111h.ballcraft.server;
 
-import java.io.Serializable;
-
 import hkust.comp3111h.ballcraft.server.Unit.type;
 
-public class UnitData implements Serializable
-{
+import java.io.Serializable;
+
+import org.jbox2d.common.Vec2;
+
+public class UnitData implements Serializable {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5785133248221806623L;
+	private static final long serialVersionUID = 8882818284804032491L;
 	
-	public Vector2f position;
+	public Vec2 position;
 	public float size;
 	public type identity;
 	
-	public UnitData(Vector2f position, float size, type identity)
+	public UnitData(Vec2 position, float size, type identity)
 	{
 		this.position = position;
 		this.size = size;
