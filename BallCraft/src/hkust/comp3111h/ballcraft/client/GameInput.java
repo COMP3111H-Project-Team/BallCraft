@@ -12,9 +12,8 @@ public class GameInput {
 	
 	private ArrayList<Skill> activeSkills = null;
 	
-	GameInput(Vec2 acceleration)
+	GameInput()
 	{
-		this.acceleration = acceleration;
 		activeSkills = new ArrayList<Skill>();
 	}
 	
@@ -36,6 +35,11 @@ public class GameInput {
 	
 	public void clearSkill() {
 		activeSkills.clear();
+	}
+	
+	public String toSerializedString() {
+		// TODO: generate serialized string
+		return null;
 	}
 	
 }

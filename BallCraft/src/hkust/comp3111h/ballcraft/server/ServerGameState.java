@@ -1,9 +1,7 @@
 package hkust.comp3111h.ballcraft.server;
 
-import hkust.comp3111h.ballcraft.BallCraft.Ball;
 import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.GameUpdater;
-import hkust.comp3111h.ballcraft.graphics.DrawableUnit;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -93,7 +91,7 @@ public class ServerGameState
     
     public void onEveryFrame(int msecElapsed)
     {
-    	Unit.msecElapsed = msecElapsed;
+    	// Unit.msecElapsed = msecElapsed;
     	Iterator<Unit> i = Unit.units.iterator();
     	world.step(msecElapsed, 6, 2);
     	
@@ -112,7 +110,7 @@ public class ServerGameState
 		try 
 		{
 			out = new ObjectOutputStream(bos);
-	    	out.writeObject(Unit.data);
+	    	// out.writeObject(Unit.data);
 	    	
 	    	bytes = bos.toByteArray(); 
 

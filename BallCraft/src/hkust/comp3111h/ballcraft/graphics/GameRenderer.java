@@ -1,11 +1,8 @@
 package hkust.comp3111h.ballcraft.graphics;
 
-import hkust.comp3111h.ballcraft.BallCraft;
-import hkust.comp3111h.ballcraft.client.Client;
-import hkust.comp3111h.ballcraft.server.ServerAdapter;
-import hkust.comp3111h.ballcraft.server.Unit;
-import hkust.comp3111h.ballcraft.server.InternalUnitData;
-import hkust.comp3111h.ballcraft.server.Vector2f;
+import hkust.comp3111h.ballcraft.client.ClientGameState;
+
+import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -17,22 +14,30 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	
 	// private Client client = null;
 	
+	/*
 	private Plane gamePlane = null;
 	private Sphere sphere = null;
 	
 	private Wall wall = null;
 	
-	private long time = 0;
 	
 	private boolean skillActivated = false;
 	private ParticleSystem system = null;
+	*/
+	
+	private long time = 0;
+	
+	private ClientGameState gameState;
 	
 	public GameRenderer() {
 		// this.client = client;
 		
+		gameState = ClientGameState.getClientGameState();
+		/*
 		gamePlane = new Plane();
 		sphere = new Sphere(30, 30, 1);
-		wall = new Wall(new Vector2f(0, 0), new Vector2f(100, 100));
+		wall = new Wall(new Vec2(0, 0), new Vec2(100, 100));
+		*/
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -82,9 +87,12 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void onDrawFrame(GL10 gl) {
-		
+		// TODO: adjust viewing params
+		ArrayList<Drawable> drawableList = gameState.getDrawables();
+		for (int i = 0; i < drawableList.size(); i++) {
+			drawableList.get(i).draw(gl);
+		}
 		/*
 		long elapsed = System.currentTimeMillis() - time;
 		Client.display("fps: " + 1000 / elapsed);
