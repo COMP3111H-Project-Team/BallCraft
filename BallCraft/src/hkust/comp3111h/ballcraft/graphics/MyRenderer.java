@@ -5,7 +5,6 @@ import hkust.comp3111h.ballcraft.client.Client;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.server.UnitData;
-import hkust.comp3111h.ballcraft.server.Vector2f;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -16,6 +15,8 @@ import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import org.jbox2d.common.Vec2;
 
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
@@ -39,7 +40,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		
 		gamePlane = new Plane();
 		sphere = new Sphere(30, 30, 1);
-		wall = new Wall(new Vector2f(0, 0), new Vector2f(100, 100));
+		wall = new Wall(new Vec2(0, 0), new Vec2(100, 100));
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -122,8 +123,8 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity();
 		
-		// gl.glTranslatef(-self.position.x, self.position.y, -300);
-		
+		gl.glTranslatef(-self.position.x, self.position.y, -300);
+		/*
 		float xPos = self.position.x;
 		float yPos = - self.position.y;
 		float xVel = self.velocity.x;
@@ -145,6 +146,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		} else {
 			gl.glTranslatef(-self.position.x, self.position.y, -300);
 		}
+		*/
 		
 		gl.glPushMatrix();
 			gl.glColor4f(0.6f, 0.6f, 0.6f, 1f);

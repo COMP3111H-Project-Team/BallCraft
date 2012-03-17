@@ -27,6 +27,8 @@ import android.widget.TextView;
 
 public class GameActivity extends Activity implements SensorEventListener {
 	
+	private Client client;
+	
 	private GLSurfaceView mGLView;
 	private GameRenderer renderer = null;
 	private SensorManager sensorManager;
@@ -44,9 +46,10 @@ public class GameActivity extends Activity implements SensorEventListener {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
         		WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
+        client = new Client();
 		
 		initLayout();
-		
 		initSensor();
 		
 		renderer = new GameRenderer();
@@ -157,7 +160,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 	@Override
 	public void onAccuracyChanged(Sensor arg0, int arg1) {
-		
 	}
 
 	@Override

@@ -4,7 +4,6 @@ package hkust.comp3111h.ballcraft.client;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
-import hkust.comp3111h.ballcraft.server.Vector2f;
 
 import java.lang.reflect.Field;
 
@@ -45,9 +44,8 @@ public class Client {
 		
     }
     
-	@Override
-	public void onSensorChanged(SensorEvent event) 
-	{
+	
+	public void setInputAcceleration(SensorEvent event) {
 		input.acceleration.x = event.values[SensorManager.DATA_Y];
 		input.acceleration.y = event.values[SensorManager.DATA_X];
 	}
