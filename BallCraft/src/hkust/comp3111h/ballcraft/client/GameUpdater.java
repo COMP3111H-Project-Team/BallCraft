@@ -1,15 +1,15 @@
 package hkust.comp3111h.ballcraft.client;
 
-import hkust.comp3111h.ballcraft.server.InternalUnitData;
+import hkust.comp3111h.ballcraft.server.Unit;
 
 import java.util.ArrayList;
 
 public class GameUpdater {
 	
-	ArrayList<InternalUnitData> units = null;
+	private ArrayList<Unit> units = null;
 
 	public GameUpdater() {
-		units = new ArrayList<InternalUnitData>();
+		units = new ArrayList<Unit>();
 	}
 	
 	public String serialize() {
@@ -18,5 +18,9 @@ public class GameUpdater {
 	
 	public static GameUpdater decodeSerializedUpdater(String serialized) {
 		return null;
+	}
+	
+	public ArrayList<Unit> getUnits() {
+		return units;
 	}
 }
