@@ -1,10 +1,11 @@
 package hkust.comp3111h.ballcraft.client;
 
-import hkust.comp3111h.ballcraft.graphics.Wall;
+import hkust.comp3111h.ballcraft.server.Wall;
 
 import java.util.Vector;
 
 import org.jbox2d.common.Vec2;
+
 
 //Map is composed of widthCount*hegihtCount small tiles.
 //notice :: width>height

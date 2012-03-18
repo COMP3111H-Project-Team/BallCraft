@@ -12,8 +12,9 @@ public class GameInput {
 	
 	private ArrayList<Skill> activeSkills = null;
 	
-	GameInput()
+	public GameInput()
 	{
+		acceleration = new Vec2();
 		activeSkills = new ArrayList<Skill>();
 	}
 	
@@ -34,8 +35,9 @@ public class GameInput {
 	}
 	
 	public String toSerializedString() {
-		// TODO: generate serialized string
-		return null;
+		String serialized = "";
+		serialized += acceleration.x + "," + acceleration.y;
+		return serialized;
 	}
 	
 	public static GameInput deserializeGameInput(String serialized) {

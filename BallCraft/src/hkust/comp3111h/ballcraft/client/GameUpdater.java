@@ -12,7 +12,8 @@ public class GameUpdater {
 		units = new ArrayList<Unit>();
 	}
 	
-	public String serialize() {
+	public String toSerializedString() {
+		String serialized = "";
 		return null;
 	}
 	

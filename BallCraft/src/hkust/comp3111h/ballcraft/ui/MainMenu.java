@@ -1,6 +1,7 @@
 package hkust.comp3111h.ballcraft.ui;
 
 import hkust.comp3111h.ballcraft.R;
+import hkust.comp3111h.ballcraft.client.GameActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,8 +32,17 @@ public class MainMenu extends Activity {
 	}
 	
 	private void initTextButtons() {
-		ImageView optionText = (ImageView) this.findViewById(R.id.main_menu_option_text);
-		optionText.setOnClickListener(new OnClickListener() {
+		ImageView singlePlayerImg = (ImageView) this.findViewById(R.id.main_menu_single_player_text);
+		singlePlayerImg.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MainMenu.this, GameActivity.class);
+				self.startActivity(intent);
+			}
+		});
+		
+		ImageView optionImg = (ImageView) this.findViewById(R.id.main_menu_option_text);
+		optionImg.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(MainMenu.this, OptionMenu.class);
