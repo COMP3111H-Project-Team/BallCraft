@@ -78,11 +78,11 @@ public class ServerGameState
 		 dynamicBox.setAsBox(0, 40);
 		body.createFixture(dynamicBox, 0);
         
-		new Ball(10, 50, 0.6f, new Vec2(0, 0));
+		units.add(new Ball(10, 50, 0.6f, new Vec2(0, 0)));
 
 		for (int i = 0; i < 1; i++)
 		{
-			new Ball(10, 5, 0.99f, new Vec2(30, 50 * i - 50));
+			units.add(new Ball(10, 5, 0.99f, new Vec2(30, 50 * i - 50)));
 		}	
     }
     
@@ -117,6 +117,10 @@ public class ServerGameState
     
     public void addUnit(Unit unit) {
     	units.add(unit);
+    }
+    
+    public ArrayList<Unit> getUnits() {
+    	return units;
     }
     
 }
