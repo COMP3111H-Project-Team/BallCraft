@@ -4,5 +4,12 @@
     android:id="@+id/main_menu_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-
+    
+    <ImageView 
+        android:id="@+id/main_menu_bg_img"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/generic_bg" />
+    
 </LinearLayout>

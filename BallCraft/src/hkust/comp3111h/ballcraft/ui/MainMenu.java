@@ -41,6 +41,15 @@ public class MainMenu extends Activity {
 			}
 		});
 		
+		ImageView multiPlayerImg = (ImageView) this.findViewById(R.id.main_menu_multi_player_text);
+		multiPlayerImg.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MainMenu.this, MultiPlayerMenu.class);
+				self.startActivity(intent);
+			}
+		});
+		
 		ImageView optionImg = (ImageView) this.findViewById(R.id.main_menu_option_text);
 		optionImg.setOnClickListener(new OnClickListener() {
 			@Override
