@@ -4,16 +4,16 @@ import hkust.comp3111h.ballcraft.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
-public class MainMenu extends Activity {
+public class SplashScreen extends Activity {
 	
 	private Activity self;
-	
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
@@ -25,19 +25,19 @@ public class MainMenu extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
         		WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
-        this.setContentView(R.layout.main_menu);
-        
-        initTextButtons();
+		this.setContentView(R.layout.splash_screen);
+		
+		handler.sendEmptyMessageDelayed(0, 3000);
 	}
 	
-	private void initTextButtons() {
-		ImageView optionText = (ImageView) this.findViewById(R.id.main_menu_option_text);
-		optionText.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MainMenu.this, OptionMenu.class);
-				self.startActivity(intent);
-			}
-		});
-	}
+	public Handler handler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			Intent intent = new Intent(SplashScreen.this, MainMenu.class);
+			self.startActivity(intent);
+			self.finish();
+			self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+		}
+	};
+	
 }

@@ -12,7 +12,7 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name" >
         <activity
-            android:name=".ui.MainMenu"
+            android:name=".ui.SplashScreen"
             android:label="@string/app_name"
             android:screenOrientation="landscape">
             <intent-filter>
@@ -22,10 +22,22 @@
         </activity>
         
         <activity
+            android:name=".ui.MainMenu"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity
+            android:name=".ui.OptionMenu"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape">
+        </activity>
+        
+        <activity
             android:name=".client.GameActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape">
         </activity>
+        
         <activity android:name=".Bluetooth"
                   android:label="@string/app_name"
                   android:configChanges="orientation|keyboardHidden" />

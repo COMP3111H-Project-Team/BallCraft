@@ -124,7 +124,6 @@ public class Sphere {
             fanVertices[index++] = x;
             fanVertices[index++] = y;
             fanVertices[index++] = z;
- 
         }
  
         return makeFloatBuffer(fanVertices);
