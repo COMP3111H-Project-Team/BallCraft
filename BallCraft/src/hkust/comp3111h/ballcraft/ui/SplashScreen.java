@@ -80,7 +80,7 @@ public class SplashScreen extends Activity {
 		});
 		tView.startAnimation(zoomIn);
 		
-		handler.sendEmptyMessageDelayed(0, 4500);
+		handler.sendEmptyMessageDelayed(0, 500);
 	}
 	
 	public Handler handler = new Handler() {

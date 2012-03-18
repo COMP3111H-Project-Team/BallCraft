@@ -166,7 +166,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		Client.setInputAcceleration(event);
+		Client.setInputAcceleration(event.values[SensorManager.DATA_Y], event.values[SensorManager.DATA_X]);
 	}
 	
 	/**

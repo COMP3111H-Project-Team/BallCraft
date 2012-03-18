@@ -4,13 +4,14 @@ import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.GameUpdater;
 import android.app.IntentService;
 import android.content.Intent;
-import android.util.Log;
 
 public class Server extends IntentService
 {
 	static private ServerGameState gameState = null;
 	
 	static private GameUpdater gameUpdater;
+	
+	static private GameInput gameInput;
 	
 	static private long lastRun;
 	
@@ -26,15 +27,15 @@ public class Server extends IntentService
 		
 		gameUpdater = new GameUpdater();
 		
-		inited = true;	
+		gameInput = new GameInput();
+		
+		inited = true;
 		lastRun = System.currentTimeMillis();
 	}
 	
-	public static void process(String string)
+	public static void setState(String string)
 	{
-		GameInput input = GameInput.deserializeGameInput(string); // get and parse data from server adapter
-		ServerGameState.getStateInstance().processPlayerInput(0, input); // process
-		ServerAdapter.processServerMsg(generateGameUpdater().toSerializedString()); // send back to server adapter
+		gameInput = GameInput.deserializeGameInput(string); // get and parse data from server adapter
 	}
 	
 	public static GameUpdater generateGameUpdater() {
@@ -48,6 +49,9 @@ public class Server extends IntentService
 		{
 			long time = System.currentTimeMillis();
 			gameState.onEveryFrame((int)(time - lastRun));
+			
+			ServerGameState.getStateInstance().processPlayerInput(0, gameInput); // process
+			ServerAdapter.processServerMsg(generateGameUpdater().toSerializedString()); // send back to server adapter
 			
 			try
 			{
