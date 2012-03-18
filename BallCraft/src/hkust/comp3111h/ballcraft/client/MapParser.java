@@ -1,12 +1,9 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.R;
-import hkust.comp3111h.ballcraft.R.drawable;
 
 import java.io.DataInputStream;
 import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -16,6 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import android.content.Context;
@@ -52,30 +50,22 @@ public class MapParser{
 	    	String msg = mapName.getFirstChild().getNodeValue();
 	    	Log.d("map", msg);
 	    	map.setName(mapName.getFirstChild().getNodeValue());
-	    	//get image URL and set Bitmap
-	    	Element imageUrl = (Element)root.getElementsByTagName("imageUrl").item(0);
-	    	String imageUrlString = (imageUrl.getFirstChild().getNodeValue());
-	    	Log.i("map", imageUrlString);
-	    	map.setBitmap(readBitmap(imageUrlString));
-	    	//get height count
+	        //get height count
 	    	Element height = (Element)root.getElementsByTagName("height").item(0);
-	    	map.setHeightCount(Integer.parseInt(height.getFirstChild().getNodeValue()));
+	    	map.setHeight(Integer.parseInt(height.getFirstChild().getNodeValue()));
 	    	//get width count
 	    	Element width = (Element)root.getElementsByTagName("width").item(0);
-	    	map.setWidthCount(Integer.parseInt(width.getFirstChild().getNodeValue()));
-	    	//get tile size
-	    	Element size = (Element)root.getElementsByTagName("size").item(0);
-	    	map.setTileSize(Integer.parseInt(size.getFirstChild().getNodeValue()));
-	    	//get layer01 string value and transfer it to 2D array.
-	    	Element layer1 = (Element) root.getElementsByTagName("layer1").item(0);
-	    	String layer1String = layer1.getFirstChild().getNodeValue();
-	    	map.setLayer(0, readLayer(layer1String,map.getWidthCount(),map.getHeightCount()));
-	    	//get layer02 string value and transfer it to 2D array
-	    	Element layer2 = (Element) root.getElementsByTagName("layer2").item(0);
-	    	String layer2String = layer2.getFirstChild().getNodeValue();
-	    	map.setLayer(1, readLayer(layer2String,map.getWidthCount(),map.getHeightCount()));
-	    	
-	    }catch (IOException e){
+	    	map.setWidth(Integer.parseInt(width.getFirstChild().getNodeValue()));
+	    	//get wall list
+	    	Element wallList = (Element)root.getElementsByTagName("wallList").item(0);
+	    	NodeList nodes=wallList.getElementsByTagName("wall");
+            //find all wall object under wall list
+             for(int i=0;i<nodes.getLength();i++){
+                     Element wallElement=(Element)(nodes.item(i));
+                     String wallData = wallElement.getFirstChild().getNodeValue();
+                     map.addWall(parseWall(wallData));                     
+             }
+        }catch (IOException e){
             e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();
@@ -86,7 +76,15 @@ public class MapParser{
 	    return map;
 	}
 
-
+	private int[] parseWall(String wallData){
+		String[] parts = wallData.split(",");
+        int[] data = new int[4];
+        for(int j = 0; j < 4; j++)
+        {
+       	 data[j] = Integer.parseInt(parts[j]);
+        }
+        return data;
+	}
 	public int[][] readLayer(String fileName,int width, int height){
 		int [][] layer = new int[height][width];
 	    int    i_data = 0; 
