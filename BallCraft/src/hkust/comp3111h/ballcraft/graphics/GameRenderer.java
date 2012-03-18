@@ -17,8 +17,11 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	
 	private long time = 0;
 	
+	private Plane plane;
+	
 	public GameRenderer() {
 		gameState = ClientGameState.getClientGameState();
+		plane = new Plane();
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -77,12 +80,19 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 				0, 0, 5, 
 				0, 0, 1);
 				*/
-		gl.glTranslatef(0, 0, -30);
-		ArrayList<Drawable> drawables = gameState.getDrawables();
+		gl.glTranslatef(0, 0, -500);
 		
 		gl.glColor4f(1f, 1f, 1f, 1f);
+		plane.draw(gl);
+		
+		ArrayList<Drawable> drawables = gameState.getDrawables();
+		
+		gl.glColor4f(0f, 0f, 1f, 1f);
 		for (int i = 0; i < drawables.size(); i++) {
+			gl.glPushMatrix();
+			gl.glScalef(10, 10, 10);
 			drawables.get(i).draw(gl);
+			gl.glPopMatrix();
 		}
 		
 		/*

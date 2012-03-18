@@ -26,6 +26,13 @@
             android:label="@string/app_name"
             android:screenOrientation="landscape">
         </activity>
+        
+        <activity
+            android:name=".ui.MultiPlayerMenu"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape">
+        </activity>
+        
         <activity
             android:name=".ui.OptionMenu"
             android:label="@string/app_name"
