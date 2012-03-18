@@ -1,5 +1,7 @@
 package hkust.comp3111h.ballcraft.server;
 
+import hkust.comp3111h.ballcraft.graphics.Drawable;
+
 import java.util.ArrayList;
 
 import org.jbox2d.collision.shapes.CircleShape;
@@ -9,16 +11,17 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 
-public abstract class Unit {
+public abstract class Unit implements Drawable {
 
 	protected Body body;
 	
 	public static ArrayList<Unit> units = new ArrayList<Unit>();
 	
+	public Unit() {
+	}
+	
 	public Unit(float size, float mass, float friction, Vec2 position) {
 
-		units.add(this);
-		
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DYNAMIC; // dynamic means it is subject to forces
 		bodyDef.position.set(position.x, position.y);
@@ -32,6 +35,7 @@ public abstract class Unit {
 		fixtureDef.friction = friction; // ... its surface has some friction coefficient
 		body.createFixture(fixtureDef); // bind the dense, friction-laden fixture to the body
 
+		units.add(this);
 	}
 	
 	public void move() 
