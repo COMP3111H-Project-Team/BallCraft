@@ -1,19 +1,20 @@
 package hkust.comp3111h.ballcraft.graphics;
 
 
+import hkust.comp3111h.ballcraft.R;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import hkust.comp3111h.ballcraft.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
 
-public class Plane {
+public class Plane implements Drawable {
 	
 	private float size = 200f;
 	
