@@ -1,17 +1,21 @@
 package hkust.comp3111h.ballcraft.client;
 
-import hkust.comp3111h.ballcraft.server.ServerAdapter;
+import android.app.IntentService;
+import android.content.Intent;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 
-public class Client implements Runnable{
+public class Client extends IntentService {
 
 	private GameInput input;
 	private ClientGameState gameState;
 	
     public Client() {
+    	super("ClientService");
     	input = new GameInput();
     	gameState = ClientGameState.getClientGameState();
+    	
+    	// new Thread(this).run();
     }
     
 	public void setInputAcceleration(SensorEvent event) {
@@ -19,12 +23,11 @@ public class Client implements Runnable{
 		input.acceleration.y = event.values[SensorManager.DATA_X];
 	}
 
-	@Override
 	public void run() 
 	{
 		while (true)
 		{
-			ServerAdapter.sendToServer(input);
+			// if (Server.inited) ServerAdapter.sendToServer(input);
 			try 
 			{
 				Thread.sleep(30);
@@ -34,7 +37,10 @@ public class Client implements Runnable{
 		}
 		
 	}
-	
-	
+
+	@Override
+	protected void onHandleIntent(Intent intent) {
+		this.run();
+	}
 	
 }

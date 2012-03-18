@@ -1,12 +1,14 @@
 package hkust.comp3111h.ballcraft.client;
 
+import hkust.comp3111h.ballcraft.graphics.GameRenderer;
+import hkust.comp3111h.ballcraft.server.Server;
+
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLDisplay;
 
-import hkust.comp3111h.ballcraft.BallCraft;
-import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -17,18 +19,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class GameActivity extends Activity implements SensorEventListener {
 	
-	private Client client;
-	
+
 	private GLSurfaceView mGLView;
 	private GameRenderer renderer = null;
 	private SensorManager sensorManager;
@@ -47,7 +48,8 @@ public class GameActivity extends Activity implements SensorEventListener {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
         		WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
-        client = new Client();
+        this.startService(new Intent(this, Server.class));
+        this.startService(new Intent(this, Client.class));
 		
 		initLayout();
 		initSensor();

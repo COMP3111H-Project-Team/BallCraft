@@ -32,11 +32,9 @@ public class ServerGameState
     	Vec2 gravity = new Vec2(0.0f, 0.0f);
         boolean doSleep = true;
         world = new World(gravity, doSleep);
-        
-        createTestGameState();
 	}
 	
-    public static void processPlayerInput(int playerId, GameInput input)
+    public void processPlayerInput(int playerId, GameInput input)
     {
     	units.get(playerId).applyForce(input.acceleration);
     }
@@ -45,7 +43,7 @@ public class ServerGameState
     	// TODO
     }
     
-    public static void createTestGameState()
+    public void createTestGameState()
     {
         
         BodyDef bodyDef = new BodyDef();

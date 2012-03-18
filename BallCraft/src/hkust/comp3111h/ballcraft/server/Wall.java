@@ -70,4 +70,9 @@ public class Wall extends Unit {
 		return buffer;
 	}
 	
+	@Override
+	public String toSerializedString() {
+		String serialized = "";
+		return null;
+	}
 }
