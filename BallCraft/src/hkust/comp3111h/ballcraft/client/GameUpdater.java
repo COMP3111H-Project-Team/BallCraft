@@ -1,7 +1,5 @@
 package hkust.comp3111h.ballcraft.client;
 
-import hkust.comp3111h.ballcraft.server.InternalUnitData;
-
 import java.util.ArrayList;
 
 public class GameUpdater {

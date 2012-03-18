@@ -1,12 +1,5 @@
 package hkust.comp3111h.ballcraft.graphics;
 
-import hkust.comp3111h.ballcraft.BallCraft;
-import hkust.comp3111h.ballcraft.client.Client;
-import hkust.comp3111h.ballcraft.server.ServerAdapter;
-import hkust.comp3111h.ballcraft.server.Unit;
-import hkust.comp3111h.ballcraft.server.InternalUnitData;
-import hkust.comp3111h.ballcraft.server.Vector2f;
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
