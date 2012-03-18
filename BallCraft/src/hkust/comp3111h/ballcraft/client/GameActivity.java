@@ -1,12 +1,14 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
+import hkust.comp3111h.ballcraft.server.Server;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLDisplay;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -28,8 +30,7 @@ import android.widget.TextView;
 
 public class GameActivity extends Activity implements SensorEventListener {
 	
-	private Client client;
-	
+
 	private GLSurfaceView mGLView;
 	private GameRenderer renderer = null;
 	private SensorManager sensorManager;
@@ -40,15 +41,16 @@ public class GameActivity extends Activity implements SensorEventListener {
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, 
-    			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     	super.onCreate(savedInstanceState);
     	
+    	this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, 
+    			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
         		WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
-        client = new Client();
+        this.startService(new Intent(this, Server.class));
+        this.startService(new Intent(this, Client.class));
 		
 		initLayout();
 		initSensor();
@@ -57,10 +59,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 		mGLView.setRenderer(renderer);
 		
 		setContentView(rLayout);
-		MapParser mapParser = new MapParser(this);
-		Map map = mapParser.getMapFromXML("vectormap.xml");
-		Log.i("map", map.getInitPosition().toString());
-		
 		
     }
     

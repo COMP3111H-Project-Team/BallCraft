@@ -7,7 +7,10 @@ import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.BodyType;
 
 public class Wall extends Unit {
 
@@ -36,6 +39,19 @@ public class Wall extends Unit {
 		vertices[11] = 50f;
 		
 		vertexBuffer = makeVertexBuffer();
+		
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyType.STATIC;
+		body = ServerGameState.world.createBody(bodyDef);
+		PolygonShape shape = new PolygonShape();
+		
+		Vec2 vector = start.sub(end);
+		float length = vector.normalize();
+		Vec2 midPoint = start.add(end).mul(0.5f);
+		float angle = (float)Math.acos(Vec2.dot(vector, new Vec2(1, 0)));
+		shape.setAsBox(length, 0, midPoint, angle);
+		
+		body.createFixture(shape, 0); // bind the dense, friction-laden fixture to the body
 	}
 	
 	public void draw(GL10 gl) {
@@ -54,4 +70,9 @@ public class Wall extends Unit {
 		return buffer;
 	}
 	
+	@Override
+	public String toSerializedString() {
+		String serialized = "";
+		return null;
+	}
 }
