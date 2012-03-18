@@ -1,43 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_menu_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     
-	<TextView
-	    android:id="@+id/main_menu_single_player"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_x="50dp"
-	    android:layout_y="60dp"
-	    android:text="SINGLE PLAYER"
-	    android:textSize="12pt"/>
-	    
-	<TextView
-	    android:id="@+id/main_menu_multi_player"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_x="260dp"
-	    android:layout_y="120dp"
-	    android:text="MULTI-PLAYER"
-	    android:textSize="12pt"/>
-	
-	<TextView
-	    android:id="@+id/main_menu_settings"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_x="120dp"
-	    android:layout_y="180dp"
-	    android:text="SETTINGS"
-	    android:textSize="12pt"/>
-	
-	<TextView
-	    android:id="@+id/main_menu_credits"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_x="240dp"
-	    android:layout_y="240dp"
-	    android:text="CREDITS"
-	    android:textSize="12pt"/>
-</AbsoluteLayout>
+    <ImageView 
+        android:id="@+id/main_menu_bg_img"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/main_menu_bg" />
+    
+    <LinearLayout 
+        android:id="@+id/main_menu_options_layout"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center">
+        
+        <ImageView
+            android:id="@+id/main_menu_single_player_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/single_player_img" />
+        
+        <ImageView
+            android:id="@+id/main_menu_multi_player_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/multi_player_img" />
+        
+        <ImageView
+            android:id="@+id/main_menu_option_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/option_img" />
+            
+    </LinearLayout>
+
+</RelativeLayout>
