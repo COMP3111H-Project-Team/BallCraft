@@ -3,12 +3,7 @@ package hkust.comp3111h.ballcraft.server;
 import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.GameUpdater;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -19,7 +14,7 @@ import org.jbox2d.dynamics.World;
 
 public class ServerGameState 
 {
-	private ArrayList<Unit> units;
+	private static ArrayList<Unit> units;
 	public static World world;
 	
 	private static ServerGameState stateInstance;
@@ -41,7 +36,7 @@ public class ServerGameState
         createTestGameState();
 	}
 	
-    public void processPlayerInput(int playerId, GameInput input)
+    public static void processPlayerInput(int playerId, GameInput input)
     {
     	units.get(playerId).applyForce(input.acceleration);
     }
@@ -85,11 +80,11 @@ public class ServerGameState
 		 dynamicBox.setAsBox(0, 40);
 		body.createFixture(dynamicBox, 0);
         
-		Ball sphere = new Ball(10, 50, 0.6f, new Vec2(0, 0));
+		new Ball(10, 50, 0.6f, new Vec2(0, 0));
 
 		for (int i = 0; i < 1; i++)
 		{
-			Ball sphere2 = new Ball(10, 5, 0.99f, new Vec2(30, 50 * i - 50));
+			new Ball(10, 5, 0.99f, new Vec2(30, 50 * i - 50));
 		}	
     }
     

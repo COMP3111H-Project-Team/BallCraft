@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.server;
 
+import hkust.comp3111h.ballcraft.client.GameInput;
 import android.app.IntentService;
 import android.content.Intent;
 
@@ -16,6 +17,12 @@ public class Server extends IntentService
 		super("ServerService");
 		gamestate = ServerGameState.getStateInstance();
 		lastRun = System.currentTimeMillis();
+	}
+	
+	public static void process(String string)
+	{
+		GameInput input = GameInput.deserializeGameInput(string);
+		ServerGameState.processPlayerInput(1, input);
 	}
 	
 	public void run() 
@@ -35,7 +42,7 @@ public class Server extends IntentService
 			catch (InterruptedException e) 
 			{
 				e.printStackTrace();
-			} //TODO:check
+			}
 		}
 		
 	}
