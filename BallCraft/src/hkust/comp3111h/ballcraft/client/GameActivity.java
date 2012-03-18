@@ -49,8 +49,8 @@ public class GameActivity extends Activity implements SensorEventListener {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
         		WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
-        this.startService(new Intent(this, Server.class));
-        this.startService(new Intent(this, Client.class));
+        this.startService(new Intent(this, Server.class)); // start running server
+        this.startService(new Intent(this, Client.class)); // start running client
 		
 		initLayout();
 		initSensor();
@@ -167,7 +167,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		
+		Client.setInputAcceleration(event);
 	}
 	
 	/**

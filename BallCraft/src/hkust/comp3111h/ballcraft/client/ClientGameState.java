@@ -1,6 +1,7 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.graphics.Drawable;
+import hkust.comp3111h.ballcraft.server.Unit;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,17 @@ public class ClientGameState {
 			stateInstance = new ClientGameState();
 		}
 		return stateInstance;
+	}
+	
+	public void applyUpdater(GameUpdater updater) {
+		ArrayList<Unit> units = updater.getUnits();
+		for (int i = 0; i < units.size(); i++) {
+			if (i < drawables.size()) {
+				drawables.set(i, units.get(i));
+			} else {
+				drawables.add(units.get(i));
+			}
+		}
 	}
 	
 	public void addDrawable(Drawable drawable) {

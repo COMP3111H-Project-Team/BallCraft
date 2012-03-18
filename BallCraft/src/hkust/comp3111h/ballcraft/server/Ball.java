@@ -1,5 +1,7 @@
 package hkust.comp3111h.ballcraft.server;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
@@ -22,6 +24,11 @@ public class Ball extends Unit {
 	
 	public Ball(float size, float mass, float friction, Vec2 position) {
 		super();
+		
+		v = new float[32][3];
+		ByteBuffer vbb = ByteBuffer.allocateDirect(v.length * v[0].length * 4);
+		vbb.order(ByteOrder.nativeOrder());
+		vfb = vbb.asFloatBuffer();
 		
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DYNAMIC; // dynamic means it is subject to forces
@@ -97,6 +104,17 @@ public class Ball extends Unit {
 	
 	public float getRadius() {
 		return body.getFixtureList().m_shape.m_radius;
+	}
+
+	@Override
+	public void updateFromString(String string)
+	{
+		String [] parts = string.split(":");String [] vals = parts[1].split(",");
+		float x = Float.valueOf(vals[0]);
+		float y = Float.valueOf(vals[1]);
+		float radius= Float.valueOf(vals[2]);
+		body.getFixtureList().m_shape.m_radius = radius;
+		body.setTransform(new Vec2(x, y), 0);	
 	}
 	
 }

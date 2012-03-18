@@ -1,6 +1,7 @@
 package hkust.comp3111h.ballcraft.graphics;
 
 import hkust.comp3111h.ballcraft.client.ClientGameState;
+import hkust.comp3111h.ballcraft.client.GameActivity;
 
 import java.util.ArrayList;
 
@@ -12,32 +13,12 @@ import android.opengl.GLU;
 
 public class GameRenderer implements GLSurfaceView.Renderer {
 	
-	// private Client client = null;
-	
-	/*
-	private Plane gamePlane = null;
-	private Sphere sphere = null;
-	
-	private Wall wall = null;
-	
-	
-	private boolean skillActivated = false;
-	private ParticleSystem system = null;
-	*/
+	private ClientGameState gameState;
 	
 	private long time = 0;
 	
-	private ClientGameState gameState;
-	
 	public GameRenderer() {
-		// this.client = client;
-		
 		gameState = ClientGameState.getClientGameState();
-		/*
-		gamePlane = new Plane();
-		sphere = new Sphere(30, 30, 1);
-		wall = new Wall(new Vec2(0, 0), new Vec2(100, 100));
-		*/
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -88,14 +69,25 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	}
 	
 	public void onDrawFrame(GL10 gl) {
-		// TODO: adjust viewing params
-		ArrayList<Drawable> drawableList = gameState.getDrawables();
-		for (int i = 0; i < drawableList.size(); i++) {
-			drawableList.get(i).draw(gl);
+		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+		gl.glLoadIdentity();
+		/*
+		GLU.gluLookAt(gl, 
+				0, 0, 300, 
+				0, 0, 5, 
+				0, 0, 1);
+				*/
+		gl.glTranslatef(0, 0, -30);
+		ArrayList<Drawable> drawables = gameState.getDrawables();
+		
+		gl.glColor4f(1f, 1f, 1f, 1f);
+		for (int i = 0; i < drawables.size(); i++) {
+			drawables.get(i).draw(gl);
 		}
+		
 		/*
 		long elapsed = System.currentTimeMillis() - time;
-		Client.display("fps: " + 1000 / elapsed);
+		GameActivity.display("fps: " + 1000 / elapsed);
 		time = System.currentTimeMillis();
 		*/
 		

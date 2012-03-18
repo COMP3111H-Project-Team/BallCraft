@@ -75,4 +75,9 @@ public class Wall extends Unit {
 		String serialized = "";
 		return null;
 	}
+
+	@Override
+	public void updateFromString(String string)
+	{		
+	}
 }
