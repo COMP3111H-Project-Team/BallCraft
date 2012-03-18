@@ -20,6 +20,20 @@ public abstract class Unit implements Drawable {
 	public Unit() {
 	}
 	
+	public static Unit fromSerializedString(String serialized) {
+		String [] parts = serialized.split(":");
+		if (parts[0].equals("ball")) {
+			String [] vals = parts[1].split(",");
+			float x = Float.valueOf(vals[0]);
+			float y = Float.valueOf(vals[1]);
+			float radius = Float.valueOf(vals[2]);
+			return new Ball(radius, 0, 0, new Vec2(x, y));
+		} else if (parts[0].equals("wall")) {
+			// TODO
+		}
+		return null;
+	}
+	
 	public Unit(float size, float mass, float friction, Vec2 position) {
 
 		BodyDef bodyDef = new BodyDef();
@@ -50,5 +64,7 @@ public abstract class Unit implements Drawable {
 	public void applyForce(Vec2 force) {
 		// TODO
 	}
+	
+	public abstract String toSerializedString();
 	
 }

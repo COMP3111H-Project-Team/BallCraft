@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.server;
 
+import hkust.comp3111h.ballcraft.client.GameInput;
 import android.app.IntentService;
 import android.content.Intent;
 
@@ -40,9 +41,18 @@ public class Server extends IntentService
 		
 	}
 	
+	public GameInput deserializeGameInput(String serialized) {
+		GameInput input = new GameInput();
+		String [] vals = serialized.split(",");
+		input.acceleration.x = Float.valueOf(vals[0]);
+		input.acceleration.y = Float.valueOf(vals[1]);
+		return input;
+	}
+	
 	@Override
 	protected void onHandleIntent(Intent arg0) 
 	{
 		run();
 	}
+	
 }
