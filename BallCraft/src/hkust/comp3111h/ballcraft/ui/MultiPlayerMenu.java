@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class OptionMenu extends Activity {
+public class MultiPlayerMenu extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -18,6 +18,6 @@ public class OptionMenu extends Activity {
         		WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         
-        this.setContentView(R.layout.option_menu);
+        this.setContentView(R.layout.multi_player_menu);
 	}
 }

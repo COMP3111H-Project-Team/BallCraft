@@ -6,7 +6,7 @@ import hkust.comp3111h.ballcraft.client.GameInput;
 public class ServerAdapter {
 		
 	public static void sendToServer(GameInput input) {
-		Server.process(input.toSerializedString());
+		Server.setState(input.toSerializedString());
 	}
 	
 	public static void processServerMsg(String msg) {

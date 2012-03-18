@@ -6,6 +6,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+import android.util.Log;
 
 public class Client extends IntentService {
 
@@ -18,14 +19,16 @@ public class Client extends IntentService {
 		gameUpdater = new GameUpdater();
     }
     
-	public static void setInputAcceleration(SensorEvent event) {
-		input.acceleration.x = event.values[SensorManager.DATA_Y];
-		input.acceleration.y = event.values[SensorManager.DATA_X];
+	public static void setInputAcceleration(float x, float y) {
+		input.acceleration.x = x;
+		input.acceleration.y = y;
 	}
 	
 	public static void processSerializedUpdate(String serialized) {
-		gameUpdater.fromSerializedString(serialized);
-		ClientGameState.getClientGameState().applyUpdater(gameUpdater);
+		if (gameUpdater != null) {
+			gameUpdater.fromSerializedString(serialized);
+			ClientGameState.getClientGameState().applyUpdater(gameUpdater);
+		}
 	}
 	
 	public void run() 
