@@ -22,8 +22,23 @@ public class ServerGameState
 	private ArrayList<Unit> units;
 	public static World world;
 	
-	public ServerGameState(ArrayList<Ball> balls) {
+	private static ServerGameState stateInstance;
+	
+	public static ServerGameState getStateInstance() {
+		if (stateInstance == null) {
+			stateInstance = new ServerGameState();
+		}
+		return stateInstance;
+	}
+	
+	private ServerGameState() {
 		units = new ArrayList<Unit>();
+		
+    	Vec2 gravity = new Vec2(0.0f, 0.0f);
+        boolean doSleep = true;
+        world = new World(gravity, doSleep);
+        
+        createTestGameState();
 	}
 	
     public void processPlayerInput(int playerId, GameInput input)
@@ -35,14 +50,8 @@ public class ServerGameState
     	// TODO
     }
     
-    public static ServerGameState createTestGameState()
+    public static void createTestGameState()
     {
-    	ArrayList<Ball> balls = new ArrayList<Ball>();
-
-    	
-    	Vec2 gravity = new Vec2(0.0f, 0.0f);
-        boolean doSleep = true;
-        world = new World(gravity, doSleep);
         
         BodyDef bodyDef = new BodyDef();
 		 bodyDef.type = BodyType.STATIC;
@@ -77,33 +86,20 @@ public class ServerGameState
 		body.createFixture(dynamicBox, 0);
         
 		Ball sphere = new Ball(10, 50, 0.6f, new Vec2(0, 0));
-		balls.add(sphere);		
 
 		for (int i = 0; i < 1; i++)
 		{
 			Ball sphere2 = new Ball(10, 5, 0.99f, new Vec2(30, 50 * i - 50));
-			balls.add(sphere2);		
 		}	
-		ServerGameState test = new ServerGameState(balls);
-		return test;
     }
     
     
     public void onEveryFrame(int msecElapsed)
     {
-    	// Unit.msecElapsed = msecElapsed;
-    	Iterator<Unit> i = Unit.units.iterator();
     	world.step(msecElapsed, 6, 2);
-    	
-    	i = Unit.units.iterator();
-    	while(i.hasNext())
-    	{
-    		i.next().move();
-    	} 
     }
     
-    public byte[] getUnitData()
-    {
+    /* used for serialization:
     	ByteArrayOutputStream bos = new ByteArrayOutputStream();
     	ObjectOutput out;
     	byte[] bytes = null;
@@ -124,9 +120,8 @@ public class ServerGameState
 		}   
     	return bytes;
 		//return Unit.data;
-    }
+		 */
     
-    /******************* new *******************/
     public void addUnit(Unit unit) {
     	units.add(unit);
     }
