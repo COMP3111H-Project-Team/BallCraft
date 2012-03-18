@@ -1,15 +1,11 @@
 package hkust.comp3111h.ballcraft.server;
 
-import java.nio.FloatBuffer;
-
 import javax.microedition.khronos.opengles.GL10;
 
 import org.jbox2d.common.Vec2;
 
 public class Ball extends Unit {
 	
-	private float radius;
-
 	public Ball(float size, float mass, float friction, Vec2 position) {
 		super(size, mass, friction, position);
 	}
@@ -19,12 +15,4 @@ public class Ball extends Unit {
 		
 	}
 	
-	public void setRadius(float radius) {
-		this.radius = radius;
-	}
-	
-	public float getRadius() {
-		return this.radius;
-	}
-
 }

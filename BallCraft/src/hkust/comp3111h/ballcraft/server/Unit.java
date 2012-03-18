@@ -15,7 +15,7 @@ public abstract class Unit implements Drawable {
 
 	protected Body body;
 	
-	public static ArrayList<Unit> units = new ArrayList<Unit>();
+	private ServerGameState gameState = ServerGameState.getStateInstance();
 	
 	public Unit() {
 	}
@@ -34,8 +34,8 @@ public abstract class Unit implements Drawable {
 		fixtureDef.density = mass; // ... its density is 1 (default is zero)
 		fixtureDef.friction = friction; // ... its surface has some friction coefficient
 		body.createFixture(fixtureDef); // bind the dense, friction-laden fixture to the body
-
-		units.add(this);
+		
+		gameState.addUnit(this);
 	}
 	
 	public void move() 
