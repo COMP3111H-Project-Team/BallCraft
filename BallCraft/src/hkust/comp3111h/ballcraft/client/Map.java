@@ -1,6 +1,11 @@
 package hkust.comp3111h.ballcraft.client;
 
-import android.graphics.Bitmap;
+import hkust.comp3111h.ballcraft.server.Wall;
+
+import java.util.Vector;
+
+import org.jbox2d.common.Vec2;
+
 
 //Map is composed of widthCount*hegihtCount small tiles.
 //notice :: width>height
@@ -8,17 +13,14 @@ import android.graphics.Bitmap;
 public class Map {
 
 	private String mapName;
-	private String imageurl;
-	private int tileSize;
 	private int widthCount;
 	private int heightCount;
-	private int[][][] layer;
-	private Bitmap bitmap;
+	private Vector<Wall> walls;
 	
 	public Map(){
-		layer = new int[2][][];
+		walls = new Vector<Wall>();
 	}
-	
+
 	public String getName() {
 		return mapName;
 	}
@@ -26,7 +28,31 @@ public class Map {
 	public void setName(String name) {
         this.mapName = name;
     }
-    
+	
+	public void setWidth(int width) {
+		this.widthCount = width;
+	}
+	
+	public int getWidth() {
+		return widthCount;
+	}
+	
+	public void setHeight(int height) {
+		this.heightCount = height;
+	}
+	
+	public int getHeight() {
+		return heightCount;
+	}
+	
+	public void addWall(int[] data) {
+		walls.add(new Wall(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
+	}
+	
+	public Vector<Wall> getWalls() {
+		return walls;
+	}
+    /*
 	public void setTileSize(int size) {
         this.tileSize = size;
     }
@@ -43,19 +69,19 @@ public class Map {
         this.bitmap = bitmap;
     }
 	
-	public void setWidthCount(int width) {
+	public void setwidth(int width) {
 		this.widthCount = width;
 	}
 	
-	public int getWidthCount() {
+	public int getwidth() {
 		return widthCount;
 	}
 	
-	public void setHeightCount(int height) {
+	public void setheight(int height) {
 		this.heightCount = height;
 	}
 	
-	public int getHeightCount() {
+	public int getheight() {
 		return heightCount;
 	}
 	
@@ -75,4 +101,5 @@ public class Map {
         int bitmapY = count * tileSize;
         return Bitmap.createBitmap(bitmap, bitmapX, bitmapY, tileSize, tileSize); 
 	}
+	*/
 }

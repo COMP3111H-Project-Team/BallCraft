@@ -6,17 +6,26 @@ import android.content.Intent;
 
 public class Server extends IntentService
 {
-	static private ServerGameState gamestate = null;
+	static private ServerGameState gameState = null;
 	static private long lastRun;
 	
-	static boolean activeSkillExists = false;
 	static int skill = 0;
+	
+	static public boolean inited = false;
 	
 	public Server()
 	{
 		super("ServerService");
-		gamestate = ServerGameState.getStateInstance();
+		gameState = ServerGameState.getStateInstance();
+		gameState.createTestGameState();
+		inited = true;	
 		lastRun = System.currentTimeMillis();
+	}
+	
+	public static void process(String string)
+	{
+		GameInput input = GameInput.deserializeGameInput(string);
+		ServerGameState.getStateInstance().processPlayerInput(4, input);
 	}
 	
 	public void run() 
@@ -24,7 +33,7 @@ public class Server extends IntentService
 		while (true)
 		{
 			long time = System.currentTimeMillis();
-			gamestate.onEveryFrame((int)(time - lastRun));
+			gameState.onEveryFrame((int)(time - lastRun));
 			
 			try
 			{
@@ -36,19 +45,11 @@ public class Server extends IntentService
 			catch (InterruptedException e) 
 			{
 				e.printStackTrace();
-			} //TODO:check
+			}
 		}
 		
 	}
-	
-	public GameInput deserializeGameInput(String serialized) {
-		GameInput input = new GameInput();
-		String [] vals = serialized.split(",");
-		input.acceleration.x = Float.valueOf(vals[0]);
-		input.acceleration.y = Float.valueOf(vals[1]);
-		return input;
-	}
-	
+
 	@Override
 	protected void onHandleIntent(Intent arg0) 
 	{

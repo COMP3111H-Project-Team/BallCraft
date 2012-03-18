@@ -14,14 +14,11 @@ public class GameInput {
 	
 	public GameInput()
 	{
+		acceleration = new Vec2();
 		activeSkills = new ArrayList<Skill>();
 	}
 	
 	public String serialize() {
-		return null;
-	}
-	
-	public static GameInput decodeSerializedInput(String serialized) {
 		return null;
 	}
 	
@@ -43,4 +40,11 @@ public class GameInput {
 		return serialized;
 	}
 	
+	public static GameInput deserializeGameInput(String serialized) {
+		GameInput input = new GameInput();
+		String [] vals = serialized.split(",");
+		input.acceleration.x = Float.valueOf(vals[0]);
+		input.acceleration.y = Float.valueOf(vals[1]);
+		return input;
+	}
 }
