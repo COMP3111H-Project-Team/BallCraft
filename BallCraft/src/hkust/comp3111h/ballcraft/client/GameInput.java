@@ -21,10 +21,6 @@ public class GameInput {
 		return null;
 	}
 	
-	public static GameInput decodeSerializedInput(String serialized) {
-		return null;
-	}
-	
 	public ArrayList<Skill> getSkills() {
 		return activeSkills;
 	}
@@ -42,4 +38,11 @@ public class GameInput {
 		return null;
 	}
 	
+	public static GameInput deserializeGameInput(String serialized) {
+		GameInput input = new GameInput();
+		String [] vals = serialized.split(",");
+		input.acceleration.x = Float.valueOf(vals[0]);
+		input.acceleration.y = Float.valueOf(vals[1]);
+		return input;
+	}
 }
