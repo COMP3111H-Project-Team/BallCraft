@@ -15,6 +15,7 @@ public class Map {
 	private int widthCount;
 	private int heightCount;
 	private Vector<Wall> walls;
+	private Vec2 initPosition;
 	
 	public Map(){
 		walls = new Vector<Wall>();
@@ -44,6 +45,13 @@ public class Map {
 		return heightCount;
 	}
 	
+	public void setInitPosition(int[] p) {
+		initPosition = new Vec2(p[0],p[1]);
+	}
+	
+	public Vec2 getInitPosition() {
+		return initPosition;
+	}
 	public void addWall(int[] data) {
 		walls.add(new Wall(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
 	}
@@ -51,7 +59,9 @@ public class Map {
 	public Vector<Wall> getWalls() {
 		return walls;
 	}
-    /*
+    
+	
+	/*
 	public void setTileSize(int size) {
         this.tileSize = size;
     }

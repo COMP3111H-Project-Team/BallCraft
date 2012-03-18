@@ -1,11 +1,11 @@
 package hkust.comp3111h.ballcraft.client;
 
+import hkust.comp3111h.ballcraft.graphics.GameRenderer;
+
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLDisplay;
 
-import hkust.comp3111h.ballcraft.BallCraft;
-import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import android.app.Activity;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -16,11 +16,12 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -56,6 +57,10 @@ public class GameActivity extends Activity implements SensorEventListener {
 		mGLView.setRenderer(renderer);
 		
 		setContentView(rLayout);
+		MapParser mapParser = new MapParser(this);
+		Map map = mapParser.getMapFromXML("vectormap.xml");
+		Log.i("map", map.getInitPosition().toString());
+		
 		
     }
     

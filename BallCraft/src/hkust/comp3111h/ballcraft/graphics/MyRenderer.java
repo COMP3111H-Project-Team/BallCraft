@@ -1,28 +1,16 @@
 package hkust.comp3111h.ballcraft.graphics;
 
-import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.client.Client;
-import hkust.comp3111h.ballcraft.server.ServerAdapter;
-import hkust.comp3111h.ballcraft.server.Unit;
-import hkust.comp3111h.ballcraft.server.UnitData;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.StreamCorruptedException;
-import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
-
-import org.jbox2d.common.Vec2;
 
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 
 public class MyRenderer implements GLSurfaceView.Renderer {
 	
+	/*
 	private Client client = null;
 	
 	private Plane gamePlane = null;
@@ -30,17 +18,13 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	
 	private Wall wall = null;
 	
-	private long time = 0;
-	
 	private boolean skillActivated = false;
 	private ParticleSystem system = null;
+	*/
+	
+	private long time = 0;
 	
 	public MyRenderer(Client client) {
-		this.client = client;
-		
-		gamePlane = new Plane();
-		sphere = new Sphere(30, 30, 1);
-		wall = new Wall(new Vec2(0, 0), new Vec2(100, 100));
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -80,8 +64,6 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		gamePlane.loadTexture(gl, client); // tex
-		gl.glEnable(GL10.GL_TEXTURE_2D); //tex
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 		gl.glShadeModel(GL10.GL_SMOOTH);
 		gl.glClearDepthf(1.0f);
@@ -99,6 +81,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		time = System.currentTimeMillis();
 		*/
 		
+		/*
 		ArrayList<UnitData> data = null;
 		byte[] bytes = ServerAdapter.process(0, client.getInput());
 		
@@ -124,6 +107,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		gl.glLoadIdentity();
 		
 		gl.glTranslatef(-self.position.x, self.position.y, -300);
+		*/
 		/*
 		float xPos = self.position.x;
 		float yPos = - self.position.y;
@@ -148,6 +132,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		}
 		*/
 		
+		/*
 		gl.glPushMatrix();
 			gl.glColor4f(0.6f, 0.6f, 0.6f, 1f);
 			gamePlane.draw(gl);
@@ -181,5 +166,6 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 			system.move();
 			system.draw(gl);
 		}
+		*/
 	}
 }
