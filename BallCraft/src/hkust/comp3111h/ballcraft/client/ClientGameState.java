@@ -5,7 +5,8 @@ import hkust.comp3111h.ballcraft.server.Unit;
 
 import java.util.ArrayList;
 
-import android.util.Log;
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.World;
 
 public class ClientGameState {
 	
@@ -14,9 +15,15 @@ public class ClientGameState {
 	private ArrayList<Drawable> drawables;
 	private ArrayList<Skill> skills;
 	
+	public static World world;
+	
 	private ClientGameState() {
 		drawables = new ArrayList<Drawable>();
 		skills = new ArrayList<Skill>();
+
+    	Vec2 gravity = new Vec2(0.0f, 0.0f);
+        boolean doSleep = true;
+        world = new World(gravity, doSleep);
 	}
 	
 	public static ClientGameState getClientGameState() {

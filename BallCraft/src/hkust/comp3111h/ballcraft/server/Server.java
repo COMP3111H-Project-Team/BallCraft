@@ -23,7 +23,7 @@ public class Server extends IntentService
 	{
 		super("ServerService");
 		gameState = ServerGameState.getStateInstance();
-		gameState.createTestGameState();
+		gameState.loadMap(this, "vector.xml");
 		
 		gameUpdater = new GameUpdater();
 		
@@ -49,6 +49,7 @@ public class Server extends IntentService
 		{
 			long time = System.currentTimeMillis();
 			gameState.onEveryFrame((int)(time - lastRun));
+			lastRun = System.currentTimeMillis();
 			
 			ServerGameState.getStateInstance().processPlayerInput(0, gameInput); // process
 			ServerAdapter.processServerMsg(generateGameUpdater().toSerializedString()); // send back to server adapter
@@ -56,7 +57,6 @@ public class Server extends IntentService
 			try {
 				/*
 				long sleep = 30 + time - System.currentTimeMillis();
-				lastRun = System.currentTimeMillis();
 				if (sleep > 0 ) {
 					Thread.sleep(sleep);
 				}
