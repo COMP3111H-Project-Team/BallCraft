@@ -5,6 +5,8 @@ import hkust.comp3111h.ballcraft.server.Unit;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 public class ClientGameState {
 	
 	private static ClientGameState stateInstance;
@@ -24,13 +26,17 @@ public class ClientGameState {
 		return stateInstance;
 	}
 	
-	public void applyUpdater(GameUpdater updater) {
-		ArrayList<Unit> units = updater.getUnits();
-		for (int i = 0; i < units.size(); i++) {
+	/**
+	 * Apply a serialized GameUpdater to the ClientGameState to change the data
+	 * @param serialized The serialized string containing the data of the GameUpdater
+	 */
+	public void applyUpdater(String serialized) {
+		String [] unitStrs = serialized.split("/");
+		for (int i = 0; i < unitStrs.length; i++) {
 			if (i < drawables.size()) {
-				drawables.set(i, units.get(i));
+				((Unit)(drawables.get(i))).updateFromString(unitStrs[i]);
 			} else {
-				drawables.add(units.get(i));
+				drawables.add(Unit.fromSerializedString(unitStrs[i]));
 			}
 		}
 	}

@@ -53,12 +53,15 @@ public class Server extends IntentService
 			ServerGameState.getStateInstance().processPlayerInput(0, gameInput); // process
 			ServerAdapter.processServerMsg(generateGameUpdater().toSerializedString()); // send back to server adapter
 			
-			try
-			{
+			try {
+				/*
 				long sleep = 30 + time - System.currentTimeMillis();
 				lastRun = System.currentTimeMillis();
-				if (sleep < 0 ) sleep = 0;
-				Thread.sleep(sleep);
+				if (sleep > 0 ) {
+					Thread.sleep(sleep);
+				}
+				*/
+				Thread.sleep(20);
 			}
 			catch (InterruptedException e) 
 			{

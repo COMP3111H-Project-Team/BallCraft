@@ -15,7 +15,7 @@ import org.jbox2d.dynamics.FixtureDef;
 public class Ball extends Unit {
 	
     FloatBuffer strip, fan_top, fan_bottom;
-    float radius = 1;
+    float radius = 10;
     int stacks = 30,  slices = 30;
 	
 	public Ball(float size, float mass, float friction, Vec2 position) {
@@ -39,26 +39,30 @@ public class Ball extends Unit {
 	
 	@Override
 	public void draw(GL10 gl) {
-        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, fan_top);
-        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
- 
-        gl.glNormalPointer(GL10.GL_FLOAT, 0, fan_top);
-        gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
-        gl.glDrawArrays(GL10.GL_TRIANGLE_FAN, 0, slices + 2);
- 
-        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, strip);
-        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
- 
-        gl.glNormalPointer(GL10.GL_FLOAT, 0, strip);
-        gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
-        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, (slices + 1) * 2 * stacks);
- 
-        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, fan_bottom);
-        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
- 
-        gl.glNormalPointer(GL10.GL_FLOAT, 0, fan_bottom);
-        gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
-        gl.glDrawArrays(GL10.GL_TRIANGLE_FAN, 0, slices + 2);
+		gl.glPushMatrix();
+			gl.glScalef(this.getRadius(), this.getRadius(), this.getRadius());
+			gl.glTranslatef(this.getPosition().x, this.getPosition().y, 0);
+	        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, fan_top);
+	        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+	 
+	        gl.glNormalPointer(GL10.GL_FLOAT, 0, fan_top);
+	        gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
+	        gl.glDrawArrays(GL10.GL_TRIANGLE_FAN, 0, slices + 2);
+	 
+	        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, strip);
+	        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+	 
+	        gl.glNormalPointer(GL10.GL_FLOAT, 0, strip);
+	        gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
+	        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, (slices + 1) * 2 * stacks);
+	 
+	        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, fan_bottom);
+	        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+	 
+	        gl.glNormalPointer(GL10.GL_FLOAT, 0, fan_bottom);
+	        gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
+	        gl.glDrawArrays(GL10.GL_TRIANGLE_FAN, 0, slices + 2);
+        gl.glPopMatrix();
 	}
 	
     protected FloatBuffer makeEndCap(int stacks, int slices, boolean top) {
