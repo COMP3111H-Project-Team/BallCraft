@@ -2,15 +2,17 @@ package hkust.comp3111h.ballcraft.server;
 
 import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.GameUpdater;
+import hkust.comp3111h.ballcraft.client.Map;
+import hkust.comp3111h.ballcraft.client.MapParser;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Vector;
 
-import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
+
+import android.content.Context;
 
 public class ServerGameState 
 {
@@ -43,41 +45,19 @@ public class ServerGameState
     	// TODO
     }
     
-    public void createTestGameState()
+    public void loadMap(Context context, String name)
     {
+        MapParser parser = new MapParser(context);
+        Map map = parser.getMapFromXML(name);
         
-        BodyDef bodyDef = new BodyDef();
-		 bodyDef.type = BodyType.STATIC;
-		 bodyDef.position.set(0, -20);
-		 Body body = ServerGameState.world.createBody(bodyDef);
-		 PolygonShape dynamicBox = new PolygonShape();
-		 dynamicBox.setAsBox(40, 0);
-		body.createFixture(dynamicBox, 0);
-
-        bodyDef = new BodyDef();
-		 bodyDef.type = BodyType.STATIC;
-		 bodyDef.position.set(0, 20);
-		body = ServerGameState.world.createBody(bodyDef);
-		 dynamicBox = new PolygonShape();
-		 dynamicBox.setAsBox(40, 0);
-		body.createFixture(dynamicBox, 0);
-
-        bodyDef = new BodyDef();
-		 bodyDef.type = BodyType.STATIC;
-		 bodyDef.position.set(20, 0);
-		body = ServerGameState.world.createBody(bodyDef);
-		 dynamicBox = new PolygonShape();
-		 dynamicBox.setAsBox(0, 40);
-		body.createFixture(dynamicBox, 0);
-
-        bodyDef = new BodyDef();
-		 bodyDef.type = BodyType.STATIC;
-		 bodyDef.position.set(-20, 0);
-		body = ServerGameState.world.createBody(bodyDef);
-		 dynamicBox = new PolygonShape();
-		 dynamicBox.setAsBox(0, 40);
-		body.createFixture(dynamicBox, 0);
+        Vector<Unit> mapUnit = map.getUnit();
+        Iterator<Unit> iterator = mapUnit.iterator();
         
+        while(iterator.hasNext())
+        {
+        	addUnit(iterator.next());
+        }
+                
 		new Ball(10, 50, 0.6f, new Vec2(0, 0));
 
 		for (int i = 0; i < 1; i++)

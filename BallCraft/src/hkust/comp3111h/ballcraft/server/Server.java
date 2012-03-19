@@ -17,7 +17,7 @@ public class Server extends IntentService
 	{
 		super("ServerService");
 		gameState = ServerGameState.getStateInstance();
-		gameState.createTestGameState();
+		gameState.loadMap(this, "vectormap.xml");
 		inited = true;	
 		lastRun = System.currentTimeMillis();
 	}
