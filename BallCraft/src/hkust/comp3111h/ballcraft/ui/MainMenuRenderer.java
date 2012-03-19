@@ -12,9 +12,8 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
-import android.util.Log;
+import android.opengl.GLUtils;
 
-/*
 public class MainMenuRenderer implements GLSurfaceView.Renderer {
 	
 	private Tet testPlane;
@@ -61,6 +60,7 @@ public class MainMenuRenderer implements GLSurfaceView.Renderer {
 		gl.glRotatef(turned, 0, 1, 0);
 		gl.glRotatef(turnedUp, 1, 0, 0);
 		
+		/*
 		if (MainMenu.touchTurn != 0) {
 			gl.glRotatef(MainMenu.touchTurn, 0, 1, 0);
 			turned += MainMenu.touchTurn;
@@ -70,6 +70,10 @@ public class MainMenuRenderer implements GLSurfaceView.Renderer {
 			gl.glRotatef(MainMenu.touchTurn, 1, 0, 0);
 			turnedUp += MainMenu.touchTurnUp;
 		}
+		*/
+		
+		turned += 1;
+		turnedUp += 1;
 		
 		gl.glColor4f(0.5f, 0.5f, 0.5f, 0.6f);
 		testPlane.draw(gl);
@@ -111,5 +115,3 @@ public class MainMenuRenderer implements GLSurfaceView.Renderer {
 	}
 	
 }
-
-*/
