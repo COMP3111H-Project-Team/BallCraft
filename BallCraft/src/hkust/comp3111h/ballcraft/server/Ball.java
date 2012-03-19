@@ -15,7 +15,7 @@ import org.jbox2d.dynamics.FixtureDef;
 public class Ball extends Unit {
 	
     FloatBuffer strip, fan_top, fan_bottom;
-    float radius = 1;
+    float radius = 10;
     int stacks = 30,  slices = 30;
 	
 	public Ball(float size, float mass, float friction, Vec2 position) {
@@ -40,6 +40,7 @@ public class Ball extends Unit {
 	@Override
 	public void draw(GL10 gl) {
 		gl.glPushMatrix();
+			gl.glScalef(this.getRadius(), this.getRadius(), this.getRadius());
 			gl.glTranslatef(this.getPosition().x, this.getPosition().y, 0);
 	        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, fan_top);
 	        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);

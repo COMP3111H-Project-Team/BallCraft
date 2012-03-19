@@ -30,12 +30,9 @@ public class Client extends IntentService {
 			if (Server.inited) {
 				ServerAdapter.sendToServer(input);
 			}
-			try 
-			{
-				Thread.sleep(30);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {}
 		}
 		
 	}

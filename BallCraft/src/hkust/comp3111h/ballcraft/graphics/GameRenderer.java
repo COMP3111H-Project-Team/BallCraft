@@ -90,14 +90,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		
 		gl.glColor4f(0f, 0f, 1f, 1f);
 		for (int i = 0; i < drawables.size(); i++) {
-			gl.glPushMatrix();
-			gl.glScalef(10, 10, 10);
 			drawables.get(i).draw(gl);
-			gl.glPopMatrix();
-			if (i == 1) {
-				Unit u = ((Unit)(drawables.get(i)));
-				GameActivity.display(u.getPosition().x + " " + u.getPosition().y);
-			}
 		}
 		
 		/*
