@@ -38,6 +38,7 @@ public class MapParser{
 	    //find the xml file first,just two layers now
 	    factory = DocumentBuilderFactory.newInstance();
 	    try {
+	    	Log.d("map", "find document");
 	    	//load file
 	    	builder = factory.newDocumentBuilder();
 	    	inputStream = context.getResources().getAssets().open(fileName);
@@ -56,35 +57,41 @@ public class MapParser{
 	    	//get width count
 	    	Element width = (Element)root.getElementsByTagName("width").item(0);
 	    	map.setWidth(Integer.parseInt(width.getFirstChild().getNodeValue()));
+	    	//get init position
+	    	Element init = (Element)root.getElementsByTagName("initPosition").item(0);
+	    	map.setInitPosition(parseString(init.getFirstChild().getNodeValue()));
 	    	//get wall list
-	    	Element wallList = (Element)root.getElementsByTagName("wallList").item(0);
-	    	NodeList nodes=wallList.getElementsByTagName("wall");
+	    //	Element wallList = (Element)root.getElementsByTagName("wallList").item(0);
+	    	NodeList nodes=root.getElementsByTagName("wall");
             //find all wall object under wall list
              for(int i=0;i<nodes.getLength();i++){
                      Element wallElement=(Element)(nodes.item(i));
                      String wallData = wallElement.getFirstChild().getNodeValue();
-                     map.addWall(parseWall(wallData));                     
+                     Log.i("map", wallData);
+                     map.addWall(parseString(wallData));                     
              }
         }catch (IOException e){
             e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();
-        }
-         catch (ParserConfigurationException e) {
+        }catch (ParserConfigurationException e) {
             e.printStackTrace();
 	    }
 	    return map;
 	}
 
-	private int[] parseWall(String wallData){
+	private int[] parseString(String wallData){
 		String[] parts = wallData.split(",");
-        int[] data = new int[4];
-        for(int j = 0; j < 4; j++)
+		int length = parts.length;
+        int[] data = new int[length];
+        for(int j = 0; j < length; j++)
         {
        	 data[j] = Integer.parseInt(parts[j]);
+       	 Log.i("map", data[j]+"");
         }
         return data;
 	}
+	
 	public int[][] readLayer(String fileName,int width, int height){
 		int [][] layer = new int[height][width];
 	    int    i_data = 0; 

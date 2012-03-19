@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.client;
 
+import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.server.Wall;
 
 import java.util.Vector;
@@ -15,10 +16,12 @@ public class Map {
 	private String mapName;
 	private int widthCount;
 	private int heightCount;
-	private Vector<Wall> walls;
+//	private Vector<Wall> walls;
+	private Vec2 initPosition;
+	private Vector<Unit> units;
 	
 	public Map(){
-		walls = new Vector<Wall>();
+		units = new Vector<Unit>();
 	}
 
 	public String getName() {
@@ -45,14 +48,30 @@ public class Map {
 		return heightCount;
 	}
 	
-	public void addWall(int[] data) {
-		walls.add(new Wall(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
+	public void setInitPosition(int[] p) {
+		initPosition = new Vec2(p[0],p[1]);
 	}
 	
+	public Vec2 getInitPosition() {
+		return initPosition;
+	}
+	
+	
+	public void addWall(int[] data) {
+		//walls.add(new Wall(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
+		units.add(new Wall(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
+	}
+	
+	public Vector<Unit> getUnit() {
+		return units;
+	}
+	/*
 	public Vector<Wall> getWalls() {
 		return walls;
 	}
-    /*
+    */
+	
+	/*
 	public void setTileSize(int size) {
         this.tileSize = size;
     }
