@@ -4,19 +4,14 @@ import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import android.app.IntentService;
 import android.content.Intent;
-import android.hardware.SensorEvent;
-import android.hardware.SensorManager;
-import android.util.Log;
 
 public class Client extends IntentService {
 
 	private static GameInput input;
-	private static GameUpdater gameUpdater;
 	
     public Client() {
     	super("ClientService");
     	input = new GameInput();
-		gameUpdater = new GameUpdater();
     }
     
 	public static void setInputAcceleration(float x, float y) {
@@ -25,10 +20,7 @@ public class Client extends IntentService {
 	}
 	
 	public static void processSerializedUpdate(String serialized) {
-		if (gameUpdater != null) {
-			gameUpdater.fromSerializedString(serialized);
-			ClientGameState.getClientGameState().applyUpdater(gameUpdater);
-		}
+		ClientGameState.getClientGameState().applyUpdater(serialized);
 	}
 	
 	public void run() 
@@ -38,12 +30,9 @@ public class Client extends IntentService {
 			if (Server.inited) {
 				ServerAdapter.sendToServer(input);
 			}
-			try 
-			{
-				Thread.sleep(30);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {}
 		}
 		
 	}
