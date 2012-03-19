@@ -6,22 +6,36 @@ import java.util.ArrayList;
 
 public class GameUpdater {
 	
-	private ArrayList<Unit> units = null;
+	public ArrayList<Unit> units = null;
 
 	public GameUpdater() {
 		units = new ArrayList<Unit>();
 	}
 	
-	public String toSerializedString() {
-		String serialized = "";
-		return null;
+	public void fromSerializedString(String serialized) {
+		String [] unitStrs = serialized.split("/");
+		for (int i = 0; i < unitStrs.length; i++) {
+			if (i < units.size()) {
+				units.get(i).updateFromString(unitStrs[i]);
+			} else {
+				units.add(Unit.fromSerializedString(unitStrs[i]));
+			}
+		}
 	}
 	
-	public static GameUpdater decodeSerializedUpdater(String serialized) {
-		return null;
+	public String toSerializedString() {
+		String serialized = "";
+		for (int i = 0; i < units.size(); i++) {
+			serialized += units.get(i).toSerializedString();
+			if (i != units.size() - 1) { // not the last one
+				serialized += "/";
+			}
+		}
+		return serialized;
 	}
 	
 	public ArrayList<Unit> getUnits() {
 		return units;
 	}
+	
 }
