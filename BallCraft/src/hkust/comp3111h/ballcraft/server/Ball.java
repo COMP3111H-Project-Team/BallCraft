@@ -20,6 +20,14 @@ public class Ball extends Unit {
     float radius = 10;
     int stacks = 30,  slices = 30;
 	
+	float theta, pi;
+	float co, si;
+	float r1, r2;
+	float h1, h2;
+	float step = 4.0f;
+	float [][] v;
+	FloatBuffer vfb;
+	
 	public Ball(float size, float mass, float friction, Vec2 position) {
 		super();
 		
@@ -56,6 +64,7 @@ public class Ball extends Unit {
 		gl.glPushMatrix();
 			gl.glScalef(this.getRadius(), this.getRadius(), this.getRadius());
 			gl.glTranslatef(this.getPosition().x, this.getPosition().y, 0);
+			
 	        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, fan_top);
 	        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 	 
@@ -76,6 +85,7 @@ public class Ball extends Unit {
 	        gl.glNormalPointer(GL10.GL_FLOAT, 0, fan_bottom);
 	        gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
 	        gl.glDrawArrays(GL10.GL_TRIANGLE_FAN, 0, slices + 2);
+	        
         gl.glPopMatrix();
 	}
 	
