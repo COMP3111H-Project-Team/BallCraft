@@ -1,5 +1,7 @@
 package hkust.comp3111h.ballcraft.server;
 
+import hkust.comp3111h.ballcraft.client.ClientGameState;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -31,7 +33,7 @@ public class Ball extends Unit {
 		
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DYNAMIC; // dynamic means it is subject to forces
-		bodyDef.position.set(position.x, position.y);
+		bodyDef.position = position;
 		body = ServerGameState.world.createBody(bodyDef);
 		CircleShape shape = new CircleShape();
 		shape.m_radius = size;
@@ -41,10 +43,22 @@ public class Ball extends Unit {
 		fixtureDef.density = mass; // ... its density is 1 (default is zero)
 		fixtureDef.friction = friction; // ... its surface has some friction coefficient
 		body.createFixture(fixtureDef); // bind the dense, friction-laden fixture to the body
+	}
+	
+	public Ball(float radius, Vec2 vec) 
+	{
+		super();
+		
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.position = vec;
+		body = ClientGameState.world.createBody(bodyDef);
+		CircleShape shape = new CircleShape();
+		shape.m_radius = radius;
+		body.createFixture(shape, 0); // bind the dense, friction-laden fixture to the body
 		
 		unitSphere(stacks, slices);
 	}
-	
+
 	@Override
 	public void draw(GL10 gl) {
 		gl.glPushMatrix();
