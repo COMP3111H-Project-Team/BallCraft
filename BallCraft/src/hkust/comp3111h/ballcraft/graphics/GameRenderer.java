@@ -2,6 +2,7 @@ package hkust.comp3111h.ballcraft.graphics;
 
 import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.GameActivity;
+import hkust.comp3111h.ballcraft.client.Player;
 import hkust.comp3111h.ballcraft.server.Unit;
 
 import java.util.ArrayList;
@@ -33,7 +34,6 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
 		gl.glLoadIdentity();
 		
-		/*
 		gl.glEnable(GL10.GL_LIGHTING);
 		gl.glEnable(GL10.GL_LIGHT0);
 		
@@ -50,15 +50,14 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		gl.glShadeModel(GL10.GL_SMOOTH);
 		
 		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SPECULAR, matSpecular, 0);
-		// gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, matShininess, 0);
+		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, matShininess, 0);
 		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_AMBIENT, matAmbient, 0);
 		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_DIFFUSE, matDiffuse, 0);
 		
 		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, lightSpecular, 0);
-		// gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPosition, 0);
+		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPosition, 0);
 		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, lightAmbient, 0);
 		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, lightDiffuse, 0);
-		*/
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -75,29 +74,31 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	public void onDrawFrame(GL10 gl) {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity();
-		/*
+				
+		ArrayList<Drawable> drawables = gameState.getDrawables();
+		Unit self = (Unit) drawables.get(Player.playerID);
+		
+		float xPos = self.getPosition().x;
+		float yPos = self.getPosition().y;
 		GLU.gluLookAt(gl, 
-				0, 0, 300, 
-				0, 0, 5, 
+				xPos, yPos + 200, 400, 
+				xPos, yPos, 5, 
 				0, 0, 1);
-				*/
-		gl.glTranslatef(0, 0, -500);
 		
 		gl.glColor4f(1f, 1f, 1f, 1f);
 		plane.draw(gl);
 		
-		ArrayList<Drawable> drawables = gameState.getDrawables();
+		gl.glColor4f(1f, 0f, 0f, 1f);
+		self.draw(gl);
 		
 		gl.glColor4f(0f, 0f, 1f, 1f);
-		for (int i = 0; i < drawables.size(); i++) {
+		for (int i = 1; i < drawables.size(); i++) {
 			drawables.get(i).draw(gl);
 		}
 		
-		/*
 		long elapsed = System.currentTimeMillis() - time;
 		GameActivity.display("fps: " + 1000 / elapsed);
 		time = System.currentTimeMillis();
-		*/
 		
 		/*
 		ArrayList<UnitData> data = null;
