@@ -2,6 +2,7 @@ package hkust.comp3111h.ballcraft.graphics;
 
 import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.GameActivity;
+import hkust.comp3111h.ballcraft.server.Unit;
 
 import java.util.ArrayList;
 
@@ -93,6 +94,10 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 			gl.glScalef(10, 10, 10);
 			drawables.get(i).draw(gl);
 			gl.glPopMatrix();
+			if (i == 1) {
+				Unit u = ((Unit)(drawables.get(i)));
+				GameActivity.display(u.getPosition().x + " " + u.getPosition().y);
+			}
 		}
 		
 		/*

@@ -82,7 +82,7 @@ public class ServerGameState
 
 		for (int i = 0; i < 1; i++)
 		{
-			units.add(new Ball(10, 5, 0.99f, new Vec2(30, 50 * i - 50)));
+			units.add(new Ball(10, 5, 0.99f, new Vec2(3, 5 * i - 5)));
 		}	
     }
     
