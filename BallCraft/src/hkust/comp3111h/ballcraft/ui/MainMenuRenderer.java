@@ -22,8 +22,8 @@ public class MainMenuRenderer implements GLSurfaceView.Renderer {
 	
 	private int [] textures;
 	
-	private float turned = 0;
-	private float turnedUp = 0;
+	private float turnX = 0;
+	private float turnY = 0;
 	
 	public MainMenuRenderer(Context context) {
 		testPlane = new Tet();
@@ -57,8 +57,8 @@ public class MainMenuRenderer implements GLSurfaceView.Renderer {
 		gl.glLoadIdentity();
 		gl.glTranslatef(0, 0, -300);	
 		
-		gl.glRotatef(turned, 0, 1, 0);
-		gl.glRotatef(turnedUp, 1, 0, 0);
+		gl.glRotatef(turnX, 0, 1, 0);
+		gl.glRotatef(turnY, 1, 0, 0);
 		
 		/*
 		if (MainMenu.touchTurn != 0) {
@@ -72,8 +72,8 @@ public class MainMenuRenderer implements GLSurfaceView.Renderer {
 		}
 		*/
 		
-		turned += 1;
-		turnedUp += 1;
+		turnX += MainMenu.turnX;
+		turnY += MainMenu.turnY;
 		
 		gl.glColor4f(0.5f, 0.5f, 0.5f, 0.6f);
 		testPlane.draw(gl);
