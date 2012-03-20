@@ -5,6 +5,10 @@ import hkust.comp3111h.ballcraft.client.GameActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.View;
@@ -12,18 +16,25 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-public class MainMenu extends Activity {
+public class MainMenu extends Activity implements SensorEventListener {
 	
 	private Activity self;
 	
 	private RelativeLayout rLayout;
 	private GLSurfaceView glView;
+	
+	private SensorManager sensorManager;
+	
+	public static float turnX = 0;
+	public static float turnY = 0;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,13 +47,20 @@ public class MainMenu extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
         		WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
-        
+        this.initSensor();
         this.initLayout();
         
         // this.setContentView(R.layout.main_menu);
         
         // initTextButtons();
 	}
+	
+    private void initSensor() {
+		sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
+		sensorManager.registerListener(this, 
+				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+				SensorManager.SENSOR_DELAY_NORMAL);
+    }
 	
 	private void initLayout() {
 		// RelativeLayout, the main layout of the activity
@@ -70,12 +88,12 @@ public class MainMenu extends Activity {
 		titleView.setImageResource(R.drawable.title);
 		
 		// ImageView of the setting icon
-		ImageView iv = new ImageView(this);
-		RelativeLayout.LayoutParams ivParams = new RelativeLayout.LayoutParams(24, 24);
+		final ImageView iv = new ImageView(this);
+		RelativeLayout.LayoutParams ivParams = new RelativeLayout.LayoutParams(40, 40);
 		ivParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 		ivParams.setMargins(0, 10, 10, 0);
 		iv.setLayoutParams(ivParams);
-		iv.setImageResource(R.drawable.settings_button);
+		iv.setImageResource(R.drawable.setting);
 		iv.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -85,6 +103,26 @@ public class MainMenu extends Activity {
 			
 		});
 		
+		final Animation rotate360 = AnimationUtils.loadAnimation(this, R.anim.rotate360);
+		rotate360.setRepeatCount(0);
+		iv.startAnimation(rotate360);
+		rotate360.setAnimationListener(new AnimationListener() {
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				iv.clearAnimation();
+				iv.startAnimation(rotate360);
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+			}
+
+			@Override
+			public void onAnimationStart(Animation animation) {
+			}
+		});
+		
 		// LinearLayout containing the two options: single player and multi-player
 		LinearLayout lLayout = new LinearLayout(this);
 		RelativeLayout.LayoutParams lLayoutParams = new RelativeLayout.LayoutParams(
@@ -92,7 +130,7 @@ public class MainMenu extends Activity {
 				RelativeLayout.LayoutParams.WRAP_CONTENT);
 		lLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		lLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-		lLayoutParams.setMargins(0, 0, 0, 20);
+		lLayoutParams.setMargins(0, 0, 0, 10);
 		lLayout.setLayoutParams(lLayoutParams);
 		lLayout.setOrientation(LinearLayout.HORIZONTAL);
 		
@@ -105,7 +143,7 @@ public class MainMenu extends Activity {
 		singlePlayerButton.setPadding(20, 70, 20, 80);
 		singlePlayerButton.setText("Single Player");
 		singlePlayerButton.setTextSize(30);
-		singlePlayerButton.setBackgroundColor(Color.rgb(0, 238, 0));
+		singlePlayerButton.setBackgroundColor(Color.rgb(255, 255, 255));
 		singlePlayerButton.getBackground().setAlpha(180);
 		singlePlayerButton.setOnClickListener(new OnClickListener() {
 			
@@ -125,7 +163,7 @@ public class MainMenu extends Activity {
 		multiPlayerButton.setPadding(20, 70, 20, 80);
 		multiPlayerButton.setText("Multi-Player");
 		multiPlayerButton.setTextSize(30);
-		multiPlayerButton.setBackgroundColor(Color.rgb(0, 0, 238));
+		multiPlayerButton.setBackgroundColor(Color.rgb(255, 255, 255));
 		multiPlayerButton.getBackground().setAlpha(180);
 		multiPlayerButton.setOnClickListener(new OnClickListener() {
 
@@ -174,5 +212,15 @@ public class MainMenu extends Activity {
 				self.startActivity(intent);
 			}
 		});
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		turnX = event.values[SensorManager.DATA_Y] / 10f;
+		turnY = event.values[SensorManager.DATA_X] / 10f;
 	}
 }
