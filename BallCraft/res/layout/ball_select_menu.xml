@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ball_select_menu_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+	<android.opengl.GLSurfaceView
+	    android:id="@+id/ball_select_menu_gl_surface_view"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" />
+
+</RelativeLayout>
