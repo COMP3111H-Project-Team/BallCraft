@@ -69,4 +69,6 @@
  		<service android:name="hkust.comp3111h.ballcraft.BluetoothService"></service>
     </application>
 
+	<uses-permission android:name="andorid.permission.STORAGE"/>
+	
 </manifest>

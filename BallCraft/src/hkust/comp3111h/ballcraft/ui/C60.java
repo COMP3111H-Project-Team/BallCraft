@@ -366,6 +366,11 @@ public class C60 {
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 	}
 	
+    /**
+     * Get a random new color value according to the current one
+     * @param index The index used to indicate R, G or B
+     * @return The new value of the channel
+     */
 	private float getRand(int index) {
 		int rand = randGen.nextInt(20) - 10;
 		RGB[index] += rand;
