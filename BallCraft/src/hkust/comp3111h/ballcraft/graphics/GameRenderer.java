@@ -70,6 +70,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		gl.glClearDepthf(1.0f);
 		gl.glEnable(GL10.GL_DEPTH_TEST);
 		gl.glDepthFunc(GL10.GL_LEQUAL);
+		gl.glFrontFace(GL10.GL_CW);
+		gl.glEnable(GL10.GL_CULL_FACE);
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
 	}
 	
