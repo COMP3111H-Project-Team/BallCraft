@@ -29,6 +29,7 @@ public class MainMenu extends Activity implements SensorEventListener {
 	private Activity self;
 	
 	private RelativeLayout rLayout;
+	private LinearLayout lLayout;
 	private GLSurfaceView glView;
 	
 	private SensorManager sensorManager;
@@ -41,18 +42,14 @@ public class MainMenu extends Activity implements SensorEventListener {
 		
 		self = this;
 		
-    	getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, 
+    	this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, 
     			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
         		WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         
         this.initSensor();
         this.initLayout();
-        
-        // this.setContentView(R.layout.main_menu);
-        
-        // initTextButtons();
 	}
 	
     private void initSensor() {
@@ -71,11 +68,13 @@ public class MainMenu extends Activity implements SensorEventListener {
 		
 		// glView
         glView = new GLSurfaceView(this);
-        glView.setRenderer(new MainMenuRenderer(this));
+        glView.setRenderer(new GameMenuRenderer(this));
 		RelativeLayout.LayoutParams glvParams = new RelativeLayout.LayoutParams(
 				RelativeLayout.LayoutParams.FILL_PARENT,
 				RelativeLayout.LayoutParams.FILL_PARENT);
 		glView.setLayoutParams(glvParams);
+		
+		rLayout.addView(glView);
 		
 		// TextView of "BallCraft"
 		ImageView titleView = new ImageView(this);
@@ -124,7 +123,7 @@ public class MainMenu extends Activity implements SensorEventListener {
 		});
 		
 		// LinearLayout containing the two options: single player and multi-player
-		LinearLayout lLayout = new LinearLayout(this);
+		lLayout = new LinearLayout(this);
 		RelativeLayout.LayoutParams lLayoutParams = new RelativeLayout.LayoutParams(
 				RelativeLayout.LayoutParams.WRAP_CONTENT,
 				RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -149,6 +148,7 @@ public class MainMenu extends Activity implements SensorEventListener {
 			
 			@Override
 			public void onClick(View v) {
+				// initSinglePlayerMenuLayout();
 				self.startActivity(new Intent(MainMenu.this, GameActivity.class));
 			}
 			
@@ -169,7 +169,8 @@ public class MainMenu extends Activity implements SensorEventListener {
 
 			@Override
 			public void onClick(View v) {
-				self.startActivity(new Intent(MainMenu.this, MultiPlayerMenu.class));
+				self.startActivity(new Intent(MainMenu.this, BallSelectMenu.class));
+				self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 			}
 			
 		});
@@ -177,41 +178,11 @@ public class MainMenu extends Activity implements SensorEventListener {
 		lLayout.addView(singlePlayerButton);
 		lLayout.addView(multiPlayerButton);
 		
-		rLayout.addView(glView);
 		rLayout.addView(titleView);
 		rLayout.addView(iv);
 		rLayout.addView(lLayout);
 		
         this.setContentView(rLayout);
-	}
-	
-	private void initTextButtons() {
-		ImageView singlePlayerImg = (ImageView) this.findViewById(R.id.main_menu_single_player_text);
-		singlePlayerImg.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MainMenu.this, GameActivity.class);
-				self.startActivity(intent);
-			}
-		});
-		
-		ImageView multiPlayerImg = (ImageView) this.findViewById(R.id.main_menu_multi_player_text);
-		multiPlayerImg.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MainMenu.this, MultiPlayerMenu.class);
-				self.startActivity(intent);
-			}
-		});
-		
-		ImageView optionImg = (ImageView) this.findViewById(R.id.main_menu_option_text);
-		optionImg.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MainMenu.this, OptionMenu.class);
-				self.startActivity(intent);
-			}
-		});
 	}
 
 	@Override
@@ -220,7 +191,7 @@ public class MainMenu extends Activity implements SensorEventListener {
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		turnX = event.values[SensorManager.DATA_Y] / 10f;
-		turnY = event.values[SensorManager.DATA_X] / 10f;
+		turnX = event.values[SensorManager.DATA_Y] / 3f;
+		turnY = event.values[SensorManager.DATA_X] / 3f;
 	}
 }
