@@ -33,7 +33,7 @@ public class SplashScreenBC extends Activity {
 	public Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-			Intent intent = new Intent(SplashScreenBC.this, GameMenu.class);
+			Intent intent = new Intent(SplashScreenBC.this, MainMenu.class);
 			self.startActivity(intent);
 			self.finish();
 			self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
