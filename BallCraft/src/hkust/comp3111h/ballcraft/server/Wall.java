@@ -80,6 +80,7 @@ public class Wall extends Unit {
 	}
 	
 	public void draw(GL10 gl) {
+		gl.glColor4f(0, 0.5f, 0.5f, 1);
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
 		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
