@@ -1,8 +1,6 @@
 package hkust.comp3111h.ballcraft.graphics;
 
 import hkust.comp3111h.ballcraft.client.ClientGameState;
-import hkust.comp3111h.ballcraft.client.GameActivity;
-import hkust.comp3111h.ballcraft.server.Unit;
 
 import java.util.ArrayList;
 

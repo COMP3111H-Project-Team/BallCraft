@@ -1,18 +1,5 @@
 package hkust.comp3111h.ballcraft.ui;
 
-import hkust.comp3111h.ballcraft.R;
-
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
-
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.opengl.GLSurfaceView;
-import android.opengl.GLU;
-import android.util.Log;
 
 /*
 public class MainMenuRenderer implements GLSurfaceView.Renderer {
