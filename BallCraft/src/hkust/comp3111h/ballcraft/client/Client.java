@@ -15,8 +15,9 @@ public class Client extends IntentService {
     }
     
 	public static void setInputAcceleration(float x, float y) {
-		input.acceleration.x = x;
-		input.acceleration.y = y;
+		//TODO: what happened here?
+		input.acceleration.x = -x;
+		input.acceleration.y = -y;
 	}
 	
 	public static void processSerializedUpdate(String serialized) {
