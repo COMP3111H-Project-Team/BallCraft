@@ -5,6 +5,8 @@ import hkust.comp3111h.ballcraft.graphics.Drawable;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 
+import android.util.Log;
+
 public abstract class Unit implements Drawable {
 
 	protected Body body;
