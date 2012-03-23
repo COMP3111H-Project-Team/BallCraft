@@ -38,11 +38,7 @@ public class ServerGameState
     {
     	units.get(playerId).applyForce(input.acceleration);
     }
-    
-    public void applyUpdate(GameUpdater updater) {
-    	// TODO
-    }
-    
+
     public void loadMap(String name)
     {
     	units.add(new Ball(10, 50, 0.6f, new Vec2(0, 0)));
@@ -64,7 +60,6 @@ public class ServerGameState
         }
                 
     }
-    
     
     public void onEveryFrame(int msecElapsed)
     {
