@@ -60,24 +60,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		setContentView(rLayout);
 		
     }
-    
-	@Override
-	protected void onPause() {
-		super.onPause();
-		mGLView.onPause();
-	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		mGLView.onResume();
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-	}
-    
     /**
      * Initialize the main layout of the game view,
      * including buttons, MUD, etc.

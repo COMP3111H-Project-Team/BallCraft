@@ -10,10 +10,14 @@ import android.view.WindowManager;
 public class OptionMenu extends Activity {
 
     private GLSurfaceView glView;
+    
+    private Activity self;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		self = this;
 		
     	this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, 
     			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -25,6 +29,12 @@ public class OptionMenu extends Activity {
         
         glView = (GLSurfaceView) this.findViewById(R.id.option_menu_gl_surface_view);
         glView.setRenderer(new GameMenuRenderer(this));
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 	}
 
 }
