@@ -64,14 +64,12 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		// gamePlane.loadTexture(gl, client); // tex
-		gl.glEnable(GL10.GL_TEXTURE_2D); //tex
+		// gl.glEnable(GL10.GL_TEXTURE_2D); //tex
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 		gl.glShadeModel(GL10.GL_SMOOTH);
 		gl.glClearDepthf(1.0f);
 		gl.glEnable(GL10.GL_DEPTH_TEST);
 		gl.glDepthFunc(GL10.GL_LEQUAL);
-		gl.glFrontFace(GL10.GL_CW);
-		gl.glEnable(GL10.GL_CULL_FACE);
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
 	}
 	
@@ -85,7 +83,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		float xPos = self.getPosition().x;
 		float yPos = self.getPosition().y;
 		GLU.gluLookAt(gl, 
-				xPos, yPos + 200, 400, 
+				xPos, yPos + 200, 300, 
 				xPos, yPos, 5, 
 				0, 0, 1);
 		
