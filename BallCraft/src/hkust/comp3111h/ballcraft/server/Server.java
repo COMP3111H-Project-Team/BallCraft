@@ -21,9 +21,9 @@ public class Server extends IntentService
 	
 	public Server()
 	{
-		super("ServerService");
+		super("Server");
 		gameState = ServerGameState.getStateInstance();
-		gameState.loadMap(this, "vector.xml");
+		gameState.loadMap("vectormap.xml");
 		
 		gameUpdater = new GameUpdater();
 		

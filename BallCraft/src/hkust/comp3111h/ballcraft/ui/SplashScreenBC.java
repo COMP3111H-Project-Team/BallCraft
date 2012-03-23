@@ -2,29 +2,42 @@ package hkust.comp3111h.ballcraft.ui;
 
 import hkust.comp3111h.ballcraft.R;
 import android.app.Activity;
-import android.opengl.GLSurfaceView;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class OptionMenu extends Activity {
-
-    private GLSurfaceView glView;
+public class SplashScreenBC extends Activity {
 	
+	private Activity self;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		self = this;
 		
     	this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, 
     			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
         		WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        
-        this.setContentView(R.layout.option_menu);
-        
-        glView = (GLSurfaceView) this.findViewById(R.id.option_menu_gl_surface_view);
-        glView.setRenderer(new GameMenuRenderer(this));
-	}
+		
+		this.setContentView(R.layout.splash_screen_bc);
 
+		handler.sendEmptyMessageDelayed(0, 1000);
+	}
+	
+	public Handler handler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			Intent intent = new Intent(SplashScreenBC.this, MainMenu.class);
+			self.startActivity(intent);
+			self.finish();
+			self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+		}
+	};
+	
 }

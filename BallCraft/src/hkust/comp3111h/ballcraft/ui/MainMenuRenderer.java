@@ -1,7 +1,19 @@
 package hkust.comp3111h.ballcraft.ui;
 
+import hkust.comp3111h.ballcraft.R;
 
-/*
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.opengl.GLSurfaceView;
+import android.opengl.GLU;
+import android.opengl.GLUtils;
+
 public class MainMenuRenderer implements GLSurfaceView.Renderer {
 	
 	private Tet testPlane;
@@ -10,8 +22,8 @@ public class MainMenuRenderer implements GLSurfaceView.Renderer {
 	
 	private int [] textures;
 	
-	private float turned = 0;
-	private float turnedUp = 0;
+	private float turnX = 0;
+	private float turnY = 0;
 	
 	public MainMenuRenderer(Context context) {
 		testPlane = new Tet();
@@ -45,9 +57,10 @@ public class MainMenuRenderer implements GLSurfaceView.Renderer {
 		gl.glLoadIdentity();
 		gl.glTranslatef(0, 0, -300);	
 		
-		gl.glRotatef(turned, 0, 1, 0);
-		gl.glRotatef(turnedUp, 1, 0, 0);
+		gl.glRotatef(turnX, 0, 1, 0);
+		gl.glRotatef(turnY, 1, 0, 0);
 		
+		/*
 		if (MainMenu.touchTurn != 0) {
 			gl.glRotatef(MainMenu.touchTurn, 0, 1, 0);
 			turned += MainMenu.touchTurn;
@@ -57,6 +70,10 @@ public class MainMenuRenderer implements GLSurfaceView.Renderer {
 			gl.glRotatef(MainMenu.touchTurn, 1, 0, 0);
 			turnedUp += MainMenu.touchTurnUp;
 		}
+		*/
+		
+		turnX += MainMenu.turnX;
+		turnY += MainMenu.turnY;
 		
 		gl.glColor4f(0.5f, 0.5f, 0.5f, 0.6f);
 		testPlane.draw(gl);
@@ -98,5 +115,3 @@ public class MainMenuRenderer implements GLSurfaceView.Renderer {
 	}
 	
 }
-
-*/

@@ -5,42 +5,64 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     
-    <ImageView 
-        android:id="@+id/main_menu_bg_img"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/main_menu_bg" />
-    
-    <LinearLayout 
-        android:id="@+id/main_menu_options_layout"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center">
-        
-        <ImageView
-            android:id="@+id/main_menu_single_player_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/single_player_img" />
-        
-        <ImageView
-            android:id="@+id/main_menu_multi_player_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/multi_player_img" />
-        
-        <ImageView
-            android:id="@+id/main_menu_option_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/option_img" />
-            
-    </LinearLayout>
+	<android.opengl.GLSurfaceView
+	    android:id="@+id/main_menu_gl_surface_view"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" />
+	
+	<ImageView
+	    android:id="@+id/main_menu_title_image_view"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginTop="20dp"
+	    android:src="@drawable/title" />
+	
+	<ImageView
+	    android:id="@+id/main_menu_setting_image_view"
+	    android:layout_width="40dp"
+	    android:layout_height="40dp"
+	    android:scaleType="fitXY"
+	    android:layout_alignParentRight="true"
+	    android:layout_marginTop="10dp"
+	    android:layout_marginRight="10dp"
+	    android:src="@drawable/setting" />
+	
+	<LinearLayout
+	    android:id="@+id/main_menu_lower_linear_layout"
+	    android:orientation="horizontal"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginBottom="10dp">
+	    
+	    <Button
+	        android:id="@+id/main_menu_single_player_button"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_marginRight="5dp"
+		    android:paddingLeft="20dp"
+		    android:paddingTop="70dp"
+		    android:paddingRight="20dp"
+		    android:paddingBottom="80dp"
+		    android:text="Single Player"
+		    android:textSize="12pt"
+		    android:background="#FFFFFF" />
+	    
+	    <Button
+	        android:id="@+id/main_menu_multi_player_button"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="5dp"
+		    android:paddingLeft="20dp"
+		    android:paddingTop="70dp"
+		    android:paddingRight="20dp"
+		    android:paddingBottom="80dp"
+		    android:text="Multi-Player"
+		    android:textSize="12pt"
+		    android:background="#FFFFFF" />
+	    
+	</LinearLayout>
 
 </RelativeLayout>
