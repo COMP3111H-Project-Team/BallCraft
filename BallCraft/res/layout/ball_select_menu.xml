@@ -9,31 +9,97 @@
 	    android:id="@+id/ball_select_menu_gl_surface_view"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent" />
-	
-	<LinearLayout
-	    android:id="@+id/ball_select_menu_linear_layout"
-	    android:orientation="vertical"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_centerInParent="true">
+	 
+    <TextView
+        android:id="@+id/ball_select_item_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:text="&lt;&lt;"
+        android:textColor="#FFFFFF"
+        android:textSize="36pt" />
+    
+    <TextView
+        android:id="@+id/ball_select_item_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:text="&gt;&gt;"
+        android:textColor="#FFFFFF"
+        android:textSize="36pt" />
 	    
-	    <Gallery 
-	        android:id="@+id/ball_select_menu_gallery"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" />
+	<RelativeLayout
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/ball_select_item_layout"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content">
+	   
+	    <ImageView 
+	        android:id="@+id/ball_select_item_image"
+	        android:layout_width="280dp"
+	        android:layout_height="280dp" 
+	        android:layout_centerInParent="true"
+	        android:scaleType="fitXY" />
 	    
-	    <!--
-	    <TextView 
-	        android:id="@+id/ball_select_menu_ok_button"
+	    <ImageView 
+	        android:id="@+id/ball_select_item_locked_image"
+	        android:layout_width="280dp"
+	        android:layout_height="280dp" 
+	        android:scaleType="fitXY"
+	        android:layout_centerInParent="true"
+	        android:src="@drawable/locked" />
+	        
+	    <TextView
+	        android:id="@+id/ball_select_item_name_display"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_gravity="center"
-	        android:layout_marginTop="20dp"
-	        android:text="OK"
-	        android:textColor="#FFFFFF"
-	        android:textSize="12pt" />
-	    -->
+	        android:layout_centerHorizontal="true"
+	        android:textSize="12pt"
+	        android:textColor="#FFFFFF" />
 	    
-	</LinearLayout>
+	    <TextView
+	        android:id="@+id/ball_select_item_description_display"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/ball_select_item_name_display"
+	        android:layout_centerHorizontal="true"
+	        android:textSize="8pt"
+	        android:textColor="#FFFFFF" />
+	    
+	    <LinearLayout
+	        android:id="@+id/ball_select_item_value_display_layout"
+	        android:orientation="vertical"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="-70dp"
+	        android:gravity="center"
+	        android:layout_below="@+id/ball_select_item_image">
+	    
+		    <TextView
+		        android:id="@+id/ball_select_item_mass_display"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textSize="10pt"
+		        android:textColor="#CCCCFF" />
+		    
+		    <TextView
+		        android:id="@+id/ball_select_item_friction_display"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textSize="10pt"
+		        android:textColor="#FFCCCC" />
+		    
+		    <TextView
+		        android:id="@+id/ball_select_item_magic_display"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textSize="10pt"
+		        android:textColor="#CCFFCC" />
+		    
+	    </LinearLayout>
+	    
+	</RelativeLayout>
 
 </RelativeLayout>

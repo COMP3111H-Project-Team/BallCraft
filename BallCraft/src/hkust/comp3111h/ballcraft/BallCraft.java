@@ -1,18 +1,17 @@
 package hkust.comp3111h.ballcraft;
 
-
 /**
  * This class includes the constants and definitions of the game
  */
 public class BallCraft {
 	
 	public static final class Ball {
-		public static final int WOOD_BALL = 1;
-		public static final int ROCK_BALL = 2;
-		public static final int WATER_BALL = 3;
-		public static final int IRON_BALL = 4;
-		public static final int FIRE_BALL = 5;
-		public static final int DARK_BALL = 6;
+		public static final int WOOD_BALL = 0;
+		public static final int ROCK_BALL = 1;
+		public static final int WATER_BALL = 2;
+		public static final int IRON_BALL = 3;
+		public static final int FIRE_BALL = 4;
+		public static final int DARK_BALL = 5;
 	}
 
 	public static final Class [] balls = {

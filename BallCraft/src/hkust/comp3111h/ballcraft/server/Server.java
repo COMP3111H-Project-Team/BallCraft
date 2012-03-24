@@ -38,7 +38,7 @@ public class Server extends IntentService
 	
 	public static void setState(String string)
 	{
-		gameInput = GameInput.deserializeGameInput(string); // get and parse data from server adapter
+		gameInput = GameInput.fromSerializedString(string); // get and parse data from server adapter
 	}
 	
 	public static GameUpdater generateGameUpdater() {
