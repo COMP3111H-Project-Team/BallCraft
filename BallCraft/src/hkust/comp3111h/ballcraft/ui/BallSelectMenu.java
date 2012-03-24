@@ -14,7 +14,7 @@ public class BallSelectMenu extends Activity {
 	
 	private Activity self;
 	
-	@Override
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
@@ -37,28 +37,28 @@ public class BallSelectMenu extends Activity {
      */
     class BallSelectAdapter extends BaseAdapter {
 
-		@Override
+		
 		public int getCount() {
 			return 1;
 		}
 
-		@Override
+		
 		public Object getItem(int position) {
 			return null;
 		}
 
-		@Override
+		
 		public long getItemId(int position) {
 			return 0;
 		}
 
-		@Override
+		
 		public View getView(int position, View convertView, ViewGroup parent) {
 			return null;
 		}
     }
 
-	@Override
+	
 	public void onBackPressed() {
 		super.onBackPressed();
 		self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

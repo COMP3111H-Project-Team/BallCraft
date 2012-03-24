@@ -104,7 +104,6 @@ public class GameMenu extends Activity implements SensorEventListener {
 		iv.setImageResource(R.drawable.setting);
 		iv.setOnClickListener(new OnClickListener() {
 
-			@Override
 			public void onClick(View v) {
 				self.startActivity(new Intent(GameMenu.this, OptionMenu.class));
 			}
@@ -116,17 +115,14 @@ public class GameMenu extends Activity implements SensorEventListener {
 		iv.startAnimation(rotate360);
 		rotate360.setAnimationListener(new AnimationListener() {
 
-			@Override
 			public void onAnimationEnd(Animation animation) {
 				iv.clearAnimation();
 				iv.startAnimation(rotate360);
 			}
 
-			@Override
 			public void onAnimationRepeat(Animation animation) {
 			}
 
-			@Override
 			public void onAnimationStart(Animation animation) {
 			}
 		});
@@ -155,7 +151,6 @@ public class GameMenu extends Activity implements SensorEventListener {
 		singlePlayerButton.getBackground().setAlpha(180);
 		singlePlayerButton.setOnClickListener(new OnClickListener() {
 			
-			@Override
 			public void onClick(View v) {
 				// initSinglePlayerMenuLayout();
 				self.startActivity(new Intent(GameMenu.this, GameActivity.class));
@@ -176,7 +171,6 @@ public class GameMenu extends Activity implements SensorEventListener {
 		multiPlayerButton.getBackground().setAlpha(180);
 		multiPlayerButton.setOnClickListener(new OnClickListener() {
 
-			@Override
 			public void onClick(View v) {
 				self.startActivity(new Intent(GameMenu.this, MultiPlayerMenu.class));
 			}
@@ -195,11 +189,9 @@ public class GameMenu extends Activity implements SensorEventListener {
 		rLayout.removeView(lLayout);
 	}
 
-	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 	}
 
-	@Override
 	public void onSensorChanged(SensorEvent event) {
 		turnX = event.values[SensorManager.DATA_Y] / 3f;
 		turnY = event.values[SensorManager.DATA_X] / 3f;

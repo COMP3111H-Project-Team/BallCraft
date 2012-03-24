@@ -38,7 +38,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 	private static TextView debugView = null;
 	private static String debugMsg = null;
 	
-    @Override
+    
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	
@@ -61,19 +61,19 @@ public class GameActivity extends Activity implements SensorEventListener {
 		
     }
     
-	@Override
+	
 	protected void onPause() {
 		super.onPause();
 		mGLView.onPause();
 	}
 
-	@Override
+	
 	protected void onResume() {
 		super.onResume();
 		mGLView.onResume();
 	}
 
-	@Override
+	
 	protected void onStop() {
 		super.onStop();
 	}
@@ -109,7 +109,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		castBtn.getBackground().setAlpha(80);
 		castBtn.setText("Function 1");
 		castBtn.setOnClickListener(new OnClickListener() {
-			@Override
+			
 			public void onClick(View v) {
 				/*
 				if (input != null) {
@@ -129,7 +129,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		accBtn.getBackground().setAlpha(80);
 		accBtn.setText("Function 2");
 		accBtn.setOnClickListener(new OnClickListener() {
-			@Override
+			
 			public void onClick(View v) {
 				/*
 				input.addSkill(new Skill(BallCraft.Skill.TEST_SKILL_2));
@@ -160,11 +160,11 @@ public class GameActivity extends Activity implements SensorEventListener {
 				SensorManager.SENSOR_DELAY_NORMAL);
     }
 
-	@Override
+	
 	public void onAccuracyChanged(Sensor arg0, int arg1) {
 	}
 
-	@Override
+	
 	public void onSensorChanged(SensorEvent event) {
 		Client.setInputAcceleration(event.values[SensorManager.DATA_Y], -event.values[SensorManager.DATA_X]);
 	}
@@ -177,7 +177,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 	}
 	
 	private static Handler debugMsgHandler = new Handler() {
-		@Override
+		
 		public void handleMessage(Message msg) {
 			displayDebugMsg();
 		}

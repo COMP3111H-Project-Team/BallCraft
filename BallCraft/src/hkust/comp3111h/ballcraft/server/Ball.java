@@ -59,7 +59,7 @@ public class Ball extends Unit {
 		unitSphere(stacks, slices);
 	}
 
-	@Override
+	
 	public void draw(GL10 gl) {
 		gl.glPushMatrix();
 			gl.glScalef(this.getRadius(), this.getRadius(), this.getRadius());
@@ -165,7 +165,7 @@ public class Ball extends Unit {
         return fb;
     }
 	
-	@Override
+	
 	public String toSerializedString() {
 		String serialized = "";
 		serialized += "ball:";
@@ -178,7 +178,7 @@ public class Ball extends Unit {
 		return body.getFixtureList().m_shape.m_radius;
 	}
 
-	@Override
+	
 	public void updateFromString(String string)
 	{
 		String [] parts = string.split(":");String [] vals = parts[1].split(",");
