@@ -50,7 +50,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 		initLayout();
 		initSensor();
     }
-    
 
     /**
      * Initialize the main layout of the game view,

@@ -53,7 +53,7 @@ public class BallSelectMenu extends Activity {
 
 		@Override
 		public int getCount() {
-			return BallCraft.numOfBalls;
+			return BallCraft.balls.length;
 		}
 
 		@Override
@@ -65,24 +65,48 @@ public class BallSelectMenu extends Activity {
 		public long getItemId(int position) {
 			return position;
 		}
-
+		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View v = inflater.inflate(R.layout.ball_select_item, null);
+			TextView ballNameView = (TextView) v.findViewById(R.id.ball_select_item_name_display);
+			TextView ballDescriptionView = (TextView) v.findViewById(R.id.ball_select_item_description_display);
+			
 			ImageView ballImageView = (ImageView) v.findViewById(R.id.ball_select_item_image);
 			ImageView ballLockedView = (ImageView) v.findViewById(R.id.ball_select_item_locked_image);
-			TextView ballNameView = (TextView) v.findViewById(R.id.ball_select_item_name_display);
+			
+			TextView ballMassView = (TextView) v.findViewById(R.id.ball_select_item_mass_display);
+			TextView ballFrictionView = (TextView) v.findViewById(R.id.ball_select_item_friction_display);
+			TextView ballMagicView = (TextView) v.findViewById(R.id.ball_select_item_magic_display);
+			
+			ballNameView.setText(BallCraft.getBallNameById(position));
+			ballDescriptionView.setText(BallCraft.getBallDescriptionById(position));
 			
 			ballImageView.setImageResource(BallCraft.getBallImageResourceById(position));
-			ballNameView.setText(BallCraft.getBallNameById(position));
+			ballMassView.setText("Mass " 
+					+ this.getValueDisplayFromInt(BallCraft.getBallMassById(position)));
+			ballFrictionView.setText("Friction " 
+					+ this.getValueDisplayFromInt(BallCraft.getBallFrictionById(position)));
+			ballMagicView.setText("Magic " 
+					+ this.getValueDisplayFromInt(BallCraft.getBallMagicById(position)));
 			
 			if (BallCraft.ballUnlocked(position)) {
+				ballImageView.setAlpha(200);
 				ballLockedView.setVisibility(View.INVISIBLE);
 			} else { // the ball is not unlocked yet
 				ballImageView.setAlpha(80);
+				ballLockedView.setAlpha(180);
 			}
 			
 			return v;
+		}
+		
+		private String getValueDisplayFromInt(int value) {
+			String display = "";
+			for (int i = 0; i < value; i++) {
+				display += "+";
+			}
+			return display;
 		}
     }
 
