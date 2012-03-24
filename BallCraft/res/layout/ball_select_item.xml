@@ -9,34 +9,64 @@
         android:id="@+id/ball_select_item_image"
         android:layout_width="280dp"
         android:layout_height="280dp" 
-        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
         android:scaleType="fitXY" />
     
     <ImageView 
         android:id="@+id/ball_select_item_locked_image"
-        android:layout_width="300dp"
-        android:layout_height="200dp" 
-        android:layout_centerVertical="true"
+        android:layout_width="280dp"
+        android:layout_height="280dp" 
         android:scaleType="fitXY"
+        android:layout_centerInParent="true"
         android:src="@drawable/locked" />
-    
-    <TextView
-        android:id="@+id/ball_select_item_mass_display"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ball_select_item_image"
-        android:layout_marginTop="-50dp"
-        android:layout_centerHorizontal="true"
-        android:text="Mass "
-        android:textSize="12pt"
-        android:textColor="#FFFFFF" />
-    
+        
     <TextView
         android:id="@+id/ball_select_item_name_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ball_select_item_mass_display"
         android:layout_centerHorizontal="true"
+        android:textSize="12pt"
         android:textColor="#FFFFFF" />
     
+    <TextView
+        android:id="@+id/ball_select_item_description_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ball_select_item_name_display"
+        android:layout_centerHorizontal="true"
+        android:textSize="8pt"
+        android:textColor="#FFFFFF" />
+    
+    <LinearLayout
+        android:id="@+id/ball_select_item_value_display_layout"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-70dp"
+        android:gravity="center"
+        android:layout_below="@+id/ball_select_item_image">
+    
+	    <TextView
+	        android:id="@+id/ball_select_item_mass_display"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="10pt"
+	        android:textColor="#CCCCFF" />
+	    
+	    <TextView
+	        android:id="@+id/ball_select_item_friction_display"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="10pt"
+	        android:textColor="#FFCCCC" />
+	    
+	    <TextView
+	        android:id="@+id/ball_select_item_magic_display"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="10pt"
+	        android:textColor="#CCFFCC" />
+	    
+	    </LinearLayout>
+	    
 </RelativeLayout>
