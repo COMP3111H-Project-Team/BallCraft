@@ -9,5 +9,29 @@
 	    android:id="@+id/ball_select_menu_gl_surface_view"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent" />
+	
+	<LinearLayout
+	    android:id="@+id/ball_select_menu_linear_layout"
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_centerInParent="true">
+	    
+	    <Gallery 
+	        android:id="@+id/ball_select_menu_gallery"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content" />
+	    
+	    <TextView 
+	        android:id="@+id/ball_select_menu_ok_button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:layout_marginTop="20dp"
+	        android:text="OK"
+	        android:textColor="#FFFFFF"
+	        android:textSize="12pt" />
+	    
+	</LinearLayout>
 
 </RelativeLayout>

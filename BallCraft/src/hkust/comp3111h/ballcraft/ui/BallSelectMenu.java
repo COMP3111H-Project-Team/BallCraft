@@ -1,14 +1,19 @@
 package hkust.comp3111h.ballcraft.ui;
 
+import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.R;
 import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import android.widget.Gallery;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class BallSelectMenu extends Activity {
 	
@@ -30,16 +35,25 @@ public class BallSelectMenu extends Activity {
 		
 		GLSurfaceView glView = (GLSurfaceView) this.findViewById(R.id.ball_select_menu_gl_surface_view);
 		glView.setRenderer(new GameMenuRenderer(this));
+		
+		Gallery ballSelectGallery = (Gallery) this.findViewById(R.id.ball_select_menu_gallery);
+		ballSelectGallery.setAdapter(new BallSelectAdapter());
 	}
 
     /**
      * Used to set the content of the gallery
      */
     class BallSelectAdapter extends BaseAdapter {
+    	
+    	private LayoutInflater inflater;
+    	
+    	public BallSelectAdapter() {
+    		inflater = self.getLayoutInflater();
+    	}
 
 		@Override
 		public int getCount() {
-			return 1;
+			return BallCraft.numOfBalls;
 		}
 
 		@Override
@@ -49,12 +63,26 @@ public class BallSelectMenu extends Activity {
 
 		@Override
 		public long getItemId(int position) {
-			return 0;
+			return position;
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			return null;
+			View v = inflater.inflate(R.layout.ball_select_item, null);
+			ImageView ballImageView = (ImageView) v.findViewById(R.id.ball_select_item_image);
+			ImageView ballLockedView = (ImageView) v.findViewById(R.id.ball_select_item_locked_image);
+			TextView ballNameView = (TextView) v.findViewById(R.id.ball_select_item_name_display);
+			
+			ballImageView.setImageResource(BallCraft.getBallImageResourceById(position));
+			ballNameView.setText(BallCraft.getBallNameById(position));
+			
+			if (BallCraft.ballUnlocked(position)) {
+				ballLockedView.setVisibility(View.INVISIBLE);
+			} else { // the ball is not unlocked yet
+				ballImageView.setAlpha(80);
+			}
+			
+			return v;
 		}
     }
 
