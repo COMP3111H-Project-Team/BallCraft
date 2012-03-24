@@ -13,6 +13,7 @@ public class Client extends IntentService {
 	private static GameInput input;
 	private static Context context;
 	private static Vibrator vibrator;
+	
     public Client() {
     	super("ClientService");
     	vibrator = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
@@ -25,6 +26,10 @@ public class Client extends IntentService {
 		input.acceleration.y = -y;
 	}
 	
+	public static void castSkill(Skill skill) {
+		input.addSkill(skill);
+	}
+	
 	public static void processSerializedUpdate(String serialized) {
 		String [] unitStrs = serialized.split(";");
 		if (!unitStrs[0].equals(""))
@@ -32,7 +37,7 @@ public class Client extends IntentService {
 			String [] collision = unitStrs[0].split(",");
 			if (collision[0].equals("0") || collision[1].equals("1"));
 			{
-				vibrator.vibrate(50);
+				// vibrator.vibrate(50);
 			}			
 		}
 		ClientGameState.getClientGameState().applyUpdater(unitStrs[1]);
@@ -44,6 +49,7 @@ public class Client extends IntentService {
 		{
 			if (Server.inited) {
 				ServerAdapter.sendToServer(input);
+				input.clearSkills();
 			}
 			try {
 				Thread.sleep(20);
