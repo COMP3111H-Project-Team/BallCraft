@@ -3,10 +3,10 @@ package hkust.comp3111h.ballcraft.client;
 import hkust.comp3111h.ballcraft.BallCraft;
 
 /**
- * 
- * @author guanlun
+ * Define a skill to be casted
  */
 public class Skill {
+	
 	private int id;
 	
 	public Skill(int id) {
@@ -24,4 +24,9 @@ public class Skill {
 	public void deactivate() {
 		id = BallCraft.Skill.DEACTIVATED;
 	}
+	
+	public String toSerializedString() {
+		return String.valueOf(id);
+	}
+	
 }

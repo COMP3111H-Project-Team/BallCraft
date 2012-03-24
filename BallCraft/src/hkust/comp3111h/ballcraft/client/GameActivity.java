@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.client;
 
+import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import hkust.comp3111h.ballcraft.graphics.MiniMapView;
@@ -26,8 +27,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 	private GLSurfaceView mGLView;
 	private SensorManager sensorManager;
-	
-	private MiniMapView miniMap;
 	
 	private static TextView debugView = null;
 	private static String debugMsg = null;
@@ -68,6 +67,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		skill1Button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Client.castSkill(new Skill(BallCraft.Skill.TEST_SKILL_1));
 			}
 		});
 			
@@ -76,12 +76,11 @@ public class GameActivity extends Activity implements SensorEventListener {
 		skill2Button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Client.castSkill(new Skill(BallCraft.Skill.TEST_SKILL_2));
 			}
 		});
 		
 		debugView = (TextView) this.findViewById(R.id.game_activity_debug_view);
-		
-		miniMap = (MiniMapView) this.findViewById(R.id.game_activity_mini_map_view);
     }
     
     private void initSensor() {
