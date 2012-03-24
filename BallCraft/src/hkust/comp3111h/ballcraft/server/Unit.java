@@ -5,10 +5,10 @@ import hkust.comp3111h.ballcraft.graphics.Drawable;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 
-import android.util.Log;
-
 public abstract class Unit implements Drawable {
 
+	protected final static float rate = 5.0f;
+	protected final static float g = 9.8f;
 	protected Body body;
 	private final static Vec2 O = new Vec2(0, 0);
 	
@@ -19,7 +19,8 @@ public abstract class Unit implements Drawable {
 			float x = Float.valueOf(vals[0]);
 			float y = Float.valueOf(vals[1]);
 			float radius = Float.valueOf(vals[2]);
-			return new Ball(radius, new Vec2(x, y));
+			float z = Float.valueOf(vals[3]);
+			return new Ball(radius, new Vec2(x, y), z);
 		} else if (parts[0].equals("wall")) {
 			String [] vals = parts[1].split(",");
 			float x1 = Float.valueOf(vals[0]);
@@ -35,7 +36,7 @@ public abstract class Unit implements Drawable {
 	}
 	
 	public void applyForce(Vec2 force) {
-		body.applyForce(force, O);
+		body.applyForce(force.mul(1.0f/ rate), O);
 //		Log.e("position:", body.getPosition().x + " , " + body.getPosition().y);
 	}
 	

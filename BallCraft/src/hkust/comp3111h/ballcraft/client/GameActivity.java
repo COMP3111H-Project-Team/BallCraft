@@ -46,7 +46,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         this.startService(new Intent(this, Client.class)); // start running client
 		
         MapParser.setContext(this);
-        
+        Client.setContext(this);
 		initLayout();
 		initSensor();
     }
