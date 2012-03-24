@@ -1,7 +1,6 @@
 package hkust.comp3111h.ballcraft.server;
 
 import hkust.comp3111h.ballcraft.client.GameInput;
-import hkust.comp3111h.ballcraft.client.GameUpdater;
 import hkust.comp3111h.ballcraft.client.Map;
 import hkust.comp3111h.ballcraft.client.MapParser;
 
@@ -32,11 +31,12 @@ public class ServerGameState
     	Vec2 gravity = new Vec2(0.0f, 0.0f);
         boolean doSleep = true;
         world = new World(gravity, doSleep);
+        world.setContactListener(new BallContactListener());
 	}
 	
     public void processPlayerInput(int playerId, GameInput input)
     {
-    	units.get(playerId).applyForce(input.acceleration);
+    	units.get(playerId).applyForce(input.acceleration.mul(1.0f));
     }
 
     public void loadMap(String name)
