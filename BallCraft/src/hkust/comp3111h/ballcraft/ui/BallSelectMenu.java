@@ -3,6 +3,7 @@ package hkust.comp3111h.ballcraft.ui;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.R;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ public class BallSelectMenu extends Activity {
 	private TextView ballNameView;
 	private TextView ballDescriptionView;
 	private ImageView ballImageView;
+	private ImageView ballSelectView;
 	private ImageView ballLockedView;
 	private TextView ballMassView;
 	private TextView ballFrictionView;
@@ -72,6 +74,8 @@ public class BallSelectMenu extends Activity {
 		ballDescriptionView = (TextView) this.findViewById(R.id.ball_select_item_description_display);
 	
 		ballImageView = (ImageView) this.findViewById(R.id.ball_select_item_image);
+		
+		ballSelectView = (ImageView) this.findViewById(R.id.ball_select_item_select_view);
 		ballLockedView = (ImageView) this.findViewById(R.id.ball_select_item_locked_image);
 	
 		ballMassView = (TextView) this.findViewById(R.id.ball_select_item_mass_display);
@@ -175,10 +179,31 @@ public class BallSelectMenu extends Activity {
 
 		if (BallCraft.ballUnlocked(currBallPos)) {
 			ballImageView.setAlpha(200);
+			ballSelectView.setVisibility(View.VISIBLE);
 			ballLockedView.setVisibility(View.INVISIBLE);
+			ballSelectView.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(self, MapSelectMenu.class);
+					intent.putExtra("ballSelected", currBallPos);
+					self.startActivity(intent);
+					self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+				}
+				
+			});
 		} else { // the ball is not unlocked yet
 			ballImageView.setAlpha(80);
+			ballSelectView.setVisibility(View.INVISIBLE);
 			ballLockedView.setVisibility(View.VISIBLE);
+			ballLockedView.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// do nothing when locked
+				}
+			});
+				
 		}
 
 		if (self.canGoPrev()) {

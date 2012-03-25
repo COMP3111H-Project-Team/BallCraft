@@ -89,6 +89,7 @@ public class Map {
 		}
 		return units;
 	}
+	
 	/*
 	public Vector<Wall> getWalls() {
 		return walls;
