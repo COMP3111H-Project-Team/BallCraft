@@ -65,6 +65,7 @@ public class MapSelectMenu extends Activity {
 		final MapDisplayView mapDisplay = (MapDisplayView) 
 				this.findViewById(R.id.map_select_menu_map_display_view);
 		mapDisplay.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+		mapDisplay.setMap(maps.get(0));
 		
 		mapList = (ListView) this.findViewById(R.id.map_select_menu_list);
 		mapList.setAdapter(new MapAdapter());

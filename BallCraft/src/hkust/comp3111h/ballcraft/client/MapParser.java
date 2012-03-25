@@ -30,10 +30,7 @@ public class MapParser{
 		context = con;
 	}
 	
-
-	
-	
-	public Map getMapFromXML(String fileName) {
+	public static Map getMapFromXML(String fileName) {
 		Map map = new Map();
 		DocumentBuilderFactory factory=null;
 	    DocumentBuilder builder=null;

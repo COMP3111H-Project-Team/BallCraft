@@ -1,9 +1,9 @@
 package hkust.comp3111h.ballcraft.ui;
 
 import hkust.comp3111h.ballcraft.client.Map;
+import hkust.comp3111h.ballcraft.client.Map.WallData;
 import hkust.comp3111h.ballcraft.client.MapParser;
 import hkust.comp3111h.ballcraft.server.Ball;
-import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.server.Wall;
 
 import java.util.Vector;
@@ -49,15 +49,20 @@ public class MapDisplayView extends SurfaceView {
 	protected void onDraw(Canvas canvas) {
 		Paint paint = new Paint();
 		paint.setColor(Color.WHITE);
-		canvas.drawRect(new Rect(100, 100, 200, 200), paint);
 		if (currMap != null) {
-			Vector<Unit> units = currMap.getUnit();
-			for (int i = 0; i < units.size(); i++) {
-				if (units.get(i) instanceof Ball) {
-					Log.w("ball", "parsed");
-				} else if (units.get(i) instanceof Wall) {
-					Log.w("wall", "parsed");
-				}
+			Vector<WallData> walls = currMap.getWallData();
+			float width = currMap.getWidth();
+			float height = currMap.getHeight();
+			float xOrig = width / 2;
+			float yOrig = height / 2;
+			
+			for (int i = 0; i < walls.size(); i++) {
+				WallData data = walls.get(i);
+				float xStart = 280 - ((xOrig + data.start.x) / 2 + 45);
+				float yStart = (yOrig + data.start.y) / 2 + 60;
+				float xEnd = 280 - ((xOrig + data.end.x) / 2 + 45);
+				float yEnd = (yOrig + data.end.y) / 2 + 60;
+				canvas.drawLine(xStart, yStart, xEnd, yEnd, paint);
 			}
 		}
 	}
