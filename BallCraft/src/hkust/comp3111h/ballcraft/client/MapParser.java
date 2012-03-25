@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.jbox2d.common.Vec2;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -28,6 +29,9 @@ public class MapParser{
 		context = con;
 	}
 	
+
+	
+	
 	public Map getMapFromXML(String fileName) {
 		Map map = new Map();
 		DocumentBuilderFactory factory=null;
@@ -42,7 +46,6 @@ public class MapParser{
 	    	//load file
 	    	builder = factory.newDocumentBuilder();
 	    	inputStream = context.getResources().getAssets().open(fileName);
-	    	Log.d("map", "find3 document");
 	    	document = builder.parse(inputStream);
 	    	Log.d("map", "load document");
 	    	//get root

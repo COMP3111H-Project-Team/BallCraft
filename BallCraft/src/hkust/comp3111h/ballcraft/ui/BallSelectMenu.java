@@ -64,12 +64,6 @@ public class BallSelectMenu extends Activity {
 		
 	}
 
-
-    /**
-     * Used to set the content of the gallery
-     */
-    class BallSelectAdapter extends BaseAdapter {
-
 	
 	private void initLayout() {
 		ballDisplayView = (RelativeLayout) this.findViewById(R.id.ball_select_item_layout);
@@ -87,7 +81,6 @@ public class BallSelectMenu extends Activity {
 		prevBallView = (TextView) this.findViewById(R.id.ball_select_item_previous);
 		prevBallView.setOnClickListener(new OnClickListener() {
 			
-			@Override
 			public void onClick(View v) {
 				if (self.canGoPrev()) {
 					currBallPos--;
@@ -100,7 +93,6 @@ public class BallSelectMenu extends Activity {
 		nextBallView = (TextView) this.findViewById(R.id.ball_select_item_next);
 		nextBallView.setOnClickListener(new OnClickListener() {
 			
-			@Override
 			public void onClick(View v) {
 				if (self.canGoNext()) {
 					currBallPos++;
@@ -131,17 +123,14 @@ public class BallSelectMenu extends Activity {
 			ballDisplayView.startAnimation(fadeOut);
 			fadeOut.setAnimationListener(new AnimationListener() {
 	
-				@Override
 				public void onAnimationEnd(Animation animation) {
 					self.refreshBallDispaly();
 				}
 	
-				@Override
 				public void onAnimationRepeat(Animation animation) {
 					
 				}
 	
-				@Override
 				public void onAnimationStart(Animation animation) {
 					
 				}
@@ -170,6 +159,41 @@ public class BallSelectMenu extends Activity {
 		}
 	}
 	
+	private void refreshBallDispaly() {
+		// ballDisplayView.startAnimation(fadeIn);
+
+		ballNameView.setText(BallCraft.getBallNameById(currBallPos));
+		ballDescriptionView.setText(BallCraft.getBallDescriptionById(currBallPos));
+
+		ballImageView.setImageResource(BallCraft.getBallImageResourceById(currBallPos));
+		ballMassView.setText("Mass " 
+				+ self.getValueDisplayFromInt(BallCraft.getBallMassById(currBallPos)));
+		ballFrictionView.setText("Friction " 
+				+ self.getValueDisplayFromInt(BallCraft.getBallFrictionById(currBallPos)));
+		ballMagicView.setText("Magic " 
+				+ self.getValueDisplayFromInt(BallCraft.getBallMagicById(currBallPos)));
+
+		if (BallCraft.ballUnlocked(currBallPos)) {
+			ballImageView.setAlpha(200);
+			ballLockedView.setVisibility(View.INVISIBLE);
+		} else { // the ball is not unlocked yet
+			ballImageView.setAlpha(80);
+			ballLockedView.setVisibility(View.VISIBLE);
+		}
+
+		if (self.canGoPrev()) {
+			prevBallView.setTextColor(Color.WHITE);
+		} else {
+			prevBallView.setTextColor(Color.rgb(60, 60, 60));
+		}
+
+		if (self.canGoNext()) {
+			nextBallView.setTextColor(Color.WHITE);
+		} else {
+			nextBallView.setTextColor(Color.rgb(60, 60, 60));
+		}
+	}
+
 	private String getValueDisplayFromInt(int value) {
 		String display = "";
 		for (int i = 0; i < value; i++) {
@@ -204,5 +228,4 @@ public class BallSelectMenu extends Activity {
 		return null;
 	}
     
-}
 }
