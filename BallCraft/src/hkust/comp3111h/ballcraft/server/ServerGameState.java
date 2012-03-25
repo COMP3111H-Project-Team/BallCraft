@@ -12,8 +12,6 @@ import java.util.Vector;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
-import android.util.Log;
-
 public class ServerGameState 
 {
 	private static ArrayList<Unit> units;
@@ -47,12 +45,28 @@ public class ServerGameState
     	if (input.skillActive()) {
     		ArrayList<Skill> skills = input.getSkills();
     		for (int i = 0; i < skills.size(); i++) {
+    			skills.get(i).setTime();
 	    		activeSkills.add(skills.get(i));
     		}
     	}
     }
 
-    public void loadMap(String name)
+    private void beforeStep() 
+    {
+    	for (int i = 0; i < activeSkills.size(); i++)
+    	{
+    		Skill skill = activeSkills.get(i);
+    		if (!skill.isActive())
+    		{
+    			activeSkills.remove(i);
+    			i--;
+    			continue;
+    		}
+    		skill.beforeStep();		
+    	}
+	}
+
+	public void loadMap(String name)
     {
     	units.add(new Ball(10, 50, 0.6f, new Vec2(0, 0)));
 
@@ -61,8 +75,7 @@ public class ServerGameState
 			units.add(new Ball(10, 5, 0.99f, new Vec2(30, 5 * i - 5)));
 		}	
 		
-        MapParser parser = new MapParser();
-        Map map = parser.getMapFromXML(name);
+        Map map = MapParser.getMapFromXML(name);
         
         Vector<Unit> mapUnit = map.getUnit();
         Iterator<Unit> iterator = mapUnit.iterator();
@@ -76,6 +89,7 @@ public class ServerGameState
     
     public void onEveryFrame(int msecElapsed)
     {
+    	beforeStep();
     	world.step(msecElapsed, 6, 2);
     }
     
@@ -109,5 +123,10 @@ public class ServerGameState
     public ArrayList<Unit> getUnits() {
     	return units;
     }
+
+	public static void init() 
+	{
+		stateInstance = new ServerGameState();
+	}
     
 }

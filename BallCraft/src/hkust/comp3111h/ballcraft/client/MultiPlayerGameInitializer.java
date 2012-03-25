@@ -22,8 +22,8 @@ public class MultiPlayerGameInitializer extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		this.setContentView(R.layout.game_initializer_layout);
-		
-		this.initGame();
+	
+		initGame();
 	}
 	
 	private void initGame() {

@@ -176,10 +176,10 @@ public class Ball extends Unit {
 	
 	
 	public String toSerializedString() {
-		if (false && Math.abs(body.getPosition().x) > 200 / rate|| Math.abs(body.getPosition().y) > 200 / rate)
+		if (Math.abs(body.getPosition().x) > 200 / rate|| Math.abs(body.getPosition().y) > 200 / rate)
 		{
-			zv += g * 0.3;
-			z += zv * 0.3;			
+//			zv += g * 0.3;
+//			z += zv * 0.3;			
 		}
 		
 		String serialized = "";

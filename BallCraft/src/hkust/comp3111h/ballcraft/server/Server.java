@@ -1,10 +1,10 @@
 package hkust.comp3111h.ballcraft.server;
 
+import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.GameUpdater;
 import android.app.IntentService;
 import android.content.Intent;
-import android.util.Log;
 
 public class Server extends IntentService
 {
@@ -12,13 +12,15 @@ public class Server extends IntentService
 	
 	static private GameUpdater gameUpdater;
 	
-	static private GameInput gameInput;
+	static private GameInput[] gameInput;
 	
 	static private long lastRun;
 	
 	static int skill = 0;
 	
 	static public boolean inited = false;
+	
+	static private boolean running = false;
 	
 	static public String msg;
 	
@@ -29,7 +31,8 @@ public class Server extends IntentService
 	
 	public static void setState(String string)
 	{
-		gameInput = GameInput.fromSerializedString(string); // get and parse data from server adapter
+		String[] str = string.split(";");
+		gameInput[Integer.parseInt(str[0])] = GameInput.fromSerializedString(str[1]); // get and parse data from server adapter
 	}
 	
 	public static GameUpdater generateGameUpdater() {
@@ -39,13 +42,17 @@ public class Server extends IntentService
 	
 	public void run() 
 	{
-		while (true)
+		while (running)
 		{
 			long time = System.currentTimeMillis();
 			gameState.onEveryFrame((int)(time - lastRun));
 			lastRun = System.currentTimeMillis();
 			
-			ServerGameState.getStateInstance().processPlayerInput(0, gameInput); // process
+			for(int i = 0; i < BallCraft.maxPlayer; i++)
+			{
+				ServerGameState.getStateInstance().processPlayerInput(i, gameInput[i]); // process				
+			}
+			
 			ServerAdapter.processServerMsg(msg + ";" + generateGameUpdater().toSerializedString()); // send back to server adapter
 			msg = "";
 			try {
@@ -66,18 +73,29 @@ public class Server extends IntentService
 	}
 
 	@Override
-	protected void onHandleIntent(Intent intent) {
+	protected void onHandleIntent(Intent intent)
+	{
+		ServerGameState.init();
 		gameState = ServerGameState.getStateInstance();
 		gameState.loadMap(intent.getStringExtra("map"));
-		
 		gameUpdater = new GameUpdater();
 		
-		gameInput = new GameInput();
+		gameInput = new GameInput[BallCraft.maxPlayer];
+		for (int i = 0; i < BallCraft.maxPlayer; i++)
+		{
+			gameInput[i] = new GameInput();
+		}
 		
 		inited = true;
 		lastRun = System.currentTimeMillis();
 		msg = "";
+		running = true;
 		run();
+	}
+	
+	public static void stop()
+	{
+		running = false;
 	}
 	
 }
