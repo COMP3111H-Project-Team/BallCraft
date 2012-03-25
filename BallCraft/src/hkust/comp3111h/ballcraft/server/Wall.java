@@ -24,16 +24,20 @@ public class Wall extends Unit {
 		this(start, end, true);
 	}
 	
-	public Wall(Vec2 start, Vec2 end, boolean isServer) {
+	public Wall(Vec2 start, Vec2 end, boolean isServer)
+	{
 		if (isServer)
 		{
+			start = start.mul(1.0f / rate);
+			end = end.mul(1.0f / rate);
+			
 			BodyDef bodyDef = new BodyDef();
 			bodyDef.type = BodyType.STATIC;
 			body = ServerGameState.world.createBody(bodyDef);
 			PolygonShape shape = new PolygonShape();
 			
 			Vec2 vector = start.sub(end);
-			float length = vector.normalize();
+			float length = vector.normalize() / 2;
 			Vec2 midPoint = start.add(end).mul(0.5f);
 			float angle = (float)Math.acos(Vec2.dot(vector, new Vec2(1, 0)));
 			shape.setAsBox(length, 0, midPoint, angle);
@@ -101,8 +105,8 @@ public class Wall extends Unit {
 	{
 		String serialized = "";
 		serialized += "wall:";
-		serialized += vertices[0] + "," +vertices[1] + ",";
-		serialized += vertices[2] + "," +vertices[3];
+		serialized += vertices[0] * rate + "," + vertices[1] * rate + ",";
+		serialized += vertices[2] * rate + "," + vertices[3] * rate;
 		return serialized;
 	}
 

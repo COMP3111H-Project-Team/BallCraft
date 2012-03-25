@@ -17,8 +17,8 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainMenu extends Activity implements SensorEventListener {
 	
@@ -87,8 +87,8 @@ public class MainMenu extends Activity implements SensorEventListener {
 			}
 		});
 		
-		Button singlePlayerButton = (Button) this.findViewById(R.id.main_menu_single_player_button);
-		singlePlayerButton.getBackground().setAlpha(180);
+		TextView singlePlayerButton = (TextView) this.findViewById(R.id.main_menu_single_player_button);
+		// singlePlayerButton.getBackground().setAlpha(180);
 		singlePlayerButton.setOnClickListener(new OnClickListener() {
 			
 			
@@ -99,8 +99,8 @@ public class MainMenu extends Activity implements SensorEventListener {
 			
 		});
 			
-		Button multiPlayerButton = (Button) this.findViewById(R.id.main_menu_multi_player_button);
-		multiPlayerButton.getBackground().setAlpha(180);
+		TextView multiPlayerButton = (TextView) this.findViewById(R.id.main_menu_multi_player_button);
+		// multiPlayerButton.getBackground().setAlpha(180);
 		multiPlayerButton.setOnClickListener(new OnClickListener() {
 			
 			

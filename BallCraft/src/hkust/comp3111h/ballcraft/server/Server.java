@@ -19,6 +19,8 @@ public class Server extends IntentService
 	
 	static public boolean inited = false;
 	
+	static public String msg;
+	
 	public Server()
 	{
 		super("Server");
@@ -31,11 +33,12 @@ public class Server extends IntentService
 		
 		inited = true;
 		lastRun = System.currentTimeMillis();
+		msg = "";
 	}
 	
 	public static void setState(String string)
 	{
-		gameInput = GameInput.deserializeGameInput(string); // get and parse data from server adapter
+		gameInput = GameInput.fromSerializedString(string); // get and parse data from server adapter
 	}
 	
 	public static GameUpdater generateGameUpdater() {
@@ -52,8 +55,8 @@ public class Server extends IntentService
 			lastRun = System.currentTimeMillis();
 			
 			ServerGameState.getStateInstance().processPlayerInput(0, gameInput); // process
-			ServerAdapter.processServerMsg(generateGameUpdater().toSerializedString()); // send back to server adapter
-			
+			ServerAdapter.processServerMsg(msg + ";" + generateGameUpdater().toSerializedString()); // send back to server adapter
+			msg = "";
 			try {
 				/*
 				long sleep = 30 + time - System.currentTimeMillis();

@@ -1,9 +1,9 @@
 package hkust.comp3111h.ballcraft.server;
 
 import hkust.comp3111h.ballcraft.client.GameInput;
-import hkust.comp3111h.ballcraft.client.GameUpdater;
 import hkust.comp3111h.ballcraft.client.Map;
 import hkust.comp3111h.ballcraft.client.MapParser;
+import hkust.comp3111h.ballcraft.client.Skill;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,10 +12,14 @@ import java.util.Vector;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import android.util.Log;
+
 public class ServerGameState 
 {
 	private static ArrayList<Unit> units;
 	public static World world;
+	
+	private static ArrayList<Skill> activeSkills;
 	
 	private static ServerGameState stateInstance;
 	
@@ -32,11 +36,18 @@ public class ServerGameState
     	Vec2 gravity = new Vec2(0.0f, 0.0f);
         boolean doSleep = true;
         world = new World(gravity, doSleep);
+        world.setContactListener(new BallContactListener());
 	}
 	
     public void processPlayerInput(int playerId, GameInput input)
     {
-    	units.get(playerId).applyForce(input.acceleration);
+    	units.get(playerId).applyForce(input.acceleration.mul(1.0f));
+    	if (input.skillActive()) {
+    		ArrayList<Skill> skills = input.getSkills();
+    		for (int i = 0; i < skills.size(); i++) {
+	    		activeSkills.add(skills.get(i));
+    		}
+    	}
     }
 
     public void loadMap(String name)

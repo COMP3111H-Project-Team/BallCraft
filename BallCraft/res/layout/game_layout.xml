@@ -36,4 +36,13 @@
 	    android:text="Debug Message Display"
 	    android:textColor="#00FF00" />
 	
+	<!--
+	<hkust.comp3111h.ballcraft.graphics.MiniMapView
+	    android:id="@+id/game_activity_mini_map_view"
+	    android:layout_width="100dp"
+	    android:layout_height="80dp"
+	    android:layout_centerHorizontal="true"
+	    android:layout_alignParentBottom="true" />
+	-->
+	
 </RelativeLayout>

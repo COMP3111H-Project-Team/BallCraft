@@ -10,6 +10,7 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent" />
 	
+	<!--
 	<ImageView
 	    android:id="@+id/main_menu_title_image_view"
 	    android:layout_width="wrap_content"
@@ -17,6 +18,7 @@
 	    android:layout_centerHorizontal="true"
 	    android:layout_marginTop="20dp"
 	    android:src="@drawable/title" />
+	-->
 	
 	<ImageView
 	    android:id="@+id/main_menu_setting_image_view"
@@ -33,11 +35,10 @@
 	    android:orientation="horizontal"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignParentBottom="true"
-	    android:layout_centerHorizontal="true"
+	    android:layout_centerInParent="true"
 	    android:layout_marginBottom="10dp">
 	    
-	    <Button
+	    <TextView
 	        android:id="@+id/main_menu_single_player_button"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
@@ -46,11 +47,12 @@
 		    android:paddingTop="70dp"
 		    android:paddingRight="20dp"
 		    android:paddingBottom="80dp"
-		    android:text="Single Player"
-		    android:textSize="12pt"
-		    android:background="#FFFFFF" />
+		    android:gravity="center"
+		    android:text="Single\nPlayer"
+		    android:textColor="#FFFFFF"
+		    android:textSize="20pt" />
 	    
-	    <Button
+	    <TextView
 	        android:id="@+id/main_menu_multi_player_button"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
@@ -59,9 +61,10 @@
 		    android:paddingTop="70dp"
 		    android:paddingRight="20dp"
 		    android:paddingBottom="80dp"
-		    android:text="Multi-Player"
-		    android:textSize="12pt"
-		    android:background="#FFFFFF" />
+		    android:gravity="center"
+		    android:text="Multi\nPlayer"
+		    android:textColor="#FFFFFF"
+		    android:textSize="20pt" />
 	    
 	</LinearLayout>
 

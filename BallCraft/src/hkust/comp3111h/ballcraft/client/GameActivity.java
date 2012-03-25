@@ -1,7 +1,9 @@
 package hkust.comp3111h.ballcraft.client;
 
+import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
+import hkust.comp3111h.ballcraft.graphics.MiniMapView;
 import hkust.comp3111h.ballcraft.server.Server;
 import android.app.Activity;
 import android.content.Intent;
@@ -43,10 +45,9 @@ public class GameActivity extends Activity implements SensorEventListener {
         this.startService(new Intent(this, Client.class)); // start running client
 		
         MapParser.setContext(this);
-        
+        Client.setContext(this);
 		initLayout();
 		initSensor();
-		
     }
 
 	@Override
@@ -73,6 +74,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		skill1Button.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
+				Client.castSkill(new Skill(BallCraft.Skill.TEST_SKILL_1));
 			}
 		});
 			
@@ -80,6 +82,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		skill2Button.getBackground().setAlpha(80);
 		skill2Button.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				Client.castSkill(new Skill(BallCraft.Skill.TEST_SKILL_2));
 			}
 		});
 		

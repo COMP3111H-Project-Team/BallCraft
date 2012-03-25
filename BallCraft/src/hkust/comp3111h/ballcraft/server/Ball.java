@@ -16,6 +16,9 @@ import org.jbox2d.dynamics.FixtureDef;
 
 public class Ball extends Unit {
 	
+	float z;
+	float zv;
+	
     FloatBuffer strip, fan_top, fan_bottom;
     float radius = 10;
     int stacks = 30,  slices = 30;
@@ -30,6 +33,10 @@ public class Ball extends Unit {
 	
 	public Ball(float size, float mass, float friction, Vec2 position) {
 		super();
+		size /= rate;
+		z = 0;
+		zv = 0;
+		position = position.mul(1.0f /rate);
 		
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DYNAMIC; // dynamic means it is subject to forces
@@ -45,10 +52,11 @@ public class Ball extends Unit {
 		body.createFixture(fixtureDef); // bind the dense, friction-laden fixture to the body
 	}
 	
-	public Ball(float radius, Vec2 vec) 
+	public Ball(float radius, Vec2 vec, float z) 
 	{
 		super();
 		
+		this.z = z;
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position = vec;
 		body = ClientGameState.world.createBody(bodyDef);
@@ -62,7 +70,7 @@ public class Ball extends Unit {
 	
 	public void draw(GL10 gl) {
 		gl.glPushMatrix();
-			gl.glTranslatef(this.getPosition().x, this.getPosition().y, 10);
+			gl.glTranslatef(this.getPosition().x, this.getPosition().y, getRadius() - z);
 			gl.glScalef(this.getRadius(), this.getRadius(), this.getRadius());
 			
 	        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, fan_top);
@@ -167,10 +175,16 @@ public class Ball extends Unit {
 	
 	
 	public String toSerializedString() {
+		if (false && Math.abs(body.getPosition().x) > 200 / rate|| Math.abs(body.getPosition().y) > 200 / rate)
+		{
+			zv += g * 0.3;
+			z += zv * 0.3;			
+		}
+		
 		String serialized = "";
 		serialized += "ball:";
-		serialized += body.getPosition().x + "," + body.getPosition().y;
-		serialized += "," + this.getRadius();
+		serialized += body.getPosition().x * rate+ "," + body.getPosition().y * rate;
+		serialized += "," + this.getRadius() * rate + "," + z;
 		return serialized;
 	}
 	
@@ -185,6 +199,8 @@ public class Ball extends Unit {
 		float x = Float.valueOf(vals[0]);
 		float y = Float.valueOf(vals[1]);
 		float radius= Float.valueOf(vals[2]);
+		
+		z= Float.valueOf(vals[3]);
 		body.getFixtureList().m_shape.m_radius = radius;
 		body.setTransform(new Vec2(x, y), 0);	
 	}

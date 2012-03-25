@@ -103,37 +103,6 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		time = System.currentTimeMillis();
 		
 		/*
-		ArrayList<UnitData> data = null;
-		byte[] bytes = ServerAdapter.process(0, client.getInput());
-		
-		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-		ObjectInput in;
-		
-		try {
-			in = new ObjectInputStream(bis);
-			data = (ArrayList<UnitData>) in.readObject();
-			bis.close();
-			in.close();
-		} catch (StreamCorruptedException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		UnitData self = data.get(0);
-		
-		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-		gl.glLoadIdentity();
-		
-		GLU.gluLookAt(gl, 
-				self.position.x, -self.position.y - 200, 300, 
-				self.position.x, -self.position.y, 5, 
-				0, 0, 1);
-		*/
-		
-		/*
 		float xPos = self.position.x;
 		float yPos = - self.position.y;
 		float xVel = self.velocity.x;
@@ -171,7 +140,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 					gl.glColor4f(0f, 0f, 1f, 1f);
 					gl.glScalef(datum.size, datum.size, datum.size);
 					sphere.draw(gl);
-				gl.glPopMatrix();
+kkkkkkkkk				gl.glPopMatrix();
 			}
 		}
 		
