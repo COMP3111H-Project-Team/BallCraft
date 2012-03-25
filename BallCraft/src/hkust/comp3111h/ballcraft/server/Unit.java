@@ -7,7 +7,7 @@ import org.jbox2d.dynamics.Body;
 
 public abstract class Unit implements Drawable {
 
-	protected final static float rate = 5.0f;
+	protected final static float rate = 3.0f;
 	protected final static float g = 9.8f;
 	protected Body body;
 	private final static Vec2 O = new Vec2(0, 0);

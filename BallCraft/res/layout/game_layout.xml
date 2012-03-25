@@ -43,4 +43,31 @@
 	    android:layout_centerHorizontal="true"
 	    android:layout_alignParentBottom="true" />
 	
+	<LinearLayout
+	    android:id="@+id/game_activity_menu"
+	    android:orientation="vertical"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_centerInParent="true"
+	    android:padding="30dp"
+	    android:background="#000000">
+	    
+	    <Button
+	        android:id="@+id/game_activity_resume_button"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text="Resume"
+	        android:textColor="#000000"
+	        android:textSize="16pt" />
+	    
+	    <Button
+	        android:id="@+id/game_activity_exit_button"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text="Exit"
+	        android:textColor="#000000"
+	        android:textSize="16pt" />
+	    
+	</LinearLayout>
+	
 </RelativeLayout>
