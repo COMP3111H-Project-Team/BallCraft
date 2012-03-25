@@ -67,7 +67,7 @@ public class Ball extends Unit {
 		unitSphere(stacks, slices);
 	}
 
-	@Override
+	
 	public void draw(GL10 gl) {
 		gl.glPushMatrix();
 			gl.glTranslatef(this.getPosition().x, this.getPosition().y, getRadius() - z);
@@ -173,7 +173,7 @@ public class Ball extends Unit {
         return fb;
     }
 	
-	@Override
+	
 	public String toSerializedString() {
 		if (false && Math.abs(body.getPosition().x) > 200 / rate|| Math.abs(body.getPosition().y) > 200 / rate)
 		{
@@ -192,7 +192,7 @@ public class Ball extends Unit {
 		return body.getFixtureList().m_shape.m_radius;
 	}
 
-	@Override
+	
 	public void updateFromString(String string)
 	{
 		String [] parts = string.split(":");String [] vals = parts[1].split(",");
