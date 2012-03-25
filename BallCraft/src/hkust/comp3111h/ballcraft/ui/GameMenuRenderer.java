@@ -27,7 +27,7 @@ public class GameMenuRenderer implements GLSurfaceView.Renderer {
 		// fogBuffer = makeFogBuffer();
 	}
 
-	@Override
+	
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		gl.glViewport(0, 0, width, height);
 		gl.glMatrixMode(GL10.GL_PROJECTION);
@@ -37,7 +37,7 @@ public class GameMenuRenderer implements GLSurfaceView.Renderer {
 		gl.glLoadIdentity();
 	}
 
-	@Override
+	
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 		gl.glShadeModel(GL10.GL_SMOOTH);
@@ -49,7 +49,7 @@ public class GameMenuRenderer implements GLSurfaceView.Renderer {
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
 	}
 	
-	@Override
+	
 	public void onDrawFrame(GL10 gl) {
 		gl.glEnable(GL10.GL_DITHER);
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);

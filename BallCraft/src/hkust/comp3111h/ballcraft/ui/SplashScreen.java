@@ -17,7 +17,7 @@ public class SplashScreen extends Activity {
 	
 	private Activity self;
 
-	@Override
+	 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
@@ -35,46 +35,46 @@ public class SplashScreen extends Activity {
 		Animation zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
 		
 		zoomIn.setAnimationListener(new AnimationListener() {
-			@Override
+			 
 			public void onAnimationEnd(Animation animation) {
 				Animation keepRotateAngle = AnimationUtils.loadAnimation(self, R.anim.keep_rotate_angle);
 				tView.startAnimation(keepRotateAngle);
 				keepRotateAngle.setAnimationListener(new AnimationListener() {
-					@Override
+					 
 					public void onAnimationEnd(Animation animation) {
 						Animation rotateBack = AnimationUtils.loadAnimation(self, R.anim.rotate_back);
 						tView.startAnimation(rotateBack);
 						rotateBack.setAnimationListener(new AnimationListener() {
-							@Override
+							 
 							public void onAnimationEnd(Animation animation) {
 								Animation rotateForth = AnimationUtils.loadAnimation(self, R.anim.rotate_forth);
 								tView.startAnimation(rotateForth);
 							}
 
-							@Override
+							 
 							public void onAnimationRepeat(Animation animation) {
 							}
 							
-							@Override
+							 
 							public void onAnimationStart(Animation animation) {
 							}
 						});
 					}
 
-					@Override
+					 
 					public void onAnimationRepeat(Animation animation) {
 					}
 
-					@Override
+					 
 					public void onAnimationStart(Animation animation) {
 					}
 				});
 			}
-			@Override
+			 
 			public void onAnimationRepeat(Animation animation) {
 			}
 			
-			@Override
+			 
 			public void onAnimationStart(Animation animation) {
 			}
 		});
@@ -84,7 +84,7 @@ public class SplashScreen extends Activity {
 	}
 	
 	public Handler handler = new Handler() {
-		@Override
+		 
 		public void handleMessage(Message msg) {
 			Intent intent = new Intent(SplashScreen.this, MainMenu.class);
 			self.startActivity(intent);

@@ -3,6 +3,7 @@ package hkust.comp3111h.ballcraft.client;
 import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.server.Wall;
 
+import java.util.Iterator;
 import java.util.Vector;
 
 import org.jbox2d.common.Vec2;
@@ -19,9 +20,20 @@ public class Map {
 //	private Vector<Wall> walls;
 	private Vec2 initPosition;
 	private Vector<Unit> units;
+	private Vector<WallDate> walls;
+	
+	private class WallDate {
+		public WallDate(Vec2 s, Vec2 e) {
+			start = s;
+			end = e;
+		}
+		public Vec2 start;
+		public Vec2 end;
+	}
 	
 	public Map(){
 		units = new Vector<Unit>();
+		walls = new Vector<WallDate>();
 	}
 
 	public String getName() {
@@ -58,11 +70,23 @@ public class Map {
 	
 	
 	public void addWall(int[] data) {
-		//walls.add(new Wall(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
-		units.add(new Wall(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
+		walls.add(new WallDate(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
+		
 	}
 	
+	public Vector<WallDate> getWallDate(){
+		return walls;
+	}
 	public Vector<Unit> getUnit() {
+		if(units.isEmpty()){
+	        Iterator<WallDate> iterator = walls.iterator();
+	        WallDate walldate;
+	        while(iterator.hasNext())
+	        {
+	        	walldate = iterator.next();
+	        	units.add(new Wall(walldate.start,walldate.end));
+	        }
+		}
 		return units;
 	}
 	
