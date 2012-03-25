@@ -2,7 +2,7 @@ package hkust.comp3111h.ballcraft.ui;
 
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.R;
-import hkust.comp3111h.ballcraft.client.GameActivity;
+import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -84,7 +84,7 @@ public class MapSelectMenu extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(self, GameActivity.class);
+				Intent intent = new Intent(self, MultiPlayerGameInitializer.class);
 				intent.putExtra("ballSelected", ballSelected);
 				intent.putExtra("mapSelected", currMap);
 				self.startActivity(intent);
@@ -106,6 +106,7 @@ public class MapSelectMenu extends Activity {
 			}
 		} catch (IOException e) {
 		}
+		currMap = maps.get(0);
 	}
 	
 	private boolean isMapFile(String filename) {
