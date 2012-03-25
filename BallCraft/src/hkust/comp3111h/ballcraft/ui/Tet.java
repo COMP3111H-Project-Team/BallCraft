@@ -7,12 +7,6 @@ import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import hkust.comp3111h.ballcraft.R;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.opengl.GLUtils;
-
 public class Tet {
 	
 	private float size = 80f;

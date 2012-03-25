@@ -22,10 +22,10 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 public class MapParser{
-	private Context context;
+	private static Context context;
 	
-	public MapParser(Context context) {
-		this.context = context;
+	public static void setContext(Context con) {
+		context = con;
 	}
 	
 	public Map getMapFromXML(String fileName) {
@@ -42,6 +42,7 @@ public class MapParser{
 	    	//load file
 	    	builder = factory.newDocumentBuilder();
 	    	inputStream = context.getResources().getAssets().open(fileName);
+	    	Log.d("map", "find3 document");
 	    	document = builder.parse(inputStream);
 	    	Log.d("map", "load document");
 	    	//get root
@@ -71,11 +72,11 @@ public class MapParser{
                      map.addWall(parseString(wallData));                     
              }
         }catch (IOException e){
-            e.printStackTrace();
+            Log.e("map", e.getMessage());
         } catch (SAXException e) {
-            e.printStackTrace();
+        	Log.e("map", e.getMessage());
         }catch (ParserConfigurationException e) {
-            e.printStackTrace();
+        	Log.e("map", e.getMessage());
 	    }
 	    return map;
 	}

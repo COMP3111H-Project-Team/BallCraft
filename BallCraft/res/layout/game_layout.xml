@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/game_activity_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+	<android.opengl.GLSurfaceView
+	    android:id="@+id/game_activity_gl_surface_view"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" />
+	
+	<Button
+	    android:id="@+id/game_activity_skill_1_button"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:padding="30dp"
+	    android:text="Grow Root" 
+	    android:textStyle="bold"/>
+	
+	<Button
+	    android:id="@+id/game_activity_skill_2_button"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentRight="true"
+	    android:padding="30dp"
+	    android:text="Tree Wall" 
+	    android:textStyle="bold"/>
+	
+	<TextView
+	    android:id="@+id/game_activity_debug_view"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:padding="10dp"
+	    android:text="Debug Message Display"
+	    android:textColor="#00FF00" />
+	
+</RelativeLayout>

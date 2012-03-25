@@ -15,9 +15,6 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 
 public class Wall extends Unit {
-
-	public Vec2 start;
-	public Vec2 end;
 	
 	private float [] vertices;
 	
@@ -42,11 +39,15 @@ public class Wall extends Unit {
 			shape.setAsBox(length, 0, midPoint, angle);
 			
 			body.createFixture(shape, 0); // bind the dense, friction-laden fixture to the body
+
+			vertices = new float [4];
+			vertices[0] = start.x;
+			vertices[1] = start.y;
+			vertices[2] = end.x;
+			vertices[3] = end.y;
 		}
 		else
 		{
-			this.start = start;
-			this.end = end;
 			vertices = new float [12];
 			vertices[0] = start.x;
 			vertices[1] = start.y;
@@ -79,6 +80,7 @@ public class Wall extends Unit {
 	}
 	
 	public void draw(GL10 gl) {
+		gl.glColor4f(0, 0.5f, 0.5f, 1);
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
 		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
@@ -95,9 +97,13 @@ public class Wall extends Unit {
 	}
 	
 	@Override
-	public String toSerializedString() {
+	public String toSerializedString() 
+	{
 		String serialized = "";
-		return null;
+		serialized += "wall:";
+		serialized += vertices[0] + "," +vertices[1] + ",";
+		serialized += vertices[2] + "," +vertices[3];
+		return serialized;
 	}
 
 	@Override
