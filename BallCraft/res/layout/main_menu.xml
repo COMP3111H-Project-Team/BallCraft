@@ -38,33 +38,19 @@
 	    android:layout_centerInParent="true"
 	    android:layout_marginBottom="10dp">
 	    
-	    <TextView
+	    <ImageView
 	        android:id="@+id/main_menu_single_player_button"
-		    android:layout_width="wrap_content"
+		    android:layout_width="220dp"
 		    android:layout_height="wrap_content"
 		    android:layout_marginRight="5dp"
-		    android:paddingLeft="20dp"
-		    android:paddingTop="70dp"
-		    android:paddingRight="20dp"
-		    android:paddingBottom="80dp"
-		    android:gravity="center"
-		    android:text="Single\nPlayer"
-		    android:textColor="#FFFFFF"
-		    android:textSize="20pt" />
+		    android:src="@drawable/single_player" />
 	    
-	    <TextView
+	    <ImageView
 	        android:id="@+id/main_menu_multi_player_button"
-		    android:layout_width="wrap_content"
+		    android:layout_width="220dp"
 		    android:layout_height="wrap_content"
 		    android:layout_marginLeft="5dp"
-		    android:paddingLeft="20dp"
-		    android:paddingTop="70dp"
-		    android:paddingRight="20dp"
-		    android:paddingBottom="80dp"
-		    android:gravity="center"
-		    android:text="Multi\nPlayer"
-		    android:textColor="#FFFFFF"
-		    android:textSize="20pt" />
+		    android:src="@drawable/multi_player" />
 	    
 	</LinearLayout>
 

@@ -7,6 +7,7 @@ import hkust.comp3111h.ballcraft.graphics.MiniMapView;
 import hkust.comp3111h.ballcraft.server.Server;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -23,17 +24,22 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class GameActivity extends Activity implements SensorEventListener {
-	
 
+	private GameActivity self;
+	
 	private GLSurfaceView mGLView;
 	private SensorManager sensorManager;
 	
 	private static TextView debugView = null;
 	private static String debugMsg = null;
 	
+	private static MiniMapView miniMap;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
+    	
+    	self = this;
     	
     	this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, 
     			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -46,6 +52,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		
         MapParser.setContext(this);
         Client.setContext(this);
+        
 		initLayout();
 		initSensor();
     }
@@ -81,6 +88,10 @@ public class GameActivity extends Activity implements SensorEventListener {
 		});
 		
 		debugView = (TextView) this.findViewById(R.id.game_activity_debug_view);
+		
+		miniMap = (MiniMapView) this.findViewById(R.id.game_activity_mini_map_view);
+		miniMap.setZOrderOnTop(true);
+		miniMap.getHolder().setFormat(PixelFormat.TRANSLUCENT);
     }
     
     private void initSensor() {
@@ -101,6 +112,12 @@ public class GameActivity extends Activity implements SensorEventListener {
 				-event.values[SensorManager.DATA_X] * 5);
 	}
 	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+	}
+    
 	/**
 	 * Used for displaying a debug message at the bottom of the screen
 	 */

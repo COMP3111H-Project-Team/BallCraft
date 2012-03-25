@@ -65,6 +65,7 @@ public class MainMenu extends Activity implements SensorEventListener {
 				self.startActivity(new Intent(MainMenu.this, OptionMenu.class));
 				self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 			}
+			
 		});
 			
 		final Animation rotate360 = AnimationUtils.loadAnimation(this, R.anim.rotate360);
@@ -85,9 +86,10 @@ public class MainMenu extends Activity implements SensorEventListener {
 			@Override
 			public void onAnimationStart(Animation animation) {
 			}
+			
 		});
 		
-		TextView singlePlayerButton = (TextView) this.findViewById(R.id.main_menu_single_player_button);
+		final ImageView singlePlayerButton = (ImageView) this.findViewById(R.id.main_menu_single_player_button);
 		// singlePlayerButton.getBackground().setAlpha(180);
 		singlePlayerButton.setOnClickListener(new OnClickListener() {
 			
@@ -98,8 +100,13 @@ public class MainMenu extends Activity implements SensorEventListener {
 			}
 			
 		});
+		
+		/*
+		Animation opacityChange = AnimationUtils.loadAnimation(self, R.anim.opacity_change);
+		singlePlayerButton.startAnimation(opacityChange);
+		*/
 			
-		TextView multiPlayerButton = (TextView) this.findViewById(R.id.main_menu_multi_player_button);
+		ImageView multiPlayerButton = (ImageView) this.findViewById(R.id.main_menu_multi_player_button);
 		// multiPlayerButton.getBackground().setAlpha(180);
 		multiPlayerButton.setOnClickListener(new OnClickListener() {
 			
@@ -111,7 +118,7 @@ public class MainMenu extends Activity implements SensorEventListener {
 			
 		});
 	}
-
+	
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 	}

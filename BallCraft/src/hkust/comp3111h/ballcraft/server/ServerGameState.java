@@ -37,6 +37,8 @@ public class ServerGameState
         boolean doSleep = true;
         world = new World(gravity, doSleep);
         world.setContactListener(new BallContactListener());
+        
+        activeSkills = new ArrayList<Skill>();
 	}
 	
     public void processPlayerInput(int playerId, GameInput input)
