@@ -20,10 +20,10 @@ public class Map {
 //	private Vector<Wall> walls;
 	private Vec2 initPosition;
 	private Vector<Unit> units;
-	private Vector<WallDate> walls;
+	private Vector<WallData> walls;
 	
-	private class WallDate {
-		public WallDate(Vec2 s, Vec2 e) {
+	public class WallData {
+		public WallData(Vec2 s, Vec2 e) {
 			start = s;
 			end = e;
 		}
@@ -33,7 +33,7 @@ public class Map {
 	
 	public Map(){
 		units = new Vector<Unit>();
-		walls = new Vector<WallDate>();
+		walls = new Vector<WallData>();
 	}
 
 	public String getName() {
@@ -68,19 +68,18 @@ public class Map {
 		return initPosition;
 	}
 	
-	
 	public void addWall(int[] data) {
-		walls.add(new WallDate(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
-		
+		walls.add(new WallData(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
 	}
 	
-	public Vector<WallDate> getWallDate(){
+	public Vector<WallData> getWallData(){
 		return walls;
 	}
+	
 	public Vector<Unit> getUnit() {
 		if(units.isEmpty()){
-	        Iterator<WallDate> iterator = walls.iterator();
-	        WallDate walldate;
+	        Iterator<WallData> iterator = walls.iterator();
+	        WallData walldate;
 	        while(iterator.hasNext())
 	        {
 	        	walldate = iterator.next();
