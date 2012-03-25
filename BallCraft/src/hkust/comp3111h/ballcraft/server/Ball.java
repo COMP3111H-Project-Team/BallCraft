@@ -70,6 +70,7 @@ public class Ball extends Unit {
 	
 	public void draw(GL10 gl) {
 		gl.glPushMatrix();
+		
 			gl.glTranslatef(this.getPosition().x, this.getPosition().y, getRadius() - z);
 			gl.glScalef(this.getRadius(), this.getRadius(), this.getRadius());
 			

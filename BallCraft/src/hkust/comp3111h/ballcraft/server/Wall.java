@@ -14,11 +14,15 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 
+import android.util.Log;
+
 public class Wall extends Unit {
 	
 	private float [] vertices;
+	private float [] normals;
 	
 	private FloatBuffer vertexBuffer = null;
+	private FloatBuffer normalBuffer = null;
 	
 	public Wall(Vec2 start, Vec2 end) {
 		this(start, end, true);
@@ -66,7 +70,28 @@ public class Wall extends Unit {
 			vertices[10] = end.y;
 			vertices[11] = 50f;
 			
+			double wallSlope = (end.y - start.y) / (end.x - start.x);
+			double dirSlope = -1f / wallSlope;
+			
+			normals = new float [12];
+			float dirCos = (float) Math.cos(Math.atan(dirSlope));
+			float dirSin = (float) Math.sin(Math.atan(dirSlope));
+			
+			normals[0] = -dirCos;
+			normals[1] = -dirSin;
+			normals[2] = 0;
+			normals[3] = -dirCos;
+			normals[4] = -dirSin;
+			normals[5] = 0;
+			normals[6] = -dirCos;
+			normals[7] = -dirSin;
+			normals[8] = 0;
+			normals[9] = -dirCos;
+			normals[10] = -dirSin;
+			normals[11] = 0;
+			
 			vertexBuffer = makeVertexBuffer();
+			// normalBuffer = makeNormalBuffer();
 			
 			BodyDef bodyDef = new BodyDef();
 			bodyDef.type = BodyType.STATIC;
@@ -86,16 +111,33 @@ public class Wall extends Unit {
 	public void draw(GL10 gl) {
 		gl.glColor4f(0, 0.5f, 0.5f, 1);
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+		gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
+		
+		gl.glEnable(GL10.GL_NORMALIZE);
+		gl.glEnable(GL10.GL_RESCALE_NORMAL);
+		
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
+		// gl.glNormalPointer(GL10.GL_FLAT, 0, normalBuffer);
 		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
+		
+		gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 	}
 	
-	public FloatBuffer makeVertexBuffer() {
+	private FloatBuffer makeVertexBuffer() {
 		ByteBuffer bb = ByteBuffer.allocateDirect(vertices.length * 4);
 		bb.order(ByteOrder.nativeOrder());
 		FloatBuffer buffer = bb.asFloatBuffer();
 		buffer.put(vertices);
+		buffer.position(0);
+		return buffer;
+	}
+	
+	private FloatBuffer makeNormalBuffer() {
+		ByteBuffer bb = ByteBuffer.allocateDirect(normals.length * 4);
+		bb.order(ByteOrder.nativeOrder());
+		FloatBuffer buffer = bb.asFloatBuffer();
+		buffer.put(normals);
 		buffer.position(0);
 		return buffer;
 	}
