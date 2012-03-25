@@ -5,6 +5,7 @@ import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import hkust.comp3111h.ballcraft.graphics.MiniMapView;
 import hkust.comp3111h.ballcraft.server.Server;
+import hkust.comp3111h.ballcraft.ui.MainMenu;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -16,6 +17,7 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -46,13 +48,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
         		WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        
-        this.startService(new Intent(this, Server.class)); // start running server
-        this.startService(new Intent(this, Client.class)); // start running client
 		
-        MapParser.setContext(this);
-        Client.setContext(this);
-        
 		initLayout();
 		initSensor();
     }
@@ -61,8 +57,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 	protected void onStop() {
 		super.onStop();
 	}
-    
-	
     
     /**
      * Initialize the main layout of the game view,

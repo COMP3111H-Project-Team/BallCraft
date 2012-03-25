@@ -4,6 +4,7 @@ import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.GameUpdater;
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 public class Server extends IntentService
 {
@@ -24,16 +25,6 @@ public class Server extends IntentService
 	public Server()
 	{
 		super("Server");
-		gameState = ServerGameState.getStateInstance();
-		gameState.loadMap("vectormap.xml");
-		
-		gameUpdater = new GameUpdater();
-		
-		gameInput = new GameInput();
-		
-		inited = true;
-		lastRun = System.currentTimeMillis();
-		msg = "";
 	}
 	
 	public static void setState(String string)
@@ -75,8 +66,17 @@ public class Server extends IntentService
 	}
 
 	@Override
-	protected void onHandleIntent(Intent arg0) 
-	{
+	protected void onHandleIntent(Intent intent) {
+		gameState = ServerGameState.getStateInstance();
+		gameState.loadMap(intent.getStringExtra("map"));
+		
+		gameUpdater = new GameUpdater();
+		
+		gameInput = new GameInput();
+		
+		inited = true;
+		lastRun = System.currentTimeMillis();
+		msg = "";
 		run();
 	}
 	
