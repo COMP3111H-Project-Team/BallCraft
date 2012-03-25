@@ -1,8 +1,5 @@
 package hkust.comp3111h.ballcraft.graphics;
 
-
-import hkust.comp3111h.ballcraft.R;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -10,9 +7,6 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.opengles.GL10;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.opengl.GLUtils;
 
 public class Plane implements Drawable {
 	
@@ -23,6 +17,13 @@ public class Plane implements Drawable {
 			-size, size, 0.0f,  // 1, Bottom Left
 			size, -size, 0.0f,  // 2, Bottom Right
 			size, size, 0.0f,  // 3, Top Right
+	};
+	
+	private float [] normals = {
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, 1,
 	};
 	
 	private float [] texture = {
@@ -39,18 +40,22 @@ public class Plane implements Drawable {
 	private int [] textures = new int[1];
 	
 	public Plane() {
-		vertexBuffer = makeVertexBuffer();
-		textureBuffer = makeTextureBuffer();
+		vertexBuffer = this.makeVertexBuffer();
+		// textureBuffer = this.makeTextureBuffer();
+		normalBuffer = this.makeNormalBuffer();
 	}
 	
 	public void draw(GL10 gl) {
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 		gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
+		
 		gl.glEnable(GL10.GL_NORMALIZE);
 		gl.glEnable(GL10.GL_RESCALE_NORMAL);
+		
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
-		// gl.glNormalPointer(3, GL10.GL_FLOAT, pointer)
+		gl.glNormalPointer(GL10.GL_FLOAT, 0, normalBuffer);
 		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
+		
 		gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 	}
@@ -69,6 +74,15 @@ public class Plane implements Drawable {
 		bb.order(ByteOrder.nativeOrder());
 		FloatBuffer buffer = bb.asFloatBuffer();
 		buffer.put(texture);
+		buffer.position(0);
+		return buffer;
+	}
+	
+	public FloatBuffer makeNormalBuffer() {
+		ByteBuffer bb = ByteBuffer.allocateDirect(normals.length * 4);
+		bb.order(ByteOrder.nativeOrder());
+		FloatBuffer buffer = bb.asFloatBuffer();
+		buffer.put(normals);
 		buffer.position(0);
 		return buffer;
 	}

@@ -27,7 +27,7 @@ public class SplashScreenUs extends Activity {
 		
 		this.setContentView(R.layout.splash_screen_us);
 		
-		handler.sendEmptyMessageDelayed(0, 500);
+		handler.sendEmptyMessageDelayed(0, 2000);
 	}
 	
 	public Handler handler = new Handler() {

@@ -10,12 +10,30 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"/>
 
-    <CheckBox
-        android:id="@+id/option_menu_vibration_checkbox"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/option_menu_linear_layout"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Vibration On" />
+        android:layout_centerInParent="true"
+        android:gravity="center">
+        
+	    <CheckBox
+	        android:id="@+id/option_menu_vibration_checkbox"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Vibration On"
+	        android:textSize="12pt"
+	        android:textColor="#FFFFFF" />
+	    
+	    <CheckBox
+	        android:id="@+id/option_menu_music_checkbox"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Music On"
+	        android:textSize="12pt"
+	        android:textColor="#FFFFFF" />
+	    
+    </LinearLayout>
     
 </RelativeLayout>

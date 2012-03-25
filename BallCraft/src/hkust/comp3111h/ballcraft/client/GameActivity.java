@@ -19,7 +19,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class GameActivity extends Activity implements SensorEventListener {
@@ -28,6 +30,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 	
 	private GLSurfaceView mGLView;
 	private SensorManager sensorManager;
+	
+	private LinearLayout menuLayout;
 	
 	private static TextView debugView = null;
 	private static String debugMsg = null;
@@ -46,8 +50,8 @@ public class GameActivity extends Activity implements SensorEventListener {
         		WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
-		initLayout();
-		initSensor();
+		this.initLayout();
+		this.initSensor();
     }
 	
 	@Override
@@ -93,6 +97,30 @@ public class GameActivity extends Activity implements SensorEventListener {
 		miniMap = (MiniMapView) this.findViewById(R.id.game_activity_mini_map_view);
 		miniMap.setZOrderOnTop(true);
 		miniMap.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+		
+		menuLayout = (LinearLayout) this.findViewById(R.id.game_activity_menu);
+		menuLayout.setVisibility(View.INVISIBLE);
+		
+		Button resumeButton = (Button) this.findViewById(R.id.game_activity_resume_button);
+		resumeButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				self.onBackPressed();
+			}
+			
+		});
+		
+		Button exitButton = (Button) this.findViewById(R.id.game_activity_exit_button);
+		exitButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				self.finish();
+				self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+			}
+			
+		});
     }
     
     private void initSensor() {
@@ -109,14 +137,29 @@ public class GameActivity extends Activity implements SensorEventListener {
 	
 	public void onSensorChanged(SensorEvent event) {
 		Client.setInputAcceleration(
-				event.values[SensorManager.DATA_Y] * 5, 
-				-event.values[SensorManager.DATA_X] * 5);
+				event.values[SensorManager.DATA_Y] * 2, 
+				-event.values[SensorManager.DATA_X] * 2);
 	}
 	
 	@Override
 	public void onBackPressed() {
+		if (menuLayout.getVisibility() == View.INVISIBLE) {
+			menuLayout.setVisibility(View.VISIBLE);
+			AlphaAnimation alphaAnim = new AlphaAnimation(0.5f, 0.5f);
+			alphaAnim.setDuration(0);
+			alphaAnim.setFillAfter(true);
+			menuLayout.setAnimation(alphaAnim);
+		} else {
+			menuLayout.setVisibility(View.INVISIBLE);
+			AlphaAnimation alphaAnim = new AlphaAnimation(0f, 0f);
+			alphaAnim.setDuration(0);
+			alphaAnim.setFillAfter(true);
+			menuLayout.setAnimation(alphaAnim);
+		}
+		/*
 		super.onBackPressed();
 		self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+		*/
 	}
     
 	/**

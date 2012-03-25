@@ -40,7 +40,7 @@ public class MultiPlayerGameInitializer extends Activity {
         
         MapParser.setContext(this);
         Client.setContext(this);
-        
+
         Intent gameIntent = new Intent(this, GameActivity.class);
         this.startActivity(gameIntent);
         
