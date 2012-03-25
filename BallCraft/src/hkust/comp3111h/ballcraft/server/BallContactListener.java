@@ -11,9 +11,10 @@ public class BallContactListener implements ContactListener
 	
 	public void beginContact(Contact arg0)
 	{
-		Server.msg += ServerGameState.getStateInstance().getUnits().indexOf(arg0.m_fixtureA);
+		//TODO: bug here
+		Server.msg += ServerGameState.getStateInstance().getUnits().indexOf(arg0.m_fixtureA.m_body);
 		Server.msg += ",";	
-		Server.msg += ServerGameState.getStateInstance().getUnits().indexOf(arg0.m_fixtureB);
+		Server.msg += ServerGameState.getStateInstance().getUnits().indexOf(arg0.m_fixtureB.m_body);
 	}
 
 	
