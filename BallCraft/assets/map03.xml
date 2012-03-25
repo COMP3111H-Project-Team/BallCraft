@@ -5,7 +5,6 @@
 	<width>400</width>
 	<initPosition>10,10</initPosition>
 	<wall>-200,-200,200,-200</wall>
-	<wall>-200,-200,-200,200</wall>
 	<wall>200,-200,200,200</wall>
 	<wall>-200,200,200,200</wall>
 </map>
