@@ -9,5 +9,13 @@
         android:id="@+id/option_menu_gl_surface_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"/>
+
+    <CheckBox
+        android:id="@+id/option_menu_vibration_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Vibration On" />
     
 </RelativeLayout>

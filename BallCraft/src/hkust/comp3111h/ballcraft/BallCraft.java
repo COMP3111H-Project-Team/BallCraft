@@ -178,7 +178,7 @@ public class BallCraft {
 		public static final String name = "Dark Ball";
 		public static final String description = 
 				"This is the Dark Ball";
-		public static final int imageResource = R.drawable.dark_ball2;
+		public static final int imageResource = R.drawable.dark_ball;
 		public static final int mass = 4;
 		public static final int friction = 4;
 		public static final int magic = 10;

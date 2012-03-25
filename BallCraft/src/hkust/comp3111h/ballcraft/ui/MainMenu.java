@@ -60,11 +60,12 @@ public class MainMenu extends Activity implements SensorEventListener {
 		final ImageView settingImage = (ImageView) this.findViewById(R.id.main_menu_setting_image_view);
 		settingImage.setOnClickListener(new OnClickListener() {
 
-			
+			@Override
 			public void onClick(View v) {
 				self.startActivity(new Intent(MainMenu.this, OptionMenu.class));
 				self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 			}
+			
 		});
 			
 		final Animation rotate360 = AnimationUtils.loadAnimation(this, R.anim.rotate360);
@@ -72,22 +73,23 @@ public class MainMenu extends Activity implements SensorEventListener {
 		settingImage.startAnimation(rotate360);
 		rotate360.setAnimationListener(new AnimationListener() {
 
-			
+			@Override
 			public void onAnimationEnd(Animation animation) {
 				settingImage.clearAnimation();
 				settingImage.startAnimation(rotate360);
 			}
 
-			
+			@Override
 			public void onAnimationRepeat(Animation animation) {
 			}
 
-			
+			@Override
 			public void onAnimationStart(Animation animation) {
 			}
+			
 		});
 		
-		TextView singlePlayerButton = (TextView) this.findViewById(R.id.main_menu_single_player_button);
+		final ImageView singlePlayerButton = (ImageView) this.findViewById(R.id.main_menu_single_player_button);
 		// singlePlayerButton.getBackground().setAlpha(180);
 		singlePlayerButton.setOnClickListener(new OnClickListener() {
 			
@@ -98,8 +100,13 @@ public class MainMenu extends Activity implements SensorEventListener {
 			}
 			
 		});
+		
+		/*
+		Animation opacityChange = AnimationUtils.loadAnimation(self, R.anim.opacity_change);
+		singlePlayerButton.startAnimation(opacityChange);
+		*/
 			
-		TextView multiPlayerButton = (TextView) this.findViewById(R.id.main_menu_multi_player_button);
+		ImageView multiPlayerButton = (ImageView) this.findViewById(R.id.main_menu_multi_player_button);
 		// multiPlayerButton.getBackground().setAlpha(180);
 		multiPlayerButton.setOnClickListener(new OnClickListener() {
 			
@@ -111,8 +118,8 @@ public class MainMenu extends Activity implements SensorEventListener {
 			
 		});
 	}
-
 	
+	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 	}
 
