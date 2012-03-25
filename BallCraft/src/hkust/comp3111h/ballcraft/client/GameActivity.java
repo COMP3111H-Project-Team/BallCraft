@@ -58,9 +58,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 	public void onStop()
 	{
 		super.onStop();
-		Server.stop();
-		Client.stop();
-		finish();
 	}
     
     /**
@@ -116,6 +113,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 			@Override
 			public void onClick(View v) {
+				Server.stop();
+				Client.stop();
 				self.finish();
 				self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 			}
