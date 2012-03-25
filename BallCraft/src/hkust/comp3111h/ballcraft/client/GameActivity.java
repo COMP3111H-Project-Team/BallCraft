@@ -50,6 +50,13 @@ public class GameActivity extends Activity implements SensorEventListener {
 		initSensor();
     }
 
+	@Override
+	protected void onStop() {
+		super.onStop();
+	}
+    
+	
+    
     /**
      * Initialize the main layout of the game view,
      * including buttons, MUD, etc.
@@ -65,7 +72,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		Button skill1Button = (Button) this.findViewById(R.id.game_activity_skill_1_button);
 		skill1Button.getBackground().setAlpha(80);
 		skill1Button.setOnClickListener(new OnClickListener() {
-			@Override
+			
 			public void onClick(View v) {
 				Client.castSkill(new Skill(BallCraft.Skill.TEST_SKILL_1));
 			}
@@ -74,7 +81,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 		Button skill2Button = (Button) this.findViewById(R.id.game_activity_skill_2_button);
 		skill2Button.getBackground().setAlpha(80);
 		skill2Button.setOnClickListener(new OnClickListener() {
-			@Override
 			public void onClick(View v) {
 				Client.castSkill(new Skill(BallCraft.Skill.TEST_SKILL_2));
 			}
@@ -90,11 +96,11 @@ public class GameActivity extends Activity implements SensorEventListener {
 				SensorManager.SENSOR_DELAY_NORMAL);
     }
 
-	@Override
+	
 	public void onAccuracyChanged(Sensor arg0, int arg1) {
 	}
 
-	@Override
+	
 	public void onSensorChanged(SensorEvent event) {
 		Client.setInputAcceleration(
 				event.values[SensorManager.DATA_Y] * 5, 
