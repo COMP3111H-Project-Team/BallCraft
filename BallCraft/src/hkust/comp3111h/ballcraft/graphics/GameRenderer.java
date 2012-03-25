@@ -34,21 +34,18 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
 		gl.glLoadIdentity();
 		
-		/*
 		gl.glEnable(GL10.GL_LIGHTING);
 		gl.glEnable(GL10.GL_LIGHT0);
 		
-		float lightAmbient [] = { 0.2f, 0.2f, 0.2f, 1.0f };
-		float lightDiffuse [] = { 0.9f, 0.9f, 0.9f, 1.0f };
+		float lightAmbient [] = { 0.4f, 0.4f, 0.4f, 1.0f };
+		float lightDiffuse [] = { 0.6f, 0.6f, 0.6f, 1.0f };
 		float lightSpecular [] = { 0.9f, 0.9f, 0.9f, 1.0f };
-		float lightPosition [] = { 0f, 0f, 100f, 1f };
+		float lightPosition [] = { 300f, 300f, 100f, 1f };
 		
+		float matAmbient [] = { 0.3f, 0.3f, 0.3f, 1f };
+		float matDiffuse [] = { 0.6f, 0.6f, 0.6f, 1f };
 		float matSpecular [] = { 1f, 1f, 1f, 1f };
-		float matShininess [] = { 5.0f };
-		float matAmbient [] = { 1f, 1f, 1f, 1f };
-		float matDiffuse [] = { 1f, 1f, 1f, 1f };
-		
-		gl.glShadeModel(GL10.GL_SMOOTH);
+		float matShininess [] = { 8f };
 		
 		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SPECULAR, matSpecular, 0);
 		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, matShininess, 0);
@@ -59,7 +56,6 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPosition, 0);
 		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, lightAmbient, 0);
 		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, lightDiffuse, 0);
-		*/
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
