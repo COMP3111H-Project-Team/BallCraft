@@ -10,7 +10,7 @@ public abstract class Unit implements Drawable {
 	protected final static float rate = 5.0f;
 	protected final static float g = 9.8f;
 	protected Body body;
-	private final static Vec2 O = new Vec2(0, 0);
+	public final static Vec2 O = new Vec2(0, 0);
 	
 	public static Unit fromSerializedString(String serialized) {
 		String [] parts = serialized.split(":");
@@ -47,5 +47,10 @@ public abstract class Unit implements Drawable {
 	public abstract String toSerializedString();
 	
 	public abstract void updateFromString(String string);
+	
+	public Body getBody()
+	{
+		return body;
+	}
 	
 }

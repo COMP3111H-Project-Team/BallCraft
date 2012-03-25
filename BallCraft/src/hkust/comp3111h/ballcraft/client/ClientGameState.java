@@ -64,4 +64,9 @@ public class ClientGameState {
 		return skills;
 	}
 
+	public static void init() 
+	{
+		stateInstance = new ClientGameState();
+	}
+
 }

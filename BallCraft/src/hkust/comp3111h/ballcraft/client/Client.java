@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.client;
 
+import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import android.app.IntentService;
@@ -12,7 +13,11 @@ public class Client extends IntentService {
 
 	private static GameInput input;
 	private static Context context;
-	private static Vibrator vibrator;
+	private static Vibrator vibrator;	
+	private static boolean running = false;
+
+	private static String myself = "" + BallCraft.myself;
+	private static String enemy = "" + BallCraft.enemy;
 	
     public Client() {
     	super("ClientService");
@@ -35,9 +40,10 @@ public class Client extends IntentService {
 		if (!unitStrs[0].equals(""))
 		{
 			String [] collision = unitStrs[0].split(",");
-			if (collision[0].equals("0") || collision[1].equals("1"));
+			if ((collision[0].equals(myself) || collision[1].equals(myself)) && 
+				(collision[0].equals(enemy) || collision[1].equals(enemy)));
 			{
-				// vibrator.vibrate(50);
+				//vibrator.vibrate(50);
 			}			
 		}
 		ClientGameState.getClientGameState().applyUpdater(unitStrs[1]);
@@ -45,7 +51,7 @@ public class Client extends IntentService {
 	
 	public void run() 
 	{
-		while (true)
+		while (running)
 		{
 			if (Server.inited) {
 				ServerAdapter.sendToServer(input);
@@ -60,12 +66,19 @@ public class Client extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
+		running = true;
+		ClientGameState.init();
 		this.run();
 	}
 
 	public static void setContext(Context context) 
 	{
 		Client.context = context;
+	}
+
+	public static void stop()
+	{
+		running = false;
 	}
 	
 }
