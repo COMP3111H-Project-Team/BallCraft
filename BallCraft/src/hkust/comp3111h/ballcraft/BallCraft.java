@@ -9,6 +9,11 @@ public class BallCraft {
 	public static int enemy = 1;
 	public static int maxPlayer = 2;
 	
+	public enum Status
+	{
+		NORMAL, DEAD, FROZEN
+	}
+	
 	public static final class Ball {
 		public static final int WOOD_BALL = 0;
 		public static final int ROCK_BALL = 1;

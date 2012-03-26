@@ -1,6 +1,8 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.server.ServerGameState;
+import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.skills.TestSkill1;
 import hkust.comp3111h.ballcraft.skills.TestSkill2;
 
@@ -46,10 +48,21 @@ public abstract class Skill {
 	public abstract void init();
 	public abstract void beforeStep();
 	public abstract void afterStep();
+	public abstract void finish();
 	
 	public int getId()
 	{
 		return id;
+	}
+	
+	protected Unit getUnit()
+	{
+		return ServerGameState.getStateInstance().getUnits().get(player);
+	}
+
+	protected Unit getUnit(int i)
+	{
+		return ServerGameState.getStateInstance().getUnits().get(i);
 	}
 	
 	public boolean isActive() 

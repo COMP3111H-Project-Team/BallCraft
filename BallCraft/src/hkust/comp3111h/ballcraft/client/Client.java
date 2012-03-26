@@ -8,6 +8,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
+import android.util.Log;
 
 public class Client extends IntentService {
 
@@ -35,16 +36,33 @@ public class Client extends IntentService {
 		input.addSkill(skill);
 	}
 	
-	public static void processSerializedUpdate(String serialized) {
-		String [] unitStrs = serialized.split(";");
-		if (!unitStrs[0].equals(""))
+	private static void handleMessage(String string)
+	{
+		String[] parts = string.split(":");
+		if (parts[0].equals("dead"))
 		{
-			String [] collision = unitStrs[0].split(",");
+			if(parts[1].equals(myself))
+			{
+				//TODO:player dead
+			}
+		}
+		else if (parts[0].equals("collision"))
+		{
+			String [] collision = parts[1].split(",");
 			if ((collision[0].equals(myself) || collision[1].equals(myself)) && 
 				(collision[0].equals(enemy) || collision[1].equals(enemy)));
 			{
 				//vibrator.vibrate(50);
-			}			
+			}	
+		}
+	}
+	
+	public static void processSerializedUpdate(String serialized) {
+		String[] unitStrs = serialized.split(";");
+		String[] messages = unitStrs[0].split("/");
+		for (String msg:messages)
+		{
+			handleMessage(msg);
 		}
 		ClientGameState.getClientGameState().applyUpdater(unitStrs[1]);
 	}
