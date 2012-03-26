@@ -23,8 +23,15 @@ public class MultiPlayerGameInitializer extends Activity {
 		
 		this.setContentView(R.layout.game_initializer_layout);
 	
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
 		initGame();
 	}
+	
 	
 	private void initGame() {
 		Intent intent = this.getIntent();

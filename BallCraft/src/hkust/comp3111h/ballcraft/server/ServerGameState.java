@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.server;
 
+import hkust.comp3111h.ballcraft.BallCraft.Status;
 import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.Map;
 import hkust.comp3111h.ballcraft.client.MapParser;
@@ -41,7 +42,11 @@ public class ServerGameState
 	
     public void processPlayerInput(int playerId, GameInput input)
     {
-    	units.get(playerId).applyForce(input.acceleration.mul(1.0f));
+    	if (units.get(playerId).getStatus() == Status.NORMAL)
+    	{
+    		units.get(playerId).applyForce(input.acceleration);
+    	}
+    	
     	if (input.skillActive()) {
     		ArrayList<Skill> skills = input.getSkills();
     		for (int i = 0; i < skills.size(); i++) {
@@ -58,11 +63,22 @@ public class ServerGameState
     		Skill skill = activeSkills.get(i);
     		if (!skill.isActive())
     		{
+    			skill.finish();
     			activeSkills.remove(i);
     			i--;
     			continue;
     		}
     		skill.beforeStep();		
+    	}
+	}
+    
+
+
+    private void afterStep() 
+    {
+    	for (int i = 0; i < activeSkills.size(); i++)
+    	{
+    		activeSkills.get(i).afterStep();		
     	}
 	}
 
@@ -91,6 +107,7 @@ public class ServerGameState
     {
     	beforeStep();
     	world.step(msecElapsed, 6, 2);
+    	afterStep();
     }
     
     /* used for serialization:
