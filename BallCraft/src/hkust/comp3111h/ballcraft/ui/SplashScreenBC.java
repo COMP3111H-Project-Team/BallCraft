@@ -10,34 +10,36 @@ import android.view.Window;
 import android.view.WindowManager;
 
 public class SplashScreenBC extends Activity {
-	
-	private Activity self;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		self = this;
-		
-    	this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, 
-    			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
-        		WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
-		this.setContentView(R.layout.splash_screen_bc);
+    private Activity self;
 
-		handler.sendEmptyMessageDelayed(0, 500);
-	}
-	
-	public Handler handler = new Handler() {
-		@Override
-		public void handleMessage(Message msg) {
-			Intent intent = new Intent(SplashScreenBC.this, MainMenu.class);
-			self.startActivity(intent);
-			self.finish();
-			self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-		}
-	};
-	
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        self = this;
+
+        this.getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        this.setContentView(R.layout.splash_screen_bc);
+
+        handler.sendEmptyMessageDelayed(0, 500);
+    }
+
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Intent intent = new Intent(SplashScreenBC.this, MainMenu.class);
+            self.startActivity(intent);
+            self.finish();
+            self.overridePendingTransition(android.R.anim.fade_in,
+                    android.R.anim.fade_out);
+        }
+    };
+
 }
