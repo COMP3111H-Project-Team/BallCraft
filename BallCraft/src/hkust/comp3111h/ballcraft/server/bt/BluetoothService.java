@@ -55,11 +55,7 @@ public abstract class BluetoothService {
 				}
 				
 				if (shallAccept(newConnection)) {
-					try {
-						onClientConnected(wrapAcceptedSocket(newConnection));
-					} catch (IOException e) {
-						throw new RuntimeException(e);
-					}
+					onClientConnected(wrapAcceptedSocket(newConnection));
 				}
 				else {
 					try {
@@ -129,9 +125,15 @@ public abstract class BluetoothService {
 	 * @return A channel that is paired with the server.
 	 * @throws IOException
 	 */
-	public BluetoothChannel connectToDevice(BluetoothDevice device) throws IOException {
-    	final BluetoothSocket socket = device.createRfcommSocketToServiceRecord(getUUID());
+	public BluetoothChannel connectToDevice(BluetoothDevice device) {
 		final BluetoothChannel channel = getChannelFactory().newServerChannel();
+    	final BluetoothSocket socket;
+		try {
+			socket = device.createRfcommSocketToServiceRecord(getUUID());
+		} catch (IOException e2) {
+			channel.onError(e2);
+			return channel;
+		}
 		final Thread opener = new Thread() {
 			public void run() {
 				try {
@@ -218,21 +220,23 @@ public abstract class BluetoothService {
 	abstract String getServiceName();
 	
 	
-	private BluetoothChannel wrapAcceptedSocket(final BluetoothSocket socket) throws IOException {
+	private BluetoothChannel wrapAcceptedSocket(final BluetoothSocket socket) {
 		final BluetoothChannel channel;
 		try {
 			channel = getChannelFactory().newClientChannel();
 		} catch (Exception e1) {
 			throw new RuntimeException(e1);
 		}
-		channel.initialize(socket);
-		
-		Thread openNotifier = new Thread() {
-			public void run() {
-				channel.onOpen();
+		try {
+			channel.initialize(socket);
+		} catch (IOException e) {
+			try {
+				socket.close();
 			}
-		};
-		openNotifier.start();
+			catch (IOException e1) { }
+			channel.onClose();
+		}
+		channel.onOpen();
 		
 		return channel;
 	}
