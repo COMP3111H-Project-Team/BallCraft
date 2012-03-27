@@ -1,7 +1,6 @@
 package hkust.comp3111h.ballcraft.graphics;
 
 import hkust.comp3111h.ballcraft.client.ClientGameState;
-import hkust.comp3111h.ballcraft.client.GameActivity;
 import hkust.comp3111h.ballcraft.client.Player;
 import hkust.comp3111h.ballcraft.server.Unit;
 
@@ -40,22 +39,22 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		float lightAmbient [] = { 0.4f, 0.4f, 0.4f, 1.0f };
 		float lightDiffuse [] = { 0.6f, 0.6f, 0.6f, 1.0f };
 		float lightSpecular [] = { 0.9f, 0.9f, 0.9f, 1.0f };
-		float lightPosition [] = { 300f, 300f, 100f, 1f };
+		float lightPosition [] = { 100f, 100f, 100f, 1f };
 		
-		float matAmbient [] = { 0.3f, 0.3f, 0.3f, 1f };
+		float matAmbient [] = { 0.4f, 0.4f, 0.4f, 1f };
 		float matDiffuse [] = { 0.6f, 0.6f, 0.6f, 1f };
-		float matSpecular [] = { 1f, 1f, 1f, 1f };
+		float matSpecular [] = { 0.9f, 0.9f, 0.9f, 1f };
 		float matShininess [] = { 8f };
 		
-		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SPECULAR, matSpecular, 0);
-		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, matShininess, 0);
 		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_AMBIENT, matAmbient, 0);
 		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_DIFFUSE, matDiffuse, 0);
+		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SPECULAR, matSpecular, 0);
+		gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, matShininess, 0);
 		
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, lightSpecular, 0);
-		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPosition, 0);
 		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, lightAmbient, 0);
 		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, lightDiffuse, 0);
+		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, lightSpecular, 0);
+		gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPosition, 0);
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -95,9 +94,11 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 				drawables.get(i).draw(gl);
 			}
 			
+			/*
 			long elapsed = System.currentTimeMillis() - time;
 			GameActivity.display("fps: " + 1000 / elapsed);
 			time = System.currentTimeMillis();
+			*/
 			
 			/*
 			float xPos = self.position.x;
