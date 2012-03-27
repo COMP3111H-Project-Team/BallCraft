@@ -5,13 +5,13 @@ import hkust.comp3111h.ballcraft.client.Client;
 import hkust.comp3111h.ballcraft.client.GameInput;
 
 public class ServerAdapter {
-		
-	public static void sendToServer(GameInput input) {
-		Server.setState(BallCraft.myself + ";" + input.toSerializedString());
-	}
-	
-	public static void processServerMsg(String msg) {
-		Client.processSerializedUpdate(msg);
-	}
-	
+
+    public static void sendToServer(GameInput input) {
+        Server.setState(BallCraft.myself + ";" + input.toSerializedString());
+    }
+
+    public static void processServerMsg(String msg) {
+        Client.processSerializedUpdate(msg);
+    }
+
 }
