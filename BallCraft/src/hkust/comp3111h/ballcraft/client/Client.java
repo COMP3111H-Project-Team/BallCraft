@@ -8,6 +8,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
+import android.util.Log;
 
 public class Client extends IntentService {
 

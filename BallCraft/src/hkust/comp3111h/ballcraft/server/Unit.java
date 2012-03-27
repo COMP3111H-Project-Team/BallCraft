@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.server;
 
+import hkust.comp3111h.ballcraft.BallCraft.Status;
 import hkust.comp3111h.ballcraft.graphics.Drawable;
 
 import org.jbox2d.common.Vec2;
