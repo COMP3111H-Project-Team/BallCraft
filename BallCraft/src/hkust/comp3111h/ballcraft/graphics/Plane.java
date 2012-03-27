@@ -46,6 +46,8 @@ public class Plane implements Drawable {
 	}
 	
 	public void draw(GL10 gl) {
+		GraphicUtils.setMaterialColor(gl, new float [] {0.4f, 0.8f, 0f, 1f});
+		
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 		gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
 		
@@ -58,6 +60,8 @@ public class Plane implements Drawable {
 		
 		gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+		
+		GraphicUtils.restoreMaterialColor(gl);
 	}
 	
 	public FloatBuffer makeVertexBuffer() {
