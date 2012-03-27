@@ -1,6 +1,7 @@
 package hkust.comp3111h.ballcraft.server;
 
 import hkust.comp3111h.ballcraft.client.ClientGameState;
+import hkust.comp3111h.ballcraft.graphics.GraphicUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -71,6 +72,8 @@ public class Ball extends Unit {
 	public void draw(GL10 gl) {
 		gl.glPushMatrix();
 		
+			GraphicUtils.setMaterialColor(gl, new float [] {0.0f, 0.4f, 0.8f, 1f});
+		
 			gl.glTranslatef(this.getPosition().x, this.getPosition().y, getRadius() - z);
 			gl.glScalef(this.getRadius(), this.getRadius(), this.getRadius());
 			
@@ -94,6 +97,8 @@ public class Ball extends Unit {
 	        gl.glNormalPointer(GL10.GL_FLOAT, 0, fan_bottom);
 	        gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
 	        gl.glDrawArrays(GL10.GL_TRIANGLE_FAN, 0, slices + 2);
+	        
+	        GraphicUtils.restoreMaterialColor(gl);
 	        
         gl.glPopMatrix();
 	}
