@@ -1,8 +1,8 @@
 package hkust.comp3111h.ballcraft.skills;
 
 import hkust.comp3111h.ballcraft.BallCraft;
-import hkust.comp3111h.ballcraft.BallCraft.Status;
 import hkust.comp3111h.ballcraft.client.Skill;
+import hkust.comp3111h.ballcraft.server.ServerGameState;
 import hkust.comp3111h.ballcraft.server.Unit;
 
 import org.jbox2d.dynamics.Body;

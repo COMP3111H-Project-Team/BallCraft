@@ -69,7 +69,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
         mGLView = (GLSurfaceView) this
                 .findViewById(R.id.game_activity_gl_surface_view);
-        mGLView.setRenderer(new GameRenderer());
+        mGLView.setRenderer(new GameRenderer(this));
 
         Button skill1Button = (Button) this
                 .findViewById(R.id.game_activity_skill_1_button);

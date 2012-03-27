@@ -1,6 +1,5 @@
 package hkust.comp3111h.ballcraft.server;
 
-import hkust.comp3111h.ballcraft.BallCraft.Status;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.graphics.GraphicUtils;
 
