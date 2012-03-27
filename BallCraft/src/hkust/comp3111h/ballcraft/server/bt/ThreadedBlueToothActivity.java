@@ -121,11 +121,7 @@ public class ThreadedBlueToothActivity extends BluetoothAwareActivity {
 			}
 			else {
 				log("discovery finished, I am the client, connecting to the server: " + serverDevice.getName());
-				try {
-					connectToDevice(serverDevice);
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
+				connectToDevice(serverDevice);
 			}
 		}
 
