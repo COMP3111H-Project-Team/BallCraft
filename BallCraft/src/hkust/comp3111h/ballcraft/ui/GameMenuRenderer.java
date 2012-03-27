@@ -14,15 +14,8 @@ public class GameMenuRenderer implements GLSurfaceView.Renderer {
     private float turnX = 0;
     private float turnY = 0;
 
-    /*
-     * float [] fogColor = { 0.5f, 0.5f, 0.5f, 1.0f };
-     * 
-     * private FloatBuffer fogBuffer;
-     */
-
     public GameMenuRenderer(Context context) {
         c60 = new C60();
-        // fogBuffer = makeFogBuffer();
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -61,12 +54,5 @@ public class GameMenuRenderer implements GLSurfaceView.Renderer {
         gl.glColor4f(0.5f, 0.5f, 0.5f, 0.6f);
         c60.draw(gl);
     }
-
-    /*
-     * private FloatBuffer makeFogBuffer() { ByteBuffer bb =
-     * ByteBuffer.allocateDirect(fogColor.length * 4);
-     * bb.order(ByteOrder.nativeOrder()); FloatBuffer fb = bb.asFloatBuffer();
-     * fb.put(fogColor); fb.position(0); return fb; }
-     */
 
 }

@@ -13,9 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -79,9 +77,10 @@ public class BallSelectMenu extends Activity {
 
         ballImageView = (ImageView) this
                 .findViewById(R.id.ball_select_item_image);
-
+        
         ballSelectView = (ImageView) this
                 .findViewById(R.id.ball_select_item_select_view);
+        
         ballLockedView = (ImageView) this
                 .findViewById(R.id.ball_select_item_locked_image);
 
@@ -131,6 +130,7 @@ public class BallSelectMenu extends Activity {
     }
 
     private void updateLayout() {
+        /*
         if (init) {
             init = false;
             self.refreshBallDispaly();
@@ -152,6 +152,8 @@ public class BallSelectMenu extends Activity {
 
             });
         }
+        */
+        self.refreshBallDispaly();
 
         if (BallCraft.ballUnlocked(currBallPos)) {
             ballImageView.setAlpha(200);
