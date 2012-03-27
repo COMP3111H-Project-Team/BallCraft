@@ -1,6 +1,5 @@
 package hkust.comp3111h.ballcraft.server;
 
-import hkust.comp3111h.ballcraft.BallCraft.Status;
 import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.Map;
 import hkust.comp3111h.ballcraft.client.MapParser;
