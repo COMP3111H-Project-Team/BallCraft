@@ -15,6 +15,10 @@ import android.opengl.GLUtils;
 
 public class Plane implements Drawable {
 
+    private FloatBuffer vertexBuffer = null;
+    private FloatBuffer textureBuffer = null;
+    private FloatBuffer normalBuffer = null;
+
     private float size = 200f;
 
     private float[] vertices = { 
@@ -36,12 +40,7 @@ public class Plane implements Drawable {
             0.0f, 0.0f,     // bottom left  (V1)
             1.0f, 1.0f,     // top right    (V4)
             1.0f, 0.0f      // bottom right (V3)
-
     };
-
-    private FloatBuffer vertexBuffer = null;
-    private FloatBuffer textureBuffer = null;
-    private FloatBuffer normalBuffer = null;
 
     private int [] textures = new int[1];
 
@@ -54,13 +53,14 @@ public class Plane implements Drawable {
     public void draw(GL10 gl) {
         GraphicUtils.setMaterialColor(gl, new float[] { 0.4f, 0.8f, 0f, 1f });
 
+        gl.glEnable(GL10.GL_TEXTURE_2D);
+        
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
+        
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
         gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
         
-        gl.glFrontFace(GL10.GL_CW);
-
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
         gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer);
         gl.glNormalPointer(GL10.GL_FLOAT, 0, normalBuffer);
@@ -69,11 +69,13 @@ public class Plane implements Drawable {
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
         gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
+        
+        gl.glDisable(GL10.GL_TEXTURE_2D);
 
         GraphicUtils.restoreMaterialColor(gl);
     }
 
-    public FloatBuffer makeVertexBuffer() {
+    private FloatBuffer makeVertexBuffer() {
         ByteBuffer bb = ByteBuffer.allocateDirect(vertices.length * 4);
         bb.order(ByteOrder.nativeOrder());
         FloatBuffer buffer = bb.asFloatBuffer();
@@ -82,7 +84,7 @@ public class Plane implements Drawable {
         return buffer;
     }
 
-    public FloatBuffer makeTextureBuffer() {
+    private FloatBuffer makeTextureBuffer() {
         ByteBuffer bb = ByteBuffer.allocateDirect(texture.length * 4);
         bb.order(ByteOrder.nativeOrder());
         FloatBuffer buffer = bb.asFloatBuffer();
@@ -91,7 +93,7 @@ public class Plane implements Drawable {
         return buffer;
     }
 
-    public FloatBuffer makeNormalBuffer() {
+    private FloatBuffer makeNormalBuffer() {
         ByteBuffer bb = ByteBuffer.allocateDirect(normals.length * 4);
         bb.order(ByteOrder.nativeOrder());
         FloatBuffer buffer = bb.asFloatBuffer();
@@ -101,13 +103,13 @@ public class Plane implements Drawable {
     }
 
     public void loadTexture(GL10 gl, Context context) {
-         Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.texture); 
-         gl.glGenTextures(1, textures, 0);
-         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
-         gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
-         gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
-         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bmp, 0); 
-         bmp.recycle();
+		Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.texture); 
+		gl.glGenTextures(1, textures, 0);
+		gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
+		GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bmp, 0); 
+		bmp.recycle();
     }
 
 }

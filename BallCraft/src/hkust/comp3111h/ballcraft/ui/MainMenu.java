@@ -96,7 +96,6 @@ public class MainMenu extends Activity implements SensorEventListener {
 
         final ImageView singlePlayerButton = (ImageView) this
                 .findViewById(R.id.main_menu_single_player_button);
-        // singlePlayerButton.getBackground().setAlpha(180);
         singlePlayerButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
@@ -107,15 +106,11 @@ public class MainMenu extends Activity implements SensorEventListener {
 
         });
 
-        /*
-         * Animation opacityChange = AnimationUtils.loadAnimation(self,
-         * R.anim.opacity_change);
-         * singlePlayerButton.startAnimation(opacityChange);
-         */
+		Animation opacityChange1 = AnimationUtils.loadAnimation(self, R.anim.opacity_change_1);
+		singlePlayerButton.startAnimation(opacityChange1);
 
         ImageView multiPlayerButton = (ImageView) this
                 .findViewById(R.id.main_menu_multi_player_button);
-        // multiPlayerButton.getBackground().setAlpha(180);
         multiPlayerButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
@@ -126,6 +121,9 @@ public class MainMenu extends Activity implements SensorEventListener {
             }
 
         });
+        
+        Animation opacityChange2 = AnimationUtils.loadAnimation(self, R.anim.opacity_change_2);
+        multiPlayerButton.startAnimation(opacityChange2);
     }
 
     @Override

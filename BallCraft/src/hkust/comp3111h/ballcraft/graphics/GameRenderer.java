@@ -54,10 +54,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
         gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_AMBIENT, matAmbient, 0);
         gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_DIFFUSE, matDiffuse, 0);
-        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SPECULAR, matSpecular,
-                0);
-        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS,
-                matShininess, 0);
+        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SPECULAR, matSpecular, 0);
+        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, matShininess, 0);
 
         gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, lightAmbient, 0);
         gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, lightDiffuse, 0);
@@ -66,7 +64,6 @@ public class GameRenderer implements GLSurfaceView.Renderer {
     }
 
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        gl.glEnable(GL10.GL_TEXTURE_2D);
         gl.glShadeModel(GL10.GL_SMOOTH);
         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
         gl.glClearDepthf(1.0f);
@@ -75,6 +72,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
         gl.glEnable(GL10.GL_NORMALIZE);
         gl.glEnable(GL10.GL_RESCALE_NORMAL);
+        
         plane.loadTexture(gl, context);
     }
 
@@ -88,7 +86,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
             float xPos = self.getPosition().x;
             float yPos = self.getPosition().y;
-            GLU.gluLookAt(gl, xPos, yPos + 40, 200, xPos, yPos, 5, 0, 0, 1);
+            GLU.gluLookAt(gl, xPos, yPos + 80, 200, xPos, yPos, 5, 0, 0, 1);
 
             plane.draw(gl);
 
