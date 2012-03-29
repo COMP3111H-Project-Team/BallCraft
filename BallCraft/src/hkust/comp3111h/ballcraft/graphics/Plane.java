@@ -51,8 +51,6 @@ public class Plane implements Drawable {
     }
 
     public void draw(GL10 gl) {
-        GraphicUtils.setMaterialColor(gl, new float[] { 0.4f, 0.8f, 0f, 1f });
-
         gl.glEnable(GL10.GL_TEXTURE_2D);
         
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
@@ -71,8 +69,6 @@ public class Plane implements Drawable {
         gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
         
         gl.glDisable(GL10.GL_TEXTURE_2D);
-
-        GraphicUtils.restoreMaterialColor(gl);
     }
 
     private FloatBuffer makeVertexBuffer() {
