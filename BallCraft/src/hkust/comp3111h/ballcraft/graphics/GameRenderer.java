@@ -31,7 +31,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         gameState = ClientGameState.getClientGameState();
         plane = new Plane();
         
-        system = new ParticleSystem2(0, 0, 5);
+        system = new ParticleSystem1(0, 0, 5);
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
