@@ -6,7 +6,6 @@ import hkust.comp3111h.ballcraft.client.Player;
 import hkust.comp3111h.ballcraft.server.Unit;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -23,7 +22,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
     private Plane plane;
     
-    private ParticleSystem1 system;
+    private ParticleSystem system;
     
     private Context context;
 
@@ -32,16 +31,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         gameState = ClientGameState.getClientGameState();
         plane = new Plane();
         
-        system = new ParticleSystem1(0, 0, 10);
-        
-        /*
-        Random randGen = new Random();
-        particles = new ArrayList<NewParticle>();
-        for (int i = 0; i < 160; i++) {
-            particles.add(new NewParticle(0, 0, 10, 
-                    randGen.nextFloat() * 5 - 2.5f, randGen.nextFloat() * 5 - 2.5f, 5));
-        }
-        */
+        system = new ParticleSystem2(0, 0, 5);
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -91,7 +81,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE_MINUS_SRC_ALPHA); 
         
         plane.loadTexture(gl, context);
-        NewParticle.loadTexture(gl, context);
+        Particle.loadTexture(gl, context);
     }
 
     public void onDrawFrame(GL10 gl) {
