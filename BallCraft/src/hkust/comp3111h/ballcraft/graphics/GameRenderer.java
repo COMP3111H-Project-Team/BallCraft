@@ -6,6 +6,7 @@ import hkust.comp3111h.ballcraft.client.Player;
 import hkust.comp3111h.ballcraft.server.Unit;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -22,12 +23,25 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
     private Plane plane;
     
+    private ParticleSystem1 system;
+    
     private Context context;
 
     public GameRenderer(Context context) {
         this.context = context;
         gameState = ClientGameState.getClientGameState();
         plane = new Plane();
+        
+        system = new ParticleSystem1(0, 0, 10);
+        
+        /*
+        Random randGen = new Random();
+        particles = new ArrayList<NewParticle>();
+        for (int i = 0; i < 160; i++) {
+            particles.add(new NewParticle(0, 0, 10, 
+                    randGen.nextFloat() * 5 - 2.5f, randGen.nextFloat() * 5 - 2.5f, 5));
+        }
+        */
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -73,7 +87,11 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         gl.glEnable(GL10.GL_NORMALIZE);
         gl.glEnable(GL10.GL_RESCALE_NORMAL);
         
+        gl.glEnable(GL10.GL_BLEND);
+        gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE_MINUS_SRC_ALPHA); 
+        
         plane.loadTexture(gl, context);
+        NewParticle.loadTexture(gl, context);
     }
 
     public void onDrawFrame(GL10 gl) {
@@ -95,6 +113,9 @@ public class GameRenderer implements GLSurfaceView.Renderer {
             for (int i = 1; i < drawables.size(); i++) { // TODO
                 drawables.get(i).draw(gl);
             }
+            
+            system.move();
+            system.draw(gl);
             
             long elapsed = System.currentTimeMillis() - time;
             GameActivity.display("fps: " + 1000 / elapsed);

@@ -22,7 +22,7 @@ public class Ball extends Unit {
 
     FloatBuffer strip, fan_top, fan_bottom;
     float radius = 10;
-    int stacks = 30, slices = 30;
+    int stacks = 20, slices = 20;
 
     float theta, pi;
     float co, si;
