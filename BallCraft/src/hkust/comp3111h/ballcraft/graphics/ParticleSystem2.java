@@ -3,8 +3,6 @@ package hkust.comp3111h.ballcraft.graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
-import android.util.Log;
-
 public class ParticleSystem2 extends ParticleSystem {
     
     public ParticleSystem2(float x, float y, float z) {
