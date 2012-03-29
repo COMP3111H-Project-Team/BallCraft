@@ -3,35 +3,23 @@ package hkust.comp3111h.ballcraft.graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.microedition.khronos.opengles.GL10;
-
-class ParticleSystem1 extends ParticleSystem {
-    
-    private int COUNT = 100;
-    
-    private ArrayList<NewParticle> particles;
+public class ParticleSystem1 extends ParticleSystem {
 
     public ParticleSystem1(float x, float y, float z) {
-        particles = new ArrayList<NewParticle>();
+        COUNT = 100;
+        
+        particles = new ArrayList<Particle>();
         Random randGen = new Random();
         
         for (int i = 0; i < COUNT; i++) {
-            particles.add(new NewParticle(0, 0, 10, 
-                    randGen.nextFloat() * 4 - 2, randGen.nextFloat() * 4 - 2, 8));
+            particles.add(new Particle(x, y, 10, 
+                    randGen.nextFloat() * 6 - 3, randGen.nextFloat() * 6 - 3, randGen.nextFloat() * 1 + 5));
         }
     }
 
     @Override
-    public void move() {
-        for (int i = 0; i < COUNT; i++) {
-            particles.get(i).move();
-        }
+    protected boolean particleActive(Particle p) {
+        return p.z >= 5;
     }
-
-    @Override
-    public void draw(GL10 gl) {
-        for (int i = 0; i < COUNT; i++) {
-            particles.get(i).draw(gl);
-        }
-    }
+    
 }
