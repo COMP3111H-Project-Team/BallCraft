@@ -1,6 +1,7 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.graphics.ParticleSystem1;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.settings.GameSettings;
@@ -12,7 +13,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
-import android.util.Log;
 
 public class Client extends IntentService {
 
@@ -68,7 +68,6 @@ public class Client extends IntentService {
 		else if (parts[0].equals("mineCreate"))
 		{
 			String [] position = parts[1].split(",");
-			Log.e("create", position[0] + " , " + position[1]);
 			float x = Float.valueOf(position[0]);
 			float y = Float.valueOf(position[1]);
 			ClientGameState.getClientGameState().addMine(new Vec2(x, y));
@@ -76,7 +75,9 @@ public class Client extends IntentService {
 		else if (parts[0].equals("mineExplode"))
 		{
 			String [] position = parts[1].split(",");
-			Log.e("Exploed", position[0] + " , " + position[1]);
+			float x = Float.valueOf(position[0]);
+			float y = Float.valueOf(position[1]);
+			ClientGameState.getClientGameState().addDrawable(new ParticleSystem1(x, y, 5));
 		}
 	}
 

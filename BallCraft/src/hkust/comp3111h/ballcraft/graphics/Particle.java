@@ -39,6 +39,8 @@ public class Particle implements Drawable, Comparable {
     public float x, y, z;
     private float xSpeed, ySpeed, zSpeed;
     
+    private float size;
+    
     static {
         vertexBuffer = makeVertexBuffer();
         textureBuffer = makeTextureBuffer();

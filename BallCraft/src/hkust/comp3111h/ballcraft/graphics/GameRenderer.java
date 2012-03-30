@@ -23,16 +23,12 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
     private Plane plane;
     
-    private ParticleSystem system;
-    
     private Context context;
 
     public GameRenderer(Context context) {
         this.context = context;
         gameState = ClientGameState.getClientGameState();
         plane = new Plane();
-        
-        system = new ParticleSystem1(0, 0, 5);
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -107,79 +103,18 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
             self.draw(gl);
 
-            for (int i = 1; i < drawables.size(); i++) { // TODO
-                drawables.get(i).draw(gl);
+            for (int i = 0; i < drawables.size(); i++) {
+                if (drawables.get(i) != self) {
+                    if (drawables.get(i) instanceof ParticleSystem) {
+                        ((ParticleSystem) drawables.get(i)).move();
+                    }
+                    drawables.get(i).draw(gl);
+                }
             }
-            
-            /*
-            system.move();
-            system.draw(gl);
-            */
             
             long elapsed = System.currentTimeMillis() - time;
             GameActivity.display("fps: " + 1000 / elapsed);
             time = System.currentTimeMillis();
-
-            /*
-            float xPos = self.position.x;
-            float yPos = - self.position.y;
-            float xVel = self.velocity.x;
-            float yVel = - self.velocity.y;
-            double vel = 200; // Math.sqrt(xVel * xVel + yVel * yVel) * 100;
-            double tanAngle = xVel / yVel;
-            double angle = Math.atan(tanAngle);
-            float xDiff = (float) (Math.sin(angle) * vel);
-            float yDiff = (float) (Math.cos(angle) * vel);
-        
-            if (xVel > 0 && yVel > 0) { // first quadrant
-                GLU.gluLookAt(gl, xPos - xDiff, yPos - yDiff, 300, xPos, yPos, 5f, 0, 0, 1f);
-            } else if (xVel < 0 && yVel > 0) { // second quadrant
-                GLU.gluLookAt(gl, xPos - xDiff, yPos - yDiff, 300, xPos, yPos, 5f, 0, 0, 1f);
-            } else if (xVel < 0 && yVel < 0) { // third quadrant
-                GLU.gluLookAt(gl, xPos + xDiff, yPos + yDiff, 300, xPos, yPos, 5f, 0, 0, 1f);
-            } else if (xVel > 0 && yVel < 0) { // fourth quadrant
-                GLU.gluLookAt(gl, xPos + xDiff, yPos + yDiff, 300, xPos, yPos, 5f, 0, 0, 1f);
-            } else {
-                gl.glTranslatef(-self.position.x, self.position.y, -300);
-            }
-            */
-
-            /*
-            gl.glPushMatrix();
-                gl.glColor4f(0.6f, 0.6f, 0.6f, 1f);
-                gamePlane.draw(gl);
-            gl.glPopMatrix();
-                    
-            for (int i = 0; i < data.size(); i++) {
-                UnitData datum = data.get(i);
-                if (datum.identity == Unit.type.BALL) {
-                    gl.glPushMatrix();
-                        gl.glTranslatef(datum.position.x, - datum.position.y, 10);
-                        gl.glColor4f(0f, 0f, 1f, 1f);
-                        gl.glScalef(datum.size, datum.size, datum.size);
-                        sphere.draw(gl);
-                    gl.glPopMatrix();
-                }
-            }
-            
-            gl.glColor4f(1f, 1f, 0f, 1f);
-            wall.draw(gl);
-            
-            
-            if (ServerAdapter.skillActive()) {
-                skillActivated = true;
-                if (ServerAdapter.getSkill() == BallCraft.Skill.TEST_SKILL_1) {
-                    system = new ParticleSystem1(data.get(0).position.x, -data.get(0).position.y, 0);
-                } else if (ServerAdapter.getSkill() == BallCraft.Skill.TEST_SKILL_2) {
-                    system = new ParticleSystem2(data.get(0).position.x, -data.get(0).position.y, 0);
-                }
-            }
-            
-            if (skillActivated) {
-                system.move();
-                system.draw(gl);
-            }
-            */
         }
     }
 }
