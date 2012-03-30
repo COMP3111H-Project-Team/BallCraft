@@ -4,6 +4,7 @@ import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.GameActivity;
 import hkust.comp3111h.ballcraft.client.Player;
 import hkust.comp3111h.ballcraft.server.Unit;
+import hkust.comp3111h.ballcraft.server.Wall;
 
 import java.util.ArrayList;
 
@@ -101,6 +102,13 @@ public class GameRenderer implements GLSurfaceView.Renderer {
             self.draw(gl);
 
             for (int i = 1; i < drawables.size(); i++) { // TODO
+                // a temporary hack
+                if (drawables.get(i) instanceof Wall) {
+                    Wall w = (Wall) (drawables.get(i));
+                    if (!w.textureInited) {
+                        w.loadTexture(gl, context);
+                    }
+                }
                 drawables.get(i).draw(gl);
             }
             

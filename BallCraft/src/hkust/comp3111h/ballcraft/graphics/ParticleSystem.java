@@ -1,6 +1,8 @@
 package hkust.comp3111h.ballcraft.graphics;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -40,7 +42,9 @@ public abstract class ParticleSystem implements Drawable {
     /**
      * Draw every particle in the particle system
      */
+    @SuppressWarnings("unchecked")
     public void draw(GL10 gl) {
+        Collections.sort(particles);
         if (this.isActive()) {
             for (int i = 0; i < COUNT; i++) {
                 particles.get(i).draw(gl);

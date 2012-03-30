@@ -27,6 +27,8 @@ public class Wall extends Unit {
     private FloatBuffer textureBuffer = null;
 	private FloatBuffer normalBuffer = null;
 	
+	public boolean textureInited = false;
+	
 	private float [] vertices = {
 			0.5f, 0.5f, 0f,
 			0.5f, 0.5f, 20f,
@@ -53,7 +55,7 @@ public class Wall extends Unit {
 			-0.5f, 0.5f, 20f,
 			-0.5f, -0.5f, 20f,
 	};
-	
+
 	private float [] normals = {
 			0, 1, 0,
 			0, 1, 0,
@@ -82,10 +84,30 @@ public class Wall extends Unit {
 	};
 	
 	private float [] texture = {
-            0.0f, 1.0f,     // top left     (V2)
-            0.0f, 0.0f,     // bottom left  (V1)
-            1.0f, 1.0f,     // top right    (V4)
-            1.0f, 0.0f      // bottom right (V3)
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f,
+            
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f,
+            
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f,
+            
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f,
+            
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f,
 	};
 	
     private int [] textures = new int[1];
@@ -154,7 +176,7 @@ public class Wall extends Unit {
 	public void draw(GL10 gl) {
 		gl.glPushMatrix();
 		
-			GraphicUtils.setMaterialColor(gl, new float [] {1, 0, 0, 1});
+			// GraphicUtils.setMaterialColor(gl, new float [] {1, 0, 0, 1});
 				
 			gl.glTranslatef(pos.x, pos.y, 0);
 			gl.glRotatef(angle, 0, 0, 1);
@@ -178,7 +200,7 @@ public class Wall extends Unit {
 			
 			gl.glDisable(GL10.GL_TEXTURE_2D);
 			
-			GraphicUtils.restoreMaterialColor(gl);
+			// GraphicUtils.restoreMaterialColor(gl);
 				
 		gl.glPopMatrix();
 	}
@@ -224,12 +246,14 @@ public class Wall extends Unit {
 	}
 	
 	public void loadTexture(GL10 gl, Context context) {
-        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.metal_texture);
+        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.texture);
 		gl.glGenTextures(1, textures, 0);
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
 		GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bmp, 0); 
 		bmp.recycle();
+		this.textureInited = true;
 	}
+	
 }

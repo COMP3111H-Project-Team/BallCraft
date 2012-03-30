@@ -157,11 +157,6 @@ public class GameActivity extends Activity implements SensorEventListener {
             alphaAnim.setFillAfter(true);
             menuLayout.setAnimation(alphaAnim);
         }
-        /*
-         * super.onBackPressed();
-         * self.overridePendingTransition(android.R.anim.fade_in,
-         * android.R.anim.fade_out);
-         */
     }
 
     /**

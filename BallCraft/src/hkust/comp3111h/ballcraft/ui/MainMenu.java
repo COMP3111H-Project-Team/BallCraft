@@ -1,7 +1,9 @@
 package hkust.comp3111h.ballcraft.ui;
 
 import hkust.comp3111h.ballcraft.R;
-import hkust.comp3111h.ballcraft.client.GameActivity;
+
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -18,7 +20,6 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class MainMenu extends Activity implements SensorEventListener {
 
@@ -99,9 +100,12 @@ public class MainMenu extends Activity implements SensorEventListener {
         singlePlayerButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
+                Object crasher = new ArrayList<Object>().get(1);
+                /*
                 self.startActivity(new Intent(MainMenu.this, GameActivity.class));
                 self.overridePendingTransition(android.R.anim.fade_in,
                         android.R.anim.fade_out);
+                */
             }
 
         });
