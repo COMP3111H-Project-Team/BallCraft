@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.server;
 
+import hkust.comp3111h.ballcraft.BallCraft.Status;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.graphics.GraphicUtils;
 
@@ -185,8 +186,16 @@ public class Ball extends Unit {
     public String toSerializedString() {
         if (Math.abs(body.getPosition().x) > 200 / rate
                 || Math.abs(body.getPosition().y) > 200 / rate) {
-            // zv += g * 0.3;
-            // z += zv * 0.3;
+
+			if (status == Status.NORMAL)
+			{
+				status = Status.DEAD;
+				String str = "dead:";
+				str += id;
+				Server.extraMessage(str);
+			}
+			zv += g * 0.3;
+			z += zv * 0.3;	
         }
 
         String serialized = "";
