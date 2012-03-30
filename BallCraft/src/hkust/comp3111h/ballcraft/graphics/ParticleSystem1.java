@@ -6,7 +6,7 @@ import java.util.Random;
 public class ParticleSystem1 extends ParticleSystem {
 
     public ParticleSystem1(float x, float y, float z) {
-        COUNT = 100;
+        COUNT = 10;
         
         particles = new ArrayList<Particle>();
         Random randGen = new Random();

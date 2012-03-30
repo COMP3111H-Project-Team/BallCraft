@@ -31,8 +31,9 @@ public class Ball extends Unit {
     float h1, h2;
     float step = 4.0f;
     float[][] v;
+    
     FloatBuffer vfb;
-
+    
     public Ball(float size, float mass, float friction, Vec2 position) {
         super();
         size /= rate;
@@ -79,8 +80,7 @@ public class Ball extends Unit {
 
         GraphicUtils.setMaterialColor(gl, new float[] { 0.0f, 0.4f, 0.8f, 1f });
 
-        gl.glTranslatef(this.getPosition().x, this.getPosition().y, getRadius()
-                - z);
+        gl.glTranslatef(this.getPosition().x, this.getPosition().y, getRadius() - z);
         gl.glScalef(this.getRadius(), this.getRadius(), this.getRadius());
 
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, fan_top);
