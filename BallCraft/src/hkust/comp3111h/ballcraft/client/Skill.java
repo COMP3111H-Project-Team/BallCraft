@@ -3,8 +3,11 @@ package hkust.comp3111h.ballcraft.client;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
 import hkust.comp3111h.ballcraft.server.Unit;
+import hkust.comp3111h.ballcraft.skills.Mine;
 import hkust.comp3111h.ballcraft.skills.TestSkill1;
 import hkust.comp3111h.ballcraft.skills.TestSkill2;
+
+import org.jbox2d.dynamics.Body;
 
 /**
  * Define a skill to be casted
@@ -26,6 +29,8 @@ public abstract class Skill {
             return new TestSkill1(player, id);
         case BallCraft.Skill.TEST_SKILL_2:
             return new TestSkill2(player, id);
+        case BallCraft.Skill.MINE:
+            return new Mine(player, id);
         }
         return null;
     }
@@ -40,17 +45,16 @@ public abstract class Skill {
     }
 
     public abstract void init();
-
     public abstract void beforeStep();
-
     public abstract void afterStep();
+	public abstract void finish();
 
     public int getId() {
         return id;
     }
 
     public boolean isActive() {
-        return System.currentTimeMillis() - time < duration
+        return (System.currentTimeMillis() - time < duration || duration == -1)
                 && id != BallCraft.Skill.DEACTIVATED;
     }
 
@@ -60,6 +64,26 @@ public abstract class Skill {
 
     public String toSerializedString() {
         return String.valueOf(id);
+    }
+    
+    protected Unit getUnit()
+    {
+    	return ServerGameState.getStateInstance().getUnits().get(player);
+    }
+    
+    protected Unit getUnit(int i)
+    {
+    	return ServerGameState.getStateInstance().getUnits().get(i);
+    }
+    
+    protected Body getBody()
+    {
+    	return ServerGameState.getStateInstance().getUnits().get(player).getBody();
+    }
+    
+    protected Body getBody(int i)
+    {
+    	return ServerGameState.getStateInstance().getUnits().get(i).getBody();
     }
 
 }

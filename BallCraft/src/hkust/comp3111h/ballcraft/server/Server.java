@@ -21,7 +21,7 @@ public class Server extends IntentService {
 
     static private boolean running = false;
 
-    static public String msg;
+    static private String msg;
 
     public Server() {
         super("Server");
@@ -33,11 +33,20 @@ public class Server extends IntentService {
                 .fromSerializedString(str[1]); // get and parse data from server
                                                // adapter
     }
-
-    public static GameUpdater generateGameUpdater() {
-        gameUpdater.units = gameState.getUnits();
-        return gameUpdater;
-    }
+    
+	public static synchronized void extraMessage(String string)
+	{
+		if(!msg.equals(""))
+		{
+			msg += "/";
+		}
+		msg += string;
+	}
+	
+	public static GameUpdater generateGameUpdater() {
+		gameUpdater.units = gameState.getUnits();
+		return gameUpdater;
+	}
 
     public void run() {
         while (running) {
@@ -49,11 +58,12 @@ public class Server extends IntentService {
                 ServerGameState.getStateInstance().processPlayerInput(i,
                         gameInput[i]); // process
             }
+            
+            String temp = new String(msg);
+			msg = "";
+			ServerAdapter.processServerMsg(temp + ";" + generateGameUpdater().toSerializedString()); // send back to server adapter
 
-            ServerAdapter.processServerMsg(msg + ";"
-                    + generateGameUpdater().toSerializedString()); // send back
-                                                                   // to server
-                                                                   // adapter
+
             msg = "";
             try {
                 /*

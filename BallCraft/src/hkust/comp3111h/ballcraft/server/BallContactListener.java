@@ -9,11 +9,11 @@ public class BallContactListener implements ContactListener {
 
     public void beginContact(Contact arg0) {
         // TODO: bug here
-        Server.msg += ServerGameState.getStateInstance().getUnits()
-                .indexOf(arg0.m_fixtureA.m_body);
-        Server.msg += ",";
-        Server.msg += ServerGameState.getStateInstance().getUnits()
-                .indexOf(arg0.m_fixtureB.m_body);
+		String string = "collision:";
+		string += ServerGameState.getStateInstance().getUnits().indexOf(arg0.m_fixtureA.m_body);
+		string += ",";	
+		string += ServerGameState.getStateInstance().getUnits().indexOf(arg0.m_fixtureB.m_body);
+		Server.extraMessage(string);
     }
 
     public void endContact(Contact arg0) {

@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.server;
 
+import hkust.comp3111h.ballcraft.BallCraft.Status;
 import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.Map;
 import hkust.comp3111h.ballcraft.client.MapParser;
@@ -38,21 +39,27 @@ public class ServerGameState {
         activeSkills = new ArrayList<Skill>();
     }
 
-    public void processPlayerInput(int playerId, GameInput input) {
-        units.get(playerId).applyForce(input.acceleration.mul(1.0f));
-        if (input.skillActive()) {
-            ArrayList<Skill> skills = input.getSkills();
-            for (int i = 0; i < skills.size(); i++) {
-                skills.get(i).setTime();
-                activeSkills.add(skills.get(i));
-            }
-        }
+    public void processPlayerInput(int playerId, GameInput input) 
+    {
+      	if (units.get(playerId).getStatus() == Status.NORMAL)
+    	{
+    		units.get(playerId).applyForce(input.acceleration);
+    	}
+    	
+    	if (input.skillActive()) {
+    		ArrayList<Skill> skills = input.getSkills();
+    		for (int i = 0; i < skills.size(); i++) {
+    			skills.get(i).setTime();
+	    		activeSkills.add(skills.get(i));
+    		}
+    	}
     }
 
     private void beforeStep() {
         for (int i = 0; i < activeSkills.size(); i++) {
             Skill skill = activeSkills.get(i);
             if (!skill.isActive()) {
+            	skill.finish();
                 activeSkills.remove(i);
                 i--;
                 continue;
@@ -61,6 +68,14 @@ public class ServerGameState {
         }
     }
 
+
+    private void afterStep() {
+        for (int i = 0; i < activeSkills.size(); i++) {
+            activeSkills.get(i).afterStep();
+        }
+    }
+
+    
     public void loadMap(String name) {
         units.add(new Ball(10, 50, 0.6f, new Vec2(0, 0)));
 
@@ -82,6 +97,7 @@ public class ServerGameState {
     public void onEveryFrame(int msecElapsed) {
         beforeStep();
         world.step(msecElapsed, 6, 2);
+        afterStep();
     }
 
     /*
