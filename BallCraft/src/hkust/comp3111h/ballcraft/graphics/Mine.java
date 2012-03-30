@@ -8,51 +8,64 @@ import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import org.jbox2d.common.Vec2;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
 
-public class Mine {
+public class Mine implements Drawable {
     
-    private FloatBuffer vertexBuffer = null;
-    private FloatBuffer textureBuffer = null;
-    private FloatBuffer normalBuffer = null;
+    private static FloatBuffer vertexBuffer = null;
+    private static FloatBuffer textureBuffer = null;
+    private static FloatBuffer normalBuffer = null;
 
-    private float size = 10f;
-
-    private float[] vertices = { 
-            -size, -size, 0.0f, // 0, Top Left
-            -size, size, 0.0f, // 1, Bottom Left
-            size, -size, 0.0f, // 2, Bottom Right
-            size, size, 0.0f, // 3, Top Right
+    private static float size = 10f;
+    
+    private static final float[] vertices = { 
+            -1, -1, 0.0f,
+            -1, 1, 0.0f,
+            1, -1, 0.0f,
+            1, 1, 0.0f,
     };
     
-    private float[] normals = { 
+    private static final float[] normals = { 
             0, 0, 1, 
             0, 0, 1, 
             0, 0, 1, 
             0, 0, 1, 
     };
 
-    private float[] texture = { 
-            0.0f, 1.0f,     // top left     (V2)
-            0.0f, 0.0f,     // bottom left  (V1)
-            1.0f, 1.0f,     // top right    (V4)
-            1.0f, 0.0f      // bottom right (V3)
+    private static final float[] texture = { 
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f,
     };
 
-    private int [] textures = new int[1];
+    private static int [] textures = new int[1];
 
-    public Mine() {
-        vertexBuffer = this.makeVertexBuffer();
-        textureBuffer = this.makeTextureBuffer();
-        normalBuffer = this.makeNormalBuffer();
+    public static boolean textureInited = false;
+    
+    public float x, y;
+    
+    static {
+        vertexBuffer = makeVertexBuffer();
+        textureBuffer = makeTextureBuffer();
+        normalBuffer = makeNormalBuffer();
+    }
+    
+    public Mine(Vec2 pos) {
+        this.x = pos.x;
+        this.y = pos.y;
     }
 
     public void draw(GL10 gl) {
         gl.glPushMatrix();
-            gl.glTranslatef(20, 20, 1);
+        
+            gl.glTranslatef(this.x, this.y, 1);
+            gl.glScalef(size, size, 1);
 	        gl.glEnable(GL10.GL_TEXTURE_2D);
 	        
 	        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
@@ -71,10 +84,11 @@ public class Mine {
 	        gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
 	        
 	        gl.glDisable(GL10.GL_TEXTURE_2D);
+	        
 	    gl.glPopMatrix();
     }
 
-    private FloatBuffer makeVertexBuffer() {
+    private static FloatBuffer makeVertexBuffer() {
         ByteBuffer bb = ByteBuffer.allocateDirect(vertices.length * 4);
         bb.order(ByteOrder.nativeOrder());
         FloatBuffer buffer = bb.asFloatBuffer();
@@ -83,7 +97,7 @@ public class Mine {
         return buffer;
     }
 
-    private FloatBuffer makeTextureBuffer() {
+    private static FloatBuffer makeTextureBuffer() {
         ByteBuffer bb = ByteBuffer.allocateDirect(texture.length * 4);
         bb.order(ByteOrder.nativeOrder());
         FloatBuffer buffer = bb.asFloatBuffer();
@@ -92,7 +106,7 @@ public class Mine {
         return buffer;
     }
 
-    private FloatBuffer makeNormalBuffer() {
+    private static FloatBuffer makeNormalBuffer() {
         ByteBuffer bb = ByteBuffer.allocateDirect(normals.length * 4);
         bb.order(ByteOrder.nativeOrder());
         FloatBuffer buffer = bb.asFloatBuffer();
@@ -101,7 +115,7 @@ public class Mine {
         return buffer;
     }
 
-    public void loadTexture(GL10 gl, Context context) {
+    public static void loadTexture(GL10 gl, Context context) {
         Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.mine_texture);
         gl.glGenTextures(1, textures, 0);
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
@@ -109,6 +123,7 @@ public class Mine {
         gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bmp, 0); 
         bmp.recycle();
+        textureInited = true;
     }
 
 }

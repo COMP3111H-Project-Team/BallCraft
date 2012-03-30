@@ -18,14 +18,14 @@ public class Particle implements Drawable, Comparable {
     private static FloatBuffer vertexBuffer;
     private static FloatBuffer textureBuffer;
     
-    private static float [] vertices = {
+    private static final float [] vertices = {
             -3, -3, 0,
             -3, 3, 0,
             3, -3, 0,
             3, 3, 0,
     };
     
-    private static float[] texture = { 
+    private static final float[] texture = { 
             0.0f, 1.0f,
             0.0f, 0.0f,
             1.0f, 1.0f,

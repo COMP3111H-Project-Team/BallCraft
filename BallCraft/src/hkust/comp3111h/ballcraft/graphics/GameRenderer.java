@@ -23,8 +23,6 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
     private Plane plane;
     
-    private Mine mine;
-    
     private ParticleSystem system;
     
     private Context context;
@@ -33,7 +31,6 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         this.context = context;
         gameState = ClientGameState.getClientGameState();
         plane = new Plane();
-        mine = new Mine();
         
         system = new ParticleSystem1(0, 0, 5);
     }
@@ -84,9 +81,14 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         gl.glEnable(GL10.GL_BLEND);
         gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE_MINUS_SRC_ALPHA); 
         
-        plane.loadTexture(gl, context);
+        this.loadTextures(gl);
+    }
+    
+    private void loadTextures(GL10 gl) {
+        Plane.loadTexture(gl, context);
         Particle.loadTexture(gl, context);
-        mine.loadTexture(gl, context);
+        Mine.loadTexture(gl, context);
+        Wall.loadTexture(gl, context);
     }
 
     public void onDrawFrame(GL10 gl) {
@@ -102,23 +104,17 @@ public class GameRenderer implements GLSurfaceView.Renderer {
             GLU.gluLookAt(gl, xPos, yPos + 80, 200, xPos, yPos, 5, 0, 0, 1);
 
             plane.draw(gl);
-            mine.draw(gl);
 
             self.draw(gl);
 
             for (int i = 1; i < drawables.size(); i++) { // TODO
-                // a quick hack
-                if (drawables.get(i) instanceof Wall) {
-                    Wall w = (Wall) (drawables.get(i));
-                    if (!w.textureInited) {
-                        w.loadTexture(gl, context);
-                    }
-                }
                 drawables.get(i).draw(gl);
             }
             
+            /*
             system.move();
             system.draw(gl);
+            */
             
             long elapsed = System.currentTimeMillis() - time;
             GameActivity.display("fps: " + 1000 / elapsed);

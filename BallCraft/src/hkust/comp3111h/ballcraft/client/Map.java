@@ -80,10 +80,10 @@ public class Map {
     public Vector<Unit> getUnit() {
         if (units.isEmpty()) {
             Iterator<WallData> iterator = walls.iterator();
-            WallData walldate;
+            WallData walldata;
             while (iterator.hasNext()) {
-                walldate = iterator.next();
-                units.add(new Wall(walldate.start, walldate.end));
+                walldata = iterator.next();
+                units.add(new Wall(walldata.start, walldata.end, true));
             }
         }
         return units;
