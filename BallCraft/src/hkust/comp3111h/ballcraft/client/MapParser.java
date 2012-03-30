@@ -135,16 +135,4 @@ public class MapParser {
         return layer;
     }
 
-    public static Bitmap readBitmap(String imageUrl) {
-        BitmapFactory.Options opt = new BitmapFactory.Options();
-        opt.inPreferredConfig = Bitmap.Config.RGB_565;
-        opt.inPurgeable = true;
-        opt.inInputShareable = true;
-        Bitmap bitmap = null;
-        if (imageUrl == "redbird.png") {
-            bitmap = BitmapFactory.decodeResource(context.getResources(),
-                    R.drawable.redbird, opt);
-        }
-        return bitmap;
-    }
 }
