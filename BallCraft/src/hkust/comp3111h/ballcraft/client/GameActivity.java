@@ -77,7 +77,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         skill1Button.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                Client.castSkill(Skill.getSkill(BallCraft.Skill.TEST_SKILL_1));
+                Client.castSkill(Skill.getSkill(BallCraft.Skill.MINE));
             }
         });
 

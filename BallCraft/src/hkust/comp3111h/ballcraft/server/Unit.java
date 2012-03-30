@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.server;
 
+import hkust.comp3111h.ballcraft.BallCraft.Status;
 import hkust.comp3111h.ballcraft.graphics.Drawable;
 
 import org.jbox2d.common.Vec2;
@@ -7,9 +8,11 @@ import org.jbox2d.dynamics.Body;
 
 public abstract class Unit implements Drawable {
 
-    protected final static float rate = 3.0f;
-    protected final static float g = 9.8f;
+    public final static float rate = 3.0f;
+    public final static float g = 9.8f;
     protected Body body;
+	protected Status status;
+	protected int id;
     public final static Vec2 O = new Vec2(0, 0);
 
     public static Unit fromSerializedString(String serialized) {
@@ -33,6 +36,8 @@ public abstract class Unit implements Drawable {
     }
 
     public Unit() {
+		status = Status.NORMAL;
+		id = ServerGameState.getStateInstance().getUnits().size();
     }
 
     public void applyForce(Vec2 force) {
@@ -52,5 +57,15 @@ public abstract class Unit implements Drawable {
     public Body getBody() {
         return body;
     }
+
+	public void setStatus(Status status) 
+	{
+		this.status = status;
+	}
+
+	public Status getStatus()
+	{
+		return status;
+	}
 
 }

@@ -9,6 +9,11 @@ public class BallCraft {
     public static int enemy = 1;
     public static int maxPlayer = 2;
 
+    public enum Status
+	{
+		NORMAL, DEAD, FROZEN
+	}
+    
     public static final class Ball {
         public static final int WOOD_BALL = 0;
         public static final int ROCK_BALL = 1;
@@ -25,6 +30,7 @@ public class BallCraft {
         public static final int DEACTIVATED = 0;
         public static final int TEST_SKILL_1 = 1;
         public static final int TEST_SKILL_2 = 2;
+		public static final int MINE = 3;
     }
 
     public static int getBallImageResourceById(int id) {

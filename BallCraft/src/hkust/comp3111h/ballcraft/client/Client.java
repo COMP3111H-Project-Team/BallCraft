@@ -37,20 +37,46 @@ public class Client extends IntentService {
         input.addSkill(skill);
     }
 
-    public static void processSerializedUpdate(String serialized) {
-        String[] unitStrs = serialized.split(";");
-        if (!unitStrs[0].equals("")) {
-            String[] collision = unitStrs[0].split(",");
-            if ((collision[0].equals(myself) || collision[1].equals(myself))
-                    && (collision[0].equals(enemy) || collision[1]
-                            .equals(enemy)))
-                ;
-            {
-                // vibrator.vibrate(50);
-            }
-        }
-        ClientGameState.getClientGameState().applyUpdater(unitStrs[1]);
-    }
+	private static void handleMessage(String string)
+	{
+		String[] parts = string.split(":");
+		if (parts[0].equals("dead"))
+		{
+			if(parts[1].equals(myself))
+			{
+				//TODO:player dead
+			}
+		}
+		else if (parts[0].equals("collision"))
+		{
+			String [] collision = parts[1].split(",");
+			if ((collision[0].equals(myself) || collision[1].equals(myself)) && 
+				(collision[0].equals(enemy) || collision[1].equals(enemy)));
+			{
+				//vibrator.vibrate(50);
+			}	
+		}
+		else if (parts[0].equals("mineCreate"))
+		{
+			String [] position = parts[1].split(",");
+			Log.e("create", position[0] + " , " + position[1]);
+		}
+		else if (parts[0].equals("mineExplode"))
+		{
+			String [] position = parts[1].split(",");
+			Log.e("Exploed", position[0] + " , " + position[1]);
+		}
+	}
+
+	public static void processSerializedUpdate(String serialized) {
+		String[] unitStrs = serialized.split(";");
+		String[] messages = unitStrs[0].split("/");
+		for (String msg:messages)
+		{
+			handleMessage(msg);
+		}
+		ClientGameState.getClientGameState().applyUpdater(unitStrs[1]);
+	}
 
     public void run() {
         while (running) {
