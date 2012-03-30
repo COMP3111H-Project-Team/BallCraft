@@ -23,6 +23,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
     private Plane plane;
     
+    private Mine mine;
+    
     private ParticleSystem system;
     
     private Context context;
@@ -31,6 +33,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         this.context = context;
         gameState = ClientGameState.getClientGameState();
         plane = new Plane();
+        mine = new Mine();
         
         system = new ParticleSystem1(0, 0, 5);
     }
@@ -83,6 +86,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         
         plane.loadTexture(gl, context);
         Particle.loadTexture(gl, context);
+        mine.loadTexture(gl, context);
     }
 
     public void onDrawFrame(GL10 gl) {
@@ -98,11 +102,12 @@ public class GameRenderer implements GLSurfaceView.Renderer {
             GLU.gluLookAt(gl, xPos, yPos + 80, 200, xPos, yPos, 5, 0, 0, 1);
 
             plane.draw(gl);
+            mine.draw(gl);
 
             self.draw(gl);
 
             for (int i = 1; i < drawables.size(); i++) { // TODO
-                // a temporary hack
+                // a quick hack
                 if (drawables.get(i) instanceof Wall) {
                     Wall w = (Wall) (drawables.get(i));
                     if (!w.textureInited) {
