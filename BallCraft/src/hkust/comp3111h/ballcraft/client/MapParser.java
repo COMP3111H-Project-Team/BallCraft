@@ -1,7 +1,5 @@
 package hkust.comp3111h.ballcraft.client;
 
-import hkust.comp3111h.ballcraft.R;
-
 import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.IOException;
@@ -9,16 +7,12 @@ import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
 public class MapParser{
@@ -94,12 +88,7 @@ public class MapParser{
 				map.addWall(parseString(wallData));                     
 			}
 			
-        } catch (IOException e) {
-            Log.e("map", e.getMessage());
-        } catch (SAXException e) {
-            Log.e("map", e.getMessage());
-        } catch (ParserConfigurationException e) {
-            Log.e("map", e.getMessage());
+        } catch (Exception e) {
         }
         return map;
     }
@@ -110,7 +99,6 @@ public class MapParser{
         int[] data = new int[length];
         for (int j = 0; j < length; j++) {
             data[j] = Integer.parseInt(parts[j]);
-            Log.i("map", data[j] + "");
         }
         return data;
     }
@@ -137,7 +125,6 @@ public class MapParser{
             }
             data_in.close();
         } catch (IOException e) {
-            System.out.println("IO Exception =: " + e);
         }
         return layer;
     }

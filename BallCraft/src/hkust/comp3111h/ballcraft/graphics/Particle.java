@@ -13,33 +13,42 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
 
-public class Particle implements Drawable, Comparable {
+public class Particle implements Drawable, Comparable<Object> {
     
-    private static FloatBuffer vertexBuffer;
-    private static FloatBuffer textureBuffer;
+    protected static FloatBuffer vertexBuffer;
+    protected static FloatBuffer textureBuffer;
     
-    private static final float [] vertices = {
-            -3, -3, 0,
-            -3, 3, 0,
-            3, -3, 0,
-            3, 3, 0,
+    protected static int textureImg = R.drawable.particle_tex;
+    
+    protected static final float [] vertices = {
+            -1, -1, 0,
+            -1, 1, 0,
+            1, -1, 0,
+            1, 1, 0,
     };
     
-    private static final float[] texture = { 
+    protected static final float[] texture = { 
             0.0f, 1.0f,
             0.0f, 0.0f,
             1.0f, 1.0f,
             1.0f, 0.0f,
     };
     
-    private static int [] textures = new int[1];
+    protected static int [] textures = new int[1];
     
-    private static final float gravity = -0.1f;
+    protected static final float gravity = -0.1f;
     
-    public float x, y, z;
-    private float xSpeed, ySpeed, zSpeed;
+    public float x = 0;
+    public float y = 0;
+    public float z = 0;
     
-    private float size;
+    public float xSpeed = 0;
+    public float ySpeed = 0;
+    public float zSpeed = 0;
+    
+    protected float size = 2;
+    
+    protected boolean gravityInfluence = true;
     
     static {
         vertexBuffer = makeVertexBuffer();
@@ -61,14 +70,36 @@ public class Particle implements Drawable, Comparable {
         this.zSpeed = zSpeed;
     }
     
+    /**
+     * Set whether gravity influences the particle, if so the particle will have a z-direction acceleration
+     * @param gi Whether gravity influences
+     */
+    public void setGravityInfluence(boolean gi) {
+        this.gravityInfluence = gi;
+    }
+    
     public void setSpeed(float xSpeed, float ySpeed, float zSpeed) {
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
         this.zSpeed = zSpeed;
     }
     
+    public Vec3 getSpeed() {
+        return new Vec3(xSpeed, ySpeed, zSpeed);
+    }
+    
+    public void setSize(float size) {
+        this.size = size;
+    }
+    
+    public float getSize() {
+        return this.size;
+    }
+
     public void move() {
-        this.zSpeed += gravity;
+        if (this.gravityInfluence) {
+	        this.zSpeed += gravity;
+        }
         this.x += this.xSpeed;
         this.y += this.ySpeed;
         this.z += this.zSpeed;
@@ -78,6 +109,7 @@ public class Particle implements Drawable, Comparable {
         gl.glPushMatrix();
         
 	        gl.glTranslatef(x, y, z);
+	        gl.glScalef(size, size, 1);
 	        gl.glEnable(GL10.GL_TEXTURE_2D);
 	        
 	        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
@@ -116,7 +148,7 @@ public class Particle implements Drawable, Comparable {
     }
 
     public static void loadTexture(GL10 gl, Context context) {
-		Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.particle_tex);
+		Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), textureImg);
 		gl.glGenTextures(1, textures, 0);
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);

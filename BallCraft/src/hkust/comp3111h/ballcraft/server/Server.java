@@ -29,9 +29,7 @@ public class Server extends IntentService {
 
     public static void setState(String string) {
         String[] str = string.split(";");
-        gameInput[Integer.parseInt(str[0])] = GameInput
-                .fromSerializedString(str[1]); // get and parse data from server
-                                               // adapter
+        gameInput[Integer.parseInt(str[0])] = GameInput.fromSerializedString(str[1]);
     }
     
 	public static synchronized void extraMessage(String string)
@@ -61,15 +59,13 @@ public class Server extends IntentService {
             
             String temp = new String(msg);
 			msg = "";
-			ServerAdapter.processServerMsg(temp + ";" + generateGameUpdater().toSerializedString()); // send back to server adapter
+			ServerAdapter.processServerMsg(temp + ";" + generateGameUpdater().toSerializedString());
 
-
-            msg = "";
             try {
                 /*
-                 * long sleep = 30 + time - System.currentTimeMillis(); if
-                 * (sleep > 0 ) { Thread.sleep(sleep); }
-                 */
+                long sleep = 30 + time - System.currentTimeMillis(); if
+                (sleep > 0 ) { Thread.sleep(sleep); }
+                */
                 Thread.sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();

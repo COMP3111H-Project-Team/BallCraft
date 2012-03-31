@@ -1,13 +1,14 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.graphics.Drawable;
-import hkust.comp3111h.ballcraft.graphics.Mine;
 import hkust.comp3111h.ballcraft.server.Unit;
 
 import java.util.ArrayList;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
+
+import android.util.Log;
 
 public class ClientGameState {
 
@@ -69,10 +70,6 @@ public class ClientGameState {
 
     public static void init() {
         stateInstance = new ClientGameState();
-    }
-    
-    public void addMine(Vec2 pos) {
-        drawables.add(new Mine(pos));
     }
 
 }

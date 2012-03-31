@@ -1,6 +1,6 @@
 package hkust.comp3111h.ballcraft.ui;
 
-import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
 
@@ -51,7 +51,7 @@ public class MapSelectMenu extends Activity {
 
         Intent intent = this.getIntent();
         ballSelected = intent
-                .getIntExtra("ballSelected", BallCraft.WoodBall.id);
+                .getIntExtra("ballSelected", BallDef.WoodBall.id);
 
         this.initMaps(); // must be put before initLayout() because maps are
                          // needed

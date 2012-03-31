@@ -3,22 +3,22 @@ package hkust.comp3111h.ballcraft.graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ParticleSystem2 extends ParticleSystem {
+public class ParticleSystem4 extends ParticleSystem {
     
-    public ParticleSystem2(float x, float y, float z) {
-        COUNT = 18;
+    public ParticleSystem4(float x, float y, float z) {
+        COUNT = 72;
         
         particles = new ArrayList<Particle>();
         
         Random randGen = new Random();
         for (int i = 0; i < COUNT; i++) {
-            double angle = i * 20 / 57.3;
+            double angle = i * 5 / 57.3;
             float cos = (float) Math.cos(angle);
             float sin = (float) Math.sin(angle);
             
-            Particle p = new Particle(x + cos * 15, y + sin * 15, z + 3 * randGen.nextFloat());
+            Particle p = new Particle(x, y, randGen.nextFloat() * 3 + z);
             p.setGravityInfluence(false);
-            p.setSpeed(-sin * 3, cos * 3, 0);
+            p.setSpeed(cos * 20, sin * 20, 0);
             
             particles.add(p);
         }

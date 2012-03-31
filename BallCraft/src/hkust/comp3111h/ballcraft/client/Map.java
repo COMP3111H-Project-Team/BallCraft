@@ -41,6 +41,10 @@ public class Map {
     public void setName(String name) {
         this.mapName = name;
     }
+    
+    public String getName(){
+    	return mapName;
+    }
 	
 	public void setWidth(int width) {
 		this.widthCount = width;

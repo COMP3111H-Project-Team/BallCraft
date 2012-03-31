@@ -1,6 +1,7 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.graphics.Mine;
 import hkust.comp3111h.ballcraft.graphics.ParticleSystem1;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
@@ -15,7 +16,7 @@ import android.content.Intent;
 import android.os.Vibrator;
 
 public class Client extends IntentService {
-
+    
     private static GameInput input;
     private static Context context;
     private static Vibrator vibrator;
@@ -26,6 +27,8 @@ public class Client extends IntentService {
     
     private static boolean vibrOn;
     
+    public static boolean playerDied = false;
+    
     public Client() {
         super("ClientService");
         vibrator = (Vibrator) context
@@ -35,7 +38,6 @@ public class Client extends IntentService {
     }
 
     public static void setInputAcceleration(float x, float y) {
-        // TODO: what happened here?
         input.acceleration.x = -x;
         input.acceleration.y = -y;
     }
@@ -52,6 +54,7 @@ public class Client extends IntentService {
 			if(parts[1].equals(myself))
 			{
 				//TODO:player dead
+			    playerDied = true;
 			}
 		}
 		else if (parts[0].equals("collision"))
@@ -70,7 +73,7 @@ public class Client extends IntentService {
 			String [] position = parts[1].split(",");
 			float x = Float.valueOf(position[0]);
 			float y = Float.valueOf(position[1]);
-			ClientGameState.getClientGameState().addMine(new Vec2(x, y));
+			ClientGameState.getClientGameState().addDrawable(new Mine(new Vec2(x, y)));
 		}
 		else if (parts[0].equals("mineExplode"))
 		{
