@@ -20,10 +20,12 @@ public class Map {
 //	private Vector<Wall> walls;
 	private Vec2 initPosition;
 	private Vector<Unit> units;
-	private Vector<WallData> walls;
+	private Vector<Data> walls;
+	private Vector<Data> traps;
+	private Vector<Data> planes;
 	
-	public class WallData {
-		public WallData(Vec2 s, Vec2 e) {
+	public class Data {
+		public Data(Vec2 s, Vec2 e) {
 			start = s;
 			end = e;
 		}
@@ -33,7 +35,9 @@ public class Map {
 	
 	public Map(){
 		units = new Vector<Unit>();
-		walls = new Vector<WallData>();
+		walls = new Vector<Data>();
+		planes = new Vector<Data>();
+		traps = new Vector<Data>();
 	}
 
 	public String getName() {
@@ -69,17 +73,32 @@ public class Map {
 	}
 	
 	public void addWall(int[] data) {
-		walls.add(new WallData(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
+		walls.add(new Data(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
+	}
+	public void addTrap(int[] data){
+		traps.add(new Data(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
 	}
 	
-	public Vector<WallData> getWallData(){
+	public void addPlane(int[] data){
+		planes.add(new Data(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
+	}
+	
+	public Vector<Data> getWallData(){
 		return walls;
+	}
+	
+	public Vector<Data> getTrapData(){
+		return traps;
+	}
+	
+	public Vector<Data> getPlaneData(){
+		return planes;
 	}
 	
 	public Vector<Unit> getUnit() {
 		if(units.isEmpty()){
-	        Iterator<WallData> iterator = walls.iterator();
-	        WallData walldate;
+	        Iterator<Data> iterator = walls.iterator();
+	        Data walldate;
 	        while(iterator.hasNext())
 	        {
 	        	walldate = iterator.next();
@@ -89,60 +108,4 @@ public class Map {
 		return units;
 	}
 	
-	/*
-	public Vector<Wall> getWalls() {
-		return walls;
-	}
-    */
-	
-	/*
-	public void setTileSize(int size) {
-        this.tileSize = size;
-    }
-    
-	public int getTileSize() {
-		return tileSize;
-	}
-    
-	public String getImageurl() {
-        return imageurl;
-    }
-    
-	public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
-    }
-	
-	public void setwidth(int width) {
-		this.widthCount = width;
-	}
-	
-	public int getwidth() {
-		return widthCount;
-	}
-	
-	public void setheight(int height) {
-		this.heightCount = height;
-	}
-	
-	public int getheight() {
-		return heightCount;
-	}
-	
-	public void setLayer(int id,int[][] array){
-		layer[id] = array;
-	}
-	
-	public int[][] getLayer(int id){
-		return layer[id];
-	}
-	
-	public Bitmap getTile(int layerId,int X, int Y) {
-		int id = layer[layerId][X][Y];
-		id --;
-		int count = id /widthCount;
-        int bitmapX = (id - (count * widthCount)) * tileSize;
-        int bitmapY = count * tileSize;
-        return Bitmap.createBitmap(bitmap, bitmapX, bitmapY, tileSize, tileSize); 
-	}
-	*/
 }

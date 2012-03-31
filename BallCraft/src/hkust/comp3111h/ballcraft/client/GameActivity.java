@@ -101,7 +101,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 		Button resumeButton = (Button) this.findViewById(R.id.game_activity_resume_button);
 		resumeButton.setOnClickListener(new OnClickListener() {
 
-			@Override
 			public void onClick(View v) {
 				self.onBackPressed();
 			}
@@ -111,7 +110,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 		Button exitButton = (Button) this.findViewById(R.id.game_activity_exit_button);
 		exitButton.setOnClickListener(new OnClickListener() {
 
-			@Override
 			public void onClick(View v) {
 				Server.stop();
 				Client.stop();

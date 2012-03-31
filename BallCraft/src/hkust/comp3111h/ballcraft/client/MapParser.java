@@ -11,7 +11,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.jbox2d.common.Vec2;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -20,7 +19,6 @@ import org.xml.sax.SAXException;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.util.Log;
 
 public class MapParser{
@@ -68,12 +66,27 @@ public class MapParser{
 	    	//get init position
 	    	Element init = (Element)root.getElementsByTagName("initPosition").item(0);
 	    	map.setInitPosition(parseString(init.getFirstChild().getNodeValue()));
-	    	
+	    	NodeList nodes;
 	    	//get wall list
-		    // Element wallList = (Element)root.getElementsByTagName("wallList").item(0);
-	    	NodeList nodes=root.getElementsByTagName("wall");
-	    	
-            //find all wall object under wall list
+	    	nodes=root.getElementsByTagName("wall");
+			for(int i=0;i<nodes.getLength();i++){
+				Element wallElement=(Element)(nodes.item(i));
+				String wallData = wallElement.getFirstChild().getNodeValue();
+				Log.i("map", wallData);
+				map.addWall(parseString(wallData));                     
+			}
+			
+			//get trap list
+	    	nodes=root.getElementsByTagName("trap");
+			for(int i=0;i<nodes.getLength();i++){
+				Element wallElement=(Element)(nodes.item(i));
+				String wallData = wallElement.getFirstChild().getNodeValue();
+				Log.i("map", wallData);
+				map.addWall(parseString(wallData));                     
+			}
+			
+			//get plane list
+	    	nodes=root.getElementsByTagName("plane");
 			for(int i=0;i<nodes.getLength();i++){
 				Element wallElement=(Element)(nodes.item(i));
 				String wallData = wallElement.getFirstChild().getNodeValue();
