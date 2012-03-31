@@ -7,6 +7,7 @@ import android.app.IntentService;
 import android.content.Intent;
 
 public class Server extends IntentService {
+    
     static private ServerGameState gameState = null;
 
     static private GameUpdater gameUpdater;

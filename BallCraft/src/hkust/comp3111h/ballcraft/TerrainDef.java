@@ -6,8 +6,8 @@ public class TerrainDef {
         public static final int id = BallCraft.Terrain.TABLE_TERRAIN;
         public static final String name = "Table Terrain";
         public static final String description = "The most common terrain";
-        public static final int floorTexture = R.drawable.texture;
-        public static final int wallTextuer = R.drawable.texture;
+        public static final int floorTexture = R.drawable.forest_floor;
+        public static final int wallTexture = R.drawable.forest_floor;
         public static final int friction = 5;
         public static final int benefitBall = -1;
     }
@@ -16,8 +16,8 @@ public class TerrainDef {
         public static final int id = BallCraft.Terrain.FOREST_TERRAIN;
         public static final String name = "Forest Terrain";
         public static final String description = "Beneficial to the Wood Ball";
-        public static final int floorTexture = R.drawable.texture;
-        public static final int wallTextuer = R.drawable.texture;
+        public static final int floorTexture = R.drawable.forest_floor;
+        public static final int wallTexture = R.drawable.forest_wall;
         public static final int friction = 7;
         public static final int benefitBall = BallCraft.Ball.WOOD_BALL;
     }
@@ -26,8 +26,8 @@ public class TerrainDef {
         public static final int id = BallCraft.Terrain.STONE_TERRAIN;
         public static final String name = "Stone Terrain";
         public static final String description = "Beneficial to the Rock Ball";
-        public static final int floorTexture = R.drawable.texture;
-        public static final int wallTextuer = R.drawable.texture;
+        public static final int floorTexture = R.drawable.stone_floor;
+        public static final int wallTexture = R.drawable.stone_wall;
         public static final int friction = 8;
         public static final int benefitBall = BallCraft.Ball.ROCK_BALL;
     }
@@ -36,8 +36,8 @@ public class TerrainDef {
         public static final int id = BallCraft.Terrain.OCEAN_TERRAIN;
         public static final String name = "Ocean Terrain";
         public static final String description = "Beneficial to the Water Ball";
-        public static final int floorTexture = R.drawable.water_texture;
-        public static final int wallTextuer = R.drawable.water_texture;
+        public static final int floorTexture = R.drawable.water_floor;
+        public static final int wallTexture = R.drawable.water_wall;
         public static final int friction = 3;
         public static final int benefitBall = BallCraft.Ball.WATER_BALL;
     }
@@ -46,8 +46,8 @@ public class TerrainDef {
         public static final int id = BallCraft.Terrain.METAL_TERRAIN;
         public static final String name = "Metal Terrain";
         public static final String description = "Beneficial to the Metal Ball";
-        public static final int floorTexture = R.drawable.metal_texture;
-        public static final int wallTextuer = R.drawable.metal_texture;
+        public static final int floorTexture = R.drawable.metal_floor;
+        public static final int wallTexture = R.drawable.metal_wall;
         public static final int friction = 3;
         public static final int benefitBall = BallCraft.Ball.IRON_BALL;
     }
@@ -56,8 +56,8 @@ public class TerrainDef {
         public static final int id = BallCraft.Terrain.FIRELAND_TERRAIN;
         public static final String name = "Fireland Terrain";
         public static final String description = "Beneficial to the Fire Ball";
-        public static final int floorTexture = R.drawable.lava_texture;
-        public static final int wallTextuer = R.drawable.lava_texture;
+        public static final int floorTexture = R.drawable.fire_floor;
+        public static final int wallTexture = R.drawable.fire_wall;
         public static final int friction = 5;
         public static final int benefitBall = BallCraft.Ball.FIRE_BALL;
     }
