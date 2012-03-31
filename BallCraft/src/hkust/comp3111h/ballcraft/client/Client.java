@@ -14,6 +14,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
+import android.util.Log;
 
 public class Client extends IntentService {
     
@@ -24,6 +25,11 @@ public class Client extends IntentService {
 
     private static String myself = "" + BallCraft.myself;
     private static String enemy = "" + BallCraft.enemy;
+    
+    /**
+     * Set to true when the game init msg is sent to the Client
+     */
+    private static boolean gameInited = false;
     
     private static boolean vibrOn;
     
@@ -44,6 +50,16 @@ public class Client extends IntentService {
 
     public static void castSkill(Skill skill) {
         input.addSkill(skill);
+    }
+    
+    public static void handleInitMsg(String msg) {
+        String [] vals = msg.split(",");
+        int terrain = Integer.parseInt(vals[0]);
+        int mode = Integer.parseInt(vals[1]);
+        ClientGameState.getClientGameState().setMapTerrain(terrain);
+        ClientGameState.getClientGameState().setMapMode(mode);
+        gameInited = true;
+        Log.w("game", "inited");
     }
 
 	private static void handleMessage(String string)
@@ -111,7 +127,6 @@ public class Client extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         running = true;
-        ClientGameState.init();
         this.run();
     }
 
@@ -121,6 +136,10 @@ public class Client extends IntentService {
 
     public static void stop() {
         running = false;
+    }
+    
+    public static boolean isGameInited() {
+        return gameInited;
     }
 
 }

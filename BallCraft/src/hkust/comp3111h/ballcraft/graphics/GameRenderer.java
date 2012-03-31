@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.graphics;
 
+import hkust.comp3111h.ballcraft.MapModeDef;
 import hkust.comp3111h.ballcraft.client.Client;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.GameActivity;
@@ -24,14 +25,9 @@ public class GameRenderer implements GLSurfaceView.Renderer {
     
     private Context context;
     
-    // testing:
-    private ParticleSystem system;
-
     public GameRenderer(Context context) {
         this.context = context;
         plane = new Plane();
-        
-        // system = new ParticleSystem2(20, 20, 20);
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -45,21 +41,17 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         gl.glEnable(GL10.GL_LIGHTING);
         gl.glEnable(GL10.GL_LIGHT0);
 
-        /*
-         * used for dark environment
-        float lightAmbient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-        float lightDiffuse[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-        float lightSpecular[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-        */
-        float lightAmbient[] = { 0.4f, 0.4f, 0.4f, 1.0f };
-        float lightDiffuse[] = { 0.6f, 0.6f, 0.6f, 1.0f };
-        float lightSpecular[] = { 0.9f, 0.9f, 0.9f, 1.0f };
-        float lightPosition[] = { 100f, 100f, 100f, 1f };
+        // set light according to whether it is day or night
+        int mapMode = ClientGameState.getClientGameState().getMapMode();
+        float [] lightAmbient = MapModeDef.getMapModeAmbientLightById(mapMode);
+        float [] lightDiffuse = MapModeDef.getMapModeDiffuseLightById(mapMode);
+        float [] lightSpecular = MapModeDef.getMapModeSpecularLightById(mapMode);
+        float [] lightPosition = { 100f, 100f, 100f, 1f };
 
-        float matAmbient[] = { 0.4f, 0.4f, 0.4f, 1f };
-        float matDiffuse[] = { 0.6f, 0.6f, 0.6f, 1f };
-        float matSpecular[] = { 0.9f, 0.9f, 0.9f, 1f };
-        float matShininess[] = { 8f };
+        float [] matAmbient = { 0.4f, 0.4f, 0.4f, 1f };
+        float [] matDiffuse = { 0.6f, 0.6f, 0.6f, 1f };
+        float [] matSpecular = { 0.9f, 0.9f, 0.9f, 1f };
+        float [] matShininess = { 8f };
 
         gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_AMBIENT, matAmbient, 0);
         gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_DIFFUSE, matDiffuse, 0);
@@ -125,11 +117,6 @@ public class GameRenderer implements GLSurfaceView.Renderer {
                     d.draw(gl);
                 }
             }
-            
-            /*
-            system.move();
-            system.draw(gl);
-            */
 
             long elapsed = System.currentTimeMillis() - time;
             GameActivity.display("fps: " + 1000 / elapsed);
