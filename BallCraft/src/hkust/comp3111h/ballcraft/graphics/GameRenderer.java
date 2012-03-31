@@ -15,7 +15,6 @@ import javax.microedition.khronos.opengles.GL10;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
-import android.util.Log;
 
 public class GameRenderer implements GLSurfaceView.Renderer {
 
@@ -32,7 +31,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         this.context = context;
         plane = new Plane();
         
-        system = new ParticleSystem2(20, 20, 5);
+        // system = new ParticleSystem2(20, 20, 20);
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -101,7 +100,6 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         gl.glLoadIdentity();
         
         ArrayList<Drawable> drawables = ClientGameState.getClientGameState().getDrawables();
-        Log.w(drawables.size() + "", "" + Player.playerID);
         if (drawables.size() > Player.playerID) {
             Ball self = (Ball) drawables.get(Player.playerID);
 
@@ -111,15 +109,13 @@ public class GameRenderer implements GLSurfaceView.Renderer {
             if (!Client.playerDied) {
 	            GLU.gluLookAt(gl, xPos, yPos + 80, 200, xPos, yPos, 5, 0, 0, 1);
             } else {
-	            GLU.gluLookAt(gl, xPos, yPos + 1, self.z + 200, xPos, yPos, 5, 0, 0, 1);
+	            GLU.gluLookAt(gl, xPos, yPos + 80, self.z + 200, xPos, yPos, 5, 0, 0, 1);
             }
 
             plane.draw(gl);
 
             self.draw(gl);
             
-            system.draw(gl);
-
             for (int i = 0; i < drawables.size(); i++) {
                 if (drawables.get(i) != self) {
                     if (drawables.get(i) instanceof ParticleSystem) {
@@ -129,6 +125,11 @@ public class GameRenderer implements GLSurfaceView.Renderer {
                 }
             }
             
+            /*
+            system.move();
+            system.draw(gl);
+            */
+
             long elapsed = System.currentTimeMillis() - time;
             GameActivity.display("fps: " + 1000 / elapsed);
             time = System.currentTimeMillis();

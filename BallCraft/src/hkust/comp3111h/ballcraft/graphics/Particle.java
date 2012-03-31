@@ -15,26 +15,28 @@ import android.opengl.GLUtils;
 
 public class Particle implements Drawable, Comparable<Object> {
     
-    private static FloatBuffer vertexBuffer;
-    private static FloatBuffer textureBuffer;
+    protected static FloatBuffer vertexBuffer;
+    protected static FloatBuffer textureBuffer;
     
-    private static final float [] vertices = {
+    protected static int textureImg = R.drawable.particle_tex;
+    
+    protected static final float [] vertices = {
             -1, -1, 0,
             -1, 1, 0,
             1, -1, 0,
             1, 1, 0,
     };
     
-    private static final float[] texture = { 
+    protected static final float[] texture = { 
             0.0f, 1.0f,
             0.0f, 0.0f,
             1.0f, 1.0f,
             1.0f, 0.0f,
     };
     
-    private static int [] textures = new int[1];
+    protected static int [] textures = new int[1];
     
-    private static final float gravity = -0.1f;
+    protected static final float gravity = -0.1f;
     
     public float x = 0;
     public float y = 0;
@@ -44,9 +46,9 @@ public class Particle implements Drawable, Comparable<Object> {
     public float ySpeed = 0;
     public float zSpeed = 0;
     
-    private float size = 4;
+    protected float size = 2;
     
-    private boolean gravityInfluence = true;
+    protected boolean gravityInfluence = true;
     
     static {
         vertexBuffer = makeVertexBuffer();
@@ -82,6 +84,18 @@ public class Particle implements Drawable, Comparable<Object> {
         this.zSpeed = zSpeed;
     }
     
+    public Vec3 getSpeed() {
+        return new Vec3(xSpeed, ySpeed, zSpeed);
+    }
+    
+    public void setSize(float size) {
+        this.size = size;
+    }
+    
+    public float getSize() {
+        return this.size;
+    }
+
     public void move() {
         if (this.gravityInfluence) {
 	        this.zSpeed += gravity;
@@ -135,7 +149,7 @@ public class Particle implements Drawable, Comparable<Object> {
     }
 
     public static void loadTexture(GL10 gl, Context context) {
-		Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.particle_tex);
+		Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), textureImg);
 		gl.glGenTextures(1, textures, 0);
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
@@ -143,7 +157,7 @@ public class Particle implements Drawable, Comparable<Object> {
 		GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bmp, 0); 
 		bmp.recycle();
     }
-
+    
     @Override
     public int compareTo(Object obj) {
         Particle p = (Particle) obj;

@@ -27,7 +27,7 @@ public abstract class ParticleSystem implements Drawable {
         if (this.isActive()) {
             boolean stillActive = false;
             for (int i = 0; i < COUNT; i++) {
-                particles.get(i).move();
+                this.moveParticle(i);
                 if (this.particleActive(particles.get(i))) {
                     stillActive = true;
                 }
@@ -36,6 +36,14 @@ public abstract class ParticleSystem implements Drawable {
                 this.deactivate();
             }
         }
+    }
+    
+    /**
+     * Move a particle specified by its position in the array
+     * @param i
+     */
+    public void moveParticle(int i) {
+        particles.get(i).move();
     }
 
     /**
