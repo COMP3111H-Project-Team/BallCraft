@@ -1,6 +1,7 @@
 package hkust.comp3111h.ballcraft.server;
 
-import hkust.comp3111h.ballcraft.R;
+import hkust.comp3111h.ballcraft.TerrainDef;
+import hkust.comp3111h.ballcraft.client.ClientGameState;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -17,6 +18,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
+import android.util.Log;
 
 public class Wall extends Unit {
 	
@@ -232,7 +234,11 @@ public class Wall extends Unit {
 	}
 	
 	public static void loadTexture(GL10 gl, Context context) {
-        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.texture);
+	    Log.w("map", "" + TerrainDef.getTerrainWallTextureBallId(
+                ClientGameState.getClientGameState().getMapTerrain()));
+        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), 
+                TerrainDef.getTerrainWallTextureBallId(
+                        ClientGameState.getClientGameState().getMapTerrain()));
 		gl.glGenTextures(1, textures, 0);
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
