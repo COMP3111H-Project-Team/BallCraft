@@ -1,11 +1,14 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.graphics.Mine;
 import hkust.comp3111h.ballcraft.graphics.ParticleSystem1;
-import hkust.comp3111h.ballcraft.graphics.ParticleSystem3;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.settings.GameSettings;
+
+import org.jbox2d.common.Vec2;
+
 import android.app.IntentService;
 import android.app.Service;
 import android.content.Context;
@@ -70,8 +73,7 @@ public class Client extends IntentService {
 			String [] position = parts[1].split(",");
 			float x = Float.valueOf(position[0]);
 			float y = Float.valueOf(position[1]);
-			// ClientGameState.getClientGameState().addDrawable(new Mine(new Vec2(x, y)));
-			ClientGameState.getClientGameState().addDrawable(new ParticleSystem3(x, y, 15));
+			ClientGameState.getClientGameState().addDrawable(new Mine(new Vec2(x, y)));
 		}
 		else if (parts[0].equals("mineExplode"))
 		{

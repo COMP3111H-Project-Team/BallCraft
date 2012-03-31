@@ -109,19 +109,20 @@ public class GameRenderer implements GLSurfaceView.Renderer {
             if (!Client.playerDied) {
 	            GLU.gluLookAt(gl, xPos, yPos + 80, 200, xPos, yPos, 5, 0, 0, 1);
             } else {
-	            GLU.gluLookAt(gl, xPos, yPos + 80, self.z + 200, xPos, yPos, 5, 0, 0, 1);
+	            GLU.gluLookAt(gl, xPos, yPos + 80, 200, xPos, yPos, 5, 0, 0, 1);
+	            // GLU.gluLookAt(gl, xPos, yPos + 80, self.z + 200, xPos, yPos, 5, 0, 0, 1);
             }
 
             plane.draw(gl);
 
             self.draw(gl);
             
-            for (int i = 0; i < drawables.size(); i++) {
-                if (drawables.get(i) != self) {
-                    if (drawables.get(i) instanceof ParticleSystem) {
-                        ((ParticleSystem) drawables.get(i)).move();
+            for (Drawable d: drawables) {
+                if (d!= self) {
+                    if (d instanceof ParticleSystem) {
+                        ((ParticleSystem) d).move();
                     }
-                    drawables.get(i).draw(gl);
+                    d.draw(gl);
                 }
             }
             
