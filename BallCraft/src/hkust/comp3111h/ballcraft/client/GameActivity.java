@@ -67,8 +67,15 @@ public class GameActivity extends Activity implements SensorEventListener {
 
         this.setContentView(R.layout.game_layout);
 
-        mGLView = (GLSurfaceView) this
-                .findViewById(R.id.game_activity_gl_surface_view);
+        mGLView = (GLSurfaceView) this.findViewById(R.id.game_activity_gl_surface_view);
+        // here we need to wait for the init data to be sent from the server to create the render
+        // and start drawing
+        while (!Client.isGameInited()) {
+            try {
+                Thread.sleep(20);
+            } catch (Exception e) {
+            }
+        }
         mGLView.setRenderer(new GameRenderer(this));
 
         Button skill1Button = (Button) this

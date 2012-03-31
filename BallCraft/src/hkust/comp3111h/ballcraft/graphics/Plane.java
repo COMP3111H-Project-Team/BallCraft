@@ -1,6 +1,7 @@
 package hkust.comp3111h.ballcraft.graphics;
 
-import hkust.comp3111h.ballcraft.R;
+import hkust.comp3111h.ballcraft.TerrainDef;
+import hkust.comp3111h.ballcraft.client.ClientGameState;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -20,10 +21,10 @@ public class Plane implements Drawable {
     private static FloatBuffer normalBuffer = null;
 
     private static final float[] vertices = { 
-            -1, -1, 0.0f, // 0, Top Left
-            -1, 1, 0.0f, // 1, Bottom Left
-            1, -1, 0.0f, // 2, Bottom Right
-            1, 1, 0.0f, // 3, Top Right
+            -1, -1, 0,
+            -1, 1, 0,
+            1, -1, 0,
+            1, 1, 0,
     };
     
     private static final float[] normals = { 
@@ -34,10 +35,10 @@ public class Plane implements Drawable {
     };
 
     private static final float[] texture = { 
-            0.0f, 1.0f,
-            0.0f, 0.0f,
-            1.0f, 1.0f,
-            1.0f, 0.0f,
+            0, 1,
+            0, 0,
+            1, 1,
+            1, 0,
     };
 
     private static int [] textures = new int[1];
@@ -108,7 +109,9 @@ public class Plane implements Drawable {
     }
 
     public static void loadTexture(GL10 gl, Context context) {
-		Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.texture);
+		Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), 
+		        TerrainDef.getTerrainFloorTextureBallId(
+		                ClientGameState.getClientGameState().getMapTerrain()));
 		gl.glGenTextures(1, textures, 0);
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
