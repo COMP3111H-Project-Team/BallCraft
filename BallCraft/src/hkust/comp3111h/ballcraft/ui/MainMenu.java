@@ -64,7 +64,6 @@ public class MainMenu extends Activity implements SensorEventListener {
                 .findViewById(R.id.main_menu_setting_image_view);
         settingImage.setOnClickListener(new OnClickListener() {
 
-            @Override
             public void onClick(View v) {
                 self.startActivity(new Intent(MainMenu.this, OptionMenu.class));
                 self.overridePendingTransition(android.R.anim.fade_in,
@@ -79,17 +78,14 @@ public class MainMenu extends Activity implements SensorEventListener {
         settingImage.startAnimation(rotate360);
         rotate360.setAnimationListener(new AnimationListener() {
 
-            @Override
             public void onAnimationEnd(Animation animation) {
                 settingImage.clearAnimation();
                 settingImage.startAnimation(rotate360);
             }
 
-            @Override
             public void onAnimationRepeat(Animation animation) {
             }
 
-            @Override
             public void onAnimationStart(Animation animation) {
             }
 
@@ -130,7 +126,6 @@ public class MainMenu extends Activity implements SensorEventListener {
         multiPlayerButton.startAnimation(opacityChange2);
     }
 
-    @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 

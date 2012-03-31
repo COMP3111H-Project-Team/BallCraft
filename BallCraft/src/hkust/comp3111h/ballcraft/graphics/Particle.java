@@ -105,7 +105,6 @@ public class Particle implements Drawable, Comparable<Object> {
         this.z += this.zSpeed;
     }
     
-    @Override
     public void draw(GL10 gl) {
         gl.glPushMatrix();
         
@@ -157,8 +156,7 @@ public class Particle implements Drawable, Comparable<Object> {
 		GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bmp, 0); 
 		bmp.recycle();
     }
-    
-    @Override
+
     public int compareTo(Object obj) {
         Particle p = (Particle) obj;
         if (this.z > p.z) {

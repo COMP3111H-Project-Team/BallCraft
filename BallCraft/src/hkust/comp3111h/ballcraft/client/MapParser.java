@@ -13,66 +13,81 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import android.content.Context;
+import android.util.Log;
 
-public class MapParser {
-    private static Context context;
-
-    public static void setContext(Context con) {
-        context = con;
-    }
-
-    public static Map getMapFromXML(String fileName) {
-        Map map = new Map();
-        DocumentBuilderFactory factory = null;
-        DocumentBuilder builder = null;
-        Document document = null;
-        InputStream inputStream = null;
-
-        // find the xml file first,just two layers now
-        factory = DocumentBuilderFactory.newInstance();
-        try {
-
-            // load file
-            builder = factory.newDocumentBuilder();
-            inputStream = context.getResources().getAssets().open(fileName);
-            document = builder.parse(inputStream);
-
-            // get root
-            Element root = document.getDocumentElement();
-
-            // get map name
-            Element mapName = (Element) root.getElementsByTagName("name").item(
-                    0);
-            map.setName(mapName.getFirstChild().getNodeValue());
-
-            // get height count
-            Element height = (Element) root.getElementsByTagName("height")
-                    .item(0);
-            map.setHeight(Integer.parseInt(height.getFirstChild()
-                    .getNodeValue()));
-            // get width count
-
-            Element width = (Element) root.getElementsByTagName("width")
-                    .item(0);
-            map.setWidth(Integer.parseInt(width.getFirstChild().getNodeValue()));
-
-            // get init position
-            Element init = (Element) root.getElementsByTagName("initPosition")
-                    .item(0);
-            map.setInitPosition(parseString(init.getFirstChild().getNodeValue()));
-
-            // get wall list
-            // Element wallList =
-            // (Element)root.getElementsByTagName("wallList").item(0);
-            NodeList nodes = root.getElementsByTagName("wall");
-
-            // find all wall object under wall list
-            for (int i = 0; i < nodes.getLength(); i++) {
-                Element wallElement = (Element) (nodes.item(i));
-                String wallData = wallElement.getFirstChild().getNodeValue();
-                map.addWall(parseString(wallData));
-            }
-
+public class MapParser{
+	private static Context context;
+	
+	public static void setContext(Context con) {
+		context = con;
+	}
+	
+	public static Map getMapFromXML(String fileName) {
+		Map map = new Map();
+		DocumentBuilderFactory factory=null;
+	    DocumentBuilder builder=null;
+	    Document document=null;
+	    InputStream inputStream=null;
+	    
+	    //find the xml file first,just two layers now
+	    factory = DocumentBuilderFactory.newInstance();
+	    try {
+	    	Log.d("map", "find document");
+	    	
+	    	//load file
+	    	builder = factory.newDocumentBuilder();
+	    	inputStream = context.getResources().getAssets().open(fileName);
+	    	document = builder.parse(inputStream);
+	    	Log.d("map", "load document");
+	    	
+	    	//get root
+	    	Element root = document.getDocumentElement();
+	    	
+	    	//get map name
+	    	Element mapName = (Element)root.getElementsByTagName("name").item(0);
+	    	String msg = mapName.getFirstChild().getNodeValue();
+	    	Log.d("map", msg);
+	    	map.setName(mapName.getFirstChild().getNodeValue());
+	    	
+	        //get height count
+	    	Element height = (Element)root.getElementsByTagName("height").item(0);
+	    	map.setHeight(Integer.parseInt(height.getFirstChild().getNodeValue()));
+	    	//get width count
+	    	
+	    	Element width = (Element)root.getElementsByTagName("width").item(0);
+	    	map.setWidth(Integer.parseInt(width.getFirstChild().getNodeValue()));
+	    	
+	    	//get init position
+	    	Element init = (Element)root.getElementsByTagName("initPosition").item(0);
+	    	map.setInitPosition(parseString(init.getFirstChild().getNodeValue()));
+	    	NodeList nodes;
+	    	//get wall list
+	    	nodes=root.getElementsByTagName("wall");
+			for(int i=0;i<nodes.getLength();i++){
+				Element wallElement=(Element)(nodes.item(i));
+				String wallData = wallElement.getFirstChild().getNodeValue();
+				Log.i("map", wallData);
+				map.addWall(parseString(wallData));                     
+			}
+			
+			//get trap list
+	    	nodes=root.getElementsByTagName("trap");
+			for(int i=0;i<nodes.getLength();i++){
+				Element wallElement=(Element)(nodes.item(i));
+				String wallData = wallElement.getFirstChild().getNodeValue();
+				Log.i("map", wallData);
+				map.addWall(parseString(wallData));                     
+			}
+			
+			//get plane list
+	    	nodes=root.getElementsByTagName("plane");
+			for(int i=0;i<nodes.getLength();i++){
+				Element wallElement=(Element)(nodes.item(i));
+				String wallData = wallElement.getFirstChild().getNodeValue();
+				Log.i("map", wallData);
+				map.addWall(parseString(wallData));                     
+			}
+			
         } catch (Exception e) {
         }
         return map;
