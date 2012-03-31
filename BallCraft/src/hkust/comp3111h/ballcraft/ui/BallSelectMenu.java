@@ -1,6 +1,6 @@
 package hkust.comp3111h.ballcraft.ui;
 
-import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
 import android.app.Activity;
 import android.content.Intent;
@@ -126,7 +126,7 @@ public class BallSelectMenu extends Activity {
     }
 
     private boolean canGoNext() {
-        return currBallPos != BallCraft.balls.length - 1;
+        return currBallPos != BallDef.balls.length - 1;
     }
 
     private void updateLayout() {
@@ -155,7 +155,7 @@ public class BallSelectMenu extends Activity {
         */
         self.refreshBallDispaly();
 
-        if (BallCraft.ballUnlocked(currBallPos)) {
+        if (BallDef.ballUnlocked(currBallPos)) {
             ballImageView.setAlpha(200);
             ballLockedView.setVisibility(View.INVISIBLE);
         } else { // the ball is not unlocked yet
@@ -179,23 +179,23 @@ public class BallSelectMenu extends Activity {
     private void refreshBallDispaly() {
         // ballDisplayView.startAnimation(fadeIn);
 
-        ballNameView.setText(BallCraft.getBallNameById(currBallPos));
-        ballDescriptionView.setText(BallCraft
+        ballNameView.setText(BallDef.getBallNameById(currBallPos));
+        ballDescriptionView.setText(BallDef
                 .getBallDescriptionById(currBallPos));
 
-        ballImageView.setImageResource(BallCraft
+        ballImageView.setImageResource(BallDef
                 .getBallImageResourceById(currBallPos));
         ballMassView.setText("Mass "
-                + self.getValueDisplayFromInt(BallCraft
+                + self.getValueDisplayFromInt(BallDef
                         .getBallMassById(currBallPos)));
         ballFrictionView.setText("Friction "
-                + self.getValueDisplayFromInt(BallCraft
+                + self.getValueDisplayFromInt(BallDef
                         .getBallFrictionById(currBallPos)));
         ballMagicView.setText("Magic "
-                + self.getValueDisplayFromInt(BallCraft
+                + self.getValueDisplayFromInt(BallDef
                         .getBallMagicById(currBallPos)));
 
-        if (BallCraft.ballUnlocked(currBallPos)) {
+        if (BallDef.ballUnlocked(currBallPos)) {
             ballImageView.setAlpha(200);
             ballSelectView.setVisibility(View.VISIBLE);
             ballLockedView.setVisibility(View.INVISIBLE);
