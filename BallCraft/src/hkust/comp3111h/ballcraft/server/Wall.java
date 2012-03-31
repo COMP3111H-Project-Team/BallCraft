@@ -1,7 +1,6 @@
 package hkust.comp3111h.ballcraft.server;
 
-
-import hkust.comp3111h.ballcraft.client.ClientGameState;
+import hkust.comp3111h.ballcraft.R;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -14,24 +13,122 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 
-import android.util.Log;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.opengl.GLUtils;
 
 public class Wall extends Unit {
 	
-	private float [] vertices;
-	private float [] normals;
+	private static FloatBuffer vertexBuffer = null;
+    private static FloatBuffer textureBuffer = null;
+	private static FloatBuffer normalBuffer = null;
 	
-	private FloatBuffer vertexBuffer = null;
-	private FloatBuffer normalBuffer = null;
+	private static final float [] vertices = {
+			0.5f, 0.5f, 0f,
+			0.5f, 0.5f, 20f,
+			-0.5f, 0.5f, 0f,
+			-0.5f, 0.5f, 20f,
+			
+			-0.5f, 0.5f, 0f,
+			-0.5f, 0.5f, 20f,
+			-0.5f, -0.5f, 0f,
+			-0.5f, -0.5f, 20f,
+			
+			-0.5f, -0.5f, 0f,
+			-0.5f, -0.5f, 20f,
+			0.5f, -0.5f, 0f,
+			0.5f, -0.5f, 20f,
+			
+			0.5f, -0.5f, 0f,
+			0.5f, -0.5f, 20f,
+			0.5f, 0.5f, 0f,
+			0.5f, 0.5f, 20f,
+			
+			0.5f, 0.5f, 20f,
+			0.5f, -0.5f, 20f,
+			-0.5f, 0.5f, 20f,
+			-0.5f, -0.5f, 20f,
+	};
+
+	private static final float [] normals = {
+			0, 1, 0,
+			0, 1, 0,
+			0, 1, 0,
+			0, 1, 0,
+			
+			-1, 0, 0,
+			-1, 0, 0,
+			-1, 0, 0,
+			-1, 0, 0,
+		
+			0, -1, 0,
+			0, -1, 0,
+			0, -1, 0,
+			0, -1, 0,
+			
+			1, 0, 0,
+			1, 0, 0,
+			1, 0, 0,
+			1, 0, 0,
+			
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, 1,
+	};
 	
-	public Wall(Vec2 start, Vec2 end) {
-		this(start, end, true);
+	private static final float [] texture = {
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f,
+            
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f,
+            
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f,
+            
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f,
+            
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f,
+	};
+	
+    private static int [] textures = new int[1];
+
+	public static boolean textureInited = false;
+	
+	private Vec2 pos; // position of the wall's center
+	private float angle;
+	private float length;
+	private float width;
+	
+	// the followings are only used by the server side
+	private Vec2 start;
+	private Vec2 end;
+	
+	static {
+		vertexBuffer = makeVertexBuffer();
+		normalBuffer = makeNormalBuffer();
+		textureBuffer = makeTextureBuffer();
 	}
 	
-	public Wall(Vec2 start, Vec2 end, boolean isServer)
-	{
-		if (isServer)
-		{
+	public Wall(Vec2 start, Vec2 end, boolean isServer) {
+		if (isServer) {
+		    this.start = start;
+		    this.end = end;
+            
 			start = start.mul(1.0f / rate);
 			end = end.mul(1.0f / rate);
 			
@@ -44,87 +141,53 @@ public class Wall extends Unit {
 			float length = vector.normalize() / 2;
 			Vec2 midPoint = start.add(end).mul(0.5f);
 			float angle = (float)Math.acos(Vec2.dot(vector, new Vec2(1, 0)));
-			shape.setAsBox(length, 0, midPoint, angle);
+			shape.setAsBox(length, 2.5f / rate, midPoint, angle);
 			
 			body.createFixture(shape, 0); // bind the dense, friction-laden fixture to the body
-
-			vertices = new float [4];
-			vertices[0] = start.x;
-			vertices[1] = start.y;
-			vertices[2] = end.x;
-			vertices[3] = end.y;
-		}
-		else
-		{
-			vertices = new float [12];
-			vertices[0] = start.x;
-			vertices[1] = start.y;
-			vertices[2] = 0f;
-			vertices[3] = start.x;
-			vertices[4] = start.y;
-			vertices[5] = 50f;
-			vertices[6] = end.x;
-			vertices[7] = end.y;
-			vertices[8] = 0f;
-			vertices[9] = end.x;
-			vertices[10] = end.y;
-			vertices[11] = 50f;
 			
-			double wallSlope = (end.y - start.y) / (end.x - start.x);
-			double dirSlope = -1f / wallSlope;
-			
-			normals = new float [12];
-			float dirCos = (float) Math.cos(Math.atan(dirSlope));
-			float dirSin = (float) Math.sin(Math.atan(dirSlope));
-			
-			normals[0] = -dirCos;
-			normals[1] = -dirSin;
-			normals[2] = 0;
-			normals[3] = -dirCos;
-			normals[4] = -dirSin;
-			normals[5] = 0;
-			normals[6] = -dirCos;
-			normals[7] = -dirSin;
-			normals[8] = 0;
-			normals[9] = -dirCos;
-			normals[10] = -dirSin;
-			normals[11] = 0;
-			
-			vertexBuffer = makeVertexBuffer();
-			// normalBuffer = makeNormalBuffer();
-			
-			BodyDef bodyDef = new BodyDef();
-			bodyDef.type = BodyType.STATIC;
-			body = ClientGameState.world.createBody(bodyDef);
-			PolygonShape shape = new PolygonShape();
-			
-			Vec2 vector = start.sub(end);
-			float length = vector.normalize();
-			Vec2 midPoint = start.add(end).mul(0.5f);
-			float angle = (float)Math.acos(Vec2.dot(vector, new Vec2(1, 0)));
-			shape.setAsBox(length, 0, midPoint, angle);
-			
-			body.createFixture(shape, 0); // bind the dense, friction-laden fixture to the body
+		} else {
+			double slope = (end.y - start.y) / (end.x - start.x);
+			pos = new Vec2((end.x + start.x) / 2, (end.y + start.y) / 2);
+			angle = (float) (Math.atan(slope) * 180 / Math.PI);
+			length = (float) Math.sqrt((end.y - start.y) * (end.y - start.y) 
+					+ (end.x - start.x) * (end.x - start.x)); 
+			width = 5;
 		}
 	}
 	
 	public void draw(GL10 gl) {
-		gl.glColor4f(0, 0.5f, 0.5f, 1);
-		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-		gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
+		gl.glPushMatrix();
 		
-		gl.glEnable(GL10.GL_NORMALIZE);
-		gl.glEnable(GL10.GL_RESCALE_NORMAL);
-		
-		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
-		// gl.glNormalPointer(GL10.GL_FLAT, 0, normalBuffer);
-		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
-		
-		gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
-		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+			// GraphicUtils.setMaterialColor(gl, new float [] {1, 0, 0, 1});
+				
+			gl.glTranslatef(pos.x, pos.y, 0);
+			gl.glRotatef(angle, 0, 0, 1);
+			gl.glScalef(length, width, 1);
+			
+	        gl.glEnable(GL10.GL_TEXTURE_2D);
+	        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
+			
+			gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+			gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
+	        gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+			
+			gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
+	        gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer);
+			gl.glNormalPointer(GL10.GL_FLOAT, 0, normalBuffer);
+			gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
+			
+			gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+			gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
+	        gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+			
+			gl.glDisable(GL10.GL_TEXTURE_2D);
+			
+			// GraphicUtils.restoreMaterialColor(gl);
+				
+		gl.glPopMatrix();
 	}
 	
-	private FloatBuffer makeVertexBuffer() {
+	private static FloatBuffer makeVertexBuffer() {
 		ByteBuffer bb = ByteBuffer.allocateDirect(vertices.length * 4);
 		bb.order(ByteOrder.nativeOrder());
 		FloatBuffer buffer = bb.asFloatBuffer();
@@ -133,7 +196,16 @@ public class Wall extends Unit {
 		return buffer;
 	}
 	
-	private FloatBuffer makeNormalBuffer() {
+    private static FloatBuffer makeTextureBuffer() {
+        ByteBuffer bb = ByteBuffer.allocateDirect(texture.length * 4);
+        bb.order(ByteOrder.nativeOrder());
+        FloatBuffer buffer = bb.asFloatBuffer();
+        buffer.put(texture);
+        buffer.position(0);
+        return buffer;
+    }
+	
+	private static FloatBuffer makeNormalBuffer() {
 		ByteBuffer bb = ByteBuffer.allocateDirect(normals.length * 4);
 		bb.order(ByteOrder.nativeOrder());
 		FloatBuffer buffer = bb.asFloatBuffer();
@@ -143,17 +215,31 @@ public class Wall extends Unit {
 	}
 	
 	@Override
-	public String toSerializedString() 
-	{
+	public String toSerializedString()  {
 		String serialized = "";
 		serialized += "wall:";
+		/*
 		serialized += vertices[0] * rate + "," + vertices[1] * rate + ",";
 		serialized += vertices[2] * rate + "," + vertices[3] * rate;
+		*/
+		serialized += start.x + "," + start.y + ",";
+		serialized += end.x + "," + end.y;
 		return serialized;
 	}
 
 	@Override
-	public void updateFromString(String string)
-	{		
+	public void updateFromString(String string) {
 	}
+	
+	public static void loadTexture(GL10 gl, Context context) {
+        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.texture);
+		gl.glGenTextures(1, textures, 0);
+		gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
+		GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bmp, 0); 
+		bmp.recycle();
+		textureInited = true;
+	}
+	
 }

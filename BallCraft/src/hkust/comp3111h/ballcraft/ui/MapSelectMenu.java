@@ -27,124 +27,132 @@ import android.widget.TextView;
 
 public class MapSelectMenu extends Activity {
 
-	private MapSelectMenu self;
-	
-	private ListView mapList;
-	
-	private ArrayList<String> maps;
-	
-	private int ballSelected;
-	private String currMap;
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		self = this;
-		
-    	this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, 
-    			WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
-        		WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
-		Intent intent = this.getIntent();
-		ballSelected = intent.getIntExtra("ballSelected", BallCraft.WoodBall.id);
-		
-		this.initMaps(); // must be put before initLayout() because maps are needed
-		this.initLayout();
-	}
-	
-	private void initLayout() {
-		this.setContentView(R.layout.map_select_menu);
-		
-		GLSurfaceView glView = (GLSurfaceView) 
-				this.findViewById(R.id.map_select_menu_gl_surface_view);
-		glView.setRenderer(new GameMenuRenderer(this));
-		
-		final MapDisplayView mapDisplay = (MapDisplayView) 
-				this.findViewById(R.id.map_select_menu_map_display_view);
-		mapDisplay.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-		mapDisplay.setMap(maps.get(0));
-		
-		mapList = (ListView) this.findViewById(R.id.map_select_menu_list);
-		mapList.setAdapter(new MapAdapter());
-		mapList.setOnItemClickListener(new OnItemClickListener() {
+    private MapSelectMenu self;
 
-			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				currMap = maps.get(position);
-				mapDisplay.setMap(currMap);
-			}
-			
-		});
-		
-		ImageView mapSelectView = (ImageView) this.findViewById(R.id.map_select_menu_select_view);
-		mapSelectView.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
-				Intent intent = new Intent(self, MultiPlayerGameInitializer.class);
-				intent.putExtra("ballSelected", ballSelected);
-				intent.putExtra("mapSelected", currMap);
-				self.startActivity(intent);
-			}
-			
-		});
-	}
-	
-	private void initMaps() {
-		maps = new ArrayList<String>();
-		try {
-			String [] list = self.getAssets().list("");
-			if (list != null) {
-				for (int i = 0; i < list.length; i++) {
-					if (self.isMapFile(list[i])) {
-						maps.add(list[i]);
-					}
-				}
-			}
-		} catch (IOException e) {
-		}
-		currMap = maps.get(0);
-	}
-	
-	private boolean isMapFile(String filename) {
-		return filename.endsWith("xml");
-	}
-	
-	private class MapAdapter extends BaseAdapter {
+    private ListView mapList;
 
-		private LayoutInflater inflater;
-		
-		public MapAdapter() {
-			inflater = self.getLayoutInflater();
-		}
-		
-		public int getCount() {
-			return maps.size();
-		}
+    private ArrayList<String> maps;
 
-		public Object getItem(int position) {
-			return null;
-		}
+    private int ballSelected;
+    private String currMap;
 
-		public long getItemId(int position) {
-			return position;
-		}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View v = inflater.inflate(R.layout.map_select_list_item, null);
-			TextView mapNameView = (TextView) v.findViewById(R.id.map_select_list_item_name);
-			mapNameView.setText(maps.get(position));
-			
-			return v;
-		}
-		
-	}
-	
-	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
-		self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-	}
-    
+        self = this;
+
+        this.getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        Intent intent = this.getIntent();
+        ballSelected = intent
+                .getIntExtra("ballSelected", BallCraft.WoodBall.id);
+
+        this.initMaps(); // must be put before initLayout() because maps are
+                         // needed
+        this.initLayout();
+    }
+
+    private void initLayout() {
+        this.setContentView(R.layout.map_select_menu);
+
+        GLSurfaceView glView = (GLSurfaceView) this
+                .findViewById(R.id.map_select_menu_gl_surface_view);
+        glView.setRenderer(new GameMenuRenderer(this));
+
+        final MapDisplayView mapDisplay = (MapDisplayView) this
+                .findViewById(R.id.map_select_menu_map_display_view);
+        mapDisplay.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+        mapDisplay.setMap(maps.get(0));
+
+        mapList = (ListView) this.findViewById(R.id.map_select_menu_list);
+        mapList.setAdapter(new MapAdapter());
+        mapList.setOnItemClickListener(new OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View v,
+                    int position, long id) {
+                currMap = maps.get(position);
+                mapDisplay.setMap(currMap);
+            }
+
+        });
+
+        ImageView mapSelectView = (ImageView) this
+                .findViewById(R.id.map_select_menu_select_view);
+        mapSelectView.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View v) {
+                Intent intent = new Intent(self,
+                        MultiPlayerGameInitializer.class);
+                intent.putExtra("ballSelected", ballSelected);
+                intent.putExtra("mapSelected", currMap);
+                self.startActivity(intent);
+            }
+
+        });
+    }
+
+    private void initMaps() {
+        maps = new ArrayList<String>();
+        try {
+            String[] list = self.getAssets().list("");
+            if (list != null) {
+                for (int i = 0; i < list.length; i++) {
+                    if (self.isMapFile(list[i])) {
+                        maps.add(list[i]);
+                    }
+                }
+            }
+        } catch (IOException e) {
+        }
+        currMap = maps.get(0);
+    }
+
+    private boolean isMapFile(String filename) {
+        return filename.endsWith("xml");
+    }
+
+    private class MapAdapter extends BaseAdapter {
+
+        private LayoutInflater inflater;
+
+        public MapAdapter() {
+            inflater = self.getLayoutInflater();
+        }
+
+        public int getCount() {
+            return maps.size();
+        }
+
+        public Object getItem(int position) {
+            return null;
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v = inflater.inflate(R.layout.map_select_list_item, null);
+            TextView mapNameView = (TextView) v
+                    .findViewById(R.id.map_select_list_item_name);
+            mapNameView.setText(maps.get(position));
+
+            return v;
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        self.overridePendingTransition(android.R.anim.fade_in,
+                android.R.anim.fade_out);
+    }
+
 }

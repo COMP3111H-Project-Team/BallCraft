@@ -8,16 +8,13 @@ import java.util.Vector;
 
 import org.jbox2d.common.Vec2;
 
-
 //Map is composed of widthCount*hegihtCount small tiles.
 //notice :: width>height
 //You can get a immutable tile by calling function map.getTile(layer id,width,height);
 public class Map {
-
 	private String mapName;
 	private int widthCount;
 	private int heightCount;
-//	private Vector<Wall> walls;
 	private Vec2 initPosition;
 	private Vector<Unit> units;
 	private Vector<Data> walls;
@@ -40,11 +37,8 @@ public class Map {
 		traps = new Vector<Data>();
 	}
 
-	public String getName() {
-		return mapName;
-	}
-	
-	public void setName(String name) {
+
+    public void setName(String name) {
         this.mapName = name;
     }
 	
@@ -102,7 +96,7 @@ public class Map {
 	        while(iterator.hasNext())
 	        {
 	        	walldate = iterator.next();
-	        	units.add(new Wall(walldate.start,walldate.end));
+	        	units.add(new Wall(walldate.start,walldate.end,true));
 	        }
 		}
 		return units;
