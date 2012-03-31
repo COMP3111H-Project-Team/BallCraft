@@ -13,16 +13,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
 
-public class Particle implements Drawable, Comparable {
+public class Particle implements Drawable, Comparable<Object> {
     
     private static FloatBuffer vertexBuffer;
     private static FloatBuffer textureBuffer;
     
     private static final float [] vertices = {
-            -3, -3, 0,
-            -3, 3, 0,
-            3, -3, 0,
-            3, 3, 0,
+            -1, -1, 0,
+            -1, 1, 0,
+            1, -1, 0,
+            1, 1, 0,
     };
     
     private static final float[] texture = { 
@@ -36,10 +36,17 @@ public class Particle implements Drawable, Comparable {
     
     private static final float gravity = -0.1f;
     
-    public float x, y, z;
-    private float xSpeed, ySpeed, zSpeed;
+    public float x = 0;
+    public float y = 0;
+    public float z = 0;
     
-    private float size;
+    public float xSpeed = 0;
+    public float ySpeed = 0;
+    public float zSpeed = 0;
+    
+    private float size = 4;
+    
+    private boolean gravityInfluence = true;
     
     static {
         vertexBuffer = makeVertexBuffer();
@@ -61,6 +68,14 @@ public class Particle implements Drawable, Comparable {
         this.zSpeed = zSpeed;
     }
     
+    /**
+     * Set whether gravity influences the particle, if so the particle will have a z-direction acceleration
+     * @param gi Whether gravity influences
+     */
+    public void setGravityInfluence(boolean gi) {
+        this.gravityInfluence = gi;
+    }
+    
     public void setSpeed(float xSpeed, float ySpeed, float zSpeed) {
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
@@ -68,7 +83,9 @@ public class Particle implements Drawable, Comparable {
     }
     
     public void move() {
-        this.zSpeed += gravity;
+        if (this.gravityInfluence) {
+	        this.zSpeed += gravity;
+        }
         this.x += this.xSpeed;
         this.y += this.ySpeed;
         this.z += this.zSpeed;
@@ -79,6 +96,7 @@ public class Particle implements Drawable, Comparable {
         gl.glPushMatrix();
         
 	        gl.glTranslatef(x, y, z);
+	        gl.glScalef(size, size, 1);
 	        gl.glEnable(GL10.GL_TEXTURE_2D);
 	        
 	        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);

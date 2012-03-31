@@ -1,19 +1,35 @@
 package hkust.comp3111h.ballcraft.graphics;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class ParticleSystem2 extends ParticleSystem {
     
     public ParticleSystem2(float x, float y, float z) {
-        COUNT = 100;
+        COUNT = 18;
         
         particles = new ArrayList<Particle>();
-        Random randGen = new Random();
         
         for (int i = 0; i < COUNT; i++) {
-            particles.add(new Particle(x, y, z, 
-                    randGen.nextFloat() * 6 - 3, randGen.nextFloat() * 6 - 3, 5));
+            double angle = i * 20 / 57.3;
+            float cos = (float) Math.cos(angle);
+            float sin = (float) Math.sin(angle);
+            particles.add(new Particle(x + cos * 10, y + sin * 10, z));
+        }
+    }
+    
+    @Override
+    public void move() {
+        if (this.isActive()) {
+            boolean stillActive = false;
+            for (int i = 0; i < COUNT; i++) {
+                particles.get(i).move();
+                if (this.particleActive(particles.get(i))) {
+                    stillActive = true;
+                }
+            }
+            if (!stillActive) {
+                this.deactivate();
+            }
         }
     }
 
