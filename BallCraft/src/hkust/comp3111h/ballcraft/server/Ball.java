@@ -18,7 +18,7 @@ import org.jbox2d.dynamics.FixtureDef;
 
 public class Ball extends Unit {
 
-    float z;
+    public float z;
     float zv;
 
     FloatBuffer strip, fan_top, fan_bottom;

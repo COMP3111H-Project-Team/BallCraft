@@ -1,6 +1,6 @@
 package hkust.comp3111h.ballcraft.client;
 
-import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.server.Server;
 import android.app.Activity;
@@ -36,7 +36,7 @@ public class MultiPlayerGameInitializer extends Activity {
     private void initGame() {
         Intent intent = this.getIntent();
         int ballSelected = intent.getIntExtra("ballSelected",
-                BallCraft.WoodBall.id);
+                BallDef.WoodBall.id);
         String mapSelected = intent.getStringExtra("mapSelected");
 
         Intent serverIntent = new Intent(this, Server.class);
