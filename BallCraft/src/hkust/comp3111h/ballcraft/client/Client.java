@@ -136,9 +136,10 @@ public class Client extends IntentService {
 
     public static void stop() {
         running = false;
-    }
-    
-    public static boolean isGameInited() {
+    } 
+ 	public static boolean isRun(){
+    	return running;
+ 	public static boolean isGameInited() {
         return gameInited;
     }
 

@@ -74,7 +74,6 @@ public class MapSelectMenu extends Activity {
         mapList.setAdapter(new MapAdapter());
         mapList.setOnItemClickListener(new OnItemClickListener() {
 
-            @Override
             public void onItemClick(AdapterView<?> parent, View v,
                     int position, long id) {
                 currMap = maps.get(position);
@@ -87,7 +86,6 @@ public class MapSelectMenu extends Activity {
                 .findViewById(R.id.map_select_menu_select_view);
         mapSelectView.setOnClickListener(new OnClickListener() {
 
-            @Override
             public void onClick(View v) {
                 Intent intent = new Intent(self,
                         MultiPlayerGameInitializer.class);
@@ -127,22 +125,18 @@ public class MapSelectMenu extends Activity {
             inflater = self.getLayoutInflater();
         }
 
-        @Override
         public int getCount() {
             return maps.size();
         }
 
-        @Override
         public Object getItem(int position) {
             return null;
         }
 
-        @Override
         public long getItemId(int position) {
             return position;
         }
 
-        @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View v = inflater.inflate(R.layout.map_select_list_item, null);
             TextView mapNameView = (TextView) v
