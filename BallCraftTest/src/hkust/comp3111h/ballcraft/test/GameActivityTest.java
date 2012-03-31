@@ -1,13 +1,10 @@
 package hkust.comp3111h.ballcraft.test;
 
-import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.client.Client;
 import hkust.comp3111h.ballcraft.client.GameActivity;
-import hkust.comp3111h.ballcraft.client.Map;
-import hkust.comp3111h.ballcraft.client.MapParser;
+import hkust.comp3111h.ballcraft.client.Skill;
+import hkust.comp3111h.ballcraft.settings.GameSettings;
 import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
-import android.widget.Button;
 
 
 public class GameActivityTest extends ActivityInstrumentationTestCase2<GameActivity> {
@@ -21,26 +18,24 @@ public class GameActivityTest extends ActivityInstrumentationTestCase2<GameActiv
 	protected void setUp() throws Exception {
 		super.setUp();
 		mGameActivity = (GameActivity) getActivity();
+		GameSettings.setContext(mGameActivity);
+		Client.setContext(mGameActivity);
 	}
 	
-	public void testMap(){
-		MapParser.setContext(mGameActivity);
-		Map map = MapParser.getMapFromXML("map01.xml");
-		assertEquals("map01",map.getName());
-		 
+	public void testMusicSetting(){
+		GameSettings.setMusicPref(true);
+		assertTrue(GameSettings.getMusicPref());
 	}
-	public void testLayout(){
-		 final Button skill1Button = (Button) mGameActivity
-	                .findViewById(R.id.game_activity_skill_1_button);
-		 mGameActivity.runOnUiThread(
-		            new Runnable() {
-		                public void run() {
-		                    skill1Button.requestFocus();
-		                }
-		            }
-		        );
-		 Log.i("testshabi",skill1Button.getText().toString());
-		 assertEquals("Grow Root",skill1Button.getText().toString());
+	
+	public void testVibrateSetting(){
+		GameSettings.setVibrPref(false);
+		assertFalse(GameSettings.getVibrPref());
+	}
+		
+	public void testSkillCast(){
+		Client.castSkill(Skill.getSkill(1,1));
+		Client.castSkill(Skill.getSkill(1,2));
+		//TODO how to detect it?
 	}
 
 	

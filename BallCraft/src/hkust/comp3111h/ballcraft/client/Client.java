@@ -122,5 +122,9 @@ public class Client extends IntentService {
     public static void stop() {
         running = false;
     }
+    
+    public static boolean isRun(){
+    	return running;
+    }
 
 }
