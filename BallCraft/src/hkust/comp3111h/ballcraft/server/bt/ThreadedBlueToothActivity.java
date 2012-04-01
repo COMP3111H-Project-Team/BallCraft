@@ -63,12 +63,10 @@ public class ThreadedBlueToothActivity extends BluetoothAwareActivity {
     }
 
     BluetoothChannelFactory channelFactory = new BluetoothChannelFactory() {
-        @Override
         public BluetoothChannel newServerChannel() {
             return new ChannelToServer();
         }
 
-        @Override
         public BluetoothChannel newClientChannel() {
             return new ChannelToClient();
         }

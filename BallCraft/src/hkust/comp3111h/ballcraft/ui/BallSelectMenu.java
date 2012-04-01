@@ -201,7 +201,6 @@ public class BallSelectMenu extends Activity {
             ballLockedView.setVisibility(View.INVISIBLE);
             ballSelectView.setOnClickListener(new OnClickListener() {
 
-                @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(self, MapSelectMenu.class);
                     intent.putExtra("ballSelected", currBallPos);
@@ -217,7 +216,6 @@ public class BallSelectMenu extends Activity {
             ballLockedView.setVisibility(View.VISIBLE);
             ballLockedView.setOnClickListener(new OnClickListener() {
 
-                @Override
                 public void onClick(View v) {
                     // do nothing when locked
                 }

@@ -12,112 +12,98 @@ import org.jbox2d.common.Vec2;
 //notice :: width>height
 //You can get a immutable tile by calling function map.getTile(layer id,width,height);
 public class Map {
+	private String mapName;
+	private int widthCount;
+	private int heightCount;
+	private Vec2 initPosition;
+	private Vector<Unit> units;
+	private Vector<Data> walls;
+	private Vector<Data> traps;
+	private Vector<Data> planes;
+	
+	public class Data {
+		public Data(Vec2 s, Vec2 e) {
+			start = s;
+			end = e;
+		}
+		public Vec2 start;
+		public Vec2 end;
+	}
+	
+	public Map(){
+		units = new Vector<Unit>();
+		walls = new Vector<Data>();
+		planes = new Vector<Data>();
+		traps = new Vector<Data>();
+	}
 
-    private String mapName;
-    private int widthCount;
-    private int heightCount;
-    // private Vector<Wall> walls;
-    private Vec2 initPosition;
-    private Vector<Unit> units;
-    private Vector<WallData> walls;
-
-    public class WallData {
-        public WallData(Vec2 s, Vec2 e) {
-            start = s;
-            end = e;
-        }
-
-        public Vec2 start;
-        public Vec2 end;
-    }
-
-    public Map() {
-        units = new Vector<Unit>();
-        walls = new Vector<WallData>();
-    }
-
-    public String getName() {
-        return mapName;
-    }
 
     public void setName(String name) {
         this.mapName = name;
     }
-
-    public void setWidth(int width) {
-        this.widthCount = width;
+    
+    public String getName(){
+    	return mapName;
     }
-
-    public int getWidth() {
-        return widthCount;
-    }
-
-    public void setHeight(int height) {
-        this.heightCount = height;
-    }
-
-    public int getHeight() {
-        return heightCount;
-    }
-
-    public void setInitPosition(int[] p) {
-        initPosition = new Vec2(p[0], p[1]);
-    }
-
-    public Vec2 getInitPosition() {
-        return initPosition;
-    }
-
-    public void addWall(int[] data) {
-        walls.add(new WallData(new Vec2(data[0], data[1]), new Vec2(data[2],
-                data[3])));
-    }
-
-    public Vector<WallData> getWallData() {
-        return walls;
-    }
-
-    public Vector<Unit> getUnit() {
-        if (units.isEmpty()) {
-            Iterator<WallData> iterator = walls.iterator();
-            WallData walldata;
-            while (iterator.hasNext()) {
-                walldata = iterator.next();
-                units.add(new Wall(walldata.start, walldata.end, true));
-            }
-        }
-        return units;
-    }
-
-    /*
-     * public Vector<Wall> getWalls() { return walls; }
-     */
-
-    /*
-     * public void setTileSize(int size) { this.tileSize = size; }
-     * 
-     * public int getTileSize() { return tileSize; }
-     * 
-     * public String getImageurl() { return imageurl; }
-     * 
-     * public void setBitmap(Bitmap bitmap) { this.bitmap = bitmap; }
-     * 
-     * public void setwidth(int width) { this.widthCount = width; }
-     * 
-     * public int getwidth() { return widthCount; }
-     * 
-     * public void setheight(int height) { this.heightCount = height; }
-     * 
-     * public int getheight() { return heightCount; }
-     * 
-     * public void setLayer(int id,int[][] array){ layer[id] = array; }
-     * 
-     * public int[][] getLayer(int id){ return layer[id]; }
-     * 
-     * public Bitmap getTile(int layerId,int X, int Y) { int id =
-     * layer[layerId][X][Y]; id --; int count = id /widthCount; int bitmapX =
-     * (id - (count * widthCount)) * tileSize; int bitmapY = count * tileSize;
-     * return Bitmap.createBitmap(bitmap, bitmapX, bitmapY, tileSize, tileSize);
-     * }
-     */
+	
+	public void setWidth(int width) {
+		this.widthCount = width;
+	}
+	
+	public int getWidth() {
+		return widthCount;
+	}
+	
+	public void setHeight(int height) {
+		this.heightCount = height;
+	}
+	
+	public int getHeight() {
+		return heightCount;
+	}
+	
+	public void setInitPosition(int[] p) {
+		initPosition = new Vec2(p[0],p[1]);
+	}
+	
+	public Vec2 getInitPosition() {
+		return initPosition;
+	}
+	
+	public void addWall(int[] data) {
+		walls.add(new Data(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
+	}
+	public void addTrap(int[] data){
+		traps.add(new Data(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
+	}
+	
+	public void addPlane(int[] data){
+		planes.add(new Data(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
+	}
+	
+	public Vector<Data> getWallData(){
+		return walls;
+	}
+	
+	public Vector<Data> getTrapData(){
+		return traps;
+	}
+	
+	public Vector<Data> getPlaneData(){
+		return planes;
+	}
+	
+	public Vector<Unit> getUnit() {
+		if(units.isEmpty()){
+	        Iterator<Data> iterator = walls.iterator();
+	        Data walldate;
+	        while(iterator.hasNext())
+	        {
+	        	walldate = iterator.next();
+	        	units.add(new Wall(walldate.start,walldate.end,true));
+	        }
+		}
+		return units;
+	}
+	
 }
