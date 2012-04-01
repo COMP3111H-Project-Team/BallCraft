@@ -2,6 +2,7 @@ package hkust.comp3111h.ballcraft.server;
 
 import hkust.comp3111h.ballcraft.TerrainDef;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
+import hkust.comp3111h.ballcraft.graphics.GraphicUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -160,7 +161,7 @@ public class Wall extends Unit {
 	public void draw(GL10 gl) {
 		gl.glPushMatrix();
 		
-			// GraphicUtils.setMaterialColor(gl, new float [] {1, 0, 0, 1});
+			// GraphicUtils.setMaterialColor(gl, new float [] {1f, 1f, 1f, 1f});
 				
 			gl.glTranslatef(pos.x, pos.y, 0);
 			gl.glRotatef(angle, 0, 0, 1);
