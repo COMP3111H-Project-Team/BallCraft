@@ -42,7 +42,7 @@ public abstract class ParticleSystem implements Drawable {
      * Move a particle specified by its position in the array
      * @param i
      */
-    public void moveParticle(int i) {
+    protected void moveParticle(int i) {
         particles.get(i).move();
     }
 

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -45,7 +44,8 @@ public class MapSelectMenu extends Activity {
         this.getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        this.getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -63,12 +63,15 @@ public class MapSelectMenu extends Activity {
 
         GLSurfaceView glView = (GLSurfaceView) this
                 .findViewById(R.id.map_select_menu_gl_surface_view);
-        glView.setRenderer(new GameMenuRenderer(this));
+        final MapRenderer renderer = new MapRenderer(this);
+        
+        renderer.setMap(maps.get(0));
+        glView.setRenderer(renderer);
 
-        final MapDisplayView mapDisplay = (MapDisplayView) this
-                .findViewById(R.id.map_select_menu_map_display_view);
-        mapDisplay.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+        /*
+        final MapDisplayView mapDisplay = new MapDisplayView(this);
         mapDisplay.setMap(maps.get(0));
+        */
 
         mapList = (ListView) this.findViewById(R.id.map_select_menu_list);
         mapList.setAdapter(new MapAdapter());
@@ -77,7 +80,7 @@ public class MapSelectMenu extends Activity {
             public void onItemClick(AdapterView<?> parent, View v,
                     int position, long id) {
                 currMap = maps.get(position);
-                mapDisplay.setMap(currMap);
+                renderer.setMap(currMap);
             }
 
         });
