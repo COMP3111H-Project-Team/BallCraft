@@ -8,6 +8,8 @@ import java.util.Vector;
 
 import org.jbox2d.common.Vec2;
 
+import android.util.Log;
+
 //Map is composed of widthCount*hegihtCount small tiles.
 //notice :: width>height
 //You can get a immutable tile by calling function map.getTile(layer id,width,height);
@@ -96,11 +98,11 @@ public class Map {
 	public Vector<Unit> getUnit() {
 		if(units.isEmpty()){
 	        Iterator<Data> iterator = walls.iterator();
-	        Data walldate;
+	        Data walldata;
 	        while(iterator.hasNext())
 	        {
-	        	walldate = iterator.next();
-	        	units.add(new Wall(walldate.start,walldate.end,true));
+	        	walldata = iterator.next();
+	        	units.add(new Wall(walldata.start,walldata.end));
 	        }
 		}
 		return units;

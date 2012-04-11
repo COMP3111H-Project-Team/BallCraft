@@ -33,7 +33,7 @@ public abstract class Unit implements Drawable {
             float x2 = Float.valueOf(vals[2]);
             float y2 = Float.valueOf(vals[3]);
             Log.w(x1 + " " + y1, x2 + " " + y2);
-            return new Wall(new Vec2(x1, y1), new Vec2(x2, y2), false);
+            return new Wall(new Vec2(x1, y1), new Vec2(x2, y2));
         }
         return null;
     }

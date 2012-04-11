@@ -10,6 +10,16 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent" />
 	
+	<TextView 
+	    android:id="@+id/game_activity_status_dispaly"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:text="Normal"
+	    android:textColor="#FFF"
+	    android:textSize="9pt"
+	    android:background="#000" />
+	
 	<Button
 	    android:id="@+id/game_activity_skill_1_button"
 	    android:layout_width="wrap_content"

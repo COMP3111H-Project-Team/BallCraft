@@ -2,7 +2,6 @@ package hkust.comp3111h.ballcraft.server;
 
 import hkust.comp3111h.ballcraft.TerrainDef;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
-import hkust.comp3111h.ballcraft.graphics.GraphicUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -19,7 +18,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
-import android.util.Log;
 
 public class Wall extends Unit {
 	
@@ -127,35 +125,33 @@ public class Wall extends Unit {
 		textureBuffer = makeTextureBuffer();
 	}
 	
-	public Wall(Vec2 start, Vec2 end, boolean isServer) {
-		if (isServer) {
-		    this.start = start;
-		    this.end = end;
+	public Wall(Vec2 start, Vec2 end) {
+	    
+		double slope = (end.y - start.y) / (end.x - start.x);
+		pos = new Vec2((end.x + start.x) / 2, (end.y + start.y) / 2);
+		angle = (float) (Math.atan(slope) * 180 / Math.PI);
+		length = (float) Math.sqrt((end.y - start.y) * (end.y - start.y) 
+				+ (end.x - start.x) * (end.x - start.x)); 
+		width = 5;
+		
+	    this.start = start;
+	    this.end = end;
             
-			start = start.mul(1.0f / rate);
-			end = end.mul(1.0f / rate);
-			
-			BodyDef bodyDef = new BodyDef();
-			bodyDef.type = BodyType.STATIC;
-			body = ServerGameState.world.createBody(bodyDef);
-			PolygonShape shape = new PolygonShape();
-			
-			Vec2 vector = start.sub(end);
-			float length = vector.normalize() / 2;
-			Vec2 midPoint = start.add(end).mul(0.5f);
-			float angle = (float)Math.acos(Vec2.dot(vector, new Vec2(1, 0)));
-			shape.setAsBox(length, 2.5f / rate, midPoint, angle);
-			
-			body.createFixture(shape, 0); // bind the dense, friction-laden fixture to the body
-			
-		} else {
-			double slope = (end.y - start.y) / (end.x - start.x);
-			pos = new Vec2((end.x + start.x) / 2, (end.y + start.y) / 2);
-			angle = (float) (Math.atan(slope) * 180 / Math.PI);
-			length = (float) Math.sqrt((end.y - start.y) * (end.y - start.y) 
-					+ (end.x - start.x) * (end.x - start.x)); 
-			width = 5;
-		}
+		start = start.mul(1.0f / rate);
+		end = end.mul(1.0f / rate);
+		
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyType.STATIC;
+		body = ServerGameState.world.createBody(bodyDef);
+		PolygonShape shape = new PolygonShape();
+		
+		Vec2 vector = start.sub(end);
+		float length = vector.normalize() / 2;
+		Vec2 midPoint = start.add(end).mul(0.5f);
+		float angle = (float)Math.acos(Vec2.dot(vector, new Vec2(1, 0)));
+		shape.setAsBox(length, 2.5f / rate, midPoint, angle);
+		
+		body.createFixture(shape, 0); // bind the dense, friction-laden fixture to the body
 	}
 	
 	public void draw(GL10 gl) {
@@ -235,8 +231,6 @@ public class Wall extends Unit {
 	}
 	
 	public static void loadTexture(GL10 gl, Context context) {
-	    Log.w("map", "" + TerrainDef.getTerrainWallTextureBallId(
-                ClientGameState.getClientGameState().getMapTerrain()));
         Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), 
                 TerrainDef.getTerrainWallTextureBallId(
                         ClientGameState.getClientGameState().getMapTerrain()));
