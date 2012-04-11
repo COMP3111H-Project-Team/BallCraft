@@ -9,18 +9,5 @@
 	<wall>200,-200,200,200</wall>
 	<wall>-200,200,200,200</wall>
 	<wall>-200,200,200,-200</wall>
-	<trap>100,100,120,120</trap>
-	<trap>30,30,40,40</trap>
-	<trap>150,230,160,240</trap>
-	<plane>120,0,400,120</plane>
-	<plane>0,100,100,400</plane>
-	<plane>0,0,40,30</plane>
-	<plane>40,0,120,40</plane>
-	<plane>30,40,120,100</plane>
-	<plane>0,30,30,100</plane>
-	<plane>100,120,160,230</plane>
-	<plane>160,120,400,240</plane>
-	<plane>150,240,400,400</plane>
-	<plane>100,230,150,400</plane>
-
+	<wall>100,100,-100,-100</wall>
 </map>

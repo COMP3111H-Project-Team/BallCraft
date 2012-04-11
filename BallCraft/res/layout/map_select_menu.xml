@@ -7,14 +7,8 @@
         
 	<android.opengl.GLSurfaceView
 	    android:id="@+id/map_select_menu_gl_surface_view"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent" />
-	
-	<hkust.comp3111h.ballcraft.ui.MapDisplayView
-	    android:id="@+id/map_select_menu_map_display_view"
 	    android:layout_width="300dp"
-	    android:layout_height="fill_parent"
-	    android:layout_alignParentLeft="true" />
+	    android:layout_height="fill_parent" />
 	
 	<ImageView
 	    android:id="@+id/map_select_menu_select_view"
@@ -29,7 +23,7 @@
 	    android:id="@+id/map_select_menu_list_flipper"
 	    android:layout_width="wrap_content"
 	    android:layout_height="fill_parent"
-	    android:layout_toRightOf="@+id/map_select_menu_map_display_view">
+	    android:layout_toRightOf="@+id/map_select_menu_gl_surface_view">
 	    
 		<ListView
 		    android:id="@+id/map_select_menu_list"
