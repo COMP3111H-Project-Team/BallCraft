@@ -222,10 +222,6 @@ public class Wall extends Unit {
 		return serialized;
 	}
 
-	@Override
-	public void updateFromString(String string) {
-	}
-	
 	public static void loadTexture(GL10 gl, Context context) {
         Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), 
                 TerrainDef.getTerrainWallTextureBallId(
