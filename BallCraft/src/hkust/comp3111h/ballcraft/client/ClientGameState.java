@@ -1,7 +1,6 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.graphics.Drawable;
-import hkust.comp3111h.ballcraft.graphics.Mine;
 import hkust.comp3111h.ballcraft.server.Unit;
 
 import java.util.ArrayList;
@@ -17,6 +16,9 @@ public class ClientGameState {
     private ArrayList<Skill> skills;
 
     public static World world;
+    
+    private int mapTerrain;
+    private int mapMode;
 
     private ClientGameState() {
         drawables = new ArrayList<Drawable>();
@@ -36,9 +38,7 @@ public class ClientGameState {
 
     /**
      * Apply a serialized GameUpdater to the ClientGameState to change the data
-     * 
-     * @param serialized
-     *            The serialized string containing the data of the GameUpdater
+     * @param serialized The serialized string containing the data of the GameUpdater
      */
     public void applyUpdater(String serialized) {
         String[] unitStrs = serialized.split("/");
@@ -67,12 +67,20 @@ public class ClientGameState {
         return skills;
     }
 
-    public static void init() {
-        stateInstance = new ClientGameState();
+    public void setMapTerrain(int terrain) {
+        this.mapTerrain = terrain;
     }
     
-    public void addMine(Vec2 pos) {
-        drawables.add(new Mine(pos));
+    public int getMapTerrain() {
+        return this.mapTerrain;
+    }
+    
+    public void setMapMode(int mode) {
+        this.mapMode = mode;
+    }
+    
+    public int getMapMode() {
+        return this.mapMode;
     }
 
 }

@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.server;
 
+import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallCraft.Status;
 import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.Map;
@@ -14,12 +15,16 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
 public class ServerGameState {
+    
     private static ArrayList<Unit> units;
     public static World world;
 
     private static ArrayList<Skill> activeSkills;
 
     private static ServerGameState stateInstance;
+    
+    private static int mapTerrain;
+    private static int mapMode;
 
     public static ServerGameState getStateInstance() {
         if (stateInstance == null) {
@@ -84,6 +89,14 @@ public class ServerGameState {
         }
 
         Map map = MapParser.getMapFromXML(name);
+        
+        // TODO: parse map to get terrain type and map mode
+        // temporary test:
+        mapTerrain = BallCraft.Terrain.OCEAN_TERRAIN;
+        mapMode = BallCraft.MapMode.DAY_MODE;
+        
+        String initMsg = mapTerrain + "," + mapMode;
+        ServerAdapter.sendInitMsgToClient(initMsg);
 
         Vector<Unit> mapUnit = map.getUnit();
         Iterator<Unit> iterator = mapUnit.iterator();

@@ -1,6 +1,6 @@
 package hkust.comp3111h.ballcraft.ui;
 
-import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
 
@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -45,13 +44,14 @@ public class MapSelectMenu extends Activity {
         this.getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        this.getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         Intent intent = this.getIntent();
         ballSelected = intent
-                .getIntExtra("ballSelected", BallCraft.WoodBall.id);
+                .getIntExtra("ballSelected", BallDef.WoodBall.id);
 
         this.initMaps(); // must be put before initLayout() because maps are
                          // needed
@@ -63,22 +63,24 @@ public class MapSelectMenu extends Activity {
 
         GLSurfaceView glView = (GLSurfaceView) this
                 .findViewById(R.id.map_select_menu_gl_surface_view);
-        glView.setRenderer(new GameMenuRenderer(this));
+        final MapRenderer renderer = new MapRenderer(this);
+        
+        renderer.setMap(maps.get(0));
+        glView.setRenderer(renderer);
 
-        final MapDisplayView mapDisplay = (MapDisplayView) this
-                .findViewById(R.id.map_select_menu_map_display_view);
-        mapDisplay.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+        /*
+        final MapDisplayView mapDisplay = new MapDisplayView(this);
         mapDisplay.setMap(maps.get(0));
+        */
 
         mapList = (ListView) this.findViewById(R.id.map_select_menu_list);
         mapList.setAdapter(new MapAdapter());
         mapList.setOnItemClickListener(new OnItemClickListener() {
 
-            @Override
             public void onItemClick(AdapterView<?> parent, View v,
                     int position, long id) {
                 currMap = maps.get(position);
-                mapDisplay.setMap(currMap);
+                renderer.setMap(currMap);
             }
 
         });
@@ -87,7 +89,6 @@ public class MapSelectMenu extends Activity {
                 .findViewById(R.id.map_select_menu_select_view);
         mapSelectView.setOnClickListener(new OnClickListener() {
 
-            @Override
             public void onClick(View v) {
                 Intent intent = new Intent(self,
                         MultiPlayerGameInitializer.class);
@@ -127,22 +128,18 @@ public class MapSelectMenu extends Activity {
             inflater = self.getLayoutInflater();
         }
 
-        @Override
         public int getCount() {
             return maps.size();
         }
 
-        @Override
         public Object getItem(int position) {
             return null;
         }
 
-        @Override
         public long getItemId(int position) {
             return position;
         }
 
-        @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View v = inflater.inflate(R.layout.map_select_list_item, null);
             TextView mapNameView = (TextView) v

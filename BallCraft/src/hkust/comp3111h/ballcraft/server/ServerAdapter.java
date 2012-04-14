@@ -13,5 +13,9 @@ public class ServerAdapter {
     public static void processServerMsg(String msg) {
         Client.processSerializedUpdate(msg);
     }
+    
+    public static void sendInitMsgToClient(String msg) {
+        Client.handleInitMsg(msg);
+    }
 
 }

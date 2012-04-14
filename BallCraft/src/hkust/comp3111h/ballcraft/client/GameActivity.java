@@ -67,9 +67,19 @@ public class GameActivity extends Activity implements SensorEventListener {
 
         this.setContentView(R.layout.game_layout);
 
-        mGLView = (GLSurfaceView) this
-                .findViewById(R.id.game_activity_gl_surface_view);
+        mGLView = (GLSurfaceView) this.findViewById(R.id.game_activity_gl_surface_view);
+        // here we need to wait for the init data to be sent from the server to create the render
+        // and start drawing
+        while (!Client.isGameInited()) {
+            try {
+                Thread.sleep(20);
+            } catch (Exception e) {
+            }
+        }
         mGLView.setRenderer(new GameRenderer(this));
+        
+        TextView statusDisplay = (TextView) this.findViewById(R.id.game_activity_status_dispaly);
+        statusDisplay.getBackground().setAlpha(200);
 
         Button skill1Button = (Button) this
                 .findViewById(R.id.game_activity_skill_1_button);
@@ -92,8 +102,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
         debugView = (TextView) this.findViewById(R.id.game_activity_debug_view);
 
-        miniMap = (MiniMapView) this
-                .findViewById(R.id.game_activity_mini_map_view);
+        miniMap = (MiniMapView) this.findViewById(R.id.game_activity_mini_map_view);
         miniMap.setZOrderOnTop(true);
         miniMap.getHolder().setFormat(PixelFormat.TRANSLUCENT);
 
@@ -104,7 +113,6 @@ public class GameActivity extends Activity implements SensorEventListener {
                 .findViewById(R.id.game_activity_resume_button);
         resumeButton.setOnClickListener(new OnClickListener() {
 
-            @Override
             public void onClick(View v) {
                 self.onBackPressed();
             }
@@ -115,7 +123,6 @@ public class GameActivity extends Activity implements SensorEventListener {
                 .findViewById(R.id.game_activity_exit_button);
         exitButton.setOnClickListener(new OnClickListener() {
 
-            @Override
             public void onClick(View v) {
                 Server.stop();
                 Client.stop();

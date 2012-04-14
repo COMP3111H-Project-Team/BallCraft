@@ -1,6 +1,7 @@
 package hkust.comp3111h.ballcraft.server;
 
-import hkust.comp3111h.ballcraft.R;
+import hkust.comp3111h.ballcraft.TerrainDef;
+import hkust.comp3111h.ballcraft.client.ClientGameState;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -124,41 +125,39 @@ public class Wall extends Unit {
 		textureBuffer = makeTextureBuffer();
 	}
 	
-	public Wall(Vec2 start, Vec2 end, boolean isServer) {
-		if (isServer) {
-		    this.start = start;
-		    this.end = end;
+	public Wall(Vec2 start, Vec2 end) {
+	    
+		double slope = (end.y - start.y) / (end.x - start.x);
+		pos = new Vec2((end.x + start.x) / 2, (end.y + start.y) / 2);
+		angle = (float) (Math.atan(slope) * 180 / Math.PI);
+		length = (float) Math.sqrt((end.y - start.y) * (end.y - start.y) 
+				+ (end.x - start.x) * (end.x - start.x)); 
+		width = 5;
+		
+	    this.start = start;
+	    this.end = end;
             
-			start = start.mul(1.0f / rate);
-			end = end.mul(1.0f / rate);
-			
-			BodyDef bodyDef = new BodyDef();
-			bodyDef.type = BodyType.STATIC;
-			body = ServerGameState.world.createBody(bodyDef);
-			PolygonShape shape = new PolygonShape();
-			
-			Vec2 vector = start.sub(end);
-			float length = vector.normalize() / 2;
-			Vec2 midPoint = start.add(end).mul(0.5f);
-			float angle = (float)Math.acos(Vec2.dot(vector, new Vec2(1, 0)));
-			shape.setAsBox(length, 2.5f / rate, midPoint, angle);
-			
-			body.createFixture(shape, 0); // bind the dense, friction-laden fixture to the body
-			
-		} else {
-			double slope = (end.y - start.y) / (end.x - start.x);
-			pos = new Vec2((end.x + start.x) / 2, (end.y + start.y) / 2);
-			angle = (float) (Math.atan(slope) * 180 / Math.PI);
-			length = (float) Math.sqrt((end.y - start.y) * (end.y - start.y) 
-					+ (end.x - start.x) * (end.x - start.x)); 
-			width = 5;
-		}
+		start = start.mul(1.0f / rate);
+		end = end.mul(1.0f / rate);
+		
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyType.STATIC;
+		body = ServerGameState.world.createBody(bodyDef);
+		PolygonShape shape = new PolygonShape();
+		
+		Vec2 vector = start.sub(end);
+		float length = vector.normalize() / 2;
+		Vec2 midPoint = start.add(end).mul(0.5f);
+		float angle = (float)Math.acos(Vec2.dot(vector, new Vec2(1, 0)));
+		shape.setAsBox(length, 2.5f / rate, midPoint, angle);
+		
+		body.createFixture(shape, 0); // bind the dense, friction-laden fixture to the body
 	}
 	
 	public void draw(GL10 gl) {
 		gl.glPushMatrix();
 		
-			// GraphicUtils.setMaterialColor(gl, new float [] {1, 0, 0, 1});
+			// GraphicUtils.setMaterialColor(gl, new float [] {1f, 1f, 1f, 1f});
 				
 			gl.glTranslatef(pos.x, pos.y, 0);
 			gl.glRotatef(angle, 0, 0, 1);
@@ -232,7 +231,9 @@ public class Wall extends Unit {
 	}
 	
 	public static void loadTexture(GL10 gl, Context context) {
-        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.texture);
+        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), 
+                TerrainDef.getTerrainWallTextureBallId(
+                        ClientGameState.getClientGameState().getMapTerrain()));
 		gl.glGenTextures(1, textures, 0);
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);

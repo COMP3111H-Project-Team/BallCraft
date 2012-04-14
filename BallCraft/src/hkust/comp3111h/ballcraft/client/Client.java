@@ -1,7 +1,9 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.graphics.Mine;
 import hkust.comp3111h.ballcraft.graphics.ParticleSystem1;
+import hkust.comp3111h.ballcraft.graphics.ParticleSystem5;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.settings.GameSettings;
@@ -13,9 +15,10 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
+import android.util.Log;
 
 public class Client extends IntentService {
-
+    
     private static GameInput input;
     private static Context context;
     private static Vibrator vibrator;
@@ -24,7 +27,14 @@ public class Client extends IntentService {
     private static String myself = "" + BallCraft.myself;
     private static String enemy = "" + BallCraft.enemy;
     
+    /**
+     * Set to true when the game init msg is sent to the Client
+     */
+    private static boolean gameInited = false;
+    
     private static boolean vibrOn;
+    
+    public static boolean playerDied = false;
     
     public Client() {
         super("ClientService");
@@ -35,13 +45,22 @@ public class Client extends IntentService {
     }
 
     public static void setInputAcceleration(float x, float y) {
-        // TODO: what happened here?
         input.acceleration.x = -x;
         input.acceleration.y = -y;
     }
 
     public static void castSkill(Skill skill) {
         input.addSkill(skill);
+    }
+    
+    public static void handleInitMsg(String msg) {
+        String [] vals = msg.split(",");
+        int terrain = Integer.parseInt(vals[0]);
+        int mode = Integer.parseInt(vals[1]);
+        ClientGameState.getClientGameState().setMapTerrain(terrain);
+        ClientGameState.getClientGameState().setMapMode(mode);
+        gameInited = true;
+        Log.w("game", "inited");
     }
 
 	private static void handleMessage(String string)
@@ -52,6 +71,7 @@ public class Client extends IntentService {
 			if(parts[1].equals(myself))
 			{
 				//TODO:player dead
+			    playerDied = true;
 			}
 		}
 		else if (parts[0].equals("collision"))
@@ -70,7 +90,8 @@ public class Client extends IntentService {
 			String [] position = parts[1].split(",");
 			float x = Float.valueOf(position[0]);
 			float y = Float.valueOf(position[1]);
-			ClientGameState.getClientGameState().addMine(new Vec2(x, y));
+			ClientGameState.getClientGameState().addDrawable(new Mine(new Vec2(x, y)));
+			// ClientGameState.getClientGameState().addDrawable(new ParticleSystem5(x, y, 5));
 		}
 		else if (parts[0].equals("mineExplode"))
 		{
@@ -108,7 +129,6 @@ public class Client extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         running = true;
-        ClientGameState.init();
         this.run();
     }
 
@@ -118,6 +138,14 @@ public class Client extends IntentService {
 
     public static void stop() {
         running = false;
+    } 
+    
+ 	public static boolean isRun(){
+    	return running;
+ 	}
+ 	
+ 	public static boolean isGameInited() {
+        return gameInited;
     }
 
 }

@@ -18,7 +18,7 @@ import org.jbox2d.dynamics.FixtureDef;
 
 public class Ball extends Unit {
 
-    float z;
+    public float z;
     float zv;
 
     FloatBuffer strip, fan_top, fan_bottom;
@@ -83,26 +83,23 @@ public class Ball extends Unit {
         gl.glTranslatef(this.getPosition().x, this.getPosition().y, getRadius() - z);
         gl.glScalef(this.getRadius(), this.getRadius(), this.getRadius());
 
-        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, fan_top);
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-
-        gl.glNormalPointer(GL10.GL_FLOAT, 0, fan_top);
         gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
+        
+        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, fan_top);
+        gl.glNormalPointer(GL10.GL_FLOAT, 0, fan_top);
         gl.glDrawArrays(GL10.GL_TRIANGLE_FAN, 0, slices + 2);
 
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, strip);
-        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-
         gl.glNormalPointer(GL10.GL_FLOAT, 0, strip);
-        gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
         gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, (slices + 1) * 2 * stacks);
 
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, fan_bottom);
-        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-
         gl.glNormalPointer(GL10.GL_FLOAT, 0, fan_bottom);
-        gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
         gl.glDrawArrays(GL10.GL_TRIANGLE_FAN, 0, slices + 2);
+        
+        gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
+        gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
 
         GraphicUtils.restoreMaterialColor(gl);
 

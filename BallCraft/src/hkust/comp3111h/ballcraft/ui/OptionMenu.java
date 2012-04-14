@@ -51,7 +51,6 @@ public class OptionMenu extends Activity {
         
         musicCheck.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-            @Override
             public void onCheckedChanged(CompoundButton buttonView,
                     boolean isChecked) {
                 GameSettings.setMusicPref(isChecked);
@@ -61,7 +60,6 @@ public class OptionMenu extends Activity {
         
         vibrCheck.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-            @Override
             public void onCheckedChanged(CompoundButton buttonView,
                     boolean isChecked) {
                 GameSettings.setVibrPref(isChecked);
