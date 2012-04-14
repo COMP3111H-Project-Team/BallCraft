@@ -1,18 +1,30 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.graphics.Drawable;
+import hkust.comp3111h.ballcraft.graphics.ParticleSystem;
+import hkust.comp3111h.ballcraft.server.Ball;
+import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Unit;
+import hkust.comp3111h.ballcraft.server.Wall;
 
 import java.util.ArrayList;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import android.util.Log;
+
 public class ClientGameState {
 
     private static ClientGameState stateInstance;
 
     private ArrayList<Drawable> drawables;
+    
+    private ArrayList<Ball> balls;
+    private ArrayList<Wall> walls;
+    private ArrayList<Plane> planes;
+    private ArrayList<ParticleSystem> particleSystems;
+    
     private ArrayList<Skill> skills;
 
     public static World world;
@@ -42,18 +54,27 @@ public class ClientGameState {
      */
     public void applyUpdater(String serialized) {
         String[] unitStrs = serialized.split("/");
+        Log.w("" + drawables.size(), unitStrs.length + "");
         for (int i = 0; i < unitStrs.length; i++) {
             if (i < drawables.size()) {
                 ((Unit) (drawables.get(i))).updateFromString(unitStrs[i]);
             } else {
                 drawables.add(Unit.fromSerializedString(unitStrs[i]));
             }
+            /*
+            Unit unit = Unit.fromSerializedString(unitStrs[i]);
+            if (unit instanceof Ball) {
+                if (i < kk
+            }
+            */
         }
     }
 
+    /*
     public void addDrawable(Drawable drawable) {
         drawables.add(drawable);
     }
+    */
 
     public void addSkill(Skill skill) {
         skills.add(skill);
