@@ -43,7 +43,7 @@ public class Server extends IntentService {
 	}
 	
 	public static GameUpdater generateGameUpdater() {
-		gameUpdater.units = gameState.getUnits();
+		gameUpdater.balls = gameState.getBalls();
 		return gameUpdater;
 	}
 
@@ -54,13 +54,13 @@ public class Server extends IntentService {
             lastRun = System.currentTimeMillis();
 
             for (int i = 0; i < BallCraft.maxPlayer; i++) {
-                ServerGameState.getStateInstance().processPlayerInput(i,
-                        gameInput[i]); // process
+                ServerGameState.getStateInstance().processPlayerInput(i, gameInput[i]); // process
             }
             
             String temp = new String(msg);
 			msg = "";
-			ServerAdapter.processServerMsg(temp + ";" + generateGameUpdater().toSerializedString());
+			ServerAdapter.processServerMsg(temp + ";" 
+			        + generateGameUpdater().toSerializedString());
 
             try {
                 /*
