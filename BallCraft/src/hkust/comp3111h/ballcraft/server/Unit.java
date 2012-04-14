@@ -6,8 +6,6 @@ import hkust.comp3111h.ballcraft.graphics.Drawable;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 
-import android.util.Log;
-
 public abstract class Unit implements Drawable {
 
     public final static float rate = 3.0f;
@@ -32,8 +30,14 @@ public abstract class Unit implements Drawable {
             float y1 = Float.valueOf(vals[1]);
             float x2 = Float.valueOf(vals[2]);
             float y2 = Float.valueOf(vals[3]);
-            Log.w(x1 + " " + y1, x2 + " " + y2);
             return new Wall(new Vec2(x1, y1), new Vec2(x2, y2));
+        } else if (parts[0].equals("plane")) {
+            String[] vals = parts[1].split(",");
+            float x = Float.valueOf(vals[0]);
+            float y = Float.valueOf(vals[1]);
+            float xScale = Float.valueOf(vals[2]);
+            float yScale = Float.valueOf(vals[3]);
+            return new Plane(new Vec2(x, y), xScale, yScale);
         }
         return null;
     }
@@ -54,8 +58,6 @@ public abstract class Unit implements Drawable {
     }
 
     public abstract String toSerializedString();
-
-    public abstract void updateFromString(String string);
 
     public Body getBody() {
         return body;

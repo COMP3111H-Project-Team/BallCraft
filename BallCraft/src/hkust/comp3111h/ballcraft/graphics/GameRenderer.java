@@ -1,10 +1,12 @@
 package hkust.comp3111h.ballcraft.graphics;
 
 import hkust.comp3111h.ballcraft.MapModeDef;
+import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.GameActivity;
 import hkust.comp3111h.ballcraft.client.Player;
 import hkust.comp3111h.ballcraft.server.Ball;
+import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Wall;
 
 import java.util.ArrayList;
@@ -20,13 +22,10 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
     private long time = 0;
 
-    private Plane plane;
-    
     private Context context;
     
     public GameRenderer(Context context) {
         this.context = context;
-        plane = new Plane();
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -80,7 +79,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
     }
     
     private void loadTextures(GL10 gl) {
-        Plane.loadTexture(gl, context);
+        Plane.loadTexture(gl, context, R.drawable.fire_floor);
         Particle.loadTexture(gl, context);
         Mine.loadTexture(gl, context);
         Wall.loadTexture(gl, context);
@@ -91,43 +90,40 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();
         
-        ArrayList<Drawable> drawables = ClientGameState.getClientGameState().getDrawables();
-        if (drawables.size() > Player.playerID) {
-            Ball self = (Ball) drawables.get(Player.playerID);
+        ArrayList<Ball> balls = ClientGameState.getClientGameState().balls;
+        
+        Ball self = (Ball) balls.get(Player.playerID);
 
-            float xPos = self.getPosition().x;
-            float yPos = self.getPosition().y;
+        float xPos = self.getPosition().x;
+        float yPos = self.getPosition().y;
             
-            GLU.gluLookAt(gl, xPos, yPos + 80, 200, xPos, yPos, 5, 0, 0, 1);
+        GLU.gluLookAt(gl, xPos, yPos + 80, 200, xPos, yPos, 5, 0, 0, 1);
             
-            /*
-            if (!Client.playerDied) {
-	            GLU.gluLookAt(gl, xPos, yPos + 80, 200, xPos, yPos, 5, 0, 0, 1);
-            } else {
-	            GLU.gluLookAt(gl, xPos, yPos + 80, 200, xPos, yPos, 5, 0, 0, 1);
-	            // GLU.gluLookAt(gl, xPos, yPos + 80, self.z + 200, xPos, yPos, 5, 0, 0, 1);
-            }
-            */
-
-            plane.draw(gl);
-
-            self.draw(gl);
-            BallShade.draw(gl, self.getPosition().x + 10, self.getPosition().y + 3);
-            
-            for (Drawable d: drawables) {
-                if (d!= self) {
-                    if (d instanceof Ball) {
-                        BallShade.draw(gl, ((Ball) d).getPosition().x + 10, ((Ball) d).getPosition().y + 3);
-                    } else if (d instanceof ParticleSystem) {
-                        ((ParticleSystem) d).move();
-                    }
-                    d.draw(gl);
-                }
-            }
-            
-            long elapsed = System.currentTimeMillis() - time;
-            GameActivity.display("fps: " + 1000 / elapsed);
-            time = System.currentTimeMillis();
+        for (Plane p : ClientGameState.getClientGameState().planes) {
+            p.draw(gl);
         }
+        
+        for (Wall w : ClientGameState.getClientGameState().walls) {
+            w.draw(gl);
+        }
+        
+        for (Ball b : balls) {
+            b.draw(gl);
+            BallShade.draw(gl, b.getPosition().x + 10, b.getPosition().y + 3);
+        }
+        
+        synchronized(ClientGameState.getClientGameState().drawableMisc)
+        {
+	        for (Drawable d : ClientGameState.getClientGameState().drawableMisc) {
+	            if (d instanceof ParticleSystem) {
+	                ((ParticleSystem) d).move();
+	            }
+	            d.draw(gl);
+	        }
+        }
+            
+        long elapsed = System.currentTimeMillis() - time;
+        GameActivity.display("fps: " + 1000 / elapsed);
+        time = System.currentTimeMillis();
     }
 }

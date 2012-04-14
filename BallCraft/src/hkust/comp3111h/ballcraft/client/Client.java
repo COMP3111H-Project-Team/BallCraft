@@ -1,12 +1,14 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.BallCraft;
-import hkust.comp3111h.ballcraft.graphics.Mine;
-import hkust.comp3111h.ballcraft.graphics.ParticleSystem1;
-import hkust.comp3111h.ballcraft.graphics.ParticleSystem5;
+import hkust.comp3111h.ballcraft.server.Ball;
+import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
+import hkust.comp3111h.ballcraft.server.Unit;
+import hkust.comp3111h.ballcraft.server.Wall;
 import hkust.comp3111h.ballcraft.settings.GameSettings;
+import hkust.comp3111h.ballcraft.graphics.*;
 
 import org.jbox2d.common.Vec2;
 
@@ -15,7 +17,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
-import android.util.Log;
 
 public class Client extends IntentService {
     
@@ -54,13 +55,27 @@ public class Client extends IntentService {
     }
     
     public static void handleInitMsg(String msg) {
-        String [] vals = msg.split(",");
-        int terrain = Integer.parseInt(vals[0]);
-        int mode = Integer.parseInt(vals[1]);
+        String [] parts = msg.split("MAPDEF");
+        
+        String [] mapDefs = parts[0].split(",");
+        
+        int terrain = Integer.parseInt(mapDefs[0]);
+        int mode = Integer.parseInt(mapDefs[1]);
         ClientGameState.getClientGameState().setMapTerrain(terrain);
         ClientGameState.getClientGameState().setMapMode(mode);
+        
+        String [] unitStrs = parts[1].split("/");
+        for (int i = 0; i < unitStrs.length; i++) {
+	        Unit unit = Unit.fromSerializedString(unitStrs[i]);
+	        if (unit instanceof Ball) {
+	            ClientGameState.getClientGameState().balls.add((Ball) unit);
+	        } else if (unit instanceof Wall) {
+	            ClientGameState.getClientGameState().walls.add((Wall) unit);
+	        } else if (unit instanceof Plane) {
+	            ClientGameState.getClientGameState().planes.add((Plane) unit);
+	        }
+        }
         gameInited = true;
-        Log.w("game", "inited");
     }
 
 	private static void handleMessage(String string)
@@ -90,7 +105,8 @@ public class Client extends IntentService {
 			String [] position = parts[1].split(",");
 			float x = Float.valueOf(position[0]);
 			float y = Float.valueOf(position[1]);
-			ClientGameState.getClientGameState().addDrawable(new Mine(new Vec2(x, y)));
+			int id = Integer.valueOf(position[2]);
+			ClientGameState.getClientGameState().addDrawable(new Mine(new Vec2(x, y), id));
 			// ClientGameState.getClientGameState().addDrawable(new ParticleSystem5(x, y, 5));
 		}
 		else if (parts[0].equals("mineExplode"))
@@ -98,6 +114,8 @@ public class Client extends IntentService {
 			String [] position = parts[1].split(",");
 			float x = Float.valueOf(position[0]);
 			float y = Float.valueOf(position[1]);
+			int id = Integer.valueOf(position[2]);
+			ClientGameState.getClientGameState().deleteMine(id);
 			ClientGameState.getClientGameState().addDrawable(new ParticleSystem1(x, y, 5));
 		}
 	}

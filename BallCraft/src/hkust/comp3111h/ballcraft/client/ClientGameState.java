@@ -1,7 +1,10 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.graphics.Drawable;
-import hkust.comp3111h.ballcraft.server.Unit;
+import hkust.comp3111h.ballcraft.graphics.Mine;
+import hkust.comp3111h.ballcraft.server.Ball;
+import hkust.comp3111h.ballcraft.server.Plane;
+import hkust.comp3111h.ballcraft.server.Wall;
 
 import java.util.ArrayList;
 
@@ -12,7 +15,11 @@ public class ClientGameState {
 
     private static ClientGameState stateInstance;
 
-    private ArrayList<Drawable> drawables;
+    public ArrayList<Ball> balls;
+    public ArrayList<Wall> walls;
+    public ArrayList<Plane> planes;
+    public ArrayList<Drawable> drawableMisc;
+    
     private ArrayList<Skill> skills;
 
     public static World world;
@@ -21,7 +28,11 @@ public class ClientGameState {
     private int mapMode;
 
     private ClientGameState() {
-        drawables = new ArrayList<Drawable>();
+        balls = new ArrayList<Ball>();
+        walls = new ArrayList<Wall>();
+        planes = new ArrayList<Plane>();
+        drawableMisc = new ArrayList<Drawable>();
+        
         skills = new ArrayList<Skill>();
 
         Vec2 gravity = new Vec2(0.0f, 0.0f);
@@ -41,26 +52,34 @@ public class ClientGameState {
      * @param serialized The serialized string containing the data of the GameUpdater
      */
     public void applyUpdater(String serialized) {
-        String[] unitStrs = serialized.split("/");
-        for (int i = 0; i < unitStrs.length; i++) {
-            if (i < drawables.size()) {
-                ((Unit) (drawables.get(i))).updateFromString(unitStrs[i]);
-            } else {
-                drawables.add(Unit.fromSerializedString(unitStrs[i]));
-            }
+        String[] ballStrs = serialized.split("/");
+        for (int i = 0; i < ballStrs.length; i++) {
+            balls.get(i).updateFromString(ballStrs[i]);
         }
     }
 
     public void addDrawable(Drawable drawable) {
-        drawables.add(drawable);
+        drawableMisc.add(drawable);
+    }
+    
+    public ArrayList<Drawable> getDrawables() {
+        return this.drawableMisc;
     }
 
+    public void deleteMine(int id) {
+    	for (Drawable d : drawableMisc) {
+    		if (d instanceof Mine) {
+    			if (((Mine) d).getID() == id)
+    			{
+    				drawableMisc.remove(d);
+    				return;
+    			}
+    		}
+    	}
+    }
+    
     public void addSkill(Skill skill) {
         skills.add(skill);
-    }
-
-    public ArrayList<Drawable> getDrawables() {
-        return drawables;
     }
 
     public ArrayList<Skill> getSkills() {
