@@ -14,11 +14,10 @@ import java.util.Vector;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
-import android.util.Log;
-
 public class ServerGameState {
     
     private static ArrayList<Unit> units;
+    
     public static World world;
 
     private static ArrayList<Skill> activeSkills;
@@ -85,10 +84,7 @@ public class ServerGameState {
     
     public void loadMap(String name) {
         units.add(new Ball(10, 50, 0.6f, new Vec2(0, 0)));
-
-        for (int i = 0; i < 1; i++) {
-            units.add(new Ball(10, 5, 0.99f, new Vec2(30, 5 * i - 5)));
-        }
+        units.add(new Ball(10, 5, 0.99f, new Vec2(30, 0)));
 
         Map map = MapParser.getMapFromXML(name);
         
@@ -96,9 +92,6 @@ public class ServerGameState {
         // temporary test:
         mapTerrain = BallCraft.Terrain.OCEAN_TERRAIN;
         mapMode = BallCraft.MapMode.DAY_MODE;
-        
-        String initMsg = mapTerrain + "," + mapMode;
-        ServerAdapter.sendInitMsgToClient(initMsg);
 
         Vector<Unit> mapUnit = map.getUnit();
         Iterator<Unit> iterator = mapUnit.iterator();
@@ -107,6 +100,14 @@ public class ServerGameState {
             addUnit(iterator.next());
         }
 
+        String initMsg = mapTerrain + "," + mapMode + "MAPDEF";
+        for (int i = 0; i < units.size(); i++) {
+            initMsg += units.get(i).toSerializedString();
+            if (i != units.size() - 1) { // not the last one
+                initMsg += "/";
+            }
+        }
+        ServerAdapter.sendInitMsgToClient(initMsg);
     }
 
     public void onEveryFrame(int msecElapsed) {
@@ -132,6 +133,16 @@ public class ServerGameState {
 
     public ArrayList<Unit> getUnits() {
         return units;
+    }
+    
+    public ArrayList<Ball> getBalls() {
+        ArrayList<Ball> balls = new ArrayList<Ball>();
+        for (Unit unit : units) {
+            if (unit instanceof Ball) {
+                balls.add((Ball)unit);
+            }
+        }
+        return balls;
     }
 
     public static void init() {

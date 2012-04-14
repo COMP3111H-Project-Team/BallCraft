@@ -90,41 +90,37 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();
         
-        ArrayList<Drawable> drawables = ClientGameState.getClientGameState().getDrawables();
-        if (drawables.size() > Player.playerID) {
-            Ball self = (Ball) drawables.get(Player.playerID);
+        ArrayList<Ball> balls = ClientGameState.getClientGameState().balls;
+        
+        Ball self = (Ball) balls.get(Player.playerID);
 
-            float xPos = self.getPosition().x;
-            float yPos = self.getPosition().y;
+        float xPos = self.getPosition().x;
+        float yPos = self.getPosition().y;
             
-            GLU.gluLookAt(gl, xPos, yPos + 80, 200, xPos, yPos, 5, 0, 0, 1);
+        GLU.gluLookAt(gl, xPos, yPos + 80, 200, xPos, yPos, 5, 0, 0, 1);
             
-            /*
-            if (!Client.playerDied) {
-	            GLU.gluLookAt(gl, xPos, yPos + 80, 200, xPos, yPos, 5, 0, 0, 1);
-            } else {
-	            GLU.gluLookAt(gl, xPos, yPos + 80, 200, xPos, yPos, 5, 0, 0, 1);
-	            // GLU.gluLookAt(gl, xPos, yPos + 80, self.z + 200, xPos, yPos, 5, 0, 0, 1);
-            }
-            */
-
-            self.draw(gl);
-            BallShade.draw(gl, self.getPosition().x + 10, self.getPosition().y + 3);
-            
-            for (Drawable d: drawables) {
-                if (d!= self) {
-                    if (d instanceof Ball) {
-                        BallShade.draw(gl, ((Ball) d).getPosition().x + 10, ((Ball) d).getPosition().y + 3);
-                    } else if (d instanceof ParticleSystem) {
-                        ((ParticleSystem) d).move();
-                    }
-                    d.draw(gl);
-                }
-            }
-            
-            long elapsed = System.currentTimeMillis() - time;
-            GameActivity.display("fps: " + 1000 / elapsed);
-            time = System.currentTimeMillis();
+        for (Plane p : ClientGameState.getClientGameState().planes) {
+            p.draw(gl);
         }
+        
+        for (Wall w : ClientGameState.getClientGameState().walls) {
+            w.draw(gl);
+        }
+        
+        for (Ball b : balls) {
+            b.draw(gl);
+            BallShade.draw(gl, b.getPosition().x + 10, b.getPosition().y + 3);
+        }
+        
+        for (Drawable d : ClientGameState.getClientGameState().drawableMisc) {
+            if (d instanceof ParticleSystem) {
+                ((ParticleSystem) d).move();
+            }
+            d.draw(gl);
+        }
+            
+        long elapsed = System.currentTimeMillis() - time;
+        GameActivity.display("fps: " + 1000 / elapsed);
+        time = System.currentTimeMillis();
     }
 }

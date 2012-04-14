@@ -12,6 +12,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
+import android.util.Log;
 
 public class Plane extends Unit {
 
@@ -20,10 +21,10 @@ public class Plane extends Unit {
     private static FloatBuffer normalBuffer = null;
 
     private static final float[] vertices = { 
-            -1, -1, 0,
-            -1, 1, 0,
-            1, -1, 0,
-            1, 1, 0,
+            -0.5f, -0.5f, 0,
+            -0.5f, 0.5f, 0,
+            0.5f, -0.5f, 0,
+            0.5f, 0.5f, 0,
     };
     
     private static final float[] normals = { 
@@ -53,9 +54,10 @@ public class Plane extends Unit {
     }
 
     public Plane(Vec2 start, Vec2 end) {
-        pos = new Vec2((end.x + start.x) / 2, (end.y - start.y) / 2);
+        pos = new Vec2((end.x + start.x) / 2, (end.y + start.y) / 2);
         xScale = Math.abs(end.x - start.x);
         yScale = Math.abs(end.y - start.y);
+        Log.w("" + xScale + "   " + yScale, "" + pos.x + "   " + pos.y);
     }
     
     public Plane(Vec2 pos, float xScale, float yScale) {
@@ -141,10 +143,6 @@ public class Plane extends Unit {
 		serialized += pos.x + "," + pos.y + ",";
 		serialized += xScale + "," + yScale;
 		return serialized;
-    }
-
-    @Override
-    public void updateFromString(String string) {
     }
 
 }
