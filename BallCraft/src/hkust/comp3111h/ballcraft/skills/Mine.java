@@ -46,7 +46,7 @@ public class Mine extends Skill {
 		for (int i = 0; i < BallCraft.maxPlayer; i++)
 		{
 			if (i == player) continue;
-			if (units.get(i).getPosition().sub(position).lengthSquared() < 400 / (Unit.rate * Unit.rate))
+			if (units.get(i).getPosition().sub(position).lengthSquared() < 1000 / (Unit.rate * Unit.rate))
 			{
 				Vec2 v = units.get(i).getPosition().sub(position);
 				v.normalize();

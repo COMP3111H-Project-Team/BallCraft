@@ -1,41 +1,30 @@
 package hkust.comp3111h.ballcraft.client;
 
-import hkust.comp3111h.ballcraft.server.Unit;
+import hkust.comp3111h.ballcraft.server.Ball;
 
 import java.util.ArrayList;
 
 public class GameUpdater {
 
-    public ArrayList<Unit> units = null;
+    public ArrayList<Ball> balls = null;
 
     public GameUpdater() {
-        units = new ArrayList<Unit>();
-    }
-
-    public void fromSerializedString(String serialized) {
-        String[] unitStrs = serialized.split("/");
-        for (int i = 0; i < unitStrs.length; i++) {
-            if (i < units.size()) {
-                units.get(i).updateFromString(unitStrs[i]);
-            } else {
-                units.add(Unit.fromSerializedString(unitStrs[i]));
-            }
-        }
+        balls = new ArrayList<Ball>();
     }
 
     public String toSerializedString() {
         String serialized = "";
-        for (int i = 0; i < units.size(); i++) {
-            serialized += units.get(i).toSerializedString();
-            if (i != units.size() - 1) { // not the last one
+        for (int i = 0; i < balls.size(); i++) {
+            serialized += balls.get(i).toSerializedString();
+            if (i != balls.size() - 1) { // not the last one
                 serialized += "/";
             }
         }
         return serialized;
     }
 
-    public ArrayList<Unit> getUnits() {
-        return units;
+    public ArrayList<Ball> getballs() {
+        return balls;
     }
 
 }

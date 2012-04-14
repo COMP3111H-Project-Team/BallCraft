@@ -3,5 +3,6 @@
 	<name>Map 02</name>
 	<height>400</height>
 	<width>400</width>
+	<plane>50,50,100,100</plane>
 	<initPosition>10,10</initPosition>
 </map>
