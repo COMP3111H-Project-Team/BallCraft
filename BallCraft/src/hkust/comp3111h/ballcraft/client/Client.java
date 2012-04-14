@@ -89,7 +89,8 @@ public class Client extends IntentService {
 			String [] position = parts[1].split(",");
 			float x = Float.valueOf(position[0]);
 			float y = Float.valueOf(position[1]);
-			// ClientGameState.getClientGameState().addDrawable(new Mine(new Vec2(x, y)));
+			int id = Integer.valueOf(position[2]);
+			ClientGameState.getClientGameState().addDrawable(new Mine(new Vec2(x, y), id));
 			// ClientGameState.getClientGameState().addDrawable(new ParticleSystem5(x, y, 5));
 		}
 		else if (parts[0].equals("mineExplode"))
@@ -97,7 +98,9 @@ public class Client extends IntentService {
 			String [] position = parts[1].split(",");
 			float x = Float.valueOf(position[0]);
 			float y = Float.valueOf(position[1]);
-			// ClientGameState.getClientGameState().addDrawable(new ParticleSystem1(x, y, 5));
+			int id = Integer.valueOf(position[2]);
+			//TODO:: delete mine
+			ClientGameState.getClientGameState().addDrawable(new ParticleSystem1(x, y, 5));
 		}
 	}
 

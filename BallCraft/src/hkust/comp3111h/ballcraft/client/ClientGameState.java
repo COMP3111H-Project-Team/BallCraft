@@ -54,7 +54,7 @@ public class ClientGameState {
      */
     public void applyUpdater(String serialized) {
         String[] unitStrs = serialized.split("/");
-        Log.w("" + drawables.size(), unitStrs.length + "");
+//        Log.w("" + drawables.size(), unitStrs.length + "");
         for (int i = 0; i < unitStrs.length; i++) {
             if (i < drawables.size()) {
                 ((Unit) (drawables.get(i))).updateFromString(unitStrs[i]);
@@ -70,11 +70,11 @@ public class ClientGameState {
         }
     }
 
-    /*
+    
     public void addDrawable(Drawable drawable) {
         drawables.add(drawable);
     }
-    */
+    
 
     public void addSkill(Skill skill) {
         skills.add(skill);
