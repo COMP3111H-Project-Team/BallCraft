@@ -3,6 +3,7 @@ package hkust.comp3111h.ballcraft.client;
 import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.server.Server;
+import hkust.comp3111h.ballcraft.server.bt.BluetoothActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -51,6 +52,9 @@ public class MultiPlayerGameInitializer extends Activity {
 
         Intent gameIntent = new Intent(this, GameActivity.class);
         this.startActivity(gameIntent);
+        
+        Intent Bluetooth = new Intent(this, BluetoothActivity.class);
+        this.startActivity(Bluetooth);
 
         this.finish();
     }
