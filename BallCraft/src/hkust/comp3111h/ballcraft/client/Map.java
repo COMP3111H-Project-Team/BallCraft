@@ -16,6 +16,8 @@ public class Map {
 	private String mapName;
 	private int widthCount;
 	private int heightCount;
+	private int terrain;
+	private int mode;
 	private Vec2 initPosition;
 	private Vector<Unit> units;
 	private Vector<Data> walls;
@@ -61,6 +63,22 @@ public class Map {
 	
 	public int getHeight() {
 		return heightCount;
+	}
+	
+	public void setTerrain(int terrain){
+		this.terrain = terrain;
+	}
+	
+	public int getTerrain() {
+		return terrain;
+	}
+	
+	public void setMode(int mode) {
+		this.mode = mode;
+	}
+	
+	public int getMode() {
+		return mode;
 	}
 	
 	public void setInitPosition(int[] p) {

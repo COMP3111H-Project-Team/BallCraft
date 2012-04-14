@@ -52,37 +52,50 @@ public class MapParser{
 	        //get height count
 	    	Element height = (Element)root.getElementsByTagName("height").item(0);
 	    	map.setHeight(Integer.parseInt(height.getFirstChild().getNodeValue()));
-	    	//get width count
 	    	
+	    	//get width count
 	    	Element width = (Element)root.getElementsByTagName("width").item(0);
 	    	map.setWidth(Integer.parseInt(width.getFirstChild().getNodeValue()));
+	    	
+	    	//get terrain
+	    	Element terrain = (Element)root.getElementsByTagName("terrain").item(0);
+	    	map.setTerrain(Integer.parseInt(terrain.getFirstChild().getNodeValue()));
+	    	
+	    	//get map mode
+	    	Element mode = (Element)root.getElementsByTagName("mode").item(0);
+	    	map.setTerrain(Integer.parseInt(mode.getFirstChild().getNodeValue()));
 	    	
 	    	//get init position
 	    	Element init = (Element)root.getElementsByTagName("initPosition").item(0);
 	    	map.setInitPosition(parseString(init.getFirstChild().getNodeValue()));
 	    	NodeList nodes;
+	    	
+	    	String data;
 	    	//get wall list
 	    	nodes=root.getElementsByTagName("wall");
 			for(int i=0;i<nodes.getLength();i++){
 				Element wallElement=(Element)(nodes.item(i));
-				String wallData = wallElement.getFirstChild().getNodeValue();
-				map.addWall(parseString(wallData));                     
+				data = wallElement.getFirstChild().getNodeValue();
+				Log.i("map", data);
+				map.addWall(parseString(data));                     
 			}
 			
 			//get trap list
 	    	nodes=root.getElementsByTagName("trap");
 			for(int i=0;i<nodes.getLength();i++){
-				Element trapElement=(Element)(nodes.item(i));
-				String trapData = trapElement.getFirstChild().getNodeValue();
-				map.addTrap(parseString(trapData));                     
+				Element TrapElement=(Element)(nodes.item(i));
+				data = TrapElement.getFirstChild().getNodeValue();
+				Log.i("map", data);
+				map.addTrap(parseString(data));                     
 			}
 			
 			//get plane list
 	    	nodes=root.getElementsByTagName("plane");
 			for(int i=0;i<nodes.getLength();i++){
-				Element planeElement=(Element)(nodes.item(i));
-				String planeData = planeElement.getFirstChild().getNodeValue();
-				map.addPlane(parseString(planeData));                     
+				Element wallElement=(Element)(nodes.item(i));
+				data = wallElement.getFirstChild().getNodeValue();
+				Log.i("map", data);
+				map.addPlane(parseString(data));                     
 			}
 			
         } catch (Exception e) {
