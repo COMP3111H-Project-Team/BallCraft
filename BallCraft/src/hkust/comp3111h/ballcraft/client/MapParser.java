@@ -66,26 +66,23 @@ public class MapParser{
 			for(int i=0;i<nodes.getLength();i++){
 				Element wallElement=(Element)(nodes.item(i));
 				String wallData = wallElement.getFirstChild().getNodeValue();
-				Log.i("map", wallData);
 				map.addWall(parseString(wallData));                     
 			}
 			
 			//get trap list
 	    	nodes=root.getElementsByTagName("trap");
 			for(int i=0;i<nodes.getLength();i++){
-				Element wallElement=(Element)(nodes.item(i));
-				String wallData = wallElement.getFirstChild().getNodeValue();
-				Log.i("map", wallData);
-				map.addWall(parseString(wallData));                     
+				Element trapElement=(Element)(nodes.item(i));
+				String trapData = trapElement.getFirstChild().getNodeValue();
+				map.addTrap(parseString(trapData));                     
 			}
 			
 			//get plane list
 	    	nodes=root.getElementsByTagName("plane");
 			for(int i=0;i<nodes.getLength();i++){
-				Element wallElement=(Element)(nodes.item(i));
-				String wallData = wallElement.getFirstChild().getNodeValue();
-				Log.i("map", wallData);
-				map.addWall(parseString(wallData));                     
+				Element planeElement=(Element)(nodes.item(i));
+				String planeData = planeElement.getFirstChild().getNodeValue();
+				map.addPlane(parseString(planeData));                     
 			}
 			
         } catch (Exception e) {

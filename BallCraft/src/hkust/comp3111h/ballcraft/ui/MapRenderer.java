@@ -67,8 +67,10 @@ public class MapRenderer implements GLSurfaceView.Renderer {
         gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, lightSpecular, 0);
         gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPosition, 0);
         
+        /*
         Wall.loadTexture(gl, context);
         Plane.loadTexture(gl, context, R.drawable.fire_wall);
+        */
     }
     
     public void setMap(String filename) {
