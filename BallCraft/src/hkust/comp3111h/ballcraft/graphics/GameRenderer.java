@@ -1,7 +1,7 @@
 package hkust.comp3111h.ballcraft.graphics;
 
 import hkust.comp3111h.ballcraft.MapModeDef;
-import hkust.comp3111h.ballcraft.R;
+import hkust.comp3111h.ballcraft.TerrainDef;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.GameActivity;
 import hkust.comp3111h.ballcraft.client.Player;
@@ -79,10 +79,15 @@ public class GameRenderer implements GLSurfaceView.Renderer {
     }
     
     private void loadTextures(GL10 gl) {
-        Plane.loadTexture(gl, context, R.drawable.fire_floor);
+        Plane.loadTexture(gl, context, 
+                TerrainDef.getTerrainFloorTextureById(
+                        ClientGameState.getClientGameState().getMapTerrain()));
+        Wall.loadTexture(gl, context, 
+                TerrainDef.getTerrainWallTextureBallId(
+                        ClientGameState.getClientGameState().getMapTerrain()));
+                
         Particle.loadTexture(gl, context);
         Mine.loadTexture(gl, context);
-        Wall.loadTexture(gl, context);
         BallShade.loadTexture(gl, context);
     }
 

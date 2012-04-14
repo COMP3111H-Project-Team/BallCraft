@@ -60,10 +60,11 @@ public class MapParser{
 	    	//get terrain
 	    	Element terrain = (Element)root.getElementsByTagName("terrain").item(0);
 	    	map.setTerrain(Integer.parseInt(terrain.getFirstChild().getNodeValue()));
+	    	Log.w("terrain", "" + map.getTerrain());
 	    	
 	    	//get map mode
 	    	Element mode = (Element)root.getElementsByTagName("mode").item(0);
-	    	map.setTerrain(Integer.parseInt(mode.getFirstChild().getNodeValue()));
+	    	map.setMode(Integer.parseInt(mode.getFirstChild().getNodeValue()));
 	    	
 	    	//get init position
 	    	Element init = (Element)root.getElementsByTagName("initPosition").item(0);

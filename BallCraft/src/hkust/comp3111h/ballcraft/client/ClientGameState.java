@@ -1,7 +1,6 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.graphics.Drawable;
-import hkust.comp3111h.ballcraft.graphics.ParticleSystem;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Wall;
@@ -88,6 +87,14 @@ public class ClientGameState {
     
     public int getMapMode() {
         return this.mapMode;
+    }
+    
+    public void clearAll() {
+        balls.clear();
+        walls.clear();
+        planes.clear();
+        drawableMisc.clear();
+        skills.clear();
     }
 
 }
