@@ -35,7 +35,6 @@ public class BluetoothActivity extends Activity {
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST = "toast";
 
-    private int kRequestEnableBluetoothDiscoverability;
     private BluetoothAdapter bluetoothAdapter;
     private String recievedMessage;
     
@@ -59,20 +58,29 @@ public class BluetoothActivity extends Activity {
 
     
     public void initialize(){
-    	
+
     	service = new BluetoothService(this, mHandler);
-    	Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-    	discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-    	startActivityForResult(discoverableIntent, REQUEST_DISCOVERABLE);
+    	
+    	setDiscoverableFor(300);
     	
     	Log.i(TAG,"initialize");
-       
-    	scanDevice();
+
     }
     
     public void scanDevice(){
     	 Intent serverIntent = new Intent(this, DeviceListActivity.class);
          startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+
+         // Performing this check in onResume() covers the case in which BT was
+         // not enabled during onStart(), so we were paused to enable it...
+         // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
+         if (service != null) {
+             // Only if the state is STATE_NONE, do we know that we haven't started already
+             if (service.getState() == BluetoothService.STATE_NONE) {
+               // Start the Bluetooth chat services
+               service.start();
+             }
+         }
     }
     
     @Override
@@ -108,6 +116,7 @@ public class BluetoothActivity extends Activity {
             }
             break;
         case REQUEST_DISCOVERABLE:
+        	scanDevice();
         	break;
         }
         
@@ -119,8 +128,7 @@ public class BluetoothActivity extends Activity {
                 BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
         discoverableIntent.putExtra(
                 BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, numSeconds);
-        startActivityForResult(discoverableIntent,
-                kRequestEnableBluetoothDiscoverability);
+        startActivityForResult(discoverableIntent, REQUEST_DISCOVERABLE);
     }
    
     /**
@@ -157,16 +165,6 @@ public class BluetoothActivity extends Activity {
         super.onResume();
         if(D) Log.e(TAG, "+ ON RESUME +");
 
-        // Performing this check in onResume() covers the case in which BT was
-        // not enabled during onStart(), so we were paused to enable it...
-        // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
-        if (service != null) {
-            // Only if the state is STATE_NONE, do we know that we haven't started already
-            if (service.getState() == BluetoothService.STATE_NONE) {
-              // Start the Bluetooth chat services
-              service.start();
-            }
-        }
     }
     private final Handler mHandler = new Handler() {
         @Override
