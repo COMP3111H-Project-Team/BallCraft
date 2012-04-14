@@ -10,9 +10,13 @@ import java.util.ArrayList;
 
 import org.jbox2d.common.Vec2;
 
+import android.util.Log;
+
 public class Mine extends Skill {
 
 	private Vec2 position;
+	private static int mineCount = 0;
+	private int mineID;
 	
 	public Mine(int player, int id) 
 	{
@@ -24,8 +28,11 @@ public class Mine extends Skill {
 	@Override
 	public void init() 
 	{
-        position = getBody().getPosition();
-        Server.extraMessage("mineCreate:" + position.x * Unit.rate + "," + position.y * Unit.rate);		
+		Log.e("Mine", "Placed");
+        position = new Vec2(getBody().getPosition());
+        mineID = mineCount;
+        mineCount++;
+        Server.extraMessage("mineCreate:" + position.x * Unit.rate + "," + position.y * Unit.rate + "," + mineID);		
 	}
 
 	@Override
@@ -39,13 +46,14 @@ public class Mine extends Skill {
 		for (int i = 0; i < BallCraft.maxPlayer; i++)
 		{
 			if (i == player) continue;
-			if (units.get(i).getPosition().sub(position).lengthSquared() < 200 / (Unit.rate * Unit.rate))
+			if (units.get(i).getPosition().sub(position).lengthSquared() < 1000 / (Unit.rate * Unit.rate))
 			{
 				Vec2 v = units.get(i).getPosition().sub(position);
 				v.normalize();
 				v = v.mul(100);
 				getBody(i).setLinearVelocity(v);
-		        Server.extraMessage("mineExplode:" + position.x * Unit.rate + "," + position.y * Unit.rate);		
+				Log.e("Mine", "Explode");
+		        Server.extraMessage("mineExplode:" + position.x * Unit.rate + "," + position.y * Unit.rate + "," + mineID);		
 		    	
 				duration = 0;
 				return;
