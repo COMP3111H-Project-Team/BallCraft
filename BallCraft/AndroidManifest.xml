@@ -73,9 +73,11 @@
                   android:label="@string/select_device"
                   android:theme="@android:style/Theme.Dialog"
                   android:configChanges="orientation|keyboardHidden" />
+		<activity android:name=".server.bt.BluetoothActivity"></activity>
+		<activity android:name=".server.bt.DeviceListActivity"></activity>
         <service android:name=".server.Server"></service>
         <service android:name=".client.Client"></service>
- 		<service android:name="hkust.comp3111h.ballcraft.BluetoothService"></service>
+ 		<service android:name=".server.bt.BluetoothService"></service>
     </application>
 
 	<uses-permission android:name="andorid.permission.STORAGE"/>
