@@ -1,6 +1,9 @@
 package hkust.comp3111h.ballcraft.client;
 
+import org.jbox2d.common.Vec2;
+
 import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.graphics.Mine;
 import hkust.comp3111h.ballcraft.graphics.ParticleSystem1;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
@@ -14,7 +17,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
-import android.util.Log;
 
 public class Client extends IntentService {
     
@@ -83,7 +85,6 @@ public class Client extends IntentService {
 		{
 			if(parts[1].equals(myself))
 			{
-				//TODO:player dead
 			    playerDied = true;
 			}
 		}
@@ -103,7 +104,7 @@ public class Client extends IntentService {
 			String [] position = parts[1].split(",");
 			float x = Float.valueOf(position[0]);
 			float y = Float.valueOf(position[1]);
-			// ClientGameState.getClientGameState().addDrawable(new Mine(new Vec2(x, y)));
+			ClientGameState.getClientGameState().addDrawable(new Mine(new Vec2(x, y)));
 			// ClientGameState.getClientGameState().addDrawable(new ParticleSystem5(x, y, 5));
 		}
 		else if (parts[0].equals("mineExplode"))

@@ -1,7 +1,5 @@
 package hkust.comp3111h.ballcraft.server;
 
-import hkust.comp3111h.ballcraft.R;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;

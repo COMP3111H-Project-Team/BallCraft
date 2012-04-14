@@ -101,20 +101,20 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
         float xPos = self.getPosition().x;
         float yPos = self.getPosition().y;
-            
+        
         GLU.gluLookAt(gl, xPos, yPos + 80, 200, xPos, yPos, 5, 0, 0, 1);
             
+        for (Ball b : balls) {
+            b.draw(gl);
+            BallShade.draw(gl, b.getPosition().x + 10, b.getPosition().y + 3);
+        }
+        
         for (Plane p : ClientGameState.getClientGameState().planes) {
             p.draw(gl);
         }
         
         for (Wall w : ClientGameState.getClientGameState().walls) {
             w.draw(gl);
-        }
-        
-        for (Ball b : balls) {
-            b.draw(gl);
-            BallShade.draw(gl, b.getPosition().x + 10, b.getPosition().y + 3);
         }
         
         for (Drawable d : ClientGameState.getClientGameState().drawableMisc) {

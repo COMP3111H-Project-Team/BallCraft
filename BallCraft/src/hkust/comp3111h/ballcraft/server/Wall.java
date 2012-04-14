@@ -1,8 +1,5 @@
 package hkust.comp3111h.ballcraft.server;
 
-import hkust.comp3111h.ballcraft.TerrainDef;
-import hkust.comp3111h.ballcraft.client.ClientGameState;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
