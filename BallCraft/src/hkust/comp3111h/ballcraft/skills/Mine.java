@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 import org.jbox2d.common.Vec2;
 
-import android.util.Log;
-
 public class Mine extends Skill {
 
 	private Vec2 position;
