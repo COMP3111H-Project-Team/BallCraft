@@ -128,4 +128,5 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         GameActivity.display("fps: " + 1000 / elapsed);
         time = System.currentTimeMillis();
     }
+    
 }
