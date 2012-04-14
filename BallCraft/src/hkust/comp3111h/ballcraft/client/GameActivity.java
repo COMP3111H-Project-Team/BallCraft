@@ -77,6 +77,9 @@ public class GameActivity extends Activity implements SensorEventListener {
             }
         }
         mGLView.setRenderer(new GameRenderer(this));
+        
+        TextView statusDisplay = (TextView) this.findViewById(R.id.game_activity_status_dispaly);
+        statusDisplay.getBackground().setAlpha(200);
 
         Button skill1Button = (Button) this
                 .findViewById(R.id.game_activity_skill_1_button);
@@ -99,8 +102,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
         debugView = (TextView) this.findViewById(R.id.game_activity_debug_view);
 
-        miniMap = (MiniMapView) this
-                .findViewById(R.id.game_activity_mini_map_view);
+        miniMap = (MiniMapView) this.findViewById(R.id.game_activity_mini_map_view);
         miniMap.setZOrderOnTop(true);
         miniMap.getHolder().setFormat(PixelFormat.TRANSLUCENT);
 

@@ -3,6 +3,7 @@ package hkust.comp3111h.ballcraft.client;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.graphics.Mine;
 import hkust.comp3111h.ballcraft.graphics.ParticleSystem1;
+import hkust.comp3111h.ballcraft.graphics.ParticleSystem5;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.settings.GameSettings;
@@ -90,6 +91,7 @@ public class Client extends IntentService {
 			float x = Float.valueOf(position[0]);
 			float y = Float.valueOf(position[1]);
 			ClientGameState.getClientGameState().addDrawable(new Mine(new Vec2(x, y)));
+			// ClientGameState.getClientGameState().addDrawable(new ParticleSystem5(x, y, 5));
 		}
 		else if (parts[0].equals("mineExplode"))
 		{
@@ -137,9 +139,11 @@ public class Client extends IntentService {
     public static void stop() {
         running = false;
     } 
+    
  	public static boolean isRun(){
     	return running;
  	}
+ 	
  	public static boolean isGameInited() {
         return gameInited;
     }

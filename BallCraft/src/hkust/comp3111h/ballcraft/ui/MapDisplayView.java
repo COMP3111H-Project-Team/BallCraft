@@ -11,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceView;
 
 public class MapDisplayView extends SurfaceView {
@@ -18,7 +19,7 @@ public class MapDisplayView extends SurfaceView {
     private Map currMap;
 
     private Context context;
-
+    
     public MapDisplayView(Context context) {
         super(context);
         this.context = context;
@@ -38,6 +39,7 @@ public class MapDisplayView extends SurfaceView {
 
     public void setMap(String filename) {
         currMap = MapParser.getMapFromXML(filename);
+        Log.w("view size", currMap.getWallData().size() + "");
         this.invalidate();
     }
 
