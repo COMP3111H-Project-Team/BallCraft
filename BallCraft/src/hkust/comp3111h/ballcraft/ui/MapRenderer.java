@@ -1,11 +1,11 @@
 package hkust.comp3111h.ballcraft.ui;
 
 import hkust.comp3111h.ballcraft.MapModeDef;
+import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.Map;
-import hkust.comp3111h.ballcraft.client.Map.Data;
 import hkust.comp3111h.ballcraft.client.MapParser;
-import hkust.comp3111h.ballcraft.graphics.Plane;
+import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.server.Wall;
 
@@ -17,11 +17,8 @@ import javax.microedition.khronos.opengles.GL10;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
-import android.util.Log;
 
 public class MapRenderer implements GLSurfaceView.Renderer {
-    
-    private Plane plane;
     
     private Map currMap;
     
@@ -33,7 +30,6 @@ public class MapRenderer implements GLSurfaceView.Renderer {
 
     public MapRenderer(Context context) {
         this.context = context;
-        plane = new Plane();
         MapParser.setContext(context);
     }
 
@@ -54,7 +50,7 @@ public class MapRenderer implements GLSurfaceView.Renderer {
         float [] lightAmbient = MapModeDef.getMapModeAmbientLightById(mapMode);
         float [] lightDiffuse = MapModeDef.getMapModeDiffuseLightById(mapMode);
         float [] lightSpecular = MapModeDef.getMapModeSpecularLightById(mapMode);
-        float [] lightPosition = { 200f, 0, 100f, 1f };
+        float [] lightPosition = { 100f, 0, 100f, 1f };
 
         float [] matAmbient = { 0.4f, 0.4f, 0.4f, 1f };
         float [] matDiffuse = { 0.6f, 0.6f, 0.6f, 1f };
@@ -70,6 +66,9 @@ public class MapRenderer implements GLSurfaceView.Renderer {
         gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, lightDiffuse, 0);
         gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, lightSpecular, 0);
         gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPosition, 0);
+        
+        Wall.loadTexture(gl, context);
+        Plane.loadTexture(gl, context, R.drawable.fire_wall);
     }
     
     public void setMap(String filename) {
@@ -90,8 +89,6 @@ public class MapRenderer implements GLSurfaceView.Renderer {
         
         gl.glEnable(GL10.GL_BLEND);
         gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE_MINUS_SRC_ALPHA); 
-        
-        Wall.loadTexture(gl, context);
     }
 
     @Override
@@ -99,16 +96,13 @@ public class MapRenderer implements GLSurfaceView.Renderer {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();
         
-        GLU.gluLookAt(gl, (float) (250 * Math.cos(rotateAngle)), (float) (250 * Math.signum(rotateAngle)), 
+        GLU.gluLookAt(gl, (float) (300 * Math.cos(rotateAngle)), (float) (300 * Math.signum(rotateAngle)), 
                 100, 0, 0, 0, 0, 0, 1);
-        rotateAngle += 0.01f;
-        
-        plane.draw(gl);
+        rotateAngle += 0.003f;
         
         for (int i = 0; i < units.size(); i++) {
             units.get(i).draw(gl);
         }
-        
     }
     
 }

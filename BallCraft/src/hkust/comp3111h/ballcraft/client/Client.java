@@ -60,7 +60,6 @@ public class Client extends IntentService {
         ClientGameState.getClientGameState().setMapTerrain(terrain);
         ClientGameState.getClientGameState().setMapMode(mode);
         gameInited = true;
-        Log.w("game", "inited");
     }
 
 	private static void handleMessage(String string)

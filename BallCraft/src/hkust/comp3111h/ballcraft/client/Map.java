@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.client;
 
+import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.server.Wall;
 
@@ -7,8 +8,6 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import org.jbox2d.common.Vec2;
-
-import android.util.Log;
 
 //Map is composed of widthCount*hegihtCount small tiles.
 //notice :: width>height
@@ -75,6 +74,7 @@ public class Map {
 	public void addWall(int[] data) {
 		walls.add(new Data(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
 	}
+	
 	public void addTrap(int[] data){
 		traps.add(new Data(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
 	}
@@ -98,11 +98,15 @@ public class Map {
 	public Vector<Unit> getUnit() {
 		if(units.isEmpty()){
 	        Iterator<Data> iterator = walls.iterator();
-	        Data walldata;
-	        while(iterator.hasNext())
-	        {
-	        	walldata = iterator.next();
+	        while (iterator.hasNext()) {
+	        	Data walldata = iterator.next();
 	        	units.add(new Wall(walldata.start,walldata.end));
+	        }
+	        
+	        iterator = planes.iterator();
+	        while (iterator.hasNext()) {
+	            Data planeData = iterator.next();
+	            units.add(new Plane(planeData.start, planeData.end));
 	        }
 		}
 		return units;
