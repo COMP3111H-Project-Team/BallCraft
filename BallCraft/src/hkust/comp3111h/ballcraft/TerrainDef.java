@@ -96,7 +96,7 @@ public class TerrainDef {
         }
     }
     
-    public static int getTerrainFloorTextureBallId(int id) {
+    public static int getTerrainFloorTextureById(int id) {
         if (id < terrains.length) {
             try {
                 return terrains[id].getField("floorTexture").getInt(null);

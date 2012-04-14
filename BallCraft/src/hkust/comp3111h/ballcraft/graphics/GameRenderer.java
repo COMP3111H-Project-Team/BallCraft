@@ -1,10 +1,12 @@
 package hkust.comp3111h.ballcraft.graphics;
 
 import hkust.comp3111h.ballcraft.MapModeDef;
+import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.GameActivity;
 import hkust.comp3111h.ballcraft.client.Player;
 import hkust.comp3111h.ballcraft.server.Ball;
+import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Wall;
 
 import java.util.ArrayList;
@@ -20,13 +22,10 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
     private long time = 0;
 
-    private Plane plane;
-    
     private Context context;
     
     public GameRenderer(Context context) {
         this.context = context;
-        plane = new Plane();
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -80,7 +79,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
     }
     
     private void loadTextures(GL10 gl) {
-        Plane.loadTexture(gl, context);
+        Plane.loadTexture(gl, context, R.drawable.fire_floor);
         Particle.loadTexture(gl, context);
         Mine.loadTexture(gl, context);
         Wall.loadTexture(gl, context);
@@ -108,8 +107,6 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	            // GLU.gluLookAt(gl, xPos, yPos + 80, self.z + 200, xPos, yPos, 5, 0, 0, 1);
             }
             */
-
-            plane.draw(gl);
 
             self.draw(gl);
             BallShade.draw(gl, self.getPosition().x + 10, self.getPosition().y + 3);
