@@ -110,7 +110,7 @@ public class Plane implements Drawable {
 
     public static void loadTexture(GL10 gl, Context context) {
 		Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), 
-		        TerrainDef.getTerrainFloorTextureBallId(
+		        TerrainDef.getTerrainFloorTextureById(
 		                ClientGameState.getClientGameState().getMapTerrain()));
 		gl.glGenTextures(1, textures, 0);
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
