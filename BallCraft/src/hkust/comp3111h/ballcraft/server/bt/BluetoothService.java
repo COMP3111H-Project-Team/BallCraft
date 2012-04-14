@@ -110,6 +110,7 @@ public class BluetoothService {
         msg.setData(bundle);
         handler.sendMessage(msg);
 
+        Log.e(TAG,"congratulation!");
         setState(STATE_CONNECTED);
     }
 
@@ -177,7 +178,7 @@ public class BluetoothService {
                         switch (state) {
                         case STATE_LISTEN:
                         case STATE_CONNECTING:
-                            // Situation normal. Start the connected thread.
+                            Log.e(TAG," Situation normal. Start the connected thread.");
                             connected(socket, socket.getRemoteDevice());
                             break;
                         case STATE_NONE:
@@ -249,6 +250,8 @@ public class BluetoothService {
                 } catch (IOException e2) {
                     Log.e(TAG, "unable to close() socket during connection failure", e2);
                 }
+                // Start the service over to restart listening mode
+                BluetoothService.this.start();
                 return;
             }
 
