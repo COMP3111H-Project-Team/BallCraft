@@ -25,14 +25,11 @@ public class MultiPlayerGameInitializer extends Activity {
 
         this.setContentView(R.layout.game_initializer_layout);
 
-    }
-    
-	@Override
-	public void onResume()
-	{
-		super.onResume();
 		initGame();
-	}
+        Intent Bluetooth = new Intent(this, BluetoothActivity.class);
+        this.startActivity(Bluetooth);
+
+    }
 
     private void initGame() {
         Intent intent = this.getIntent();
@@ -52,9 +49,6 @@ public class MultiPlayerGameInitializer extends Activity {
 
         Intent gameIntent = new Intent(this, GameActivity.class);
         this.startActivity(gameIntent);
-        
-        Intent Bluetooth = new Intent(this, BluetoothActivity.class);
-        this.startActivity(Bluetooth);
 
         this.finish();
     }

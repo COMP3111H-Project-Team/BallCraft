@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class BluetoothActivity extends Activity {
 	
-	final String kServerName = "sanya-htc";
+	//final String kServerName = "sanya-htc";
 	//Debug
 	public final String TAG = "bluetooth";
 	public final boolean D = true;
@@ -29,12 +29,12 @@ public class BluetoothActivity extends Activity {
 	// Intent request codes
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;    
+    private static final int REQUEST_DISCOVERABLE = 3;    
 	  
     // Key names received from the BluetoothChatService Handler
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST = "toast";
 
-    private int kRequestEnableBluetooth;
     private int kRequestEnableBluetoothDiscoverability;
     private BluetoothAdapter bluetoothAdapter;
     private String recievedMessage;
@@ -45,35 +45,49 @@ public class BluetoothActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setContentView(R.layout.main);
-
-        initializeBluetooth(0, 1);
-        service = new BluetoothService(this, mHandler);
-        scanDevice();
-    }
-
-    public void initializeBluetooth(int kRequestEnableBluetooth,
-            int kRequestEnableBluetoothDiscoverability) {
-        this.kRequestEnableBluetooth = kRequestEnableBluetooth;
-        this.kRequestEnableBluetoothDiscoverability = kRequestEnableBluetoothDiscoverability;
+        // Get local Bluetooth adapter
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        enableBluetooth();
+
+        // If the adapter is null, then Bluetooth is not supported
+        if (bluetoothAdapter == null) {
+            Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+        initialize();
     }
 
+    
+    public void initialize(){
+    	
+    	service = new BluetoothService(this, mHandler);
+    	Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+    	discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+    	startActivityForResult(discoverableIntent, REQUEST_DISCOVERABLE);
+    	
+    	Log.i(TAG,"initialize");
+       
+    	scanDevice();
+    }
+    
     public void scanDevice(){
     	 Intent serverIntent = new Intent(this, DeviceListActivity.class);
          startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
     }
     
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(D) Log.d(TAG, "onActivityResult " + resultCode);
+        Log.e(TAG,requestCode+"");
         switch (requestCode) {
         case REQUEST_CONNECT_DEVICE:
             // When DeviceListActivity returns with a device to connect
+        	Log.e(TAG, "connect:" + resultCode);
             if (resultCode == Activity.RESULT_OK) {
                 // Get the device MAC address
                 String address = data.getExtras()
                                      .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+                Log.e(TAG,address);
                 // Get the BLuetoothDevice object
                 BluetoothDevice device = bluetoothAdapter.getRemoteDevice(address);
                 // Attempt to connect to the device
@@ -84,27 +98,23 @@ public class BluetoothActivity extends Activity {
             // When the request to enable Bluetooth returns
             if (resultCode == Activity.RESULT_OK) {
                 // Bluetooth is now enabled, so set up a chat session
-                enableBluetooth();
+            	initialize();
+                
             } else {
                 // User did not enable Bluetooth or an error occured
                 Log.d(TAG, "BT not enabled");
                 //Toast.makeText(this, R.string.bt_not_enabled_leaving, Toast.LENGTH_SHORT).show();
                 finish();
             }
+            break;
+        case REQUEST_DISCOVERABLE:
+        	break;
         }
         
     }
     
    
-    void enableBluetooth() {
-        if (!bluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(
-                    BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, kRequestEnableBluetooth);
-        }
-    }
-
-    void setDiscoverableFor(int numSeconds) {
+    public void setDiscoverableFor(int numSeconds) {
         Intent discoverableIntent = new Intent(
                 BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
         discoverableIntent.putExtra(
@@ -117,7 +127,7 @@ public class BluetoothActivity extends Activity {
      * Sends a message.
      * @param message  A string of text to send.
      */
-    private void sendMessage(String message) {
+    public void sendMessage(String message) {
         // Check that we're actually connected before trying anything
         if (service.getState() != BluetoothService.STATE_CONNECTED) {
             Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT).show();
@@ -132,10 +142,32 @@ public class BluetoothActivity extends Activity {
         }
     }
     
-    private String getMessage() {
+    
+    public String getMessage() {
     	return recievedMessage;
     }
     
+    @Override
+    public void onPause(){
+    	super.onPause();
+    }
+
+    @Override
+    public synchronized void onResume() {
+        super.onResume();
+        if(D) Log.e(TAG, "+ ON RESUME +");
+
+        // Performing this check in onResume() covers the case in which BT was
+        // not enabled during onStart(), so we were paused to enable it...
+        // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
+        if (service != null) {
+            // Only if the state is STATE_NONE, do we know that we haven't started already
+            if (service.getState() == BluetoothService.STATE_NONE) {
+              // Start the Bluetooth chat services
+              service.start();
+            }
+        }
+    }
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
