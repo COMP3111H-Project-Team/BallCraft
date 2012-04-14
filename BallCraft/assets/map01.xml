@@ -3,6 +3,8 @@
 	<name>Map 01</name>
 	<height>400</height>
 	<width>400</width>
+	<terrain>0</terrain>
+	<mode>0</mode>
 	<initPosition>100,100</initPosition>
 	<wall>-200,-200,200,-200</wall>
 	<wall>-200,-200,-200,200</wall>
