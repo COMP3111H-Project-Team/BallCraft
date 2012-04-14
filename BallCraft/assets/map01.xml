@@ -3,11 +3,26 @@
 	<name>Map 01</name>
 	<height>400</height>
 	<width>400</width>
+	<terrain>0</terrain>
+	<mode>0</mode>
 	<initPosition>100,100</initPosition>
 	<wall>-200,-200,200,-200</wall>
 	<wall>-200,-200,-200,200</wall>
 	<wall>200,-200,200,200</wall>
 	<wall>-200,200,200,200</wall>
 	<wall>-200,200,200,-200</wall>
-	<wall>100,100,-100,-100</wall>
+	<trap>-100,-100,-80,-80</trap>
+	<trap>-170,-170,-160,-160</trap>
+	<trap>-50,30,-40,40</trap>
+	<plane>-80,-200,200,-80</plane>
+	<plane>-200,-100,-100,200</plane>
+	<plane>-200,-200,-160,-170</plane>
+	<plane>-160,-200,-80,-160</plane>
+	<plane>-170,-160,-80,-100</plane>
+	<plane>-200,-170,-170,-100</plane>
+	<plane>-100,-80,-40,30</plane>
+	<plane>-40,-80,200,40</plane>
+	<plane>-50,40,200,200</plane>
+	<plane>-100,30,-50,200</plane>
+
 </map>
