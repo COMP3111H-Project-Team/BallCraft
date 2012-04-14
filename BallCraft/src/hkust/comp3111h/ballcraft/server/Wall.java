@@ -217,10 +217,6 @@ public class Wall extends Unit {
 	public String toSerializedString()  {
 		String serialized = "";
 		serialized += "wall:";
-		/*
-		serialized += vertices[0] * rate + "," + vertices[1] * rate + ",";
-		serialized += vertices[2] * rate + "," + vertices[3] * rate;
-		*/
 		serialized += start.x + "," + start.y + ",";
 		serialized += end.x + "," + end.y;
 		return serialized;
