@@ -1,5 +1,7 @@
 package hkust.comp3111h.ballcraft.server.bt;
 
+import hkust.comp3111h.ballcraft.BallCraft;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 public class BluetoothService {
 	//Debug
@@ -112,6 +115,9 @@ public class BluetoothService {
 
         Log.e(TAG,"congratulation!");
         setState(STATE_CONNECTED);
+        
+        BluetoothActivity.startGame();
+        
     }
 
 
@@ -180,6 +186,9 @@ public class BluetoothService {
                         case STATE_CONNECTING:
                             Log.e(TAG," Situation normal. Start the connected thread.");
                             connected(socket, socket.getRemoteDevice());
+                            BallCraft.isServer = false;
+                            BallCraft.enemy = 0;
+                            BallCraft.myself = 1;
                             break;
                         case STATE_NONE:
                         case STATE_CONNECTED:
