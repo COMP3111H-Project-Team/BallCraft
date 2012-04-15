@@ -9,6 +9,8 @@ public class BallCraft {
     public static int myself = 0;
     public static int enemy = 1;
     public static int maxPlayer = 2;
+    
+    public static boolean isServer = true;
 
     public enum Status
 	{
