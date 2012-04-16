@@ -1,5 +1,9 @@
 package hkust.comp3111h.ballcraft.server.bt;
 
+import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.client.Client;
+import hkust.comp3111h.ballcraft.server.Server;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 public class BluetoothService {
 	//Debug
@@ -43,9 +48,13 @@ public class BluetoothService {
     private ConnectThread connectThread;
     private ConnectedThread connectedThread;
     
+    private boolean init;
+    
     public BluetoothService(Context context, Handler handler){
     	this.context = context;
     	this.handler = handler;
+    	
+    	init = true;
     }
       
     
@@ -112,6 +121,9 @@ public class BluetoothService {
 
         Log.e(TAG,"congratulation!");
         setState(STATE_CONNECTED);
+        
+        BluetoothActivity.startGame();
+        
     }
 
 
@@ -180,6 +192,9 @@ public class BluetoothService {
                         case STATE_CONNECTING:
                             Log.e(TAG," Situation normal. Start the connected thread.");
                             connected(socket, socket.getRemoteDevice());
+                            BallCraft.isServer = false;
+                            BallCraft.enemy = 0;
+                            BallCraft.myself = 1;
                             break;
                         case STATE_NONE:
                         case STATE_CONNECTED:
@@ -310,13 +325,30 @@ public class BluetoothService {
             // Keep listening to the InputStream while connected
             while (true) {
                 try {
-                    // Read from the InputStream
-                    bytes = mmInStream.read(buffer);
+                	if(mmInStream.available() > 0){
+                		Log.e(TAG,"shoudaole");
+                		bytes = mmInStream.read(buffer);
+                		// Send the obtained bytes to the UI Activity
+//                		                           handler.obtainMessage(BluetoothActivity.MESSAGE_READ, bytes, -1, buffer)
+//                		                                   .sendToTarget();
 
-                    // Send the obtained bytes to the UI Activity
-                    handler.obtainMessage(BluetoothActivity.MESSAGE_READ, bytes, -1, buffer)
-                            .sendToTarget();
-                } catch (IOException e) {
+                		Log.e("msg received", "MESSAGE_READ");
+                		// construct a string from the valid bytes in the buffer
+                		if (BallCraft.isServer) Server.setState(new String(buffer));
+                		else 
+                		{
+                			String message = new String(buffer);
+                			Log.e("msg received", message);
+                			if (init) 
+                			{
+                    			Client.handleInitMsg(message);
+                    			init = false;
+                			}
+                			else Client.processSerializedUpdate(message);
+                		}
+                    }    
+   					Thread.sleep(100);
+                } catch (Exception e) {
                     Log.e(TAG, "disconnected", e);
                     connectionLost();
                     break;

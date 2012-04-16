@@ -1,6 +1,7 @@
 package hkust.comp3111h.ballcraft.ui;
 
 import hkust.comp3111h.ballcraft.R;
+import hkust.comp3111h.ballcraft.server.bt.BluetoothActivity;
 
 import java.util.ArrayList;
 
@@ -23,7 +24,7 @@ import android.widget.ImageView;
 
 public class MainMenu extends Activity implements SensorEventListener {
 
-    private Activity self;
+    public static Activity self;
 
     private SensorManager sensorManager;
 
@@ -114,8 +115,8 @@ public class MainMenu extends Activity implements SensorEventListener {
         multiPlayerButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                self.startActivity(new Intent(MainMenu.this,
-                        BallSelectMenu.class));
+                Intent Bluetooth = new Intent(MainMenu.this, BluetoothActivity.class);
+                MainMenu.this.startActivity(Bluetooth);
                 self.overridePendingTransition(android.R.anim.fade_in,
                         android.R.anim.fade_out);
             }

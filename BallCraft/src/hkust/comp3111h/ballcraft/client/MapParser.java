@@ -32,13 +32,13 @@ public class MapParser{
 	    //find the xml file first,just two layers now
 	    factory = DocumentBuilderFactory.newInstance();
 	    try {
-	    	Log.d("map", "find document");
+	    	//Log.d("map", "find document");
 	    	
 	    	//load file
 	    	builder = factory.newDocumentBuilder();
 	    	inputStream = context.getResources().getAssets().open(fileName);
 	    	document = builder.parse(inputStream);
-	    	Log.d("map", "load document");
+	    	//Log.d("map", "load document");
 	    	
 	    	//get root
 	    	Element root = document.getDocumentElement();
@@ -77,7 +77,7 @@ public class MapParser{
 			for(int i=0;i<nodes.getLength();i++){
 				Element wallElement=(Element)(nodes.item(i));
 				data = wallElement.getFirstChild().getNodeValue();
-				Log.i("map", data);
+				//Log.i("map", data);
 				map.addWall(parseString(data));                     
 			}
 			
@@ -86,7 +86,7 @@ public class MapParser{
 			for(int i=0;i<nodes.getLength();i++){
 				Element TrapElement=(Element)(nodes.item(i));
 				data = TrapElement.getFirstChild().getNodeValue();
-				Log.i("map", data);
+				//Log.i("map", data);
 				map.addTrap(parseString(data));                     
 			}
 			
@@ -95,7 +95,7 @@ public class MapParser{
 			for(int i=0;i<nodes.getLength();i++){
 				Element wallElement=(Element)(nodes.item(i));
 				data = wallElement.getFirstChild().getNodeValue();
-				Log.i("map", data);
+				//Log.i("map", data);
 				map.addPlane(parseString(data));                     
 			}
 			

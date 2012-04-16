@@ -15,6 +15,7 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -25,6 +26,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class GameActivity extends Activity implements SensorEventListener {
+	//Debug
+	public final String TAG = "gameActivity";
+	public final boolean D = true;
 
     private GameActivity self;
 
@@ -53,6 +57,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
         this.initLayout();
         this.initSensor();
+        
     }
 
     @Override
@@ -70,9 +75,12 @@ public class GameActivity extends Activity implements SensorEventListener {
         mGLView = (GLSurfaceView) this.findViewById(R.id.game_activity_gl_surface_view);
         // here we need to wait for the init data to be sent from the server to create the render
         // and start drawing
+        int time = 0;
         while (!Client.isGameInited()) {
             try {
-                Thread.sleep(20);
+            	Log.i("starting game", "waiting for server, " + time + " s");
+            	time++;
+                Thread.sleep(1000);                
             } catch (Exception e) {
             }
         }

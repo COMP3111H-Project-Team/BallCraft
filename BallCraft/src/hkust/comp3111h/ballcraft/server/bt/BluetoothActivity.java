@@ -1,6 +1,12 @@
 package hkust.comp3111h.ballcraft.server.bt;
 
+import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.R;
+import hkust.comp3111h.ballcraft.client.Client;
+import hkust.comp3111h.ballcraft.server.Server;
+import hkust.comp3111h.ballcraft.server.ServerAdapter;
+import hkust.comp3111h.ballcraft.ui.BallSelectMenu;
+import hkust.comp3111h.ballcraft.ui.MainMenu;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -15,16 +21,18 @@ public class BluetoothActivity extends Activity {
 	
 	//final String kServerName = "sanya-htc";
 	//Debug
-	public final String TAG = "bluetooth";
+	public final static String TAG = "bluetooth";
 	public final boolean D = true;
 
+	private static BluetoothActivity context;
+	
 	// Message types sent from the BluetoothService Handler
 	public static final int MESSAGE_STATE_CHANGE = 1;
 	public static final int MESSAGE_READ = 2;
 	public static final int MESSAGE_WRITE = 3;
 	public static final int MESSAGE_DEVICE_NAME = 4;
 	public static final int MESSAGE_TOAST = 5;
-	private BluetoothService service;
+	private static BluetoothService service;
 
 	// Intent request codes
     private static final int REQUEST_CONNECT_DEVICE = 1;
@@ -44,6 +52,7 @@ public class BluetoothActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         // Get local Bluetooth adapter
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -90,7 +99,7 @@ public class BluetoothActivity extends Activity {
         switch (requestCode) {
         case REQUEST_CONNECT_DEVICE:
             // When DeviceListActivity returns with a device to connect
-        	Log.e(TAG, "connect:" + resultCode);
+        	Log.e(TAG, "connect:" + resultCode);	
             if (resultCode == Activity.RESULT_OK) {
                 // Get the device MAC address
                 String address = data.getExtras()
@@ -100,6 +109,7 @@ public class BluetoothActivity extends Activity {
                 BluetoothDevice device = bluetoothAdapter.getRemoteDevice(address);
                 // Attempt to connect to the device
                 service.connect(device);
+
             }
             break;
         case REQUEST_ENABLE_BT:
@@ -129,6 +139,12 @@ public class BluetoothActivity extends Activity {
         discoverableIntent.putExtra(
                 BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, numSeconds);
         startActivityForResult(discoverableIntent, REQUEST_DISCOVERABLE);
+    }
+    
+    public static void startGame()
+    {
+    	ServerAdapter.setService(service);
+        context.startActivity(new Intent(MainMenu.self, BallSelectMenu.class));
     }
    
     /**
@@ -164,11 +180,12 @@ public class BluetoothActivity extends Activity {
     public synchronized void onResume() {
         super.onResume();
         if(D) Log.e(TAG, "+ ON RESUME +");
-
     }
+    
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+        	Log.e("msg received", "Some Message");
             switch (msg.what) {
             case MESSAGE_STATE_CHANGE:
                 if(D) Log.i(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
@@ -193,8 +210,22 @@ public class BluetoothActivity extends Activity {
                 break;
             case MESSAGE_READ:
                 byte[] readBuf = (byte[]) msg.obj;
+            	Log.e("msg received", "MESSAGE_READ");
                 // construct a string from the valid bytes in the buffer
-                recievedMessage = new String(readBuf, 0, msg.arg1);
+                if (BallCraft.isServer) Server.setState(new String(readBuf, 0, msg.arg1));
+                else 
+                {
+                	String message = new String(readBuf, 0, msg.arg1);
+                	Log.e("msg received", message);
+                	if (message.charAt(0) == 'S')
+                	{
+                		message = message.substring(1);
+                		Client.processSerializedUpdate(message);
+                		break;
+                	}
+
+                	Client.handleInitMsg(message);
+                }
                 break;
             case MESSAGE_DEVICE_NAME:
                 // save the connected device's name

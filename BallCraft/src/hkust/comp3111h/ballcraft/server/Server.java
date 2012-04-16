@@ -59,8 +59,13 @@ public class Server extends IntentService {
             
             String temp = new String(msg);
 			msg = "";
-			ServerAdapter.processServerMsg(temp + ";" 
-			        + generateGameUpdater().toSerializedString());
+
+	        
+	        for (int i = 0; i < BallCraft.maxPlayer; i++)
+	        {		        
+				ServerAdapter.processServerMsg(temp + ";" 
+				        + generateGameUpdater().toSerializedString(), i);	
+	        }
 
             try {
                 /*

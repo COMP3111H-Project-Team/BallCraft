@@ -1,21 +1,25 @@
 package hkust.comp3111h.ballcraft.client;
 
+import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.server.Server;
-import hkust.comp3111h.ballcraft.server.bt.BluetoothActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
 public class MultiPlayerGameInitializer extends Activity {
-
+	//Dubug
+	public final String TAG = "MultiInit";
+	public final boolean D = true;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        
         this.getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -24,11 +28,7 @@ public class MultiPlayerGameInitializer extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         this.setContentView(R.layout.game_initializer_layout);
-
-		initGame();
-        Intent Bluetooth = new Intent(this, BluetoothActivity.class);
-        this.startActivity(Bluetooth);
-
+        initGame();
     }
 
     private void initGame() {
@@ -36,17 +36,21 @@ public class MultiPlayerGameInitializer extends Activity {
         int ballSelected = intent.getIntExtra("ballSelected",
                 BallDef.WoodBall.id);
         String mapSelected = intent.getStringExtra("mapSelected");
-
-        Intent serverIntent = new Intent(this, Server.class);
-        serverIntent.putExtra("ball", ballSelected);
-        serverIntent.putExtra("map", mapSelected);
-        this.startService(serverIntent);
+        
+        if (BallCraft.isServer)
+        {
+            Intent serverIntent = new Intent(this, Server.class);
+            serverIntent.putExtra("ball", ballSelected);
+            serverIntent.putExtra("map", mapSelected);
+            this.startService(serverIntent);        	
+        }
 
         this.startService(new Intent(this, Client.class)); // start running client
 
         MapParser.setContext(this);
         Client.setContext(this);
 
+        if(D)Log.e(TAG,"start gameactivity");
         Intent gameIntent = new Intent(this, GameActivity.class);
         this.startActivity(gameIntent);
 
