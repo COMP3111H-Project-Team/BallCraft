@@ -185,6 +185,7 @@ public class BluetoothActivity extends Activity {
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+        	Log.e("msg received", "Some Message");
             switch (msg.what) {
             case MESSAGE_STATE_CHANGE:
                 if(D) Log.i(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
@@ -209,11 +210,13 @@ public class BluetoothActivity extends Activity {
                 break;
             case MESSAGE_READ:
                 byte[] readBuf = (byte[]) msg.obj;
+            	Log.e("msg received", "MESSAGE_READ");
                 // construct a string from the valid bytes in the buffer
                 if (BallCraft.isServer) Server.setState(new String(readBuf, 0, msg.arg1));
                 else 
                 {
                 	String message = new String(readBuf, 0, msg.arg1);
+                	Log.e("msg received", message);
                 	if (message.charAt(0) == 'S')
                 	{
                 		message = message.substring(1);
