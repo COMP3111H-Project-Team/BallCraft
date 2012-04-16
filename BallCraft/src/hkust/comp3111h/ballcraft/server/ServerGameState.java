@@ -110,7 +110,7 @@ public class ServerGameState {
         
         for (int i = 0; i < BallCraft.maxPlayer; i++)
         {
-        	ServerAdapter.sendInitMsgToClient(initMsg, i);        	
+        	ServerAdapter.sendInitMsgToClient(new String(initMsg), i);        	
         }
     }
 

@@ -326,19 +326,19 @@ public class BluetoothService {
             while (true) {
                 try {
                 	if(mmInStream.available() > 0){
-                		Log.e(TAG,"shoudaole");
+//                		Log.e(TAG,"shoudaole");
                 		bytes = mmInStream.read(buffer);
                 		// Send the obtained bytes to the UI Activity
 //                		                           handler.obtainMessage(BluetoothActivity.MESSAGE_READ, bytes, -1, buffer)
 //                		                                   .sendToTarget();
 
-                		Log.e("msg received", "MESSAGE_READ");
+//                		Log.e("msg received", "MESSAGE_READ");
                 		// construct a string from the valid bytes in the buffer
                 		if (BallCraft.isServer) Server.setState(new String(buffer));
                 		else 
                 		{
                 			String message = new String(buffer);
-                			Log.e("msg received", message);
+//                			Log.e("msg received", message);
                 			if (init) 
                 			{
                     			Client.handleInitMsg(message);
