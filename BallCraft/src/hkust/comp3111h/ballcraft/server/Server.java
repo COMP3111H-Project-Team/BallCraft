@@ -23,7 +23,7 @@ public class Server extends IntentService {
     static private boolean running = false;
 
     static private String msg;
-
+    
     public Server() {
         super("Server");
     }

@@ -13,6 +13,7 @@ import org.jbox2d.common.Vec2;
 //notice :: width>height
 //You can get a immutable tile by calling function map.getTile(layer id,width,height);
 public class Map {
+    
 	private String mapName;
 	private int widthCount;
 	private int heightCount;
