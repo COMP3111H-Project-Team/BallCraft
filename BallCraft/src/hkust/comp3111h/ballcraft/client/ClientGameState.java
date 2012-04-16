@@ -1,6 +1,7 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.graphics.Drawable;
+import hkust.comp3111h.ballcraft.graphics.Mine;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Wall;
@@ -65,6 +66,18 @@ public class ClientGameState {
         return this.drawableMisc;
     }
 
+    public void deleteMine(int id) {
+    	for (Drawable d : drawableMisc) {
+    		if (d instanceof Mine) {
+    			if (((Mine) d).getID() == id)
+    			{
+    				drawableMisc.remove(d);
+    				return;
+    			}
+    		}
+    	}
+    }
+    
     public void addSkill(Skill skill) {
         skills.add(skill);
     }

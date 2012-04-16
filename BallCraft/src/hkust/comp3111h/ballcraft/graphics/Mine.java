@@ -23,6 +23,10 @@ public class Mine implements Drawable {
 
     private static float size = 10f;
     
+    private final int id;
+    
+    public int getID() {return id;}
+    
     private static final float[] vertices = { 
             -1, -1, 0.0f,
             -1, 1, 0.0f,
@@ -56,9 +60,10 @@ public class Mine implements Drawable {
         normalBuffer = makeNormalBuffer();
     }
     
-    public Mine(Vec2 pos) {
+    public Mine(Vec2 pos, int id) {
         this.x = pos.x;
         this.y = pos.y;
+        this.id = id;
     }
 
     public void draw(GL10 gl) {

@@ -117,6 +117,18 @@ public class GameRenderer implements GLSurfaceView.Renderer {
             w.draw(gl);
         }
         
+<<<<<<< HEAD
+        for (Drawable d : ClientGameState.getClientGameState().drawableMisc) {
+            if (d instanceof ParticleSystem) {
+                ((ParticleSystem) d).move();
+            }
+            d.draw(gl);
+=======
+        for (Ball b : balls) {
+            b.draw(gl);
+            BallShade.draw(gl, b.getPosition().x + 10, b.getPosition().y + 3);
+        }
+        
         synchronized(ClientGameState.getClientGameState().drawableMisc)
         {
 	        for (Drawable d : ClientGameState.getClientGameState().drawableMisc) {
@@ -125,6 +137,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	            }
 	            d.draw(gl);
 	        }
+>>>>>>> f8562d57dddfb2631d0fad955cdb507c6efad646
         }
             
         long elapsed = System.currentTimeMillis() - time;
