@@ -1,8 +1,5 @@
 package hkust.comp3111h.ballcraft.server;
 
-import hkust.comp3111h.ballcraft.TerrainDef;
-import hkust.comp3111h.ballcraft.client.ClientGameState;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -222,10 +219,8 @@ public class Wall extends Unit {
 		return serialized;
 	}
 
-	public static void loadTexture(GL10 gl, Context context) {
-        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), 
-                TerrainDef.getTerrainWallTextureBallId(
-                        ClientGameState.getClientGameState().getMapTerrain()));
+	public static void loadTexture(GL10 gl, Context context, int textureId) {
+        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), textureId);
 		gl.glGenTextures(1, textures, 0);
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
