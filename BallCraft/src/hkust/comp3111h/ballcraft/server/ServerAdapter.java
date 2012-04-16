@@ -26,15 +26,14 @@ public class ServerAdapter {
             service.write(send);
         }
     }
-
-    public static void processServerMsg(String msg) {
-        if(BallCraft.isServer) 
+ 
+    public static void processServerMsg(String msg, int id) {
+        if(id == BallCraft.myself) 
         {
         	Client.processSerializedUpdate(msg);
         	return;
         }
         
-        msg = "S" + msg;
         // Check that there's actually something to send
         if (msg.length() > 0) {
             // Get the message bytes and tell the BluetoothChatService to write
@@ -43,13 +42,14 @@ public class ServerAdapter {
         }
     }
     
-    public static void sendInitMsgToClient(String msg) {
-        if(BallCraft.isServer) 
+    public static void sendInitMsgToClient(String msg, int id) {
+            	
+    	if(id == BallCraft.myself) 
         {
         	Client.handleInitMsg(msg);
         	return;
         }
-
+    	
         // Check that there's actually something to send
         if (msg.length() > 0) {
             // Get the message bytes and tell the BluetoothChatService to write
