@@ -1,10 +1,11 @@
 package hkust.comp3111h.ballcraft.ui;
 
-import hkust.comp3111h.ballcraft.R;
-import hkust.comp3111h.ballcraft.server.bt.BluetoothActivity;
-
 import java.util.ArrayList;
 
+import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.R;
+import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
+import hkust.comp3111h.ballcraft.server.bt.BluetoothActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -13,6 +14,9 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -97,12 +101,12 @@ public class MainMenu extends Activity implements SensorEventListener {
         singlePlayerButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                Object crasher = new ArrayList<Object>().get(1);
-                /*
-                self.startActivity(new Intent(MainMenu.this, GameActivity.class));
-                self.overridePendingTransition(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-                */
+                BallCraft.maxPlayer = 1;
+                Intent intent = new Intent(self,
+                        MultiPlayerGameInitializer.class);
+                intent.putExtra("ballSelected", BallCraft.Ball.FIRE_BALL);
+                intent.putExtra("mapSelected", "map01.xml");
+                self.startActivity(intent);
             }
 
         });
@@ -134,4 +138,23 @@ public class MainMenu extends Activity implements SensorEventListener {
         turnX = event.values[SensorManager.DATA_Y] / 3f;
         turnY = event.values[SensorManager.DATA_X] / 3f;
     }
+    
+ 	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.options_menu, menu);
+		
+		return true;
+	}
+ 	
+ 	// for debugging only!
+ 	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+ 	    if (item.getItemId() == R.id.crash) {
+ 	        ArrayList<Integer> list = new ArrayList<Integer>();
+ 	        list.get(0);
+ 	    }
+        return super.onOptionsItemSelected(item);
+    }
+ 	
 }

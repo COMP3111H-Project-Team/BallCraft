@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.server;
 
+import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallCraft.Status;
 import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.Map;
@@ -79,7 +80,6 @@ public class ServerGameState {
             activeSkills.get(i).afterStep();
         }
     }
-
     
     public void loadMap(String name) {
         units.add(new Ball(10, 50, 0.6f, new Vec2(0, 0)));
@@ -107,7 +107,7 @@ public class ServerGameState {
         
         for (int i = 0; i < BallCraft.maxPlayer; i++)
         {
-        	ServerAdapter.sendInitMsgToClient(initMsg, i);        	
+        	ServerAdapter.sendInitMsgToClient(initMsg, i);
         }
     }
 
