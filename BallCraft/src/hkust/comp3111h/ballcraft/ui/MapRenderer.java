@@ -1,7 +1,7 @@
 package hkust.comp3111h.ballcraft.ui;
 
 import hkust.comp3111h.ballcraft.MapModeDef;
-import hkust.comp3111h.ballcraft.R;
+import hkust.comp3111h.ballcraft.TerrainDef;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.Map;
 import hkust.comp3111h.ballcraft.client.MapParser;
@@ -27,6 +27,8 @@ public class MapRenderer implements GLSurfaceView.Renderer {
     private Vector<Unit> units;
     
     private float rotateAngle = 0;
+    
+    private boolean shouldLoadTexture = true;
 
     public MapRenderer(Context context) {
         this.context = context;
@@ -67,15 +69,12 @@ public class MapRenderer implements GLSurfaceView.Renderer {
         gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, lightSpecular, 0);
         gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPosition, 0);
         
-        /*
-        Wall.loadTexture(gl, context);
-        Plane.loadTexture(gl, context, R.drawable.fire_wall);
-        */
     }
     
     public void setMap(String filename) {
         currMap = MapParser.getMapFromXML(filename);
         units = currMap.getUnit();
+        this.shouldLoadTexture = true;
     }
 
     @Override
@@ -95,6 +94,14 @@ public class MapRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
+        if (this.shouldLoadTexture) {
+	        Wall.loadTexture(gl, context, 
+	                TerrainDef.getTerrainWallTextureBallId(currMap.getTerrain()));
+	        Plane.loadTexture(gl, context, 
+	                TerrainDef.getTerrainFloorTextureById(currMap.getTerrain()));
+	        this.shouldLoadTexture = false;
+        }
+        
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();
         

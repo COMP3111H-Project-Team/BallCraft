@@ -1,6 +1,8 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.graphics.Mine;
+import hkust.comp3111h.ballcraft.graphics.ParticleSystem1;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Server;
@@ -8,7 +10,6 @@ import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.server.Wall;
 import hkust.comp3111h.ballcraft.settings.GameSettings;
-import hkust.comp3111h.ballcraft.graphics.*;
 
 import org.jbox2d.common.Vec2;
 
@@ -89,7 +90,6 @@ public class Client extends IntentService {
 		{
 			if(parts[1].equals(myself))
 			{
-				//TODO:player dead
 			    playerDied = true;
 			}
 		}
