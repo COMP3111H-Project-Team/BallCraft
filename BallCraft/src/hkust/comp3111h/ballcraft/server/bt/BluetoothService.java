@@ -18,7 +18,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
 
 public class BluetoothService {
 	//Debug
@@ -104,10 +103,10 @@ public class BluetoothService {
 
         // Cancel any thread currently running a connection
         if (connectedThread != null) {connectedThread.cancel(); connectedThread = null;}
-/*
+        
         // Cancel the accept thread because we only want to connect to one device
         if (acceptThread != null) {acceptThread.cancel(); acceptThread = null;}
-*/
+
         // Start the thread to manage the connection and perform transmissions
         connectedThread = new ConnectedThread(socket);
         connectedThread.start();
@@ -328,10 +327,6 @@ public class BluetoothService {
                 	if(mmInStream.available() > 0){
                 		Log.e(TAG,"shoudaole");
                 		bytes = mmInStream.read(buffer);
-                		// Send the obtained bytes to the UI Activity
-//                		                           handler.obtainMessage(BluetoothActivity.MESSAGE_READ, bytes, -1, buffer)
-//                		                                   .sendToTarget();
-
                 		Log.e("msg received", "MESSAGE_READ");
                 		// construct a string from the valid bytes in the buffer
                 		if (BallCraft.isServer) Server.setState(new String(buffer));
