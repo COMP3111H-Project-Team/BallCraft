@@ -34,6 +34,8 @@ public class Client extends IntentService {
      */
     private static boolean gameInited = false;
     
+    private static boolean remoteServerInited = false;
+    
     private static boolean vibrOn;
     
     public static boolean playerDied = false;
@@ -77,6 +79,8 @@ public class Client extends IntentService {
 	        }
         }
         gameInited = true;
+        remoteServerInited = true;
+//        Server.inited = true;
     }
 
 	private static void handleMessage(String string)
@@ -132,7 +136,7 @@ public class Client extends IntentService {
 
     public void run() {
         while (running) {
-            if (Server.inited) {
+            if (Server.inited || remoteServerInited) {
                 ServerAdapter.sendToServer(input);
                 input.clearSkills();
             }
