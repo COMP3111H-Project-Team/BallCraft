@@ -185,7 +185,7 @@ public class BluetoothActivity extends Activity {
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-        	Log.e("msg received", "Some Message");
+//        	Log.e("msg received", "Some Message");
             switch (msg.what) {
             case MESSAGE_STATE_CHANGE:
                 if(D) Log.i(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);

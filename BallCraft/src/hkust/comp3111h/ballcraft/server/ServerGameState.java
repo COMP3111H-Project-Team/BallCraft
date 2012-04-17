@@ -13,6 +13,8 @@ import java.util.Vector;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import android.util.Log;
+
 public class ServerGameState {
     
     private static ArrayList<Unit> units;
@@ -107,7 +109,7 @@ public class ServerGameState {
         
         for (int i = 0; i < BallCraft.maxPlayer; i++)
         {
-        	ServerAdapter.sendInitMsgToClient(initMsg, i);        	
+        	ServerAdapter.sendInitMsgToClient(new String(initMsg), i);        	
         }
     }
 
