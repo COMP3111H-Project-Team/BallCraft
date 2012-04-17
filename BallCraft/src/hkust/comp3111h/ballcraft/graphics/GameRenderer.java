@@ -90,6 +90,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         Particle.loadTexture(gl, context);
         Mine.loadTexture(gl, context);
         BallShade.loadTexture(gl, context);
+        Ball.loadTexture(gl, context);
     }
 
     public void onDrawFrame(GL10 gl) {
