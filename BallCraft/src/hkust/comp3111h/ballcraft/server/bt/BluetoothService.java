@@ -334,11 +334,16 @@ public class BluetoothService {
 
 //                		Log.e("msg received", "MESSAGE_READ");
                 		// construct a string from the valid bytes in the buffer
-                		if (BallCraft.isServer) Server.setState(new String(buffer));
+            			String message = new String(buffer, 0, bytes);
+//            			Log.e("msg received", message);
+            			message = message.split("__MSG__")[1];
+//            			Log.e("msg received", message);
+                		if (BallCraft.isServer)
+                		{
+                			Server.setState(message);                			
+                		}
                 		else 
                 		{
-                			String message = new String(buffer);
-//                			Log.e("msg received", message);
                 			if (init) 
                 			{
                     			Client.handleInitMsg(message);
@@ -347,7 +352,7 @@ public class BluetoothService {
                 			else Client.processSerializedUpdate(message);
                 		}
                     }    
-   					Thread.sleep(100);
+//   					Thread.sleep(100);
                 } catch (Exception e) {
                     Log.e(TAG, "disconnected", e);
                     connectionLost();

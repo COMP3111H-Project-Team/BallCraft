@@ -37,6 +37,7 @@ public class ServerAdapter {
         // Check that there's actually something to send
         if (msg.length() > 0) {
             // Get the message bytes and tell the BluetoothChatService to write
+        	msg = "__MSG__" + msg;
             byte[] send = msg.getBytes();
             service.write(send);
         }
@@ -53,6 +54,7 @@ public class ServerAdapter {
         // Check that there's actually something to send
         if (msg.length() > 0) {
             // Get the message bytes and tell the BluetoothChatService to write
+        	msg = "__MSG__" + msg;
             byte[] send = msg.getBytes();
             service.write(send);
         }

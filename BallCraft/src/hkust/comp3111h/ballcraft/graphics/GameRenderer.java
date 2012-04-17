@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.graphics;
 
+import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.MapModeDef;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
@@ -92,7 +93,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         
         ArrayList<Ball> balls = ClientGameState.getClientGameState().balls;
         
-        Ball self = (Ball) balls.get(Player.playerID);
+        Ball self = (Ball) balls.get(BallCraft.myself);
 
         float xPos = self.getPosition().x;
         float yPos = self.getPosition().y;
