@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.server;
 
+import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.BallCraft.Status;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.graphics.GraphicUtils;
@@ -16,23 +17,30 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.opengl.GLUtils;
+
 public class Ball extends Unit {
 
     public float z;
-    float zv;
+    private float zv;
 
-    FloatBuffer strip, fan_top, fan_bottom;
-    float radius = 10;
-    int stacks = 20, slices = 20;
-
-    float theta, pi;
-    float co, si;
-    float r1, r2;
-    float h1, h2;
-    float step = 4.0f;
-    float[][] v;
+    private FloatBuffer strip;
+    private FloatBuffer fan_top, fan_bottom;
+    // private FloatBuffer texture_top, texture_bottom;
     
-    FloatBuffer vfb;
+    private float [] texCoords = {
+            0, 1,
+            1, 1,
+            0, 0,
+            1, 0
+    };
+    
+    private static int [] textureIDs = new int [1];
+    
+    private int stacks = 20, slices = 20;
     
     public Ball(float size, float mass, float friction, Vec2 position) {
         super();
@@ -85,6 +93,8 @@ public class Ball extends Unit {
 
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
+        // gl.glEnabeClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+        // gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, texture_top);
         
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, fan_top);
         gl.glNormalPointer(GL10.GL_FLOAT, 0, fan_top);
@@ -100,21 +110,23 @@ public class Ball extends Unit {
         
         gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
         gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
+        // gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
 
         GraphicUtils.restoreMaterialColor(gl);
 
         gl.glPopMatrix();
     }
 
-    protected FloatBuffer makeEndCap(int stacks, int slices, boolean top) {
+    private FloatBuffer makeEndCap(int stacks, int slices, boolean top) {
         // Calculate the Triangle Fan for the endcaps
         int triangleFanVertexCount = slices + 2;
         float dtheta = (float) (2.0 * Math.PI / slices);
         float drho = (float) (Math.PI / stacks);
-        float[] fanVertices = new float[triangleFanVertexCount * 3];
+        float [] fanVertices = new float[triangleFanVertexCount * 3];
         float theta = 0;
         float sin_drho = (float) Math.sin(drho);
         // float cos_drho = (float)Math.cos(Math.PI / stacks);
+        
         int index = 0;
         fanVertices[index++] = 0.0f;
         fanVertices[index++] = 0.0f;
@@ -131,13 +143,24 @@ public class Ball extends Unit {
 
         return makeFloatBuffer(fanVertices);
     }
+    
+    private FloatBuffer makeTextureBuffer() {
+        ByteBuffer tbb = ByteBuffer.allocateDirect(texCoords.length * 4);
+        tbb.order(ByteOrder.nativeOrder());
+        FloatBuffer texBuffer = tbb.asFloatBuffer();
+        texBuffer.put(texCoords);
+        texBuffer.position(0);
+        return texBuffer;
+    }
 
-    protected void unitSphere(int stacks, int slices) {
+    private void unitSphere(int stacks, int slices) {
         float drho = (float) (Math.PI / stacks);
         float dtheta = (float) (2.0 * Math.PI / slices);
 
         fan_top = makeEndCap(stacks, slices, true);
         fan_bottom = makeEndCap(stacks, slices, false);
+        
+        // texture_top = this.makeTextureBuffer();
 
         // Calculate the triangle strip for the sphere body
         int triangleStripVertexCount = (slices + 1) * 2 * stacks;
@@ -217,6 +240,18 @@ public class Ball extends Unit {
         z = Float.valueOf(vals[3]);
         body.getFixtureList().m_shape.m_radius = radius;
         body.setTransform(new Vec2(x, y), 0);
+    }
+    
+    public static void loadTexture(GL10 gl, Context context) {
+        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.fire_wall);
+        
+        gl.glGenTextures(1, textureIDs, 0);
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, textureIDs[0]);
+        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
+        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NEAREST);
+        
+		GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bmp, 0); 
+		bmp.recycle();
     }
 
 }
