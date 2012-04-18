@@ -14,6 +14,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceView;
 
+/*
 public class MapDisplayView extends SurfaceView {
 
     private Map currMap;
@@ -66,3 +67,4 @@ public class MapDisplayView extends SurfaceView {
     }
 
 }
+*/

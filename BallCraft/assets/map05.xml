@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <map>
-	<name>Map 06</name>
+	<name>Lava</name>
 	<height>400</height>
 	<width>400</width>
 	<terrain>5</terrain>
-	<mode>0</mode>
+	<mode>1</mode>
 	<initPosition>100,100</initPosition>
 	<plane>-80,-200,200,-80</plane>
 	<plane>-200,-100,-100,200</plane>
