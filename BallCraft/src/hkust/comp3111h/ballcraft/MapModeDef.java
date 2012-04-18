@@ -6,18 +6,18 @@ public class MapModeDef {
         public static final int id = BallCraft.MapMode.DAY_MODE;
         public static final String name = "Day";
         public static final String description = "Not beneficial to dark ball";
-        public static final float lightAmbient[] = { 0.4f, 0.4f, 0.4f, 1.0f };
-        public static final float lightDiffuse[] = { 0.6f, 0.6f, 0.6f, 1.0f };
-        public static final float lightSpecular[] = { 0.9f, 0.9f, 0.9f, 1.0f };
+        public static final float lightAmbient[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+        public static final float lightDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+        public static final float lightSpecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     }
     
     public static final class NightMode {
         public static final int id = BallCraft.MapMode.NIGHT_MODE;
         public static final String name = "Night";
         public static final String description = "Beneficial to dark ball";
-        public static final float lightAmbient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-        public static final float lightDiffuse[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-        public static final float lightSpecular[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+        public static final float lightAmbient[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+        public static final float lightDiffuse[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+        public static final float lightSpecular[] = { 0.5f, 0.5f, 0.5f, 1.0f };
     }
     
     @SuppressWarnings("rawtypes")

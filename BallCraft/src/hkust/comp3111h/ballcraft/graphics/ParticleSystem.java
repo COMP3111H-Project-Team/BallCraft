@@ -1,5 +1,7 @@
 package hkust.comp3111h.ballcraft.graphics;
 
+import hkust.comp3111h.ballcraft.graphics.particles.Particle;
+
 import java.util.ArrayList;
 import java.util.Collections;
 

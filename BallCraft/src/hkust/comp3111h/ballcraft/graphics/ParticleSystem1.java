@@ -1,8 +1,11 @@
 package hkust.comp3111h.ballcraft.graphics;
 
+import hkust.comp3111h.ballcraft.graphics.particles.Particle;
+
 import java.util.ArrayList;
 import java.util.Random;
 
+/*
 public class ParticleSystem1 extends ParticleSystem {
 
     public ParticleSystem1(float x, float y, float z) {
@@ -23,3 +26,4 @@ public class ParticleSystem1 extends ParticleSystem {
     }
     
 }
+*/
