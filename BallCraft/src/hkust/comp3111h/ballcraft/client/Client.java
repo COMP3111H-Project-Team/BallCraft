@@ -17,7 +17,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
-import android.util.Log;
 
 public class Client extends IntentService {
     
@@ -138,6 +137,13 @@ public class Client extends IntentService {
 			int skillID = Integer.valueOf(position[0]);
 			int id = Integer.valueOf(position[1]);
 			int player = Integer.valueOf(position[2]);
+			//TODO:: 
+		}
+		else if (parts[0].equals("propel"))
+		{
+			String [] position = parts[1].split(",");
+			float x = Float.valueOf(position[0]);
+			float y = Float.valueOf(position[1]);
 			//TODO:: 
 		}
 	}
