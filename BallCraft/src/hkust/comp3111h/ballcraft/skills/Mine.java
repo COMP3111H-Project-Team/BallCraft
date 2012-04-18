@@ -28,7 +28,6 @@ public class Mine extends Skill {
 	@Override
 	public void init() 
 	{
-		Log.e("Mine", "Placed");
         position = new Vec2(getBody().getPosition());
         mineID = mineCount;
         mineCount++;
@@ -52,7 +51,6 @@ public class Mine extends Skill {
 				v.normalize();
 				v = v.mul(100);
 				getBody(i).setLinearVelocity(v);
-				Log.e("Mine", "Explode");
 		        Server.extraMessage("mineExplode:" + position.x * Unit.rate + "," + position.y * Unit.rate + "," + mineID);		
 		    	
 				duration = 0;

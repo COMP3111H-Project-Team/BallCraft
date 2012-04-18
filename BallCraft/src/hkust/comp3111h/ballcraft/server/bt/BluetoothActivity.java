@@ -212,20 +212,6 @@ public class BluetoothActivity extends Activity {
                 byte[] readBuf = (byte[]) msg.obj;
             	Log.e("msg received", "MESSAGE_READ");
                 // construct a string from the valid bytes in the buffer
-                if (BallCraft.isServer) Server.setState(new String(readBuf, 0, msg.arg1));
-                else 
-                {
-                	String message = new String(readBuf, 0, msg.arg1);
-                	Log.e("msg received", message);
-                	if (message.charAt(0) == 'S')
-                	{
-                		message = message.substring(1);
-                		Client.processSerializedUpdate(message);
-                		break;
-                	}
-
-                	Client.handleInitMsg(message);
-                }
                 break;
             case MESSAGE_DEVICE_NAME:
                 // save the connected device's name
