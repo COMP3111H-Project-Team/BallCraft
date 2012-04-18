@@ -2,6 +2,8 @@ package hkust.comp3111h.ballcraft.graphics.particles;
 
 import hkust.comp3111h.ballcraft.R;
 
+import java.util.Random;
+
 import javax.microedition.khronos.opengles.GL10;
 
 import android.content.Context;
@@ -11,17 +13,21 @@ import android.opengl.GLUtils;
 
 public class DarkBallParticle extends BallParticle {
     
+    private static int textureImg = R.drawable.dark_particle;
+    
+    private static int [] textures = new int[1];
+
     public DarkBallParticle(double theta, double rho, double r) {
         super(theta, rho, r);
-        textureImg = R.drawable.dark_particle;
+        
         this.size = 2;
-        this.gravityInfluence = false;
+        
+        randGen = new Random();
+        
+        dTheta = randGen.nextDouble() / 3;
+        dRho = randGen.nextDouble() / 3;
     }
 
-    protected static int textureImg;
-    
-    protected static int [] textures = new int[1];
-    
     public static void loadTexture(GL10 gl, Context context) {
 		Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), textureImg);
 		gl.glGenTextures(1, textures, 0);

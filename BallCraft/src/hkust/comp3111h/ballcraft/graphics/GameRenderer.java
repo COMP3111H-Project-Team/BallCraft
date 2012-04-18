@@ -5,13 +5,7 @@ import hkust.comp3111h.ballcraft.MapModeDef;
 import hkust.comp3111h.ballcraft.TerrainDef;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.GameActivity;
-import hkust.comp3111h.ballcraft.graphics.balls.DarkBall;
-import hkust.comp3111h.ballcraft.graphics.balls.FireBall;
-import hkust.comp3111h.ballcraft.graphics.balls.IronBall;
 import hkust.comp3111h.ballcraft.graphics.balls.ParticleBall;
-import hkust.comp3111h.ballcraft.graphics.balls.RockBall;
-import hkust.comp3111h.ballcraft.graphics.balls.WaterBall;
-import hkust.comp3111h.ballcraft.graphics.balls.WoodBall;
 import hkust.comp3111h.ballcraft.graphics.particles.DarkBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.FireBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterBallParticle;
@@ -23,8 +17,6 @@ import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
-
-import org.jbox2d.common.Vec2;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
@@ -38,22 +30,26 @@ public class GameRenderer implements GLSurfaceView.Renderer {
     
     // private ParticleSystem system;
     
+    /*
     private WoodBall woodBall;
     private RockBall rockBall;
     private IronBall ironBall;
     private WaterBall waterBall;;
     private FireBall fireBall;
     private DarkBall darkBall;
+    */
     
     public GameRenderer(Context context) {
         this.context = context;
         // system = new ParticleSystem6(0, 0, 10);
+        /*
         woodBall = new WoodBall(10, new Vec2(150, 0), 10);
         rockBall = new RockBall(10, new Vec2(150, 40), 10);
         ironBall = new IronBall(10, new Vec2(150, 80), 10);
         waterBall = new WaterBall(10, new Vec2(150, 120), 10);
         fireBall = new FireBall(10, new Vec2(150, 150), 10);
         darkBall = new DarkBall(10, new Vec2(150, 180), 10);
+        */
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {

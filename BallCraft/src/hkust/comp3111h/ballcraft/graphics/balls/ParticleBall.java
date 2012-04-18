@@ -31,7 +31,7 @@ public abstract class ParticleBall extends Ball {
     
     public void draw(GL10 gl) {
         gl.glPushMatrix();
-        gl.glTranslatef(this.getPosition().x, this.getPosition().y, this.z);
+        gl.glTranslatef(this.getPosition().x, this.getPosition().y, this.getRadius() - this.z);
         
         Collections.sort(particles);
         for (int i = 0; i < COUNT; i++) {
