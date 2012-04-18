@@ -159,7 +159,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
     @Override
     public void onBackPressed() {
-        if (menuLayout.getVisibility() == View.INVISIBLE) {
+       if (menuLayout.getVisibility() == View.INVISIBLE) {
             menuLayout.setVisibility(View.VISIBLE);
             AlphaAnimation alphaAnim = new AlphaAnimation(0.5f, 0.5f);
             alphaAnim.setDuration(0);

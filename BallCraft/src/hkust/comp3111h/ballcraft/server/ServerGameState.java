@@ -88,10 +88,8 @@ public class ServerGameState {
 
         Map map = MapParser.getMapFromXML(name);
         
-        // TODO: parse map to get terrain type and map mode
-        // temporary test:
-        mapTerrain = BallCraft.Terrain.OCEAN_TERRAIN;
-        mapMode = BallCraft.MapMode.DAY_MODE;
+        mapTerrain = map.getTerrain();
+        mapMode = map.getMode();
 
         Vector<Unit> mapUnit = map.getUnit();
         Iterator<Unit> iterator = mapUnit.iterator();
@@ -110,7 +108,7 @@ public class ServerGameState {
         
         for (int i = 0; i < BallCraft.maxPlayer; i++)
         {
-        	ServerAdapter.sendInitMsgToClient(initMsg, i);        	
+        	ServerAdapter.sendInitMsgToClient(new String(initMsg), i);        	
         }
     }
 

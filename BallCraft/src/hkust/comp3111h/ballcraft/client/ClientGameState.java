@@ -101,5 +101,13 @@ public class ClientGameState {
     public int getMapMode() {
         return this.mapMode;
     }
+    
+    public void clearAll() {
+        balls.clear();
+        walls.clear();
+        planes.clear();
+        drawableMisc.clear();
+        skills.clear();
+    }
 
 }

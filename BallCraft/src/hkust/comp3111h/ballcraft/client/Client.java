@@ -1,6 +1,8 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.graphics.Mine;
+import hkust.comp3111h.ballcraft.graphics.ParticleSystem1;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Server;
@@ -8,7 +10,6 @@ import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.server.Wall;
 import hkust.comp3111h.ballcraft.settings.GameSettings;
-import hkust.comp3111h.ballcraft.graphics.*;
 
 import org.jbox2d.common.Vec2;
 
@@ -32,6 +33,8 @@ public class Client extends IntentService {
      * Set to true when the game init msg is sent to the Client
      */
     private static boolean gameInited = false;
+    
+    private static boolean remoteServerInited = false;
     
     private static boolean vibrOn;
     
@@ -76,6 +79,8 @@ public class Client extends IntentService {
 	        }
         }
         gameInited = true;
+        remoteServerInited = true;
+//        Server.inited = true;
     }
 
 	private static void handleMessage(String string)
@@ -85,7 +90,6 @@ public class Client extends IntentService {
 		{
 			if(parts[1].equals(myself))
 			{
-				//TODO:player dead
 			    playerDied = true;
 			}
 		}
@@ -132,7 +136,7 @@ public class Client extends IntentService {
 
     public void run() {
         while (running) {
-            if (Server.inited) {
+            if (Server.inited || remoteServerInited) {
                 ServerAdapter.sendToServer(input);
                 input.clearSkills();
             }

@@ -1,6 +1,5 @@
 package hkust.comp3111h.ballcraft.graphics;
 
-import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.MapModeDef;
 import hkust.comp3111h.ballcraft.TerrainDef;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
@@ -98,7 +97,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         
         ArrayList<Ball> balls = ClientGameState.getClientGameState().balls;
         
-        Ball self = (Ball) balls.get(BallCraft.myself);
+        Ball self = (Ball) balls.get(Player.playerID);
 
         float xPos = self.getPosition().x;
         float yPos = self.getPosition().y;
@@ -118,6 +117,18 @@ public class GameRenderer implements GLSurfaceView.Renderer {
             w.draw(gl);
         }
         
+<<<<<<< HEAD
+        for (Drawable d : ClientGameState.getClientGameState().drawableMisc) {
+            if (d instanceof ParticleSystem) {
+                ((ParticleSystem) d).move();
+            }
+            d.draw(gl);
+=======
+        for (Ball b : balls) {
+            b.draw(gl);
+            BallShade.draw(gl, b.getPosition().x + 10, b.getPosition().y + 3);
+        }
+        
         synchronized(ClientGameState.getClientGameState().drawableMisc)
         {
 	        for (Drawable d : ClientGameState.getClientGameState().drawableMisc) {
@@ -126,6 +137,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	            }
 	            d.draw(gl);
 	        }
+>>>>>>> f8562d57dddfb2631d0fad955cdb507c6efad646
         }
             
         long elapsed = System.currentTimeMillis() - time;
