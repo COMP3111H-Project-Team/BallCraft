@@ -2,7 +2,6 @@ package hkust.comp3111h.ballcraft.ui;
 
 import hkust.comp3111h.ballcraft.MapModeDef;
 import hkust.comp3111h.ballcraft.TerrainDef;
-import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.Map;
 import hkust.comp3111h.ballcraft.client.MapParser;
 import hkust.comp3111h.ballcraft.server.Plane;
@@ -17,6 +16,7 @@ import javax.microedition.khronos.opengles.GL10;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
+import android.util.Log;
 
 public class MapRenderer implements GLSurfaceView.Renderer {
     
@@ -28,8 +28,8 @@ public class MapRenderer implements GLSurfaceView.Renderer {
     
     private float rotateAngle = 0;
     
-    private boolean shouldLoadTexture = true;
-
+    private boolean shouldReload = true;
+    
     public MapRenderer(Context context) {
         this.context = context;
         MapParser.setContext(context);
@@ -43,16 +43,20 @@ public class MapRenderer implements GLSurfaceView.Renderer {
         GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 1000f);
         gl.glMatrixMode(GL10.GL_MODELVIEW);
         gl.glLoadIdentity();
+        
+        this.loadLight(gl);
 
         gl.glEnable(GL10.GL_LIGHTING);
         gl.glEnable(GL10.GL_LIGHT0);
-
+   }
+    
+    private void loadLight(GL10 gl) {
         // set light according to whether it is day or night
-        int mapMode = ClientGameState.getClientGameState().getMapMode();
+        int mapMode = currMap.getMode();
         float [] lightAmbient = MapModeDef.getMapModeAmbientLightById(mapMode);
         float [] lightDiffuse = MapModeDef.getMapModeDiffuseLightById(mapMode);
         float [] lightSpecular = MapModeDef.getMapModeSpecularLightById(mapMode);
-        float [] lightPosition = { 100f, 0, 100f, 1f };
+        float [] lightPosition = { 0, 0, 100f, 1f };
 
         float [] matAmbient = { 0.4f, 0.4f, 0.4f, 1f };
         float [] matDiffuse = { 0.6f, 0.6f, 0.6f, 1f };
@@ -68,13 +72,12 @@ public class MapRenderer implements GLSurfaceView.Renderer {
         gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, lightDiffuse, 0);
         gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, lightSpecular, 0);
         gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPosition, 0);
-        
     }
     
-    public void setMap(String filename) {
-        currMap = MapParser.getMapFromXML(filename);
+    public void setMap(String mapName) {
+        currMap = MapParser.getMapFromXML(mapName);
         units = currMap.getUnit();
-        this.shouldLoadTexture = true;
+        this.shouldReload = true;
     }
 
     @Override
@@ -94,12 +97,13 @@ public class MapRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
-        if (this.shouldLoadTexture) {
+        if (this.shouldReload) {
 	        Wall.loadTexture(gl, context, 
 	                TerrainDef.getTerrainWallTextureBallId(currMap.getTerrain()));
 	        Plane.loadTexture(gl, context, 
 	                TerrainDef.getTerrainFloorTextureById(currMap.getTerrain()));
-	        this.shouldLoadTexture = false;
+	        this.loadLight(gl);
+	        this.shouldReload = false;
         }
         
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);

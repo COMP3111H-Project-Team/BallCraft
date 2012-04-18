@@ -18,7 +18,7 @@ public class BallShade {
     protected static FloatBuffer vertexBuffer;
     protected static FloatBuffer textureBuffer;
     
-    protected static int textureImg = R.drawable.shadow_texture;
+    protected static int textureImg = R.drawable.shadow_texture_shear;
     
     protected static final float [] vertices = {
             -1, -1, 0,
@@ -47,7 +47,7 @@ public class BallShade {
         gl.glPushMatrix();
         
             gl.glTranslatef(x, y, 1);
-            gl.glScalef(size, size * 0.8f, 1);
+            gl.glScalef(size, size, 0.1f);
             gl.glEnable(GL10.GL_TEXTURE_2D);
             
             gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
