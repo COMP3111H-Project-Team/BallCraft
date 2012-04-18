@@ -31,12 +31,17 @@ public class BallSelectMenu extends Activity {
     private ImageView ballImageView;
     private ImageView ballSelectView;
     private ImageView ballLockedView;
-    private TextView ballMassView;
-    private TextView ballFrictionView;
-    private TextView ballMagicView;
+    
+    private RelativeLayout ballMassLayout;
+    private RelativeLayout ballFrictionLayout;
+    private RelativeLayout ballMagicLayout;
+    
+    private ValueDisplayView ballMassView;
+    private ValueDisplayView ballFrictionView;
+    private ValueDisplayView ballMagicView;
 
-    private TextView prevBallView;
-    private TextView nextBallView;
+    private ImageView prevBallView;
+    private ImageView nextBallView;
 
     private Animation fadeOut;
     private Animation fadeIn;
@@ -77,21 +82,26 @@ public class BallSelectMenu extends Activity {
 
         ballImageView = (ImageView) this
                 .findViewById(R.id.ball_select_item_image);
-        
         ballSelectView = (ImageView) this
                 .findViewById(R.id.ball_select_item_select_view);
-        
         ballLockedView = (ImageView) this
                 .findViewById(R.id.ball_select_item_locked_image);
+        
+        ballMassLayout = (RelativeLayout) this
+                .findViewById(R.id.ball_select_item_mass_layout);
+        ballFrictionLayout = (RelativeLayout) this
+                .findViewById(R.id.ball_select_item_friction_layout);
+        ballMagicLayout = (RelativeLayout) this
+                .findViewById(R.id.ball_select_item_magic_layout);
 
-        ballMassView = (TextView) this
-                .findViewById(R.id.ball_select_item_mass_display);
-        ballFrictionView = (TextView) this
-                .findViewById(R.id.ball_select_item_friction_display);
-        ballMagicView = (TextView) this
-                .findViewById(R.id.ball_select_item_magic_display);
+        ballMassView = (ValueDisplayView) this
+                .findViewById(R.id.ball_select_item_mass_value);
+        ballFrictionView = (ValueDisplayView) this
+                .findViewById(R.id.ball_select_item_friction_value);
+        ballMagicView = (ValueDisplayView) this
+                .findViewById(R.id.ball_select_item_magic_value);
 
-        prevBallView = (TextView) this
+        prevBallView = (ImageView) this
                 .findViewById(R.id.ball_select_item_previous);
         prevBallView.setOnClickListener(new OnClickListener() {
 
@@ -104,7 +114,7 @@ public class BallSelectMenu extends Activity {
 
         });
 
-        nextBallView = (TextView) this.findViewById(R.id.ball_select_item_next);
+        nextBallView = (ImageView) this.findViewById(R.id.ball_select_item_next);
         nextBallView.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
@@ -158,21 +168,31 @@ public class BallSelectMenu extends Activity {
         if (BallDef.ballUnlocked(currBallPos)) {
             ballImageView.setAlpha(200);
             ballLockedView.setVisibility(View.INVISIBLE);
+            ballMassLayout.setVisibility(View.VISIBLE);
+            ballFrictionLayout.setVisibility(View.VISIBLE);
+            ballMagicLayout.setVisibility(View.VISIBLE);
         } else { // the ball is not unlocked yet
             ballImageView.setAlpha(80);
             ballLockedView.setVisibility(View.VISIBLE);
+            ballMassLayout.setVisibility(View.INVISIBLE);
+            ballFrictionLayout.setVisibility(View.INVISIBLE);
+            ballMagicLayout.setVisibility(View.INVISIBLE);
         }
-
+        
         if (self.canGoPrev()) {
-            prevBallView.setTextColor(Color.WHITE);
+            // prevBallView.setTextColor(Color.WHITE);
+            prevBallView.setColorFilter(Color.RED);
         } else {
-            prevBallView.setTextColor(Color.rgb(60, 60, 60));
+            // prevBallView.setTextColor(Color.rgb(60, 60, 60));
+            prevBallView.setColorFilter(Color.BLACK);
         }
 
         if (self.canGoNext()) {
-            nextBallView.setTextColor(Color.WHITE);
+            // nextBallView.setTextColor(Color.WHITE);
+            nextBallView.setColorFilter(Color.RED);
         } else {
-            nextBallView.setTextColor(Color.rgb(60, 60, 60));
+            // nextBallView.setTextColor(Color.rgb(60, 60, 60));
+            nextBallView.setColorFilter(Color.BLACK);
         }
     }
 
@@ -185,6 +205,14 @@ public class BallSelectMenu extends Activity {
 
         ballImageView.setImageResource(BallDef
                 .getBallImageResourceById(currBallPos));
+        
+        ballMassView.setDisplayValue(BallDef.getBallMassById(currBallPos));
+        
+        ballFrictionView.setDisplayValue(BallDef.getBallFrictionById(currBallPos));
+        
+        ballMagicView.setDisplayValue(BallDef.getBallMagicById(currBallPos));
+        
+        /*
         ballMassView.setText("Mass "
                 + self.getValueDisplayFromInt(BallDef
                         .getBallMassById(currBallPos)));
@@ -194,6 +222,7 @@ public class BallSelectMenu extends Activity {
         ballMagicView.setText("Magic "
                 + self.getValueDisplayFromInt(BallDef
                         .getBallMagicById(currBallPos)));
+        */
 
         if (BallDef.ballUnlocked(currBallPos)) {
             ballImageView.setAlpha(200);
@@ -210,6 +239,7 @@ public class BallSelectMenu extends Activity {
                 }
 
             });
+            
         } else { // the ball is not unlocked yet
             ballImageView.setAlpha(80);
             ballSelectView.setVisibility(View.INVISIBLE);
@@ -219,20 +249,26 @@ public class BallSelectMenu extends Activity {
                 public void onClick(View v) {
                     // do nothing when locked
                 }
+                
             });
 
         }
 
+ 
         if (self.canGoPrev()) {
-            prevBallView.setTextColor(Color.WHITE);
+            // prevBallView.setTextColor(Color.WHITE);
+            prevBallView.setColorFilter(Color.RED);
         } else {
-            prevBallView.setTextColor(Color.rgb(60, 60, 60));
+            // prevBallView.setTextColor(Color.rgb(60, 60, 60));
+            prevBallView.setColorFilter(Color.BLACK);
         }
 
         if (self.canGoNext()) {
-            nextBallView.setTextColor(Color.WHITE);
+            // nextBallView.setTextColor(Color.WHITE);
+            nextBallView.setColorFilter(Color.RED);
         } else {
-            nextBallView.setTextColor(Color.rgb(60, 60, 60));
+            // nextBallView.setTextColor(Color.rgb(60, 60, 60));
+            nextBallView.setColorFilter(Color.BLACK);
         }
     }
 

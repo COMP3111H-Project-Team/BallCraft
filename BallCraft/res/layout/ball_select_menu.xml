@@ -10,25 +10,23 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent" />
 	 
-    <TextView
+    <ImageView
         android:id="@+id/ball_select_item_previous"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:text="&lt;&lt;"
-        android:textColor="#FFFFFF"
-        android:textSize="36pt" />
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/left_arrow" />
     
-    <TextView
+    <ImageView
         android:id="@+id/ball_select_item_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:text="&gt;&gt;"
-        android:textColor="#FFFFFF"
-        android:textSize="36pt" />
+        android:layout_marginRight="10dp"
+        android:src="@drawable/right_arrow" />
 	    
 	<RelativeLayout
 	    xmlns:android="http://schemas.android.com/apk/res/android"
@@ -64,6 +62,9 @@
 	        android:layout_height="wrap_content"
 	        android:layout_centerHorizontal="true"
 	        android:textSize="12pt"
+	        android:textStyle="bold|italic"
+	        android:paddingLeft="10dp"
+	        android:paddingRight="10dp"
 	        android:textColor="#FFFFFF" />
 	    
 	    <TextView
@@ -84,26 +85,71 @@
 	        android:gravity="center"
 	        android:layout_below="@+id/ball_select_item_image">
 	    
-		    <TextView
-		        android:id="@+id/ball_select_item_mass_display"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:textSize="10pt"
-		        android:textColor="#CCCCFF" />
-		    
-		    <TextView
-		        android:id="@+id/ball_select_item_friction_display"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:textSize="10pt"
-		        android:textColor="#FFCCCC" />
-		    
-		    <TextView
-		        android:id="@+id/ball_select_item_magic_display"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:textSize="10pt"
-		        android:textColor="#CCFFCC" />
+		    <RelativeLayout
+		        android:id="@+id/ball_select_item_mass_layout"
+		        android:layout_width="350dp"
+		        android:layout_height="20dp"
+		        android:layout_marginTop="10dp">
+		        
+			    <hkust.comp3111h.ballcraft.ui.ValueDisplayView
+			        android:id="@+id/ball_select_item_mass_value"
+			        android:layout_width="fill_parent"
+			        android:layout_height="fill_parent" />
+			    
+		        <TextView
+		            android:id="@+id/ball_select_item_mass_title"
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:gravity="center"
+		            android:textColor="#FFFFFF"
+		            android:textSize="7pt"
+		            android:text="Mass" />
+		        
+			</RelativeLayout>
+		     
+		    <RelativeLayout
+		        android:id="@+id/ball_select_item_friction_layout"
+		        android:layout_width="350dp"
+		        android:layout_height="20dp"
+		        android:layout_marginTop="10dp">
+		        
+			    <hkust.comp3111h.ballcraft.ui.ValueDisplayView
+			        android:id="@+id/ball_select_item_friction_value"
+			        android:layout_width="fill_parent"
+			        android:layout_height="fill_parent" />
+			    
+		        <TextView
+		            android:id="@+id/ball_select_item_friction_title"
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:gravity="center"
+		            android:textColor="#FFFFFF"
+		            android:textSize="7pt"
+		            android:text="Friction" />
+		        
+			</RelativeLayout>
+		     
+		    <RelativeLayout
+		        android:id="@+id/ball_select_item_magic_layout"
+		        android:layout_width="350dp"
+		        android:layout_height="20dp"
+		        android:layout_marginTop="10dp">
+		        
+			    <hkust.comp3111h.ballcraft.ui.ValueDisplayView
+			        android:id="@+id/ball_select_item_magic_value"
+			        android:layout_width="fill_parent"
+			        android:layout_height="fill_parent" />
+			    
+		        <TextView
+		            android:id="@+id/ball_select_item_magic_title"
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:gravity="center"
+		            android:textColor="#FFFFFF"
+		            android:textSize="7pt"
+		            android:text="Magic" />
+		        
+			</RelativeLayout>
 		    
 	    </LinearLayout>
 	    
