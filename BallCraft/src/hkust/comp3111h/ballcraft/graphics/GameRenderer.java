@@ -5,7 +5,10 @@ import hkust.comp3111h.ballcraft.MapModeDef;
 import hkust.comp3111h.ballcraft.TerrainDef;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.GameActivity;
-import hkust.comp3111h.ballcraft.client.Player;
+import hkust.comp3111h.ballcraft.graphics.balls.ParticleBall;
+import hkust.comp3111h.ballcraft.graphics.particles.DarkBallParticle;
+import hkust.comp3111h.ballcraft.graphics.particles.FireBallParticle;
+import hkust.comp3111h.ballcraft.graphics.particles.WaterBallParticle;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Wall;
@@ -25,8 +28,28 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
     private Context context;
     
+    // private ParticleSystem system;
+    
+    /*
+    private WoodBall woodBall;
+    private RockBall rockBall;
+    private IronBall ironBall;
+    private WaterBall waterBall;;
+    private FireBall fireBall;
+    private DarkBall darkBall;
+    */
+    
     public GameRenderer(Context context) {
         this.context = context;
+        // system = new ParticleSystem6(0, 0, 10);
+        /*
+        woodBall = new WoodBall(10, new Vec2(150, 0), 10);
+        rockBall = new RockBall(10, new Vec2(150, 40), 10);
+        ironBall = new IronBall(10, new Vec2(150, 80), 10);
+        waterBall = new WaterBall(10, new Vec2(150, 120), 10);
+        fireBall = new FireBall(10, new Vec2(150, 150), 10);
+        darkBall = new DarkBall(10, new Vec2(150, 180), 10);
+        */
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -87,9 +110,12 @@ public class GameRenderer implements GLSurfaceView.Renderer {
                 TerrainDef.getTerrainWallTextureBallId(
                         ClientGameState.getClientGameState().getMapTerrain()));
                 
-        Particle.loadTexture(gl, context);
         Mine.loadTexture(gl, context);
         BallShade.loadTexture(gl, context);
+        
+        WaterBallParticle.loadTexture(gl, context);
+        FireBallParticle.loadTexture(gl, context);
+        DarkBallParticle.loadTexture(gl, context);
     }
 
     public void onDrawFrame(GL10 gl) {
@@ -104,16 +130,28 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         float yPos = self.getPosition().y;
         
         GLU.gluLookAt(gl, xPos, yPos + 80, 200, xPos, yPos, 5, 0, 0, 1);
-            
-        for (Ball b : balls) {
-            b.draw(gl);
-            BallShade.draw(gl, b.getPosition().x + 10, b.getPosition().y + 3);
-        }
         
         for (Plane p : ClientGameState.getClientGameState().planes) {
             p.draw(gl);
         }
         
+        for (Ball b : balls) {
+            if (b instanceof ParticleBall) {
+                ((ParticleBall) b).move();
+            }
+            b.draw(gl);
+            BallShade.draw(gl, b.getPosition().x + 10, b.getPosition().y + 3);
+        }
+        
+        /*
+        woodBall.draw(gl);
+        rockBall.draw(gl);
+        ironBall.draw(gl);
+        waterBall.draw(gl);
+        fireBall.draw(gl);
+        darkBall.draw(gl);
+        */
+
         for (Wall w : ClientGameState.getClientGameState().walls) {
             w.draw(gl);
         }
@@ -127,6 +165,11 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	            d.draw(gl);
 	        }
         }
+        
+        /*
+        system.move();
+        system.draw(gl);
+        */
             
         long elapsed = System.currentTimeMillis() - time;
         GameActivity.display("fps: " + 1000 / elapsed);

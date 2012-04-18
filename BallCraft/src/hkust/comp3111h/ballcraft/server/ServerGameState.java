@@ -80,7 +80,6 @@ public class ServerGameState {
             activeSkills.get(i).afterStep();
         }
     }
-
     
     public void loadMap(String name) {
         units.add(new Ball(10, 50, 0.6f, new Vec2(0, 0)));

@@ -2,7 +2,6 @@ package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.graphics.Mine;
-import hkust.comp3111h.ballcraft.graphics.ParticleSystem1;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Server;
@@ -71,16 +70,19 @@ public class Client extends IntentService {
         for (int i = 0; i < unitStrs.length; i++) {
 	        Unit unit = Unit.fromSerializedString(unitStrs[i]);
 	        if (unit instanceof Ball) {
-	            ClientGameState.getClientGameState().balls.add((Ball) unit);
+	            ClientGameState.getClientGameState()
+	                    .balls.add(Ball.getTypedBall((Ball) unit, BallCraft.Ball.WATER_BALL));
 	        } else if (unit instanceof Wall) {
-	            ClientGameState.getClientGameState().walls.add((Wall) unit);
+	            ClientGameState.getClientGameState()
+	                    .walls.add((Wall) unit);
 	        } else if (unit instanceof Plane) {
-	            ClientGameState.getClientGameState().planes.add((Plane) unit);
+	            ClientGameState.getClientGameState()
+	                    .planes.add((Plane) unit);
 	        }
         }
         gameInited = true;
         remoteServerInited = true;
-//        Server.inited = true;
+        // Server.inited = true;
     }
 
 	private static void handleMessage(String string)
@@ -120,7 +122,7 @@ public class Client extends IntentService {
 			float y = Float.valueOf(position[1]);
 			int id = Integer.valueOf(position[2]);
 			ClientGameState.getClientGameState().deleteMine(id);
-			ClientGameState.getClientGameState().addDrawable(new ParticleSystem1(x, y, 5));
+			// ClientGameState.getClientGameState().addDrawable(new ParticleSystem1(x, y, 5));
 		}
 	}
 
