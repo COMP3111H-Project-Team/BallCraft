@@ -1,7 +1,11 @@
 package hkust.comp3111h.ballcraft.ui;
 
+import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
+import hkust.comp3111h.ballcraft.TerrainDef;
+import hkust.comp3111h.ballcraft.client.Map;
+import hkust.comp3111h.ballcraft.client.MapParser;
 import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
 
 import java.io.IOException;
@@ -30,10 +34,10 @@ public class MapSelectMenu extends Activity {
 
     private ListView mapList;
 
-    private ArrayList<String> maps;
+    private ArrayList<String> mapFilenames;
 
     private int ballSelected;
-    private String currMap;
+    private String currMapName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,26 +69,71 @@ public class MapSelectMenu extends Activity {
                 .findViewById(R.id.map_select_menu_gl_surface_view);
         final MapRenderer renderer = new MapRenderer(this);
         
-        renderer.setMap(maps.get(0));
+        renderer.setMap(this.mapFilenames.get(0));
         glView.setRenderer(renderer);
+        
+        Map initMap = MapParser.getMapFromXML(this.mapFilenames.get(0));
 
-        /*
-        final MapDisplayView mapDisplay = new MapDisplayView(this);
-        mapDisplay.setMap(maps.get(0));
-        */
+        final TextView terrainTextView = 
+                (TextView) this.findViewById(R.id.map_select_menu_terrain_value);
+        
+        terrainTextView.setText(
+                TerrainDef.getTerrainNameById(initMap.getTerrain()));
+        
+        final TextView lightTextView = 
+                (TextView) this.findViewById(R.id.map_select_menu_light_value);
+        
+        lightTextView.setText(
+                initMap.getMode() == BallCraft.MapMode.DAY_MODE ? "Daylight" : "Night");
+                
+        final TextView benefitBallView = 
+                (TextView) this.findViewById(R.id.map_select_menu_benefit_ball_value);
+        
+        if (initMap.getMode() == BallCraft.MapMode.DAY_MODE) {
+	        benefitBallView.setText(
+	                BallDef.getBallNameById(
+	                        TerrainDef.getTerrainBenefitBallById(initMap.getTerrain())));
+        } else { // night mode
+	        benefitBallView.setText(
+	                BallDef.getBallNameById(BallCraft.Ball.DARK_BALL) + "\n" +
+	                BallDef.getBallNameById(
+	                        TerrainDef.getTerrainBenefitBallById(initMap.getTerrain())));
+        }
 
         mapList = (ListView) this.findViewById(R.id.map_select_menu_list);
+        mapList.setDividerHeight(0);
         mapList.setAdapter(new MapAdapter());
         mapList.setOnItemClickListener(new OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View v,
                     int position, long id) {
-                currMap = maps.get(position);
-                renderer.setMap(currMap);
-            }
+                currMapName = self.mapFilenames.get(position);
+                
+                Map map = MapParser.getMapFromXML(self.currMapName);
+                
+                renderer.setMap(currMapName);
+                
+                terrainTextView.setText(
+                        TerrainDef.getTerrainNameById(map.getTerrain()));
+                
+                lightTextView.setText(
+                        map.getMode() == 0 ? "Daylight" : "Night");
+                
+		        if (map.getMode() == BallCraft.MapMode.DAY_MODE) {
+			        benefitBallView.setText(
+			                BallDef.getBallNameById(
+			                        TerrainDef.getTerrainBenefitBallById(map.getTerrain())));
+		        } else { // night mode
+			        benefitBallView.setText(
+			                BallDef.getBallNameById(BallCraft.Ball.DARK_BALL) + "\n" +
+			                BallDef.getBallNameById(
+			                        TerrainDef.getTerrainBenefitBallById(map.getTerrain())));
+		        }
+		
+	        }
 
         });
-
+        
         ImageView mapSelectView = (ImageView) this
                 .findViewById(R.id.map_select_menu_select_view);
         mapSelectView.setOnClickListener(new OnClickListener() {
@@ -93,7 +142,7 @@ public class MapSelectMenu extends Activity {
                 Intent intent = new Intent(self,
                         MultiPlayerGameInitializer.class);
                 intent.putExtra("ballSelected", ballSelected);
-                intent.putExtra("mapSelected", currMap);
+                intent.putExtra("mapSelected", currMapName);
                 self.startActivity(intent);
             }
 
@@ -101,19 +150,19 @@ public class MapSelectMenu extends Activity {
     }
 
     private void initMaps() {
-        maps = new ArrayList<String>();
+        self.mapFilenames = new ArrayList<String>();
         try {
             String[] list = self.getAssets().list("");
             if (list != null) {
                 for (int i = 0; i < list.length; i++) {
                     if (self.isMapFile(list[i])) {
-                        maps.add(list[i]);
+                        self.mapFilenames.add(list[i]);
                     }
                 }
             }
         } catch (IOException e) {
         }
-        currMap = maps.get(0);
+        currMapName = self.mapFilenames.get(0);
     }
 
     private boolean isMapFile(String filename) {
@@ -129,7 +178,7 @@ public class MapSelectMenu extends Activity {
         }
 
         public int getCount() {
-            return maps.size();
+            return self.mapFilenames.size();
         }
 
         public Object getItem(int position) {
@@ -142,9 +191,14 @@ public class MapSelectMenu extends Activity {
 
         public View getView(int position, View convertView, ViewGroup parent) {
             View v = inflater.inflate(R.layout.map_select_list_item, null);
+            
+            // get the map from the parser
+            Map map = MapParser.getMapFromXML(self.mapFilenames.get(position));
+            
             TextView mapNameView = (TextView) v
                     .findViewById(R.id.map_select_list_item_name);
-            mapNameView.setText(maps.get(position));
+            
+            mapNameView.setText(map.getName());
 
             return v;
         }

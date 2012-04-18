@@ -9,7 +9,7 @@ public class BallDef {
 	public static final class WoodBall {
 	    public static final int id = BallCraft.Ball.WOOD_BALL;
 	    public static final String name = "Wood Ball";
-	    public static final String description = "The Wood Ball is made from the power of nature";
+	    public static final String description = "Making use of the power of nature";
 	    public static final int imageResource = R.drawable.wood_ball;
 	    public static final int mass = 5;
 	    public static final int friction = 3;
@@ -19,7 +19,7 @@ public class BallDef {
 	public static final class RockBall {
 	    public static final int id = BallCraft.Ball.ROCK_BALL;
 	    public static final String name = "Rock Ball";
-	    public static final String description = "This is the Rock Ball";
+	    public static final String description = "Hard and heavy";
 	    public static final int imageResource = R.drawable.rock_ball;
 	    public static final int mass = 7;
 	    public static final int friction = 7;
@@ -29,7 +29,7 @@ public class BallDef {
 	public static final class WaterBall {
 	    public static final int id = BallCraft.Ball.WATER_BALL;
 	    public static final String name = "Water Ball";
-	    public static final String description = "This is the Water Ball";
+	    public static final String description = "Water is soft, but powerful";
 	    public static final int imageResource = R.drawable.water_ball;
 	    public static final int mass = 6;
 	    public static final int friction = 3;
@@ -39,7 +39,7 @@ public class BallDef {
 	public static final class IronBall {
 	    public static final int id = BallCraft.Ball.IRON_BALL;
 	    public static final String name = "Iron Ball";
-	    public static final String description = "This is the Iron Ball";
+	    public static final String description = "Hard to find its weakness";
 	    public static final int imageResource = R.drawable.iron_ball;
 	    public static final int mass = 10;
 	    public static final int friction = 4;
@@ -49,7 +49,7 @@ public class BallDef {
 	public static final class FireBall {
 	    public static final int id = BallCraft.Ball.FIRE_BALL;
 	    public static final String name = "Fire Ball";
-	    public static final String description = "This is the Fire Ball";
+	    public static final String description = "Burns everything to the ground";
 	    public static final int imageResource = R.drawable.fire_ball;
 	    public static final int mass = 4;
 	    public static final int friction = 5;
@@ -59,7 +59,7 @@ public class BallDef {
 	public static final class DarkBall {
 	    public static final int id = BallCraft.Ball.DARK_BALL;
 	    public static final String name = "Dark Ball";
-	    public static final String description = "This is the Dark Ball";
+	    public static final String description = "At night, it is never visible";
 	    public static final int imageResource = R.drawable.dark_ball;
 	    public static final int mass = 4;
 	    public static final int friction = 4;
@@ -93,10 +93,10 @@ public class BallDef {
 	        try {
 	            return (String) (balls[id].getField("name").get(null));
 	        } catch (Exception e) {
-	            return null;
+	            return "None";
 	        }
 	    } else {
-	        return null;
+	        return "None";
 	    }
 	}
 	

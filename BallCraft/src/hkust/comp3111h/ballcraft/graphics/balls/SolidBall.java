@@ -23,12 +23,14 @@ public abstract class SolidBall extends Ball {
     private FloatBuffer fan_top, fan_bottom;
     // private FloatBuffer texture_top, texture_bottom;
     
+    /*
     private float [] texCoords = {
             0, 1,
             1, 1,
             0, 0,
             1, 0
     };
+    */
     
     private static int [] textureIDs = new int [1];
     
@@ -106,6 +108,7 @@ public abstract class SolidBall extends Ball {
         return makeFloatBuffer(fanVertices);
     }
     
+    /*
     private FloatBuffer makeTextureBuffer() {
         ByteBuffer tbb = ByteBuffer.allocateDirect(texCoords.length * 4);
         tbb.order(ByteOrder.nativeOrder());
@@ -114,6 +117,7 @@ public abstract class SolidBall extends Ball {
         texBuffer.position(0);
         return texBuffer;
     }
+    */
 
     private void unitSphere(int stacks, int slices) {
         float drho = (float) (Math.PI / stacks);

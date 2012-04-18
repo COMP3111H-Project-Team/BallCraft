@@ -15,7 +15,7 @@ public class IronBall extends SolidBall {
     @Override
     protected void loadLight(GL10 gl) {
         GraphicUtils.setMaterialAmbient(gl, new float[] { 0.1f, 0.1f, 0.1f, 1f });
-        GraphicUtils.setMaterialDiffuse(gl, new float[] { 0.8f, 0.8f, 0.8f, 1f });
+        GraphicUtils.setMaterialDiffuse(gl, new float[] { 0.5f, 0.5f, 0.5f, 1f });
         GraphicUtils.setMaterialSpecular(gl, new float[] { 1.0f, 1.0f, 1.0f, 1f });
         GraphicUtils.setMaterialShininess(gl, new float [] { 30 });
     }

@@ -6,6 +6,7 @@ import hkust.comp3111h.ballcraft.TerrainDef;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.GameActivity;
 import hkust.comp3111h.ballcraft.graphics.balls.ParticleBall;
+import hkust.comp3111h.ballcraft.graphics.balls.SolidBall;
 import hkust.comp3111h.ballcraft.graphics.particles.DarkBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.FireBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterBallParticle;
@@ -28,28 +29,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
     private Context context;
     
-    // private ParticleSystem system;
-    
-    /*
-    private WoodBall woodBall;
-    private RockBall rockBall;
-    private IronBall ironBall;
-    private WaterBall waterBall;;
-    private FireBall fireBall;
-    private DarkBall darkBall;
-    */
-    
     public GameRenderer(Context context) {
         this.context = context;
-        // system = new ParticleSystem6(0, 0, 10);
-        /*
-        woodBall = new WoodBall(10, new Vec2(150, 0), 10);
-        rockBall = new RockBall(10, new Vec2(150, 40), 10);
-        ironBall = new IronBall(10, new Vec2(150, 80), 10);
-        waterBall = new WaterBall(10, new Vec2(150, 120), 10);
-        fireBall = new FireBall(10, new Vec2(150, 150), 10);
-        darkBall = new DarkBall(10, new Vec2(150, 180), 10);
-        */
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -68,7 +49,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         float [] lightAmbient = MapModeDef.getMapModeAmbientLightById(mapMode);
         float [] lightDiffuse = MapModeDef.getMapModeDiffuseLightById(mapMode);
         float [] lightSpecular = MapModeDef.getMapModeSpecularLightById(mapMode);
-        float [] lightPosition = { 200f, 0, 100f, 1f };
+        float [] lightPosition = { 300f, 0f, 50f, 1f };
 
         float [] matAmbient = { 0.4f, 0.4f, 0.4f, 1f };
         float [] matDiffuse = { 0.6f, 0.6f, 0.6f, 1f };
@@ -134,26 +115,19 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         for (Plane p : ClientGameState.getClientGameState().planes) {
             p.draw(gl);
         }
-        
+       
+        for (Wall w : ClientGameState.getClientGameState().walls) {
+            w.draw(gl);
+        }
+         
         for (Ball b : balls) {
             if (b instanceof ParticleBall) {
                 ((ParticleBall) b).move();
             }
             b.draw(gl);
-            BallShade.draw(gl, b.getPosition().x + 10, b.getPosition().y + 3);
-        }
-        
-        /*
-        woodBall.draw(gl);
-        rockBall.draw(gl);
-        ironBall.draw(gl);
-        waterBall.draw(gl);
-        fireBall.draw(gl);
-        darkBall.draw(gl);
-        */
-
-        for (Wall w : ClientGameState.getClientGameState().walls) {
-            w.draw(gl);
+            if (b instanceof SolidBall) {
+	            BallShade.draw(gl, b.getPosition().x + 10, b.getPosition().y - 8);
+            }
         }
         
         synchronized(ClientGameState.getClientGameState().drawableMisc)
@@ -166,11 +140,6 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	        }
         }
         
-        /*
-        system.move();
-        system.draw(gl);
-        */
-            
         long elapsed = System.currentTimeMillis() - time;
         GameActivity.display("fps: " + 1000 / elapsed);
         time = System.currentTimeMillis();
