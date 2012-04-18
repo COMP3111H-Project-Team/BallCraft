@@ -71,7 +71,8 @@ public class Client extends IntentService {
 	        Unit unit = Unit.fromSerializedString(unitStrs[i]);
 	        if (unit instanceof Ball) {
 	            ClientGameState.getClientGameState()
-	                    .balls.add(Ball.getTypedBall((Ball) unit, BallCraft.Ball.WATER_BALL));
+	                    .balls.add((Ball) unit);
+	                    // .balls.add(Ball.getTypedBall((Ball) unit, BallCraft.Ball.DARK_BALL));
 	        } else if (unit instanceof Wall) {
 	            ClientGameState.getClientGameState()
 	                    .walls.add((Wall) unit);

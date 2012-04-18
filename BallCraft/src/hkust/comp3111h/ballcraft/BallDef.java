@@ -93,10 +93,10 @@ public class BallDef {
 	        try {
 	            return (String) (balls[id].getField("name").get(null));
 	        } catch (Exception e) {
-	            return null;
+	            return "None";
 	        }
 	    } else {
-	        return null;
+	        return "None";
 	    }
 	}
 	

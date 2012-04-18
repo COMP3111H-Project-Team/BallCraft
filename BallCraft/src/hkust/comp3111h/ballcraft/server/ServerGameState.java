@@ -14,8 +14,6 @@ import java.util.Vector;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
-import android.util.Log;
-
 public class ServerGameState {
     
     private static ArrayList<Unit> units;

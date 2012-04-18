@@ -13,14 +13,14 @@ import android.opengl.GLUtils;
 
 public class FireBallParticle extends BallParticle {
     
-    private static int textureImg = R.drawable.fire_particle;
+    private static int textureImg = R.drawable.fire_particle_trans;
     
     private static int [] textures = new int[1];
     
     public FireBallParticle(double theta, double rho, double r) {
         super(theta, rho, r);
         
-        this.size = 5;
+        this.size = 6;
         
         randGen = new Random();
         

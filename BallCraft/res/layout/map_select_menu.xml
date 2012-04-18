@@ -10,25 +10,111 @@
 	    android:layout_width="300dp"
 	    android:layout_height="fill_parent" />
 	
-	<ImageView
-	    android:id="@+id/map_select_menu_select_view"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_centerVertical="true"
-	    android:layout_marginLeft="50dp"
-	    android:src="@drawable/select" />
-	
+	<RelativeLayout
+	    android:id="@+id/map_select_menu_info_layout"
+	    android:orientation="vertical"
+	    android:layout_width="300dp"
+	    android:layout_height="fill_parent">
+	    
+	    <LinearLayout 
+	        android:id="@+id/map_select_menu_info_upper_layout"
+	        android:orientation="horizontal"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerInParent="true">
+	        
+	        <LinearLayout
+	            android:id="@+id/map_select_menu_info_upper_left_layout"
+	            android:orientation="vertical"
+	            android:layout_width="150dp"
+	            android:layout_height="fill_parent"
+	            android:paddingLeft="10dp">
+	            
+	            <TextView
+	                android:id="@+id/map_select_menu_terrain_title"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:textSize="9pt"
+	                android:textColor="#FFFFFF"
+	                android:layout_gravity="center"
+	                android:text="Terrain" />
+	            
+	            <TextView
+	                android:id="@+id/map_select_menu_light_title"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:textSize="9pt"
+	                android:textColor="#FFFFFF"
+	                android:text="Light" />
+	            
+	            <TextView
+	                android:id="@+id/map_select_menu_benefit_ball_title"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:textSize="9pt"
+	                android:textColor="#FFFFFF"
+	                android:text="Beneficial to" />
+	            
+	        </LinearLayout>
+	        
+	        <LinearLayout
+	            android:id="@+id/map_select_menu_info_upper_right_layout"
+	            android:orientation="vertical"
+	            android:layout_width="150dp"
+	            android:layout_height="fill_parent"
+	            android:paddingLeft="10dp">
+	             
+	            <TextView
+	                android:id="@+id/map_select_menu_terrain_value"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:textSize="9pt"
+	                android:textColor="#FFFFFF"
+	                android:textStyle="italic" />
+	            
+	            <TextView
+	                android:id="@+id/map_select_menu_light_value"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:textSize="9pt"
+	                android:textColor="#FFFFFF"
+	                android:textStyle="italic" />
+	            
+	            <TextView
+	                android:id="@+id/map_select_menu_benefit_ball_value"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:textSize="9pt"
+	                android:textColor="#FFFFFF"
+	                android:textStyle="italic" />
+	            
+	        </LinearLayout>
+	        
+        </LinearLayout>
+	    
+		<ImageView
+		    android:id="@+id/map_select_menu_select_view"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentBottom="true"
+		    android:layout_centerHorizontal="true"
+		    android:layout_marginBottom="30dp"
+		    android:src="@drawable/select" />
+		
+	</RelativeLayout>
+		
 	<ViewFlipper
 	    android:id="@+id/map_select_menu_list_flipper"
-	    android:layout_width="wrap_content"
+	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
 	    android:layout_toRightOf="@+id/map_select_menu_gl_surface_view">
 	    
 		<ListView
 		    android:id="@+id/map_select_menu_list"
-		    android:layout_width="wrap_content"
-		    android:layout_height="fill_parent" />
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:paddingTop="10dp"
+		    android:paddingBottom="10dp" />
 		
 	</ViewFlipper>
     

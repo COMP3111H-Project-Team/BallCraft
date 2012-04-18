@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.server;
 
+import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallCraft.Status;
 import hkust.comp3111h.ballcraft.graphics.Drawable;
 
@@ -23,7 +24,9 @@ public abstract class Unit implements Drawable {
             float y = Float.valueOf(vals[1]);
             float radius = Float.valueOf(vals[2]);
             float z = Float.valueOf(vals[3]);
-            return new Ball(radius, new Vec2(x, y), z);
+            // int ballType = Integer.valueOf(vals[4]);
+            // handle different ball types
+            return Ball.getTypedBall(new Ball(radius, new Vec2(x, y), z), BallCraft.Ball.FIRE_BALL);
         } else if (parts[0].equals("wall")) {
             String[] vals = parts[1].split(",");
             float x1 = Float.valueOf(vals[0]);
