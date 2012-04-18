@@ -2,16 +2,18 @@ package hkust.comp3111h.ballcraft.graphics.particles;
 
 import java.util.Random;
 
-
+/**
+ * The super class of all particles of ball
+ */
 public abstract class BallParticle extends Particle {
     
-    public double theta;
-    public double rho;
-    public double r;
+    protected double theta;
+    protected double rho;
+    protected double r;
     
     // the rate of change
-    public double dTheta;
-    public double dRho;
+    protected double dTheta;
+    protected double dRho;
     
     protected Random randGen;
 
@@ -24,11 +26,6 @@ public abstract class BallParticle extends Particle {
         this.theta = theta;
         this.rho = rho;
         this.r = r;
-        
-        randGen = new Random();
-        
-        dTheta = randGen.nextDouble() / 3;
-        dRho = randGen.nextDouble() / 3;
         
         this.gravityInfluence = false;
     }
