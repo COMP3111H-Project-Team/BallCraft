@@ -10,25 +10,21 @@ public class FireBall extends ParticleBall {
 
     public FireBall(float radius, Vec2 vec, float z) {
         super(radius, vec, z);
-        COUNT = 60;
+        COUNT = 40;
         
         Random randGen = new Random();
         
         for (int i = 0; i < COUNT; i++) {
-            double rho = randGen.nextDouble() * 360 / Math.PI;
             double theta = randGen.nextDouble() * 180 / Math.PI;
-            float xc = this.getPosition().x + (float) (radius * Math.cos(rho) * Math.sin(theta));
-            float yc = this.getPosition().y + (float) (radius * Math.sin(rho) * Math.sin(theta));
-            float zc = radius + (float) (radius * Math.cos(theta)); 
-            FireBallParticle p = new FireBallParticle(xc, yc, zc);
+            double rho = randGen.nextDouble() * 360 / Math.PI;
+            FireBallParticle p = new FireBallParticle(theta, rho, 10);
             particles.add(p);
         }
     }
 
     @Override
     protected void moveParticle(int i) {
-        
+        particles.get(i).move();
     }
-
 
 }

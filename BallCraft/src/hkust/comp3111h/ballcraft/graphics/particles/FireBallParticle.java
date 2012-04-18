@@ -2,6 +2,8 @@ package hkust.comp3111h.ballcraft.graphics.particles;
 
 import hkust.comp3111h.ballcraft.R;
 
+import java.util.Random;
+
 import javax.microedition.khronos.opengles.GL10;
 
 import android.content.Context;
@@ -9,17 +11,21 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
 
-public class FireBallParticle extends Particle {
+public class FireBallParticle extends BallParticle {
     
-    protected static int textureImg;
+    private static int textureImg = R.drawable.fire_particle;
     
-    protected static int [] textures = new int[1];
+    private static int [] textures = new int[1];
     
-    public FireBallParticle(float x, float y, float z) {
-        super(x, y, z);
-        textureImg = R.drawable.fire_particle;
+    public FireBallParticle(double theta, double rho, double r) {
+        super(theta, rho, r);
+        
         this.size = 5;
-        this.gravityInfluence = false;
+        
+        randGen = new Random();
+        
+        dTheta = randGen.nextDouble() / 2;
+        dRho = 0;
     }
     
     public static void loadTexture(GL10 gl, Context context) {

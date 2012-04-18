@@ -45,7 +45,7 @@ public abstract class SolidBall extends Ball {
 
         this.loadLight(gl);
 
-        gl.glTranslatef(this.getPosition().x, this.getPosition().y, getRadius() - z);
+        gl.glTranslatef(this.getPosition().x, this.getPosition().y, this.getRadius() - z);
         gl.glScalef(this.getRadius(), this.getRadius(), this.getRadius());
 
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
