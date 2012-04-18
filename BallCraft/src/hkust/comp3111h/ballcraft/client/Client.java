@@ -17,6 +17,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
+import android.util.Log;
 
 public class Client extends IntentService {
     
@@ -119,11 +120,25 @@ public class Client extends IntentService {
 		else if (parts[0].equals("mineExplode"))
 		{
 			String [] position = parts[1].split(",");
-			float x = Float.valueOf(position[0]);
-			float y = Float.valueOf(position[1]);
 			int id = Integer.valueOf(position[2]);
 			ClientGameState.getClientGameState().deleteMine(id);
 			// ClientGameState.getClientGameState().addDrawable(new ParticleSystem1(x, y, 5));
+		}
+		else if (parts[0].equals("skillInit"))
+		{
+			String [] position = parts[1].split(",");
+			int skillID = Integer.valueOf(position[0]);
+			int id = Integer.valueOf(position[1]);
+			int player = Integer.valueOf(position[2]);
+			//TODO:: 
+		}
+		else if (parts[0].equals("skillFinish"))
+		{
+			String [] position = parts[1].split(",");
+			int skillID = Integer.valueOf(position[0]);
+			int id = Integer.valueOf(position[1]);
+			int player = Integer.valueOf(position[2]);
+			//TODO:: 
 		}
 	}
 
