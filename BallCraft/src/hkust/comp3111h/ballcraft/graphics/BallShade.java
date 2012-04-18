@@ -18,7 +18,7 @@ public class BallShade {
     protected static FloatBuffer vertexBuffer;
     protected static FloatBuffer textureBuffer;
     
-    protected static int textureImg = R.drawable.particle_tex;
+    protected static int textureImg = R.drawable.shadow_texture;
     
     protected static final float [] vertices = {
             -1, -1, 0,
@@ -86,7 +86,7 @@ public class BallShade {
     }
 
     public static void loadTexture(GL10 gl, Context context) {
-        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.shadow_texture);
+        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), textureImg);
         gl.glGenTextures(1, textures, 0);
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
         gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);

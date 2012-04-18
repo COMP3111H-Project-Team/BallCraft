@@ -1,10 +1,13 @@
 package hkust.comp3111h.ballcraft.graphics;
 
+import hkust.comp3111h.ballcraft.graphics.particles.Particle;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 import android.util.Log;
 
+/*
 public class ParticleSystem5 extends ParticleSystem {
     
     private double angle = 0;
@@ -47,3 +50,4 @@ public class ParticleSystem5 extends ParticleSystem {
     }
     
 }
+*/
