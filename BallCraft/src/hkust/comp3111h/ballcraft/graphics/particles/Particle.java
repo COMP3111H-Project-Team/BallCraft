@@ -9,8 +9,6 @@ import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import android.content.Context;
-
 public abstract class Particle implements Drawable, Comparable<Object> {
     
     protected static FloatBuffer vertexBuffer;
@@ -90,14 +88,7 @@ public abstract class Particle implements Drawable, Comparable<Object> {
         return this.size;
     }
 
-    public void move() {
-        if (this.gravityInfluence) {
-	        this.zSpeed += gravity;
-        }
-        this.x += this.xSpeed;
-        this.y += this.ySpeed;
-        this.z += this.zSpeed;
-    }
+    public abstract void move();
     
     public void draw(GL10 gl) {
         gl.glPushMatrix();

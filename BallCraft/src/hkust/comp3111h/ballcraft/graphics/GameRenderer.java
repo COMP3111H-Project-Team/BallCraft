@@ -10,11 +10,15 @@ import hkust.comp3111h.ballcraft.graphics.balls.SolidBall;
 import hkust.comp3111h.ballcraft.graphics.particles.DarkBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.FireBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterBallParticle;
+import hkust.comp3111h.ballcraft.graphics.particles.WaterPropelParticle;
+import hkust.comp3111h.ballcraft.graphics.particlesystem.ParticleSystem;
+import hkust.comp3111h.ballcraft.graphics.particlesystem.WaterPropelParticleSystem;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Wall;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -22,6 +26,7 @@ import javax.microedition.khronos.opengles.GL10;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
+import android.util.Log;
 
 public class GameRenderer implements GLSurfaceView.Renderer {
 
@@ -97,6 +102,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         WaterBallParticle.loadTexture(gl, context);
         FireBallParticle.loadTexture(gl, context);
         DarkBallParticle.loadTexture(gl, context);
+        
+        WaterPropelParticle.loadTexture(gl, context);
     }
 
     public void onDrawFrame(GL10 gl) {
@@ -130,14 +137,15 @@ public class GameRenderer implements GLSurfaceView.Renderer {
             }
         }
         
-        synchronized(ClientGameState.getClientGameState().drawableMisc)
-        {
-	        for (Drawable d : ClientGameState.getClientGameState().drawableMisc) {
+        synchronized(ClientGameState.getClientGameState().drawableMisc) {
+            HashMap<Integer, Drawable> drawables = ClientGameState.getClientGameState().drawableMisc;
+            for (Integer key : drawables.keySet()) {
+                Drawable d = drawables.get(key);
 	            if (d instanceof ParticleSystem) {
 	                ((ParticleSystem) d).move();
 	            }
 	            d.draw(gl);
-	        }
+            }
         }
         
         long elapsed = System.currentTimeMillis() - time;

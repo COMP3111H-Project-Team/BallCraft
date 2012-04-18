@@ -2,6 +2,7 @@ package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.graphics.Mine;
+import hkust.comp3111h.ballcraft.graphics.particlesystem.WaterPropelParticleSystem;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Server;
@@ -9,6 +10,7 @@ import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.server.Wall;
 import hkust.comp3111h.ballcraft.settings.GameSettings;
+import hkust.comp3111h.ballcraft.skills.Skill;
 
 import org.jbox2d.common.Vec2;
 
@@ -71,8 +73,8 @@ public class Client extends IntentService {
 	        Unit unit = Unit.fromSerializedString(unitStrs[i]);
 	        if (unit instanceof Ball) {
 	            ClientGameState.getClientGameState()
-	                    .balls.add((Ball) unit);
-	                    // .balls.add(Ball.getTypedBall((Ball) unit, BallCraft.Ball.DARK_BALL));
+	                    .balls.add(Ball.getTypedBall((Ball) unit, BallCraft.Ball.FIRE_BALL));
+	                    // .balls.add((Ball) unit);
 	        } else if (unit instanceof Wall) {
 	            ClientGameState.getClientGameState()
 	                    .walls.add((Wall) unit);
@@ -86,45 +88,48 @@ public class Client extends IntentService {
         // Server.inited = true;
     }
 
-	private static void handleMessage(String string)
-	{
+	private static void handleMessage(String string) {
 		String[] parts = string.split(":");
-		if (parts[0].equals("dead"))
-		{
-			if(parts[1].equals(myself))
-			{
+		
+		if (parts[0].equals("dead")) {
+			if(parts[1].equals(myself)) {
 			    playerDied = true;
 			}
-		}
-		else if (parts[0].equals("collision"))
-		{
+			
+		} else if (parts[0].equals("collision")) {
 			String [] collision = parts[1].split(",");
 			if ((collision[0].equals(myself) || collision[1].equals(myself)) && 
-				(collision[0].equals(enemy) || collision[1].equals(enemy)))
-			{
+				(collision[0].equals(enemy) || collision[1].equals(enemy))) {
 			    if (vibrOn) {
 					vibrator.vibrate(50);
 			    }
 			}	
-		}
-		else if (parts[0].equals("mineCreate"))
-		{
+			
+		} else if (parts[0].equals("mineCreate")) {
 			String [] position = parts[1].split(",");
 			float x = Float.valueOf(position[0]);
 			float y = Float.valueOf(position[1]);
 			int id = Integer.valueOf(position[2]);
-			ClientGameState.getClientGameState().addDrawable(new Mine(new Vec2(x, y), id));
-			// ClientGameState.getClientGameState().addDrawable(new ParticleSystem5(x, y, 5));
-		}
-		else if (parts[0].equals("mineExplode"))
-		{
+			ClientGameState.getClientGameState().addDrawable(id, new Mine(new Vec2(x, y), id));
+			ClientGameState.getClientGameState().addDrawable(
+			        id + 1, new WaterPropelParticleSystem(x, y, 5));
+			
+		} else if (parts[0].equals("mineExplode")) {
 			String [] position = parts[1].split(",");
 			float x = Float.valueOf(position[0]);
 			float y = Float.valueOf(position[1]);
 			int id = Integer.valueOf(position[2]);
-			ClientGameState.getClientGameState().deleteMine(id);
+			ClientGameState.getClientGameState().deleteDrawable(id);
 			// ClientGameState.getClientGameState().addDrawable(new ParticleSystem1(x, y, 5));
+			
+		} else if (parts[0].equals("waterPropelStart")) {
+		    
+		} else if (parts[0].equals("waterPropelEnd")) {
+		    String idStr = parts[1];
+		    int id = Integer.valueOf(idStr);
+		    ClientGameState.getClientGameState().deleteDrawable(id);
 		}
+		
 	}
 
 	public static void processSerializedUpdate(String serialized) {

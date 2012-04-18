@@ -5,8 +5,10 @@ import hkust.comp3111h.ballcraft.graphics.Mine;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Wall;
+import hkust.comp3111h.ballcraft.skills.Skill;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
@@ -18,7 +20,7 @@ public class ClientGameState {
     public ArrayList<Ball> balls;
     public ArrayList<Wall> walls;
     public ArrayList<Plane> planes;
-    public ArrayList<Drawable> drawableMisc;
+    public HashMap<Integer, Drawable> drawableMisc;
     
     private ArrayList<Skill> skills;
 
@@ -31,7 +33,7 @@ public class ClientGameState {
         balls = new ArrayList<Ball>();
         walls = new ArrayList<Wall>();
         planes = new ArrayList<Plane>();
-        drawableMisc = new ArrayList<Drawable>();
+        drawableMisc = new HashMap<Integer, Drawable>();
         
         skills = new ArrayList<Skill>();
 
@@ -58,15 +60,16 @@ public class ClientGameState {
         }
     }
 
-    public void addDrawable(Drawable drawable) {
-        drawableMisc.add(drawable);
+    public void addDrawable(int id, Drawable drawable) {
+        this.drawableMisc.put(id, drawable);
     }
     
-    public ArrayList<Drawable> getDrawables() {
+    public HashMap<Integer, Drawable> getDrawables() {
         return this.drawableMisc;
     }
 
-    public void deleteMine(int id) {
+    public void deleteDrawable(int id) {
+        /*
     	for (Drawable d : drawableMisc) {
     		if (d instanceof Mine) {
     			if (((Mine) d).getID() == id)
@@ -76,6 +79,8 @@ public class ClientGameState {
     			}
     		}
     	}
+    	*/
+        drawableMisc.remove(new Integer(id));
     }
     
     public void addSkill(Skill skill) {
