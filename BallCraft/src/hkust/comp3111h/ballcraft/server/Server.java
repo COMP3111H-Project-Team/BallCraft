@@ -27,7 +27,7 @@ public class Server extends IntentService {
     
     static private boolean clientInited = false;
     
-    static private int clientBall;
+    static private int clientBall = 0;
     
     public Server() {
         super("Server");
@@ -89,7 +89,7 @@ public class Server extends IntentService {
     protected void onHandleIntent(Intent intent) {
         ServerGameState.init();
         
-        while (!clientInited)
+        while (!clientInited && BallCraft.maxPlayer == 2)
         {
         	Log.w("Server", "Witing for client");
             try 
@@ -99,7 +99,7 @@ public class Server extends IntentService {
             catch (InterruptedException e) 
             {
 				Log.e("Server", e.toString());
-			}  
+			}
         }
         
         gameState = ServerGameState.getStateInstance();

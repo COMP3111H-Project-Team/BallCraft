@@ -14,6 +14,7 @@ import hkust.comp3111h.ballcraft.graphics.particles.WaterBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterPropelParticle;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Crush;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.RockBump;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.SkillEffect;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
@@ -109,6 +110,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         WaterPropelParticle.loadTexture(gl, context);
         
         Crush.loadTexture(gl, context);
+        RockBump.loadTexture(gl, context);
         MassOverlordParticle.loadTexture(gl, context);
     }
 
@@ -168,12 +170,6 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         long elapsed = System.currentTimeMillis() - time;
         GameActivity.display("fps: " + 1000 / elapsed);
         time = System.currentTimeMillis();
-        
-        if (elapsed < 30) {
-            try {
-                Thread.sleep(30 - elapsed);
-            } catch (Exception e) {}
-        }
     }
     
 }
