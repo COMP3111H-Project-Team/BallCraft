@@ -27,7 +27,7 @@ public class Server extends IntentService {
     
     static private boolean clientInited = false;
     
-    static private int clientBall;
+    static private int clientBall = 0;
     
     public Server() 
     {
@@ -103,7 +103,7 @@ public class Server extends IntentService {
             catch (InterruptedException e) 
             {
 				Log.e("Server", e.toString());
-			}  
+			}
         }
         
         gameState = ServerGameState.getStateInstance();
