@@ -118,59 +118,50 @@ public class Client extends IntentService {
 			    }
 			}	
 			
-		} else if (parts[0].equals("mineCreate")) {
-			String [] position = parts[1].split(",");
-			float x = Float.valueOf(position[0]);
-			float y = Float.valueOf(position[1]);
-			int id = Integer.valueOf(position[2]);
-			ClientGameState.getClientGameState().addSkillEffect(id, new Mine(new Vec2(x, y), id));
-			
-		} else if (parts[0].equals("mineExplode")) {
-			String [] position = parts[1].split(",");
-			int id = Integer.valueOf(position[2]);
-			ClientGameState.getClientGameState().deleteDrawable(id);
-			// ClientGameState.getClientGameState().addDrawable(new ParticleSystem1(x, y, 5));
-			
-		}
-		
+		}		
 		else if (parts[0].equals("skillInit"))
 		{
-			String [] position = parts[1].split(",");
-			int skillID = Integer.valueOf(position[0]);
-			int id = Integer.valueOf(position[1]);
-			int player = Integer.valueOf(position[2]);
+			String [] str = parts[1].split("&");
 			
-			Ball b = ClientGameState.getClientGameState().balls.get(player);
-			float x = b.getPosition().x;
-			float y = b.getPosition().y;
-			float z = b.z;
+			int skillID = Integer.parseInt(str[0]);
 			
 			switch (skillID) {
-			case BallCraft.Skill.Propel:
+			case BallCraft.Skill.PROPEL:
 			    /*
 				ClientGameState.getClientGameState().addSkillEffect(
 				        id, new WaterPropelParticleSystem(x, y, z));
-				        */
+				        
 				ClientGameState.getClientGameState().addSkillEffect(
-				        id, new RockBump(b));
+				        id, new MassOverlord(b));*/
 				break;
 				
-			case BallCraft.Skill.TEST_SKILL_1:
+			case BallCraft.Skill.MINE:
+				String [] position = str[1].split(",");
+				float x = Float.valueOf(position[0]);
+				float y = Float.valueOf(position[1]);
+				int id = Integer.valueOf(position[2]);
+				ClientGameState.getClientGameState().addSkillEffect(id, new Mine(new Vec2(x, y), id));
+			    break;
+			    
+			case BallCraft.Skill.BUMP:
+				int enemyID = Integer.parseInt(str[1]);
+				//TODO::
 			    break;
 			}
 		}
 		else if (parts[0].equals("skillFinish"))
 		{
-			String [] position = parts[1].split(",");
-			int skillID = Integer.valueOf(position[0]);
-			int id = Integer.valueOf(position[1]);
-			int player = Integer.valueOf(position[2]);
+			String [] str = parts[1].split("&");
+			int skillID = Integer.valueOf(str[0]);
 			switch (skillID) {
 			
-			case BallCraft.Skill.Propel:
+			case BallCraft.Skill.PROPEL:
 				break;
 				
 			case BallCraft.Skill.MINE:
+				String [] position = str[1].split(",");
+				int id = Integer.valueOf(position[2]);
+				ClientGameState.getClientGameState().deleteDrawable(id);
 			    break;
 				
 			}
