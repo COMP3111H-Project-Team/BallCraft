@@ -105,7 +105,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         skill2Button.getBackground().setAlpha(80);
         skill2Button.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                Client.castSkill(Skill.getSkill(BallCraft.Skill.TEST_SKILL_2));
+                Client.castSkill(Skill.getSkill(BallCraft.Skill.Propel));
             }
         });
 
@@ -160,7 +160,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
     @Override
     public void onBackPressed() {
-        if (menuLayout.getVisibility() == View.INVISIBLE) {
+       if (menuLayout.getVisibility() == View.INVISIBLE) {
             menuLayout.setVisibility(View.VISIBLE);
             AlphaAnimation alphaAnim = new AlphaAnimation(0.5f, 0.5f);
             alphaAnim.setDuration(0);

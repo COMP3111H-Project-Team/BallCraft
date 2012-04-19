@@ -38,7 +38,7 @@ public abstract class Particle implements Drawable, Comparable<Object> {
     public float ySpeed = 0;
     public float zSpeed = 0;
     
-    protected float size;
+    protected float size = 3;
     
     protected boolean gravityInfluence;
     
@@ -133,7 +133,6 @@ public abstract class Particle implements Drawable, Comparable<Object> {
         buffer.position(0);
         return buffer;
     }
-
 
     public int compareTo(Object obj) {
         Particle p = (Particle) obj;

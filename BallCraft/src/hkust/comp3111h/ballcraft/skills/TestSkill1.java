@@ -41,7 +41,6 @@ public class TestSkill1 extends Skill {
 		{
 			getUnit().setStatus(Status.NORMAL);
 		}
-
 	}
 
 }

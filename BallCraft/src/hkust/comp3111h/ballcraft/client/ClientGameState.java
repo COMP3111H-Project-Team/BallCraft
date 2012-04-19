@@ -1,14 +1,13 @@
 package hkust.comp3111h.ballcraft.client;
 
-import hkust.comp3111h.ballcraft.graphics.Drawable;
-import hkust.comp3111h.ballcraft.graphics.Mine;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.SkillEffect;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Wall;
 import hkust.comp3111h.ballcraft.skills.Skill;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
@@ -20,7 +19,7 @@ public class ClientGameState {
     public ArrayList<Ball> balls;
     public ArrayList<Wall> walls;
     public ArrayList<Plane> planes;
-    public HashMap<Integer, Drawable> drawableMisc;
+    public ConcurrentHashMap<Integer, SkillEffect> skillEffects;
     
     private ArrayList<Skill> skills;
 
@@ -33,7 +32,7 @@ public class ClientGameState {
         balls = new ArrayList<Ball>();
         walls = new ArrayList<Wall>();
         planes = new ArrayList<Plane>();
-        drawableMisc = new HashMap<Integer, Drawable>();
+        skillEffects = new ConcurrentHashMap<Integer, SkillEffect>();
         
         skills = new ArrayList<Skill>();
 
@@ -60,27 +59,16 @@ public class ClientGameState {
         }
     }
 
-    public void addDrawable(int id, Drawable drawable) {
-        this.drawableMisc.put(id, drawable);
+    public void addSkillEffect(int id, SkillEffect effect) {
+        this.skillEffects.put(id, effect);
     }
     
-    public HashMap<Integer, Drawable> getDrawables() {
-        return this.drawableMisc;
+    public ConcurrentHashMap<Integer, SkillEffect> getDrawables() {
+        return this.skillEffects;
     }
 
     public void deleteDrawable(int id) {
-        /*
-    	for (Drawable d : drawableMisc) {
-    		if (d instanceof Mine) {
-    			if (((Mine) d).getID() == id)
-    			{
-    				drawableMisc.remove(d);
-    				return;
-    			}
-    		}
-    	}
-    	*/
-        drawableMisc.remove(new Integer(id));
+        this.skillEffects.remove(new Integer(id));
     }
     
     public void addSkill(Skill skill) {
@@ -111,7 +99,7 @@ public class ClientGameState {
         balls.clear();
         walls.clear();
         planes.clear();
-        drawableMisc.clear();
+        skillEffects.clear();
         skills.clear();
     }
 

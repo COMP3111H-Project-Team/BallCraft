@@ -57,6 +57,7 @@ public class ServerGameState {
     		for (int i = 0; i < skills.size(); i++) {
     			skills.get(i).setTime();
 	    		activeSkills.add(skills.get(i));
+	    		Server.extraMessage("skillInit:" + skills.get(i).getIDs());
     		}
     	}
     }
@@ -66,6 +67,7 @@ public class ServerGameState {
             Skill skill = activeSkills.get(i);
             if (!skill.isActive()) {
             	skill.finish();
+	    		Server.extraMessage("skillFinish:" + skill.getIDs());
                 activeSkills.remove(i);
                 i--;
                 continue;
@@ -82,7 +84,7 @@ public class ServerGameState {
     }
     
     public void loadMap(String name) {
-        units.add(new Ball(10, 50, 0.6f, new Vec2(0, 0)));
+        units.add(new Ball(10, 50, 0.8f, new Vec2(0, 0)));
         units.add(new Ball(10, 5, 0.99f, new Vec2(30, 0)));
 
         Map map = MapParser.getMapFromXML(name);

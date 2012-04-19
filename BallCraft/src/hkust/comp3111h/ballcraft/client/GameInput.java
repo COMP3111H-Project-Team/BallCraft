@@ -65,7 +65,8 @@ public class GameInput {
         if (parts.length != 1) {
             String[] skillVals = parts[1].split(",");
             for (int i = 0; i < skillVals.length; i++) {
-                input.addSkill(Skill.getSkill(Integer.valueOf(skillVals[i])));
+            	String[] str = skillVals[i].split("&");
+                input.addSkill(Skill.getSkill(Integer.parseInt(str[0]),Integer.parseInt((str[1]))));
             }
         }
 

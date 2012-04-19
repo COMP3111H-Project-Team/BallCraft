@@ -11,15 +11,13 @@ import org.jbox2d.dynamics.Body;
  */
 public abstract class Skill {
 
+    private static int skillCount = 0;
+    
     protected int id;
-    
+    protected int skillID;
     protected int player;
-    
     private long time;
     protected long duration;
-    
-    protected String startMsg;
-    protected String endMsg;
 
     public static Skill getSkill(int id) {
         return getSkill(BallCraft.myself, id);
@@ -33,12 +31,18 @@ public abstract class Skill {
             return new TestSkill2(player, id);
         case BallCraft.Skill.MINE:
             return new Mine(player, id);
+        case BallCraft.Skill.MassOverload:
+            return new MassOverload(player, id);
+        case BallCraft.Skill.Propel:
+            return new Propel(player, id);
         }
         return null;
     }
 
     public void setTime() {
         time = System.currentTimeMillis();
+        skillID = skillCount;
+        skillCount++;
         init();
     }
 
@@ -49,10 +53,10 @@ public abstract class Skill {
     public abstract void init();
     public abstract void beforeStep();
     public abstract void afterStep();
-	public abstract void finish();
+    public abstract void finish();
 
-    public int getId() {
-        return id;
+    public String getIDs() {
+        return id + "," + skillID + "," + player;
     }
 
     public boolean isActive() {
@@ -65,27 +69,28 @@ public abstract class Skill {
     }
 
     public String toSerializedString() {
-        return String.valueOf(id);
+        return player+ "&" + id;
     }
     
     protected Unit getUnit()
     {
-    	return ServerGameState.getStateInstance().getUnits().get(player);
+        return ServerGameState.getStateInstance().getUnits().get(player);
     }
     
     protected Unit getUnit(int i)
     {
-    	return ServerGameState.getStateInstance().getUnits().get(i);
+        return ServerGameState.getStateInstance().getUnits().get(i);
     }
     
     protected Body getBody()
     {
-    	return ServerGameState.getStateInstance().getUnits().get(player).getBody();
+        return ServerGameState.getStateInstance().getUnits().get(player).getBody();
     }
     
     protected Body getBody(int i)
     {
-    	return ServerGameState.getStateInstance().getUnits().get(i).getBody();
+        return ServerGameState.getStateInstance().getUnits().get(i).getBody();
     }
 
 }
+

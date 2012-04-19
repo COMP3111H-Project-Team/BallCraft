@@ -1,8 +1,8 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.BallCraft;
-import hkust.comp3111h.ballcraft.graphics.Mine;
-import hkust.comp3111h.ballcraft.graphics.particlesystem.WaterPropelParticleSystem;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.MassOverlord;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Server;
@@ -73,8 +73,8 @@ public class Client extends IntentService {
 	        Unit unit = Unit.fromSerializedString(unitStrs[i]);
 	        if (unit instanceof Ball) {
 	            ClientGameState.getClientGameState()
-	                    .balls.add(Ball.getTypedBall((Ball) unit, BallCraft.Ball.FIRE_BALL));
-	                    // .balls.add((Ball) unit);
+	                    .balls.add((Ball) unit);
+	                    // .balls.add(Ball.getTypedBall((Ball) unit, BallCraft.Ball.DARK_BALL));
 	        } else if (unit instanceof Wall) {
 	            ClientGameState.getClientGameState()
 	                    .walls.add((Wall) unit);
@@ -110,26 +110,68 @@ public class Client extends IntentService {
 			float x = Float.valueOf(position[0]);
 			float y = Float.valueOf(position[1]);
 			int id = Integer.valueOf(position[2]);
-			ClientGameState.getClientGameState().addDrawable(id, new Mine(new Vec2(x, y), id));
-			ClientGameState.getClientGameState().addDrawable(
-			        id + 1, new WaterPropelParticleSystem(x, y, 5));
+			ClientGameState.getClientGameState().addSkillEffect(id, new Mine(new Vec2(x, y), id));
 			
 		} else if (parts[0].equals("mineExplode")) {
+			String [] position = parts[1].split(",");
+			int id = Integer.valueOf(position[2]);
+			ClientGameState.getClientGameState().deleteDrawable(id);
+			// ClientGameState.getClientGameState().addDrawable(new ParticleSystem1(x, y, 5));
+		}
+		
+		else if (parts[0].equals("skillInit"))
+		{
+			String [] position = parts[1].split(",");
+			int skillID = Integer.valueOf(position[0]);
+			int id = Integer.valueOf(position[1]);
+			int player = Integer.valueOf(position[2]);
+			
+			Ball b = ClientGameState.getClientGameState().balls.get(player);
+			float x = b.getPosition().x;
+			float y = b.getPosition().y;
+			float z = b.z;
+			
+			switch (skillID) {
+			case BallCraft.Skill.Propel:
+			    /*
+				ClientGameState.getClientGameState().addSkillEffect(
+				        id, new WaterPropelParticleSystem(x, y, z));
+				        */
+				ClientGameState.getClientGameState().addSkillEffect(
+				        id, new MassOverlord(b));
+				break;
+				
+			case BallCraft.Skill.TEST_SKILL_1:
+			    break;
+			}
+		}
+		else if (parts[0].equals("skillFinish"))
+		{
+			String [] position = parts[1].split(",");
+			int skillID = Integer.valueOf(position[0]);
+			int id = Integer.valueOf(position[1]);
+			int player = Integer.valueOf(position[2]);
+			switch (skillID) {
+			
+			case BallCraft.Skill.Propel:
+				break;
+				
+			case BallCraft.Skill.MINE:
+			    break;
+				
+			}
+		}
+		else if (parts[0].equals("propel"))
+		{
 			String [] position = parts[1].split(",");
 			float x = Float.valueOf(position[0]);
 			float y = Float.valueOf(position[1]);
 			int id = Integer.valueOf(position[2]);
-			ClientGameState.getClientGameState().deleteDrawable(id);
-			// ClientGameState.getClientGameState().addDrawable(new ParticleSystem1(x, y, 5));
-			
-		} else if (parts[0].equals("waterPropelStart")) {
-		    
-		} else if (parts[0].equals("waterPropelEnd")) {
-		    String idStr = parts[1];
-		    int id = Integer.valueOf(idStr);
-		    ClientGameState.getClientGameState().deleteDrawable(id);
+			/*
+			((WaterPropelParticleSystem) (ClientGameState.getClientGameState()
+			        .getDrawables().get(new Integer(id)))).refresh(x, y);
+			        */
 		}
-		
 	}
 
 	public static void processSerializedUpdate(String serialized) {

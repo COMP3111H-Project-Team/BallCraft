@@ -21,6 +21,8 @@ public class BallCraft {
         public static final int TEST_SKILL_1 = 1;
         public static final int TEST_SKILL_2 = 2;
         public static final int MINE = 3;
+        public static final int MassOverload = 4;
+        public static final int Propel = 5;
     }
     
     public static final class Ball {
