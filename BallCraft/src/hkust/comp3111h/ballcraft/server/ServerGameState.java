@@ -27,8 +27,10 @@ public class ServerGameState {
     private static int mapTerrain;
     private static int mapMode;
 
-    public static ServerGameState getStateInstance() {
-        if (stateInstance == null) {
+    public static ServerGameState getStateInstance() 
+    {
+        if (stateInstance == null) 
+        {
             stateInstance = new ServerGameState();
         }
         return stateInstance;
@@ -39,7 +41,8 @@ public class ServerGameState {
         stateInstance = new ServerGameState();    	
     }
 
-    private ServerGameState() {
+    private ServerGameState()
+    {
         units = new ArrayList<Unit>();
 
         Vec2 gravity = new Vec2(0.0f, 0.0f);
@@ -57,22 +60,27 @@ public class ServerGameState {
     		units.get(playerId).applyForce(input.acceleration);
     	}
     	
-    	if (input.skillActive()) {
+    	if (input.skillActive())
+    	{
     		ArrayList<Skill> skills = input.getSkills();
-    		for (int i = 0; i < skills.size(); i++) {
+    		for (int i = 0; i < skills.size(); i++)
+    		{
     			skills.get(i).setTime();
 	    		activeSkills.add(skills.get(i));
-	    		Server.extraMessage("skillInit:" + skills.get(i).getIDs());
+	    		Server.extraMessage("skillInit:" + skills.get(i).getID() + "&" + skills.get(i).getInitMsg());
     		}
     	}
     }
 
-    private void beforeStep() {
-        for (int i = 0; i < activeSkills.size(); i++) {
+    private void beforeStep() 
+    {
+        for (int i = 0; i < activeSkills.size(); i++)
+        {
             Skill skill = activeSkills.get(i);
-            if (!skill.isActive()) {
+            if (!skill.isActive()) 
+            {
             	skill.finish();
-	    		Server.extraMessage("skillFinish:" + skill.getIDs());
+	    		Server.extraMessage("skillFinish:" + skill.getID() + "&" + skill.getInitMsg());
                 activeSkills.remove(i);
                 i--;
                 continue;
@@ -82,13 +90,16 @@ public class ServerGameState {
     }
 
 
-    private void afterStep() {
-        for (int i = 0; i < activeSkills.size(); i++) {
+    private void afterStep() 
+    {
+        for (int i = 0; i < activeSkills.size(); i++)
+        {
             activeSkills.get(i).afterStep();
         }
     }
     
-    public void loadMap(String name, int serverBall, int clientBall) {
+    public void loadMap(String name, int serverBall, int clientBall) 
+    {
         units.add(new Ball(10, 50, 0.8f, new Vec2(0, 0)));
         units.add(new Ball(10, 5, 0.99f, new Vec2(30, 0)));
 
@@ -100,14 +111,17 @@ public class ServerGameState {
         Vector<Unit> mapUnit = map.getUnit();
         Iterator<Unit> iterator = mapUnit.iterator();
 
-        while (iterator.hasNext()) {
+        while (iterator.hasNext()) 
+        {
             addUnit(iterator.next());
         }
 
         String initMsg = mapTerrain + "," + mapMode + "," + serverBall +"," +  clientBall + "MAPDEF";
-        for (int i = 0; i < units.size(); i++) {
+        for (int i = 0; i < units.size(); i++)
+        {
             initMsg += units.get(i).toSerializedString();
-            if (i != units.size() - 1) { // not the last one
+            if (i != units.size() - 1)
+            { // not the last one
                 initMsg += "/";
             }
         }
@@ -118,7 +132,9 @@ public class ServerGameState {
         }
     }
 
-    public void onEveryFrame(int msecElapsed) {
+    
+    public void onEveryFrame(int msecElapsed) 
+    {
         beforeStep();
         world.step(msecElapsed, 6, 2);
         afterStep();
@@ -135,25 +151,31 @@ public class ServerGameState {
      * e.printStackTrace(); } return bytes; //return Unit.data;
      */
 
-    public void addUnit(Unit unit) {
+    public void addUnit(Unit unit)
+    {
         units.add(unit);
     }
 
-    public ArrayList<Unit> getUnits() {
+    public ArrayList<Unit> getUnits() 
+    {
         return units;
     }
     
-    public ArrayList<Ball> getBalls() {
+    public ArrayList<Ball> getBalls()
+    {
         ArrayList<Ball> balls = new ArrayList<Ball>();
-        for (Unit unit : units) {
-            if (unit instanceof Ball) {
+        for (Unit unit : units)
+        {
+            if (unit instanceof Ball) 
+            {
                 balls.add((Ball)unit);
             }
         }
         return balls;
     }
 
-    public static void init() {
+    public static void init()
+    {
         stateInstance = new ServerGameState();
     }
 

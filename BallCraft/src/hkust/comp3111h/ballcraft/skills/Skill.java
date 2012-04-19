@@ -16,14 +16,16 @@ public abstract class Skill {
     protected int id;
     protected int skillID;
     protected int player;
-    private long time;
+    protected long time;
     protected long duration;
 
-    public static Skill getSkill(int id) {
+    public static Skill getSkill(int id)
+    {
         return getSkill(BallCraft.myself, id);
     }
 
-    public static Skill getSkill(int player, int id) {
+    public static Skill getSkill(int player, int id) 
+    {
         switch (id) {
         case BallCraft.Skill.TEST_SKILL_1:
             return new TestSkill1(player, id);
@@ -31,22 +33,26 @@ public abstract class Skill {
             return new TestSkill2(player, id);
         case BallCraft.Skill.MINE:
             return new Mine(player, id);
-        case BallCraft.Skill.MassOverload:
+        case BallCraft.Skill.MASSOVERLOAD:
             return new MassOverload(player, id);
-        case BallCraft.Skill.Propel:
+        case BallCraft.Skill.PROPEL:
             return new Propel(player, id);
+        case BallCraft.Skill.BUMP:
+            return new Bump(player, id);
         }
         return null;
     }
 
-    public void setTime() {
+    public void setTime() 
+    {
         time = System.currentTimeMillis();
         skillID = skillCount;
         skillCount++;
         init();
     }
 
-    public int getPlayer() {
+    public int getPlayer()
+    {
         return player;
     }
 
@@ -54,21 +60,27 @@ public abstract class Skill {
     public abstract void beforeStep();
     public abstract void afterStep();
     public abstract void finish();
+    public String getFinishMsg(){return "";}
+    public String getInitMsg(){return "";}
 
-    public String getIDs() {
-        return id + "," + skillID + "," + player;
+    public int getID() 
+    {
+        return id;
     }
 
-    public boolean isActive() {
+    public boolean isActive()
+    {
         return (System.currentTimeMillis() - time < duration || duration == -1)
                 && id != BallCraft.Skill.DEACTIVATED;
     }
 
-    public void deactivate() {
+    public void deactivate()
+    {
         id = BallCraft.Skill.DEACTIVATED;
     }
 
-    public String toSerializedString() {
+    public String toSerializedString() 
+    {
         return player+ "&" + id;
     }
     
