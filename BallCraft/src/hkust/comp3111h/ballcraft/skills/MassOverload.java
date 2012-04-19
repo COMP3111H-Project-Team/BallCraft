@@ -1,8 +1,5 @@
 package hkust.comp3111h.ballcraft.skills;
 
-import hkust.comp3111h.ballcraft.client.Skill;
-
-
 public class MassOverload extends Skill
 {
 	private final static float rate = 1.3f;
