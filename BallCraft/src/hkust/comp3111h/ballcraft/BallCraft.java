@@ -12,8 +12,7 @@ public class BallCraft {
     
     public static boolean isServer = true;
 
-    public enum Status
-	{
+    public enum Status {
 		NORMAL, DEAD, FROZEN
 	}
     

@@ -13,8 +13,6 @@ import android.opengl.GLUtils;
 
 public class FireBallParticle extends BallParticle {
     
-    private static int textureImg = R.drawable.fire_particle_trans;
-    
     private static int [] textures = new int[1];
     
     public FireBallParticle(double theta, double rho, double r) {
@@ -29,7 +27,7 @@ public class FireBallParticle extends BallParticle {
     }
     
     public static void loadTexture(GL10 gl, Context context) {
-		Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), textureImg);
+		Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.fire_particle);
 		gl.glGenTextures(1, textures, 0);
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);

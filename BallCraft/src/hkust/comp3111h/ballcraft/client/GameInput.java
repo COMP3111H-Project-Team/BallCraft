@@ -1,5 +1,7 @@
 package hkust.comp3111h.ballcraft.client;
 
+import hkust.comp3111h.ballcraft.skills.Skill;
+
 import java.util.ArrayList;
 
 import org.jbox2d.common.Vec2;
