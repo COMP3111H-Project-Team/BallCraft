@@ -35,7 +35,7 @@ public abstract class SolidBall extends Ball {
     private static int [] textureIDs = new int [1];
     
     private int stacks = 20, slices = 20;
- 
+    
     public SolidBall(float radius, Vec2 vec, float z) {
         super(radius, vec, z);
         unitSphere(stacks, slices);
@@ -43,11 +43,11 @@ public abstract class SolidBall extends Ball {
     
     @Override
     public void draw(GL10 gl) {
-        gl.glPushMatrix();
-
         this.loadLight(gl);
 
-        gl.glTranslatef(this.getPosition().x, this.getPosition().y, this.getRadius() - z);
+        gl.glPushMatrix();
+        this.translateForDraw(gl);
+
         gl.glScalef(this.getRadius(), this.getRadius(), this.getRadius());
 
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);

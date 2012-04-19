@@ -14,6 +14,7 @@ import hkust.comp3111h.ballcraft.graphics.particles.WaterBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterPropelParticle;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Crush;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.RockBump;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.SkillEffect;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
@@ -24,6 +25,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import org.jbox2d.common.Vec3;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
@@ -107,6 +110,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         WaterPropelParticle.loadTexture(gl, context);
         
         Crush.loadTexture(gl, context);
+        RockBump.loadTexture(gl, context);
         MassOverlordParticle.loadTexture(gl, context);
     }
 
@@ -117,6 +121,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         ArrayList<Ball> balls = ClientGameState.getClientGameState().balls;
         
         Ball self = (Ball) balls.get(BallCraft.myself);
+        self.useGraphicalPosForDrawing = true;
 
         float xPos = self.getPosition().x;
         float yPos = self.getPosition().y;
@@ -135,36 +140,36 @@ public class GameRenderer implements GLSurfaceView.Renderer {
             if (b instanceof ParticleBall) {
                 ((ParticleBall) b).move();
             }
+            if (b.useGraphicalPosForDrawing) {
+                b.setGraphicalPosition(new Vec3(xPos, yPos, 10));
+            }
             b.draw(gl);
             if (b instanceof SolidBall) {
-	            BallShade.draw(gl, b.getPosition().x + 10, b.getPosition().y - 8);
+                if (b.useGraphicalPosForDrawing) {
+		            BallShade.draw(gl, b.getGraphicalPosition().x + 10, 
+		                    b.getGraphicalPosition().y - 8);
+                } else {
+		            BallShade.draw(gl, b.getPosition().x + 10, b.getPosition().y - 8);
+                }
             }
         }
         
-        synchronized(ClientGameState.getClientGameState().skillEffects) {
-            ConcurrentHashMap<Integer, SkillEffect> effects = 
-                    ClientGameState.getClientGameState().skillEffects;
+        ConcurrentHashMap<Integer, SkillEffect> effects = 
+                ClientGameState.getClientGameState().skillEffects;
             
-            for (Integer key : effects.keySet()) {
-                SkillEffect d = effects.get(key);
-                if (d.timeout()) {
-                    effects.remove(key);
-                } else {
-                    d.move();
-		            d.draw(gl);
-                }
+        for (Integer key : effects.keySet()) {
+            SkillEffect d = effects.get(key);
+            if (d.timeout()) {
+                effects.remove(key);
+            } else {
+                d.move();
+	            d.draw(gl);
             }
         }
         
         long elapsed = System.currentTimeMillis() - time;
         GameActivity.display("fps: " + 1000 / elapsed);
         time = System.currentTimeMillis();
-        
-        if (elapsed < 40) {
-            try {
-                Thread.sleep(40 - elapsed);
-            } catch (Exception e) {}
-        }
     }
     
 }

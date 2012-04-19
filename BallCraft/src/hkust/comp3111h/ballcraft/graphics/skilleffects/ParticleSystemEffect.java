@@ -7,8 +7,6 @@ import java.util.Collections;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import android.util.Log;
-
 /**
  * The particle system used for graphical effects
  */
@@ -30,9 +28,15 @@ public abstract class ParticleSystemEffect extends SkillEffect {
     @Override
     public void move() {
         if (this.ballEffected != null) { // attached to ball
-            this.x = this.ballEffected.getPosition().x;
-            this.y = this.ballEffected.getPosition().y;
-            this.z = this.ballEffected.z;
+            if (this.ballEffected.useGraphicalPosForDrawing) {
+	            this.x = this.ballEffected.getGraphicalPosition().x;
+	            this.y = this.ballEffected.getGraphicalPosition().y;
+	            this.z = this.ballEffected.z;
+            } else {
+	            this.x = this.ballEffected.getPosition().x;
+	            this.y = this.ballEffected.getPosition().y;
+	            this.z = this.ballEffected.z;
+            }
         }
         for (int i = 0; i < COUNT; i++) {
             this.moveParticle(i);

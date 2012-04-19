@@ -47,6 +47,11 @@ public class ClientGameState {
         }
         return stateInstance;
     }
+    
+    public static void clear()
+    {
+        stateInstance = new ClientGameState();    	
+    }
 
     /**
      * Apply a serialized GameUpdater to the ClientGameState to change the data

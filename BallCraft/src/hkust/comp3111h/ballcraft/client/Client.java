@@ -1,8 +1,8 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.BallCraft;
-import hkust.comp3111h.ballcraft.graphics.skilleffects.MassOverlord;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.RockBump;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Server;
@@ -65,6 +65,10 @@ public class Client extends IntentService {
         
         int terrain = Integer.parseInt(mapDefs[0]);
         int mode = Integer.parseInt(mapDefs[1]);
+        
+        int ball1Type = Integer.parseInt(mapDefs[2]);
+        int ball2Type = Integer.parseInt(mapDefs[3]);
+        
         ClientGameState.getClientGameState().setMapTerrain(terrain);
         ClientGameState.getClientGameState().setMapMode(mode);
         
@@ -72,9 +76,18 @@ public class Client extends IntentService {
         for (int i = 0; i < unitStrs.length; i++) {
 	        Unit unit = Unit.fromSerializedString(unitStrs[i]);
 	        if (unit instanceof Ball) {
+	            if (i == 0) {
+		            ClientGameState.getClientGameState()
+		                    .balls.add(Ball.getTypedBall((Ball) unit, ball1Type));
+	            } else if (i == 1) {
+		            ClientGameState.getClientGameState()
+		                    .balls.add(Ball.getTypedBall((Ball) unit, ball2Type));
+	            }
+	            /*
 	            ClientGameState.getClientGameState()
-	                    .balls.add((Ball) unit);
-	                    // .balls.add(Ball.getTypedBall((Ball) unit, BallCraft.Ball.DARK_BALL));
+	                    .balls.add(Ball.getTypedBall((Ball) unit, BallCraft.Ball.DARK_BALL));
+	                    // .balls.add((Ball) unit);
+                */
 	        } else if (unit instanceof Wall) {
 	            ClientGameState.getClientGameState()
 	                    .walls.add((Wall) unit);
@@ -117,6 +130,7 @@ public class Client extends IntentService {
 			int id = Integer.valueOf(position[2]);
 			ClientGameState.getClientGameState().deleteDrawable(id);
 			// ClientGameState.getClientGameState().addDrawable(new ParticleSystem1(x, y, 5));
+			
 		}
 		
 		else if (parts[0].equals("skillInit"))
@@ -138,7 +152,7 @@ public class Client extends IntentService {
 				        id, new WaterPropelParticleSystem(x, y, z));
 				        */
 				ClientGameState.getClientGameState().addSkillEffect(
-				        id, new MassOverlord(b));
+				        id, new RockBump(b));
 				break;
 				
 			case BallCraft.Skill.TEST_SKILL_1:

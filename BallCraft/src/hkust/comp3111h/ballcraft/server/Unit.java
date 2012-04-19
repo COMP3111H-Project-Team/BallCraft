@@ -26,7 +26,7 @@ public abstract class Unit implements Drawable {
             float z = Float.valueOf(vals[3]);
             // int ballType = Integer.valueOf(vals[4]);
             // handle different ball types
-            return Ball.getTypedBall(new Ball(radius, new Vec2(x, y), z), BallCraft.Ball.FIRE_BALL);
+            return Ball.getTypedBall(new Ball(radius, new Vec2(x, y), z), BallCraft.Ball.IRON_BALL);
         } else if (parts[0].equals("wall")) {
             String[] vals = parts[1].split(",");
             float x1 = Float.valueOf(vals[0]);

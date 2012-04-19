@@ -126,6 +126,7 @@ public class MainMenu extends Activity implements SensorEventListener {
             public void onClick(View v) {
                 Intent Bluetooth = new Intent(MainMenu.this, BluetoothActivity.class);
                 MainMenu.this.startActivity(Bluetooth);
+                BallCraft.maxPlayer = 2;
                 self.overridePendingTransition(android.R.anim.fade_in,
                         android.R.anim.fade_out);
             }
