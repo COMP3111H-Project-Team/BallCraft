@@ -61,13 +61,10 @@ public class DeviceListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.e(TAG,"device create");
         // Setup the window
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.device_list);
-
-        // Set result CANCELED incase the user backs out
-        setResult(Activity.RESULT_CANCELED);
 
         // Initialize the button to perform device discovery
         Button scanButton = (Button) findViewById(R.id.button_scan);
@@ -188,5 +185,12 @@ public class DeviceListActivity extends Activity {
             }
         }
     };
+    
+    @Override
+    public void onBackPressed(){
+    	Log.e(TAG, "back pressed device");
+    	this.setResult(BluetoothActivity.CANCLE);
+    	finish();
+    }
 
 }

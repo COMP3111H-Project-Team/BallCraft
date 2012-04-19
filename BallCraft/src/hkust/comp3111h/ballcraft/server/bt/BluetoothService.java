@@ -38,7 +38,6 @@ public class BluetoothService {
 
     private BluetoothAdapter bluetoothAdapter = BluetoothAdapter
             .getDefaultAdapter();
-    private Thread connectionAccepterThread;
     private BluetoothServerSocket serverSocket;
     private Handler handler;
     private Context context;
@@ -89,7 +88,16 @@ public class BluetoothService {
         setState(STATE_LISTEN);
     }
     
-    
+    public void stop(){
+    	// Cancel the thread that completed the connection
+        if (connectThread != null) {connectThread.cancel(); connectThread = null;}
+
+        // Cancel any thread currently running a connection
+        if (connectedThread != null) {connectedThread.cancel(); connectedThread = null;}
+        
+        // Cancel the accept thread because we only want to connect to one device
+        if (acceptThread != null) {acceptThread.cancel(); acceptThread = null;}
+    }
     /**
      * Start the ConnectedThread to begin managing a Bluetooth connection
      * @param socket  The BluetoothSocket on which the connection was made
@@ -162,7 +170,8 @@ public class BluetoothService {
             try {
                 tmp = bluetoothAdapter.listenUsingRfcommWithServiceRecord(NAME, MY_UUID);
             } catch (IOException e) {
-                Log.e(TAG, "listen() failed", e);
+            	Log.e(TAG, "listen() failed", e);
+                BluetoothService.this.destroy();
             }
             mmServerSocket = tmp;
         }
@@ -325,12 +334,10 @@ public class BluetoothService {
             while (true) {
                 try {
                 	if(mmInStream.available() > 0){
-//                		Log.e(TAG,"shoudaole");
                 		bytes = mmInStream.read(buffer);
 //                		Log.e("msg received", "MESSAGE_READ");
                 		// construct a string from the valid bytes in the buffer
             			String message = new String(buffer, 0, bytes);
-//            			Log.e("msg received", message);
                 		if (BallCraft.isServer)
                 		{
                 			Server.setState(message);                			
@@ -391,6 +398,7 @@ public class BluetoothService {
         bundle.putString(BluetoothActivity.TOAST, "Unable to connect device");
         msg.setData(bundle);
         handler.sendMessage(msg);
+        destroy();
     }
     
     private void connectionLost() {
@@ -402,6 +410,11 @@ public class BluetoothService {
         bundle.putString(BluetoothActivity.TOAST, "Device connection was lost");
         msg.setData(bundle);
         handler.sendMessage(msg);
+        destroy();
     }
     
+    public void destroy(){
+    	Message msg = handler.obtainMessage(BluetoothActivity.MESSAGE_LOST);
+        handler.sendMessage(msg);
+    }
 }
