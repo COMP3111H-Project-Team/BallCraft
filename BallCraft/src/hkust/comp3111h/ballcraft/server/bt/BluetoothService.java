@@ -333,7 +333,7 @@ public class BluetoothService {
 //                		Log.e("msg received", "MESSAGE_READ");
                 		// construct a string from the valid bytes in the buffer
             			String message = new String(buffer, 0, bytes);
-            			Log.e("msg received", message);
+//            			Log.e("msg received", message);
                 		if (BallCraft.isServer)
                 		{
                 			if (serverInit)
