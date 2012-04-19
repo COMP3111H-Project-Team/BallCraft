@@ -22,9 +22,4 @@ public class FireBall extends ParticleBall {
         }
     }
 
-    @Override
-    protected void moveParticle(int i) {
-        particles.get(i).move();
-    }
-
 }

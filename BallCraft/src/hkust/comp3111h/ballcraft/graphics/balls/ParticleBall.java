@@ -27,11 +27,13 @@ public abstract class ParticleBall extends Ball {
         }
     }
     
-    protected abstract void moveParticle(int i);
+    protected void moveParticle(int i) {
+        particles.get(i).move();
+    }
     
     public void draw(GL10 gl) {
         gl.glPushMatrix();
-        gl.glTranslatef(this.getPosition().x, this.getPosition().y, this.getRadius() - this.z);
+        this.translateForDraw(gl);
         
         Collections.sort(particles);
         for (int i = 0; i < COUNT; i++) {
@@ -40,5 +42,5 @@ public abstract class ParticleBall extends Ball {
         
         gl.glPopMatrix();
     }
-    
+
 }

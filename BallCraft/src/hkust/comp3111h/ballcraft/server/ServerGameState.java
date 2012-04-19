@@ -5,7 +5,7 @@ import hkust.comp3111h.ballcraft.BallCraft.Status;
 import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.Map;
 import hkust.comp3111h.ballcraft.client.MapParser;
-import hkust.comp3111h.ballcraft.client.Skill;
+import hkust.comp3111h.ballcraft.skills.Skill;
 
 import java.util.ArrayList;
 import java.util.Iterator;

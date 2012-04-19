@@ -1,13 +1,8 @@
-package hkust.comp3111h.ballcraft.client;
+package hkust.comp3111h.ballcraft.skills;
 
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
 import hkust.comp3111h.ballcraft.server.Unit;
-import hkust.comp3111h.ballcraft.skills.MassOverload;
-import hkust.comp3111h.ballcraft.skills.Mine;
-import hkust.comp3111h.ballcraft.skills.Propel;
-import hkust.comp3111h.ballcraft.skills.TestSkill1;
-import hkust.comp3111h.ballcraft.skills.TestSkill2;
 
 import org.jbox2d.dynamics.Body;
 
@@ -16,8 +11,8 @@ import org.jbox2d.dynamics.Body;
  */
 public abstract class Skill {
 
-	private static int skillCount = 0;
-	
+    private static int skillCount = 0;
+    
     protected int id;
     protected int skillID;
     protected int player;
@@ -58,7 +53,7 @@ public abstract class Skill {
     public abstract void init();
     public abstract void beforeStep();
     public abstract void afterStep();
-	public abstract void finish();
+    public abstract void finish();
 
     public String getIDs() {
         return id + "," + skillID + "," + player;
@@ -79,22 +74,23 @@ public abstract class Skill {
     
     protected Unit getUnit()
     {
-    	return ServerGameState.getStateInstance().getUnits().get(player);
+        return ServerGameState.getStateInstance().getUnits().get(player);
     }
     
     protected Unit getUnit(int i)
     {
-    	return ServerGameState.getStateInstance().getUnits().get(i);
+        return ServerGameState.getStateInstance().getUnits().get(i);
     }
     
     protected Body getBody()
     {
-    	return ServerGameState.getStateInstance().getUnits().get(player).getBody();
+        return ServerGameState.getStateInstance().getUnits().get(player).getBody();
     }
     
     protected Body getBody(int i)
     {
-    	return ServerGameState.getStateInstance().getUnits().get(i).getBody();
+        return ServerGameState.getStateInstance().getUnits().get(i).getBody();
     }
 
 }
+

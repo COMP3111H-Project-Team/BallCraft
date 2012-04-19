@@ -1,7 +1,6 @@
 package hkust.comp3111h.ballcraft.graphics.particles;
 
 import hkust.comp3111h.ballcraft.graphics.Drawable;
-import hkust.comp3111h.ballcraft.graphics.Vec3;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -9,7 +8,7 @@ import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import android.content.Context;
+import org.jbox2d.common.Vec3;
 
 public abstract class Particle implements Drawable, Comparable<Object> {
     
@@ -40,7 +39,7 @@ public abstract class Particle implements Drawable, Comparable<Object> {
     public float ySpeed = 0;
     public float zSpeed = 0;
     
-    protected float size;
+    protected float size = 3;
     
     protected boolean gravityInfluence;
     
@@ -90,14 +89,7 @@ public abstract class Particle implements Drawable, Comparable<Object> {
         return this.size;
     }
 
-    public void move() {
-        if (this.gravityInfluence) {
-	        this.zSpeed += gravity;
-        }
-        this.x += this.xSpeed;
-        this.y += this.ySpeed;
-        this.z += this.zSpeed;
-    }
+    public abstract void move();
     
     public void draw(GL10 gl) {
         gl.glPushMatrix();
@@ -142,7 +134,6 @@ public abstract class Particle implements Drawable, Comparable<Object> {
         buffer.position(0);
         return buffer;
     }
-
 
     public int compareTo(Object obj) {
         Particle p = (Particle) obj;

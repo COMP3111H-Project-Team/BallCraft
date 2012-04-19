@@ -1,7 +1,8 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.BallCraft;
-import hkust.comp3111h.ballcraft.graphics.Mine;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.MassOverlord;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Server;
@@ -9,6 +10,7 @@ import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.server.Wall;
 import hkust.comp3111h.ballcraft.settings.GameSettings;
+import hkust.comp3111h.ballcraft.skills.Skill;
 
 import org.jbox2d.common.Vec2;
 
@@ -90,50 +92,62 @@ public class Client extends IntentService {
         // Server.inited = true;
     }
 
-	private static void handleMessage(String string)
-	{
+	private static void handleMessage(String string) {
 		String[] parts = string.split(":");
-		if (parts[0].equals("dead"))
-		{
-			if(parts[1].equals(myself))
-			{
+		
+		if (parts[0].equals("dead")) {
+			if(parts[1].equals(myself)) {
 			    playerDied = true;
 			}
-		}
-		else if (parts[0].equals("collision"))
-		{
+			
+		} else if (parts[0].equals("collision")) {
 			String [] collision = parts[1].split(",");
 			if ((collision[0].equals(myself) || collision[1].equals(myself)) && 
-				(collision[0].equals(enemy) || collision[1].equals(enemy)))
-			{
+				(collision[0].equals(enemy) || collision[1].equals(enemy))) {
 			    if (vibrOn) {
 					vibrator.vibrate(50);
 			    }
 			}	
-		}
-		else if (parts[0].equals("mineCreate"))
-		{
+			
+		} else if (parts[0].equals("mineCreate")) {
 			String [] position = parts[1].split(",");
 			float x = Float.valueOf(position[0]);
 			float y = Float.valueOf(position[1]);
 			int id = Integer.valueOf(position[2]);
-			ClientGameState.getClientGameState().addDrawable(new Mine(new Vec2(x, y), id));
-			// ClientGameState.getClientGameState().addDrawable(new ParticleSystem5(x, y, 5));
-		}
-		else if (parts[0].equals("mineExplode"))
-		{
+			ClientGameState.getClientGameState().addSkillEffect(id, new Mine(new Vec2(x, y), id));
+			
+		} else if (parts[0].equals("mineExplode")) {
 			String [] position = parts[1].split(",");
 			int id = Integer.valueOf(position[2]);
-			ClientGameState.getClientGameState().deleteMine(id);
+			ClientGameState.getClientGameState().deleteDrawable(id);
 			// ClientGameState.getClientGameState().addDrawable(new ParticleSystem1(x, y, 5));
 		}
+		
 		else if (parts[0].equals("skillInit"))
 		{
 			String [] position = parts[1].split(",");
 			int skillID = Integer.valueOf(position[0]);
 			int id = Integer.valueOf(position[1]);
 			int player = Integer.valueOf(position[2]);
-			//TODO:: 
+			
+			Ball b = ClientGameState.getClientGameState().balls.get(player);
+			float x = b.getPosition().x;
+			float y = b.getPosition().y;
+			float z = b.z;
+			
+			switch (skillID) {
+			case BallCraft.Skill.Propel:
+			    /*
+				ClientGameState.getClientGameState().addSkillEffect(
+				        id, new WaterPropelParticleSystem(x, y, z));
+				        */
+				ClientGameState.getClientGameState().addSkillEffect(
+				        id, new MassOverlord(b));
+				break;
+				
+			case BallCraft.Skill.TEST_SKILL_1:
+			    break;
+			}
 		}
 		else if (parts[0].equals("skillFinish"))
 		{
@@ -141,14 +155,26 @@ public class Client extends IntentService {
 			int skillID = Integer.valueOf(position[0]);
 			int id = Integer.valueOf(position[1]);
 			int player = Integer.valueOf(position[2]);
-			//TODO:: 
+			switch (skillID) {
+			
+			case BallCraft.Skill.Propel:
+				break;
+				
+			case BallCraft.Skill.MINE:
+			    break;
+				
+			}
 		}
 		else if (parts[0].equals("propel"))
 		{
 			String [] position = parts[1].split(",");
 			float x = Float.valueOf(position[0]);
 			float y = Float.valueOf(position[1]);
-			//TODO:: 
+			int id = Integer.valueOf(position[2]);
+			/*
+			((WaterPropelParticleSystem) (ClientGameState.getClientGameState()
+			        .getDrawables().get(new Integer(id)))).refresh(x, y);
+			        */
 		}
 	}
 
