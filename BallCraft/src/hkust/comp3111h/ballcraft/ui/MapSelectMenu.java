@@ -144,6 +144,7 @@ public class MapSelectMenu extends Activity {
                 intent.putExtra("ballSelected", ballSelected);
                 intent.putExtra("mapSelected", currMapName);
                 self.startActivity(intent);
+                MapSelectMenu.this.finish();
             }
 
         });

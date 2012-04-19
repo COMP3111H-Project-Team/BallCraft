@@ -49,11 +49,14 @@ public class BluetoothService {
     
     private boolean init;
     
+    private boolean serverInit;
+    
     public BluetoothService(Context context, Handler handler){
     	this.context = context;
     	this.handler = handler;
     	
     	init = true;
+    	serverInit = true;
     }
       
     
@@ -330,10 +333,16 @@ public class BluetoothService {
 //                		Log.e("msg received", "MESSAGE_READ");
                 		// construct a string from the valid bytes in the buffer
             			String message = new String(buffer, 0, bytes);
-//            			Log.e("msg received", message);
+            			Log.e("msg received", message);
                 		if (BallCraft.isServer)
                 		{
-                			Server.setState(message);                			
+                			if (serverInit)
+                			{
+                				Log.w("BlueTooth", "Client ball message");
+                				Server.serClientBall(Integer.parseInt(message));
+                				serverInit = false;
+                			}
+                			else Server.setState(message);                			
                 		}
                 		else 
                 		{
