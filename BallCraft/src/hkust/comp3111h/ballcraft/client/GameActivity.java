@@ -3,11 +3,9 @@ package hkust.comp3111h.ballcraft.client;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
-import hkust.comp3111h.ballcraft.graphics.MiniMapView;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.skills.Skill;
 import android.app.Activity;
-import android.graphics.PixelFormat;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -40,8 +38,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 
     private static TextView debugView = null;
     private static String debugMsg = null;
-
-    private static MiniMapView miniMap;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -110,10 +106,6 @@ public class GameActivity extends Activity implements SensorEventListener {
         });
 
         debugView = (TextView) this.findViewById(R.id.game_activity_debug_view);
-
-        miniMap = (MiniMapView) this.findViewById(R.id.game_activity_mini_map_view);
-        miniMap.setZOrderOnTop(true);
-        miniMap.getHolder().setFormat(PixelFormat.TRANSLUCENT);
 
         menuLayout = (LinearLayout) this.findViewById(R.id.game_activity_menu);
         menuLayout.setVisibility(View.INVISIBLE);
