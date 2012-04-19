@@ -20,19 +20,31 @@ public class Mine extends Skill {
 	}
 
 	@Override
+	public String getInitMsg()
+	{
+		return position.x * Unit.rate + "," + position.y * Unit.rate + "," + skillID;
+	}
+	
+	@Override
+	public String getFinishMsg()
+	{
+		return position.x * Unit.rate + "," + position.y * Unit.rate + "," + skillID;	
+	}
+	
+	@Override
 	public void init() 
 	{
         position = new Vec2(getBody().getPosition());
-        Server.extraMessage("mineCreate:" + position.x * Unit.rate + "," + position.y * Unit.rate + "," + skillID);		
 	}
 
 	@Override
-	public void beforeStep() {
-		
+	public void beforeStep() 
+	{		
 	}
 
 	@Override
-	public void afterStep() {
+	public void afterStep() 
+	{
 		ArrayList<Unit> units = ServerGameState.getStateInstance().getUnits();
 		for (int i = 0; i < 2; i++)
 		{
@@ -42,8 +54,7 @@ public class Mine extends Skill {
 				Vec2 v = units.get(i).getPosition().sub(position);
 				v.normalize();
 				v = v.mul(100);
-				getBody(i).setLinearVelocity(v);
-		        Server.extraMessage("mineExplode:" + position.x * Unit.rate + "," + position.y * Unit.rate + "," + skillID);		
+				getBody(i).setLinearVelocity(v);		        	
 		    	
 				duration = 3000;
 				return;
@@ -52,7 +63,8 @@ public class Mine extends Skill {
 	}
 
 	@Override
-	public void finish() {
+	public void finish() 
+	{
 		// TODO Auto-generated method stub
 		
 	}
