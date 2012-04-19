@@ -14,6 +14,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
+import org.jbox2d.common.Vec3;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
@@ -22,6 +23,10 @@ public class Ball extends Unit {
 
     public float z;
     private float zv;
+    
+    private Vec3 graphicalPos;
+    
+    public boolean useGraphicalPosForDrawing = false;
     
     public static Ball getTypedBall(Ball ball, int ballType) {
         switch (ballType) {
@@ -87,9 +92,29 @@ public class Ball extends Unit {
         shape.m_radius = radius;
         body.createFixture(shape, 0); // bind the dense, friction-laden fixture
                                       // to the body
+        
+        this.graphicalPos = new Vec3(this.getPosition().x, this.getPosition().y, this.z);
     }
 
     public void draw(GL10 gl) {
+    }
+    
+    public void translateForDraw(GL10 gl) {
+        if (this.useGraphicalPosForDrawing) {
+	        gl.glTranslatef(this.graphicalPos.x, this.graphicalPos.y, 
+	                this.getRadius() - this.z);
+        } else {
+	        gl.glTranslatef(this.getPosition().x, this.getPosition().y, 
+	                this.getRadius() - this.z);
+        }
+    }
+    
+    public Vec3 getGraphicalPosition() {
+        return this.graphicalPos;
+    }
+    
+    public void setGraphicalPosition(Vec3 pos) {
+        this.graphicalPos = pos;
     }
     
     public String toSerializedString() {
@@ -130,4 +155,4 @@ public class Ball extends Unit {
         body.getFixtureList().m_shape.m_radius = radius;
         body.setTransform(new Vec2(x, y), 0);
     }
-   }
+}

@@ -1,13 +1,14 @@
 package hkust.comp3111h.ballcraft.graphics.particles;
 
 import hkust.comp3111h.ballcraft.graphics.Drawable;
-import hkust.comp3111h.ballcraft.graphics.Vec3;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
+
+import org.jbox2d.common.Vec3;
 
 public abstract class Particle implements Drawable, Comparable<Object> {
     
