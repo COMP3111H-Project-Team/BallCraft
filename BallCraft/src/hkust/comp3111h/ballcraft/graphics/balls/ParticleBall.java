@@ -27,7 +27,9 @@ public abstract class ParticleBall extends Ball {
         }
     }
     
-    protected abstract void moveParticle(int i);
+    protected void moveParticle(int i) {
+        particles.get(i).move();
+    }
     
     public void draw(GL10 gl) {
         gl.glPushMatrix();

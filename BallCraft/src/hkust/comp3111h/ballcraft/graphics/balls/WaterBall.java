@@ -10,6 +10,7 @@ public class WaterBall extends ParticleBall {
 
     public WaterBall(float radius, Vec2 vec, float z) {
         super(radius, vec, z);
+        
         COUNT = 40;
         
         Random randGen = new Random();
@@ -20,11 +21,6 @@ public class WaterBall extends ParticleBall {
             WaterBallParticle p = new WaterBallParticle(theta, rho, 10);
             particles.add(p);
         }
-    }
-
-    @Override
-    protected void moveParticle(int i) {
-        particles.get(i).move();
     }
 
 }

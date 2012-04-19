@@ -5,6 +5,7 @@ import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import hkust.comp3111h.ballcraft.graphics.MiniMapView;
 import hkust.comp3111h.ballcraft.server.Server;
+import hkust.comp3111h.ballcraft.skills.Skill;
 import android.app.Activity;
 import android.graphics.PixelFormat;
 import android.hardware.Sensor;
