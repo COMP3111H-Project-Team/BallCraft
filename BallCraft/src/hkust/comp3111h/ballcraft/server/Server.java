@@ -5,6 +5,7 @@ import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.GameUpdater;
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 public class Server extends IntentService {
     
@@ -23,6 +24,10 @@ public class Server extends IntentService {
     static private boolean running = false;
 
     static private String msg;
+    
+    static private boolean clientInited = false;
+    
+    static private int clientBall;
     
     public Server() {
         super("Server");
@@ -83,8 +88,22 @@ public class Server extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         ServerGameState.init();
+        
+        while (!clientInited)
+        {
+        	Log.w("Server", "Witing for client");
+            try 
+            {
+				Thread.sleep(1000);
+			} 
+            catch (InterruptedException e) 
+            {
+				Log.e("Server", e.toString());
+			}  
+        }
+        
         gameState = ServerGameState.getStateInstance();
-        gameState.loadMap(intent.getStringExtra("map"));
+        gameState.loadMap(intent.getStringExtra("map"), intent.getIntExtra("ball", 0), clientBall);
         gameUpdater = new GameUpdater();
 
         gameInput = new GameInput[BallCraft.maxPlayer];
@@ -97,6 +116,12 @@ public class Server extends IntentService {
         msg = "";
         running = true;
         run();
+    }
+    
+    public static void serClientBall(int ball)
+    {
+    	clientBall = ball;
+    	clientInited = true;
     }
 
     public static void stop() {

@@ -33,6 +33,11 @@ public class ServerGameState {
         }
         return stateInstance;
     }
+    
+    public static void clear()
+    {
+        stateInstance = new ServerGameState();    	
+    }
 
     private ServerGameState() {
         units = new ArrayList<Unit>();
@@ -83,7 +88,7 @@ public class ServerGameState {
         }
     }
     
-    public void loadMap(String name) {
+    public void loadMap(String name, int serverBall, int clientBall) {
         units.add(new Ball(10, 50, 0.8f, new Vec2(0, 0)));
         units.add(new Ball(10, 5, 0.99f, new Vec2(30, 0)));
 
@@ -99,7 +104,7 @@ public class ServerGameState {
             addUnit(iterator.next());
         }
 
-        String initMsg = mapTerrain + "," + mapMode + "MAPDEF";
+        String initMsg = mapTerrain + "," + mapMode + "," + serverBall +"," +  clientBall + "MAPDEF";
         for (int i = 0; i < units.size(); i++) {
             initMsg += units.get(i).toSerializedString();
             if (i != units.size() - 1) { // not the last one

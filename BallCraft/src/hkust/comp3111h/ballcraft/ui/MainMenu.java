@@ -109,6 +109,7 @@ public class MainMenu extends Activity implements SensorEventListener {
                 intent.putExtra("mapSelected", "map01.xml");
                 self.startActivity(intent);
                 */
+            	BallCraft.maxPlayer = 1;
                 Intent intent = new Intent(self,
                         BallSelectMenu.class);
                 self.startActivity(intent);
@@ -126,6 +127,7 @@ public class MainMenu extends Activity implements SensorEventListener {
             public void onClick(View v) {
                 Intent Bluetooth = new Intent(MainMenu.this, BluetoothActivity.class);
                 MainMenu.this.startActivity(Bluetooth);
+                BallCraft.maxPlayer = 2;
                 self.overridePendingTransition(android.R.anim.fade_in,
                         android.R.anim.fade_out);
             }

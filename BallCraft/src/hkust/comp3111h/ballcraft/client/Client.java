@@ -63,6 +63,10 @@ public class Client extends IntentService {
         
         int terrain = Integer.parseInt(mapDefs[0]);
         int mode = Integer.parseInt(mapDefs[1]);
+        
+        int ball1Type = Integer.parseInt(mapDefs[2]);
+        int ball2Type = Integer.parseInt(mapDefs[3]);
+        
         ClientGameState.getClientGameState().setMapTerrain(terrain);
         ClientGameState.getClientGameState().setMapMode(mode);
         

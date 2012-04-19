@@ -5,6 +5,7 @@ import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import hkust.comp3111h.ballcraft.graphics.MiniMapView;
 import hkust.comp3111h.ballcraft.server.Server;
+import hkust.comp3111h.ballcraft.server.ServerGameState;
 import android.app.Activity;
 import android.graphics.PixelFormat;
 import android.hardware.Sensor;
@@ -134,6 +135,8 @@ public class GameActivity extends Activity implements SensorEventListener {
             public void onClick(View v) {
                 Server.stop();
                 Client.stop();
+                ClientGameState.clear();
+                if (BallCraft.isServer) ServerGameState.clear();
                 self.finish();
                 self.overridePendingTransition(android.R.anim.fade_in,
                         android.R.anim.fade_out);

@@ -4,6 +4,7 @@ import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.server.Server;
+import hkust.comp3111h.ballcraft.ui.MainMenu;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -51,7 +52,7 @@ public class MultiPlayerGameInitializer extends Activity {
         Client.setContext(this);
 
         if(D)Log.e(TAG,"start gameactivity");
-        Intent gameIntent = new Intent(this, GameActivity.class);
+        Intent gameIntent = new Intent(MainMenu.self, GameActivity.class);
         this.startActivity(gameIntent);
 
         this.finish();
