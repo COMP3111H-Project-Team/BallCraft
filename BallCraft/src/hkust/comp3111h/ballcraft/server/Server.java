@@ -29,11 +29,13 @@ public class Server extends IntentService {
     
     static private int clientBall;
     
-    public Server() {
+    public Server() 
+    {
         super("Server");
     }
 
-    public static void setState(String string) {
+    public static void setState(String string) 
+    {
         String[] str = string.split(";");
         gameInput[Integer.parseInt(str[0])] = GameInput.fromSerializedString(str[1]);
     }
@@ -47,7 +49,8 @@ public class Server extends IntentService {
 		msg += string;
 	}
 	
-	public static GameUpdater generateGameUpdater() {
+	public static GameUpdater generateGameUpdater() 
+	{
 		gameUpdater.balls = gameState.getBalls();
 		return gameUpdater;
 	}
@@ -86,10 +89,11 @@ public class Server extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onHandleIntent(Intent intent)
+    {
         ServerGameState.init();
         
-        while (!clientInited)
+        while (!clientInited && BallCraft.maxPlayer == 2)
         {
         	Log.w("Server", "Witing for client");
             try 
@@ -107,7 +111,8 @@ public class Server extends IntentService {
         gameUpdater = new GameUpdater();
 
         gameInput = new GameInput[BallCraft.maxPlayer];
-        for (int i = 0; i < BallCraft.maxPlayer; i++) {
+        for (int i = 0; i < BallCraft.maxPlayer; i++)
+        {
             gameInput[i] = new GameInput();
         }
 

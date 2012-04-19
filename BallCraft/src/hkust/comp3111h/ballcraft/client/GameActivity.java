@@ -5,6 +5,7 @@ import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
+import hkust.comp3111h.ballcraft.skills.Skill;
 import android.app.Activity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
