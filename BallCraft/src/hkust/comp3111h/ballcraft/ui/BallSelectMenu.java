@@ -1,7 +1,12 @@
 package hkust.comp3111h.ballcraft.ui;
 
+import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
+import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
+import hkust.comp3111h.ballcraft.server.ServerAdapter;
+import hkust.comp3111h.ballcraft.server.bt.BluetoothActivity;
+import hkust.comp3111h.ballcraft.server.bt.BluetoothService;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -231,11 +236,21 @@ public class BallSelectMenu extends Activity {
             ballSelectView.setOnClickListener(new OnClickListener() {
 
                 public void onClick(View v) {
-                    Intent intent = new Intent(self, MapSelectMenu.class);
+                    Intent intent;
+                    if (BallCraft.isServer)
+                    {
+                    	intent = new Intent(self, MapSelectMenu.class);
+                    }
+                    else
+                    {
+                    	intent = new Intent(self, MultiPlayerGameInitializer.class);    
+                    	ServerAdapter.sendClientInitMsg("" + currBallPos);
+                    }
                     intent.putExtra("ballSelected", currBallPos);
                     self.startActivity(intent);
                     self.overridePendingTransition(android.R.anim.fade_in,
                             android.R.anim.fade_out);
+                    BallSelectMenu.this.finish();
                 }
 
             });

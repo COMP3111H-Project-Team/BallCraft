@@ -59,5 +59,14 @@ public class ServerAdapter {
             service.write(send);
         }
     }
+    
+    public static void sendClientInitMsg(String msg)
+    {
+        if (msg.length() > 0) {
+            // Get the message bytes and tell the BluetoothChatService to write
+            byte[] send = msg.getBytes();
+            service.write(send);
+        }
+    }
 
 }
