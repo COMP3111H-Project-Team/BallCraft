@@ -96,6 +96,7 @@ public abstract class Particle implements Drawable, Comparable<Object> {
         
 	        gl.glTranslatef(x, y, z);
 	        gl.glScalef(size, size, 1);
+	        gl.glRotatef(180, 0, 0, 1);
 	        gl.glEnable(GL10.GL_TEXTURE_2D);
 	        
 	        this.bindTexture(gl);
@@ -142,6 +143,10 @@ public abstract class Particle implements Drawable, Comparable<Object> {
         } else {
             return -1;
         }
+    }
+    
+    public boolean isActive() {
+        return true;
     }
     
 }

@@ -16,8 +16,8 @@ public class RockBump extends TextureEffect {
     
     public RockBump(Ball ballEffected) {
         super(ballEffected);
-        this.size = 5;
-        this.z = 100;
+        this.size = 8;
+        this.z = 200;
     }
     
     public static void loadTexture(GL10 gl, Context context) {
@@ -37,9 +37,9 @@ public class RockBump extends TextureEffect {
 
     @Override
     public void move() {
-        this.x = this.ballEffected.getPosition().x;
-        this.y = this.ballEffected.getPosition().y;
-        this.z -= 5;
+        this.x = this.ballEffected.getPosition().x - this.z;
+        this.y = this.ballEffected.getPosition().y - this.z;
+        this.z -= 10;
     }
     
     @Override
