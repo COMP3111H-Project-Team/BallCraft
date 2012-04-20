@@ -10,6 +10,8 @@ import hkust.comp3111h.ballcraft.graphics.balls.SolidBall;
 import hkust.comp3111h.ballcraft.graphics.particles.DarkBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.FireBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.MassOverlordParticle;
+import hkust.comp3111h.ballcraft.graphics.particles.NaturesCureParticle;
+import hkust.comp3111h.ballcraft.graphics.particles.SlipperyParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterPropelParticle;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Crush;
@@ -112,6 +114,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         Crush.loadTexture(gl, context);
         RockBump.loadTexture(gl, context);
         MassOverlordParticle.loadTexture(gl, context);
+        NaturesCureParticle.loadTexture(gl, context);
+        SlipperyParticle.loadTexture(gl, context);
     }
 
     public void onDrawFrame(GL10 gl) {
@@ -126,7 +130,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         float xPos = self.getPosition().x;
         float yPos = self.getPosition().y;
         
-        GLU.gluLookAt(gl, xPos, yPos + 120, 180, xPos, yPos, 5, 0, 0, 1);
+        GLU.gluLookAt(gl, xPos, yPos + 60, 200, xPos, yPos, 5, 0, 0, 1);
         
         for (Plane p : ClientGameState.getClientGameState().planes) {
             p.draw(gl);

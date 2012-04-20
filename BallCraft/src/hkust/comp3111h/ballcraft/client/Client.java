@@ -2,7 +2,7 @@ package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
-import hkust.comp3111h.ballcraft.graphics.skilleffects.RockBump;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.Slippery;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Server;
@@ -145,7 +145,8 @@ public class Client extends IntentService {
 			    
 			case BallCraft.Skill.BUMP:
 				int enemyID = Integer.parseInt(str[1]);
-				//TODO::
+				Ball b = ClientGameState.getClientGameState().balls.get(enemyID);
+				ClientGameState.getClientGameState().addSkillEffect(skillID, new Slippery(b));
 			    break;
 			}
 		}

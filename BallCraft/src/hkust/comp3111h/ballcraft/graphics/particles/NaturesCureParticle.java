@@ -9,18 +9,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
 
-public class MassOverlordParticle extends MagicParticle {
-    
+public class NaturesCureParticle extends MagicParticle {
+
     private static int [] textures = new int[1];
     
     private double theta;
     private float motionRadius;
     
-    public MassOverlordParticle(float radius, float z, double theta) {
+    public NaturesCureParticle(float radius, float z, double theta) {
         super((float) (radius * Math.cos(theta)),
                 (float) (radius * Math.sin(theta)),
                 z);
         
+        this.size = 5;
         this.gravityInfluence = false;
         this.theta = theta;
         this.motionRadius = radius;
@@ -29,7 +30,7 @@ public class MassOverlordParticle extends MagicParticle {
     
     public static void loadTexture(GL10 gl, Context context) {
         Bitmap bmp = BitmapFactory.decodeResource(
-                context.getResources(), R.drawable.mass_overlord);
+                context.getResources(), R.drawable.water_particle);
         gl.glGenTextures(1, textures, 0);
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
         gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
@@ -42,13 +43,18 @@ public class MassOverlordParticle extends MagicParticle {
     public void bindTexture(GL10 gl) {
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
     }
-    
+  
     @Override
     public void move() {
         this.motionRadius--;
-        this.theta++;
         this.x = this.motionRadius * (float) (Math.cos(this.theta));
         this.y = this.motionRadius * (float) (Math.sin(this.theta));
+        this.z++;
     }
     
+    @Override
+    public boolean isActive() {
+        return true;
+    }
+       
 }
