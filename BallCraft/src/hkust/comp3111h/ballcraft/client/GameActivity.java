@@ -41,7 +41,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
     private static TextView debugView = null;
     private static String debugMsg = null;
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -47,6 +47,9 @@ public class Plane extends Unit {
     private float xScale;
     private float yScale;
     
+    public Vec2 start;
+    public Vec2 end;
+    
     static {
         vertexBuffer = makeVertexBuffer();
         textureBuffer = makeTextureBuffer();
@@ -57,7 +60,8 @@ public class Plane extends Unit {
         pos = new Vec2((end.x + start.x) / 2, (end.y + start.y) / 2);
         xScale = Math.abs(end.x - start.x);
         yScale = Math.abs(end.y - start.y);
-        Log.w("" + xScale + "   " + yScale, "" + pos.x + "   " + pos.y);
+        this.start = start;
+        this.end = end;
     }
     
     public Plane(Vec2 pos, float xScale, float yScale) {

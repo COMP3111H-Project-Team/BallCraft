@@ -104,8 +104,8 @@ public class MainMenu extends Activity implements SensorEventListener {
                 BallCraft.maxPlayer = 1;
                 Intent intent = new Intent(self,
                         MultiPlayerGameInitializer.class);
-                intent.putExtra("ballSelected", BallCraft.Ball.WATER_BALL);
-                intent.putExtra("mapSelected", "map01.xml");
+                intent.putExtra("ballSelected", BallCraft.Ball.IRON_BALL);
+                intent.putExtra("mapSelected", "map02.xml");
                 self.startActivity(intent);
                 /*
                 Intent intent = new Intent(self,

@@ -45,6 +45,32 @@
 	    android:padding="10dp"
 	    android:text="Debug Message Display"
 	    android:textColor="#00FF00" />
+	
+	<LinearLayout
+	    android:id="@+id/game_activity_score_layout"
+	    android:orientation="horizontal"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_centerHorizontal="true">
+	    
+	    <TextView
+	        android:id="@+id/game_activity_self_score"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="12pt"
+	        android:textColor="#FF0000" />
+	    
+	    <TextView
+	        android:id="@+id/game_activity_enemy_score"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="30dp"
+	        android:textSize="12pt"
+	        android:textColor="#FF0000" />
+	    
+	</LinearLayout>
+	    
 
 	<LinearLayout
 	    android:id="@+id/game_activity_menu"
