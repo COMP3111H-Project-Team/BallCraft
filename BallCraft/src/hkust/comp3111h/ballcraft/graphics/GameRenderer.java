@@ -9,6 +9,7 @@ import hkust.comp3111h.ballcraft.graphics.balls.ParticleBall;
 import hkust.comp3111h.ballcraft.graphics.balls.SolidBall;
 import hkust.comp3111h.ballcraft.graphics.particles.DarkBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.FireBallParticle;
+import hkust.comp3111h.ballcraft.graphics.particles.FlameThrowParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.MassOverlordParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.NaturesCureParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.SlipperyParticle;
@@ -118,6 +119,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         MassOverlordParticle.loadTexture(gl, context);
         NaturesCureParticle.loadTexture(gl, context);
         SlipperyParticle.loadTexture(gl, context);
+        FlameThrowParticle.loadTexture(gl, context);
     }
     
     public void startRendering() {
@@ -127,7 +129,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
     public void stopRendering() {
         this.rendering = false;
     }
-
+    
     public void onDrawFrame(GL10 gl) {
         if (this.rendering) {
 	        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
@@ -140,8 +142,9 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	
 	        float xPos = self.getPosition().x;
 	        float yPos = self.getPosition().y;
+	        float zPos = self.z;
 	        
-	        GLU.gluLookAt(gl, xPos, yPos + 60, 200, xPos, yPos, 5, 0, 0, 1);
+	        GLU.gluLookAt(gl, xPos, yPos + zPos + 60, 200 - zPos, xPos, yPos, zPos, 0, 0, 1);
 	        
 	        for (Plane p : ClientGameState.getClientGameState().planes) {
 	            p.draw(gl);
@@ -160,7 +163,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	            }
 	            b.draw(gl);
 	            if (b instanceof SolidBall) {
-	                if (b.z <= 5) { // above the plane, draw shade
+	                if (b.z <= 0) { // above the plane, draw shade
 		                if (b.useGraphicalPosForDrawing) {
 				            BallShade.draw(gl, b.getGraphicalPosition().x + 10, 
 				                    b.getGraphicalPosition().y - 8);
