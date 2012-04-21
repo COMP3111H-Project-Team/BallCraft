@@ -30,6 +30,8 @@ public class Ball extends Unit {
     
     public boolean useGraphicalPosForDrawing = false;
     
+    private boolean dead = false;
+    
     public static Ball getTypedBall(Ball ball, int ballType) {
         switch (ballType) {
         
@@ -119,7 +121,7 @@ public class Ball extends Unit {
         this.graphicalPos = pos;
     }
     
-    public boolean isDead(ArrayList<Unit> units) {
+    public boolean isOutOfBound(ArrayList<Unit> units) {
         for (Unit u : units) {
             if (u instanceof Plane) {
                 Plane p = (Plane) u;
@@ -152,6 +154,7 @@ public class Ball extends Unit {
                 }
             }
         }
+        this.dead = true;
         return true;
     }
     
@@ -160,7 +163,7 @@ public class Ball extends Unit {
         if (Math.abs(body.getPosition().x) > 200 / rate
                 || Math.abs(body.getPosition().y) > 200 / rate) {
                 */
-        if (this.isDead(ServerGameState.getStateInstance().getUnits())) {
+        if (this.isOutOfBound(ServerGameState.getStateInstance().getUnits()) || this.dead) {
 
 			if (status == Status.NORMAL)
 			{
@@ -169,8 +172,9 @@ public class Ball extends Unit {
 				str += id;
 				Server.extraMessage(str);
 			}
-			zv += g * 0.3;
-			z += zv * 0.3;	
+			zv += g * 0.05;
+			z += zv * 0.05;	
+			
         }
 
         String serialized = "";
@@ -196,4 +200,5 @@ public class Ball extends Unit {
         body.getFixtureList().m_shape.m_radius = radius;
         body.setTransform(new Vec2(x, y), 0);
     }
+    
 }
