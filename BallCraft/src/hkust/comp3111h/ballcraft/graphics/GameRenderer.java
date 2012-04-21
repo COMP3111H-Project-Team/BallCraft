@@ -34,6 +34,8 @@ import org.jbox2d.common.Vec3;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
+import android.os.Message;
+import android.view.View;
 
 public class GameRenderer implements GLSurfaceView.Renderer {
 
@@ -51,7 +53,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         gl.glViewport(0, 0, width, height);
         gl.glMatrixMode(GL10.GL_PROJECTION);
         gl.glLoadIdentity();
-        GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 500f);
+        GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 400f);
         gl.glMatrixMode(GL10.GL_MODELVIEW);
         gl.glLoadIdentity();
 
@@ -144,7 +146,17 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	        float yPos = self.getPosition().y;
 	        float zPos = self.z;
 	        
-	        GLU.gluLookAt(gl, xPos, yPos + zPos + 60, 200 - zPos, xPos, yPos, zPos, 0, 0, 1);
+	        if (zPos > 200) {
+	            Message msg = new Message();
+	            msg.what = View.VISIBLE;
+	            GameActivity.loseViewHanlder.sendMessage(msg);
+	        } else {
+	            Message msg = new Message();
+	            msg.what = View.INVISIBLE;
+	            GameActivity.loseViewHanlder.sendMessage(msg);
+	        }
+	        
+	        GLU.gluLookAt(gl, xPos, yPos + 60 + zPos / 2, 200 - zPos, xPos, yPos, -zPos, 0, 0, 1);
 	        
 	        for (Plane p : ClientGameState.getClientGameState().planes) {
 	            p.draw(gl);
@@ -159,7 +171,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	                ((ParticleBall) b).move();
 	            }
 	            if (b.useGraphicalPosForDrawing) {
-	                b.setGraphicalPosition(new Vec3(xPos, yPos, 10));
+	                b.setGraphicalPosition(new Vec3(xPos, yPos, zPos));
 	            }
 	            b.draw(gl);
 	            if (b instanceof SolidBall) {

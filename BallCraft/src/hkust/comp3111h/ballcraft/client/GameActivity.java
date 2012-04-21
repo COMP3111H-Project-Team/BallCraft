@@ -38,6 +38,8 @@ public class GameActivity extends Activity implements SensorEventListener {
     private LinearLayout menuLayout;
     
     private GameRenderer renderer;
+    
+    private static TextView loseView = null;
 
     private static TextView debugView = null;
     private static String debugMsg = null;
@@ -110,6 +112,9 @@ public class GameActivity extends Activity implements SensorEventListener {
                 Client.castSkill(Skill.getSkill(BallCraft.Skill.BUMP));
             }
         });
+        
+        loseView = (TextView) this.findViewById(R.id.game_activity_lose_text);
+        loseView.setVisibility(View.INVISIBLE);
 
         debugView = (TextView) this.findViewById(R.id.game_activity_debug_view);
 
@@ -177,6 +182,15 @@ public class GameActivity extends Activity implements SensorEventListener {
             menuLayout.setAnimation(alphaAnim);
         }
     }
+    
+    public static Handler loseViewHanlder = new Handler() {
+        
+        @Override
+        public void handleMessage(Message msg) {
+            loseView.setVisibility(msg.what);
+        }
+        
+    };
 
     /**
      * Used for displaying a debug message at the bottom of the screen

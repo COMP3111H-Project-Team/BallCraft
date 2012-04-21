@@ -159,10 +159,6 @@ public class Ball extends Unit {
     }
     
     public String toSerializedString() {
-        /*
-        if (Math.abs(body.getPosition().x) > 200 / rate
-                || Math.abs(body.getPosition().y) > 200 / rate) {
-                */
         if (this.isOutOfBound(ServerGameState.getStateInstance().getUnits()) || this.dead) {
 
 			if (status == Status.NORMAL)
@@ -172,9 +168,9 @@ public class Ball extends Unit {
 				str += id;
 				Server.extraMessage(str);
 			}
-			zv += g * 0.05;
-			z += zv * 0.05;	
 			
+			zv += g * 0.2;
+			z += zv * 0.2;	
         }
 
         String serialized = "";
