@@ -18,7 +18,7 @@ public class BallShade {
     protected static FloatBuffer vertexBuffer;
     protected static FloatBuffer textureBuffer;
     
-    protected static int textureImg = R.drawable.shadow_texture_shear;
+    protected static int textureImg = R.drawable.shadow_texture;
     
     protected static final float [] vertices = {
             -1, -1, 0,

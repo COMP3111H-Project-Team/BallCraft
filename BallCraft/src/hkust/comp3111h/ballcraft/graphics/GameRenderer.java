@@ -163,13 +163,11 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	            }
 	            b.draw(gl);
 	            if (b instanceof SolidBall) {
-	                if (b.z <= 0) { // above the plane, draw shade
-		                if (b.useGraphicalPosForDrawing) {
-				            BallShade.draw(gl, b.getGraphicalPosition().x + 10, 
-				                    b.getGraphicalPosition().y - 8);
-		                } else {
-				            BallShade.draw(gl, b.getPosition().x + 10, b.getPosition().y - 8);
-		                }
+	                if (b.useGraphicalPosForDrawing) {
+			            BallShade.draw(gl, b.getGraphicalPosition().x + 8, 
+			                    b.getGraphicalPosition().y - 3);
+	                } else {
+			            BallShade.draw(gl, b.getPosition().x + 8, b.getPosition().y - 3);
 	                }
 	            }
 	        }
