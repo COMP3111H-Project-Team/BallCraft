@@ -28,7 +28,7 @@ import android.widget.ImageView;
 
 public class MainMenu extends Activity implements SensorEventListener {
 
-    public static Activity self;
+    public static MainMenu self;
 
     private SensorManager sensorManager;
 
