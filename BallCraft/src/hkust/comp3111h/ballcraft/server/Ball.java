@@ -10,6 +10,8 @@ import hkust.comp3111h.ballcraft.graphics.balls.RockBall;
 import hkust.comp3111h.ballcraft.graphics.balls.WaterBall;
 import hkust.comp3111h.ballcraft.graphics.balls.WoodBall;
 
+import java.util.ArrayList;
+
 import javax.microedition.khronos.opengles.GL10;
 
 import org.jbox2d.collision.shapes.CircleShape;
@@ -117,9 +119,48 @@ public class Ball extends Unit {
         this.graphicalPos = pos;
     }
     
+    public boolean isDead(ArrayList<Unit> units) {
+        for (Unit u : units) {
+            if (u instanceof Plane) {
+                Plane p = (Plane) u;
+                
+                float x1, y1, x2, y2;
+                if (p.start.x < p.end.x) {
+                    x1 = p.start.x;
+                    x2 = p.end.x;
+                } else {
+                    x1 = p.end.x;
+                    x2 = p.start.x;
+                }
+                
+                if (p.start.y < p.end.y) {
+                    y1 = p.start.y;
+                    y2 = p.end.y;
+                } else {
+                    y1 = p.end.y;
+                    y2 = p.start.y;
+                }
+                
+                x1 /= rate;
+                x2 /= rate;
+                y1 /= rate;
+                y2 /= rate;
+                
+                if (x1 < this.getPosition().x && x2 > this.getPosition().x
+                        && y1 < this.getPosition().y && y2 > this.getPosition().y) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
     public String toSerializedString() {
+        /*
         if (Math.abs(body.getPosition().x) > 200 / rate
                 || Math.abs(body.getPosition().y) > 200 / rate) {
+                */
+        if (this.isDead(ServerGameState.getStateInstance().getUnits())) {
 
 			if (status == Status.NORMAL)
 			{

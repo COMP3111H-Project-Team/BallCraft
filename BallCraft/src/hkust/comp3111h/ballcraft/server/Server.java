@@ -34,7 +34,7 @@ public class Server extends IntentService {
         super("Server");
     }
 
-    public static void setState(String string) 
+    public static void setState(String string)
     {
         String[] str = string.split(";");
         gameInput[Integer.parseInt(str[0])] = GameInput.fromSerializedString(str[1]);
