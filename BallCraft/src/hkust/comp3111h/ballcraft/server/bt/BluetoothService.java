@@ -2,6 +2,7 @@ package hkust.comp3111h.ballcraft.server.bt;
 
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.client.Client;
+import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
 import hkust.comp3111h.ballcraft.server.Server;
 
 import java.io.IOException;
@@ -356,7 +357,7 @@ public class BluetoothService {
                 			message = message.split("__MSG__")[1];
                 			if (init) 
                 			{
-                    			Client.handleInitMsg(message);
+                    			MultiPlayerGameInitializer.handleInitMsg(message);
                     			init = false;
                 			}
                 			else Client.processSerializedUpdate(message);
