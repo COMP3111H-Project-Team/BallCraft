@@ -40,6 +40,9 @@ public class Client extends IntentService {
     
     public static boolean inputStarted = false;
     
+    public static int selfScore = 0;
+    public static int enemyScore = 0;
+    
     public Client() {
         super("ClientService");
         vibrator = (Vibrator) context
@@ -57,45 +60,6 @@ public class Client extends IntentService {
     public static void castSkill(Skill skill) {
         input.addSkill(skill);
     }
-    
-    /*
-    public static void handleInitMsg(String msg) {
-        String [] parts = msg.split("MAPDEF");
-        String [] mapDefs = parts[0].split(",");
-        
-        int terrain = Integer.parseInt(mapDefs[0]);
-        int mode = Integer.parseInt(mapDefs[1]);
-        
-        int ball1Type = Integer.parseInt(mapDefs[2]);
-        int ball2Type = Integer.parseInt(mapDefs[3]);
-        
-        ClientGameState.getClientGameState().setMapTerrain(terrain);
-        ClientGameState.getClientGameState().setMapMode(mode);
-        
-        String [] unitStrs = parts[1].split("/");
-        for (int i = 0; i < unitStrs.length; i++) {
-	        Unit unit = Unit.fromSerializedString(unitStrs[i]);
-	        if (unit instanceof Ball) {
-	            if (i == 0) {
-		            ClientGameState.getClientGameState()
-		                    .balls.add(Ball.getTypedBall((Ball) unit, ball1Type));
-	            } else if (i == 1) {
-		            ClientGameState.getClientGameState()
-		                    .balls.add(Ball.getTypedBall((Ball) unit, ball2Type));
-	            }
-	        } else if (unit instanceof Wall) {
-	            ClientGameState.getClientGameState()
-	                    .walls.add((Wall) unit);
-	        } else if (unit instanceof Plane) {
-	            ClientGameState.getClientGameState()
-	                    .planes.add((Plane) unit);
-	        }
-        }
-        gameInited = true;
-        remoteServerInited = true;
-        // Server.inited = true;
-    }
-    */
 
 	private static void handleMessage(String string) {
 		String[] parts = string.split(":");
@@ -103,6 +67,9 @@ public class Client extends IntentService {
 		if (parts[0].equals("dead")) {
 			if(parts[1].equals(myself)) {
 			    playerDied = true;
+			    enemyScore++;
+			} else {
+			    selfScore++;
 			}
 			
 		} else if (parts[0].equals("collision")) {
