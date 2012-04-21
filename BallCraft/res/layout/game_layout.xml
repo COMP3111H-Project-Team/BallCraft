@@ -4,12 +4,12 @@
     android:id="@+id/game_activity_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    
+       
 	<android.opengl.GLSurfaceView
 	    android:id="@+id/game_activity_gl_surface_view"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent" />
-	
+	   
 	<TextView 
 	    android:id="@+id/game_activity_status_dispaly"
 	    android:layout_width="fill_parent"
@@ -70,8 +70,17 @@
 	        android:textColor="#FF0000" />
 	    
 	</LinearLayout>
-	    
-
+	     
+    <TextView
+        android:id="@+id/game_activity_lose_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="30pt"
+        android:textColor="#FF0000"
+        android:textStyle="bold"
+        android:text="You Lose" />
+ 
 	<LinearLayout
 	    android:id="@+id/game_activity_menu"
 	    android:orientation="vertical"
