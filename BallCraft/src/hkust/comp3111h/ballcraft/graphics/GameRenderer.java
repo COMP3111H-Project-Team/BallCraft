@@ -40,6 +40,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
     private Context context;
     
+    private boolean rendering = false;
+    
     public GameRenderer(Context context) {
         this.context = context;
     }
@@ -117,63 +119,73 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         NaturesCureParticle.loadTexture(gl, context);
         SlipperyParticle.loadTexture(gl, context);
     }
+    
+    public void startRendering() {
+        this.rendering = true;
+    }
+    
+    public void stopRendering() {
+        this.rendering = false;
+    }
 
     public void onDrawFrame(GL10 gl) {
-        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-        gl.glLoadIdentity();
-        
-        ArrayList<Ball> balls = ClientGameState.getClientGameState().balls;
-        
-        Ball self = (Ball) balls.get(BallCraft.myself);
-        self.useGraphicalPosForDrawing = true;
-
-        float xPos = self.getPosition().x;
-        float yPos = self.getPosition().y;
-        
-        GLU.gluLookAt(gl, xPos, yPos + 60, 200, xPos, yPos, 5, 0, 0, 1);
-        
-        for (Plane p : ClientGameState.getClientGameState().planes) {
-            p.draw(gl);
-        }
-       
-        for (Wall w : ClientGameState.getClientGameState().walls) {
-            w.draw(gl);
-        }
-         
-        for (Ball b : balls) {
-            if (b instanceof ParticleBall) {
-                ((ParticleBall) b).move();
-            }
-            if (b.useGraphicalPosForDrawing) {
-                b.setGraphicalPosition(new Vec3(xPos, yPos, 10));
-            }
-            b.draw(gl);
-            if (b instanceof SolidBall) {
-                if (b.useGraphicalPosForDrawing) {
-		            BallShade.draw(gl, b.getGraphicalPosition().x + 10, 
-		                    b.getGraphicalPosition().y - 8);
-                } else {
-		            BallShade.draw(gl, b.getPosition().x + 10, b.getPosition().y - 8);
-                }
-            }
-        }
-        
-        ConcurrentHashMap<Integer, SkillEffect> effects = 
-                ClientGameState.getClientGameState().skillEffects;
-            
-        for (Integer key : effects.keySet()) {
-            SkillEffect d = effects.get(key);
-            if (d.timeout()) {
-                effects.remove(key);
-            } else {
-                d.move();
-	            d.draw(gl);
-            }
-        }
-        
-        long elapsed = System.currentTimeMillis() - time;
-        GameActivity.display("fps: " + 1000 / elapsed);
-        time = System.currentTimeMillis();
+        if (this.rendering) {
+	        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+	        gl.glLoadIdentity();
+	        
+	        ArrayList<Ball> balls = ClientGameState.getClientGameState().balls;
+	        
+	        Ball self = (Ball) balls.get(BallCraft.myself);
+	        self.useGraphicalPosForDrawing = true;
+	
+	        float xPos = self.getPosition().x;
+	        float yPos = self.getPosition().y;
+	        
+	        GLU.gluLookAt(gl, xPos, yPos + 60, 200, xPos, yPos, 5, 0, 0, 1);
+	        
+	        for (Plane p : ClientGameState.getClientGameState().planes) {
+	            p.draw(gl);
+	        }
+	       
+	        for (Wall w : ClientGameState.getClientGameState().walls) {
+	            w.draw(gl);
+	        }
+	         
+	        for (Ball b : balls) {
+	            if (b instanceof ParticleBall) {
+	                ((ParticleBall) b).move();
+	            }
+	            if (b.useGraphicalPosForDrawing) {
+	                b.setGraphicalPosition(new Vec3(xPos, yPos, 10));
+	            }
+	            b.draw(gl);
+	            if (b instanceof SolidBall) {
+	                if (b.useGraphicalPosForDrawing) {
+			            BallShade.draw(gl, b.getGraphicalPosition().x + 10, 
+			                    b.getGraphicalPosition().y - 8);
+	                } else {
+			            BallShade.draw(gl, b.getPosition().x + 10, b.getPosition().y - 8);
+	                }
+	            }
+	        }
+	        
+	        ConcurrentHashMap<Integer, SkillEffect> effects = 
+	                ClientGameState.getClientGameState().skillEffects;
+	            
+	        for (Integer key : effects.keySet()) {
+	            SkillEffect d = effects.get(key);
+	            if (d.timeout()) {
+	                effects.remove(key);
+	            } else {
+	                d.move();
+		            d.draw(gl);
+	            }
+	        }
+	        
+	        long elapsed = System.currentTimeMillis() - time;
+	        GameActivity.display("fps: " + 1000 / elapsed);
+	        time = System.currentTimeMillis();
+	    }
     }
     
 }
