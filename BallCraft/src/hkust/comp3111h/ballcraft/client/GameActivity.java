@@ -36,6 +36,8 @@ public class GameActivity extends Activity implements SensorEventListener {
     private SensorManager sensorManager;
 
     private LinearLayout menuLayout;
+    
+    private GameRenderer renderer;
 
     private static TextView debugView = null;
     private static String debugMsg = null;
@@ -82,7 +84,10 @@ public class GameActivity extends Activity implements SensorEventListener {
             } catch (Exception e) {
             }
         }
-        mGLView.setRenderer(new GameRenderer(this));
+        
+        self.renderer = new GameRenderer(this);
+        mGLView.setRenderer(self.renderer);
+        self.renderer.startRendering();
         
         TextView statusDisplay = (TextView) this.findViewById(R.id.game_activity_status_dispaly);
         statusDisplay.getBackground().setAlpha(200);
@@ -126,10 +131,13 @@ public class GameActivity extends Activity implements SensorEventListener {
         exitButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
+                renderer.stopRendering();
                 Server.stop();
                 Client.stop();
                 ClientGameState.clear();
-                if (BallCraft.isServer) ServerGameState.clear();
+                if (BallCraft.isServer) {
+                    ServerGameState.clear();
+                }
                 self.finish();
                 self.overridePendingTransition(android.R.anim.fade_in,
                         android.R.anim.fade_out);

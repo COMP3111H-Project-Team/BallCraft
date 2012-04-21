@@ -4,11 +4,8 @@ import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Slippery;
 import hkust.comp3111h.ballcraft.server.Ball;
-import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
-import hkust.comp3111h.ballcraft.server.Unit;
-import hkust.comp3111h.ballcraft.server.Wall;
 import hkust.comp3111h.ballcraft.settings.GameSettings;
 import hkust.comp3111h.ballcraft.skills.Skill;
 
@@ -33,13 +30,15 @@ public class Client extends IntentService {
     /**
      * Set to true when the game init msg is sent to the Client
      */
-    private static boolean gameInited = false;
+    public static boolean gameInited = false;
     
-    private static boolean remoteServerInited = false;
+    public static boolean remoteServerInited = false;
     
     private static boolean vibrOn;
     
     public static boolean playerDied = false;
+    
+    public static boolean inputStarted = false;
     
     public Client() {
         super("ClientService");
@@ -52,15 +51,16 @@ public class Client extends IntentService {
     public static void setInputAcceleration(float x, float y) {
         input.acceleration.x = -x;
         input.acceleration.y = -y;
+        inputStarted = true;
     }
 
     public static void castSkill(Skill skill) {
         input.addSkill(skill);
     }
     
+    /*
     public static void handleInitMsg(String msg) {
         String [] parts = msg.split("MAPDEF");
-        
         String [] mapDefs = parts[0].split(",");
         
         int terrain = Integer.parseInt(mapDefs[0]);
@@ -83,11 +83,6 @@ public class Client extends IntentService {
 		            ClientGameState.getClientGameState()
 		                    .balls.add(Ball.getTypedBall((Ball) unit, ball2Type));
 	            }
-	            /*
-	            ClientGameState.getClientGameState()
-	                    .balls.add(Ball.getTypedBall((Ball) unit, BallCraft.Ball.DARK_BALL));
-	                    // .balls.add((Ball) unit);
-                */
 	        } else if (unit instanceof Wall) {
 	            ClientGameState.getClientGameState()
 	                    .walls.add((Wall) unit);
@@ -100,6 +95,7 @@ public class Client extends IntentService {
         remoteServerInited = true;
         // Server.inited = true;
     }
+    */
 
 	private static void handleMessage(String string) {
 		String[] parts = string.split(":");
@@ -193,8 +189,10 @@ public class Client extends IntentService {
     public void run() {
         while (running) {
             if (Server.inited || remoteServerInited) {
-                ServerAdapter.sendToServer(input);
-                input.clearSkills();
+                if (inputStarted) {
+	                ServerAdapter.sendToServer(input);
+	                input.clearSkills();
+                }
             }
             try {
                 Thread.sleep(20);
