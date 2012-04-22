@@ -17,9 +17,6 @@
 package hkust.comp3111h.ballcraft.server.bt;
 
 import hkust.comp3111h.ballcraft.R;
-
-import java.util.Set;
-
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -30,14 +27,14 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * This Activity appears as a dialog. It lists any paired devices and
@@ -101,9 +98,6 @@ public class DeviceListActivity extends Activity {
         // Get the local Bluetooth adapter
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        // Get a set of currently paired devices
-        Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
-
     }
 
     @Override
@@ -149,6 +143,11 @@ public class DeviceListActivity extends Activity {
 
             // Get the device MAC address, which is the last 17 chars in the View
             String info = ((TextView) v).getText().toString();
+            if(info == getResources().getText(R.string.none_found).toString()){
+            	if(D)Log.e(TAG,"no device found");
+            	setResult(BluetoothActivity.CANCLE);
+            	finish();
+            } else {
             String address = info.substring(info.length() - 17);
             Log.i(TAG,address);
             // Create the result Intent and include the MAC address
@@ -158,6 +157,7 @@ public class DeviceListActivity extends Activity {
             // Set result and finish this Activity
             setResult(Activity.RESULT_OK, intent);
             finish();
+            }
         }
     };
 
