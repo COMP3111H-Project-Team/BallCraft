@@ -2,12 +2,12 @@ package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.MyApplication;
 import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.data.GameData;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Slippery;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
-import hkust.comp3111h.ballcraft.settings.GameSettings;
 import hkust.comp3111h.ballcraft.skills.Skill;
 
 import org.jbox2d.common.Vec2;
@@ -47,7 +47,7 @@ public class Client extends IntentService {
         super("ClientService");
         vibrator = (Vibrator) MyApplication.getAppContext()
                 .getSystemService(Service.VIBRATOR_SERVICE);
-        vibrOn = GameSettings.getVibrPref();
+        vibrOn = GameData.getVibrPref();
         input = new GameInput();
     }
 
