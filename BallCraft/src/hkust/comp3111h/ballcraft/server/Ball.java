@@ -159,7 +159,8 @@ public class Ball extends Unit {
     }
     
     public String toSerializedString() {
-        if (this.isOutOfBound(ServerGameState.getStateInstance().getUnits()) || this.dead) {
+        if (this.isOutOfBound(ServerGameState.getStateInstance().getUnits()) || this.dead)
+        {
 
 			if (status == Status.NORMAL)
 			{
@@ -171,6 +172,15 @@ public class Ball extends Unit {
 			
 			zv += g * 0.2;
 			z += zv * 0.2;	
+			if (z > 5000)
+			{
+				z = 0;
+				zv = 0;
+				status = Status.NORMAL; 
+				dead = false;
+				body.setLinearVelocity(O);
+				body.setTransform(O, 0);
+			}
         }
 
         String serialized = "";
@@ -181,7 +191,8 @@ public class Ball extends Unit {
         return serialized;
     }
 
-    public float getRadius() {
+    public float getRadius() 
+    {
         return body.getFixtureList().m_shape.m_radius;
     }
 
