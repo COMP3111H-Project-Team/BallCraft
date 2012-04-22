@@ -3,6 +3,7 @@ package hkust.comp3111h.ballcraft.server.bt;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.client.Client;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
+import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
 
@@ -40,7 +41,7 @@ public class BluetoothService {
 
     private BluetoothAdapter bluetoothAdapter = BluetoothAdapter
             .getDefaultAdapter();
-    private BluetoothServerSocket serverSocket;
+   // private BluetoothServerSocket serverSocket;
     private Handler handler;
     private Context context;
     private int state;
@@ -358,7 +359,7 @@ public class BluetoothService {
                 			message = message.split("__MSG__")[1];
                 			if (init) 
                 			{
-                    			Client.handleInitMsg(message);
+                    			MultiPlayerGameInitializer.handleInitMsg(message);
                     			init = false;
                 			}
                 			else Client.processSerializedUpdate(message);

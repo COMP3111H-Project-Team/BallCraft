@@ -3,6 +3,7 @@ package hkust.comp3111h.ballcraft.server;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.client.Client;
 import hkust.comp3111h.ballcraft.client.GameInput;
+import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
 import hkust.comp3111h.ballcraft.server.bt.BluetoothService;
 
 public class ServerAdapter {
@@ -47,7 +48,7 @@ public class ServerAdapter {
             	
     	if(id == BallCraft.myself) 
         {
-        	Client.handleInitMsg(msg);
+        	MultiPlayerGameInitializer.handleInitMsg(msg);
         	return;
         }
     	

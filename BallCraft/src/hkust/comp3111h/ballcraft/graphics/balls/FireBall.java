@@ -10,7 +10,7 @@ public class FireBall extends ParticleBall {
 
     public FireBall(float radius, Vec2 vec, float z) {
         super(radius, vec, z);
-        COUNT = 40;
+        COUNT = 60;
         
         Random randGen = new Random();
         

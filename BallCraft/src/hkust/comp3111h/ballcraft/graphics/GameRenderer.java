@@ -9,7 +9,10 @@ import hkust.comp3111h.ballcraft.graphics.balls.ParticleBall;
 import hkust.comp3111h.ballcraft.graphics.balls.SolidBall;
 import hkust.comp3111h.ballcraft.graphics.particles.DarkBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.FireBallParticle;
+import hkust.comp3111h.ballcraft.graphics.particles.FlameThrowParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.MassOverlordParticle;
+import hkust.comp3111h.ballcraft.graphics.particles.NaturesCureParticle;
+import hkust.comp3111h.ballcraft.graphics.particles.SlipperyParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterPropelParticle;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Crush;
@@ -31,12 +34,16 @@ import org.jbox2d.common.Vec3;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
+import android.os.Message;
+import android.view.View;
 
 public class GameRenderer implements GLSurfaceView.Renderer {
 
     private long time = 0;
 
     private Context context;
+    
+    private boolean rendering = false;
     
     public GameRenderer(Context context) {
         this.context = context;
@@ -46,7 +53,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         gl.glViewport(0, 0, width, height);
         gl.glMatrixMode(GL10.GL_PROJECTION);
         gl.glLoadIdentity();
-        GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 500f);
+        GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 400f);
         gl.glMatrixMode(GL10.GL_MODELVIEW);
         gl.glLoadIdentity();
 
@@ -112,64 +119,90 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         Crush.loadTexture(gl, context);
         RockBump.loadTexture(gl, context);
         MassOverlordParticle.loadTexture(gl, context);
+        NaturesCureParticle.loadTexture(gl, context);
+        SlipperyParticle.loadTexture(gl, context);
+        FlameThrowParticle.loadTexture(gl, context);
     }
-
+    
+    public void startRendering() {
+        this.rendering = true;
+    }
+    
+    public void stopRendering() {
+        this.rendering = false;
+    }
+    
     public void onDrawFrame(GL10 gl) {
-        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-        gl.glLoadIdentity();
-        
-        ArrayList<Ball> balls = ClientGameState.getClientGameState().balls;
-        
-        Ball self = (Ball) balls.get(BallCraft.myself);
-        self.useGraphicalPosForDrawing = true;
-
-        float xPos = self.getPosition().x;
-        float yPos = self.getPosition().y;
-        
-        GLU.gluLookAt(gl, xPos, yPos + 120, 180, xPos, yPos, 5, 0, 0, 1);
-        
-        for (Plane p : ClientGameState.getClientGameState().planes) {
-            p.draw(gl);
-        }
-       
-        for (Wall w : ClientGameState.getClientGameState().walls) {
-            w.draw(gl);
-        }
-         
-        for (Ball b : balls) {
-            if (b instanceof ParticleBall) {
-                ((ParticleBall) b).move();
-            }
-            if (b.useGraphicalPosForDrawing) {
-                b.setGraphicalPosition(new Vec3(xPos, yPos, 10));
-            }
-            b.draw(gl);
-            if (b instanceof SolidBall) {
-                if (b.useGraphicalPosForDrawing) {
-		            BallShade.draw(gl, b.getGraphicalPosition().x + 10, 
-		                    b.getGraphicalPosition().y - 8);
-                } else {
-		            BallShade.draw(gl, b.getPosition().x + 10, b.getPosition().y - 8);
-                }
-            }
-        }
-        
-        ConcurrentHashMap<Integer, SkillEffect> effects = 
-                ClientGameState.getClientGameState().skillEffects;
-            
-        for (Integer key : effects.keySet()) {
-            SkillEffect d = effects.get(key);
-            if (d.timeout()) {
-                effects.remove(key);
-            } else {
-                d.move();
-	            d.draw(gl);
-            }
-        }
-        
-        long elapsed = System.currentTimeMillis() - time;
-        GameActivity.display("fps: " + 1000 / elapsed);
-        time = System.currentTimeMillis();
+        if (this.rendering) {
+	        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+	        gl.glLoadIdentity();
+	        
+	        ArrayList<Ball> balls = ClientGameState.getClientGameState().balls;
+	        
+	        Ball self = (Ball) balls.get(BallCraft.myself);
+	        self.useGraphicalPosForDrawing = true;
+	
+	        float xPos = self.getPosition().x;
+	        float yPos = self.getPosition().y;
+	        float zPos = self.z;
+	        
+	        if (zPos > 200) {
+	            Message msg = new Message();
+	            msg.what = View.VISIBLE;
+	            GameActivity.loseViewHanlder.sendMessage(msg);
+	        } else {
+	            Message msg = new Message();
+	            msg.what = View.INVISIBLE;
+	            GameActivity.loseViewHanlder.sendMessage(msg);
+	        }
+	        
+	        GLU.gluLookAt(gl, xPos, yPos + 60 + zPos / 2, 200 - zPos, xPos, yPos, -zPos, 0, 0, 1);
+	        
+	        for (Plane p : ClientGameState.getClientGameState().planes) {
+	            p.draw(gl);
+	        }
+	       
+	        for (Wall w : ClientGameState.getClientGameState().walls) {
+	            w.draw(gl);
+	        }
+	         
+	        for (Ball b : balls) {
+	            if (b instanceof ParticleBall) {
+	                ((ParticleBall) b).move();
+	            }
+	            if (b.useGraphicalPosForDrawing) {
+	                b.setGraphicalPosition(new Vec3(xPos, yPos, zPos));
+	            }
+	            b.draw(gl);
+	            if (b instanceof SolidBall) {
+	                if (b.z <= 0) { // above the plane, draw shade
+		                if (b.useGraphicalPosForDrawing) {
+				            BallShade.draw(gl, b.getGraphicalPosition().x + 8, 
+				                    b.getGraphicalPosition().y - 2);
+		                } else {
+				            BallShade.draw(gl, b.getPosition().x + 8, b.getPosition().y - 2);
+		                }
+	                }
+	            }
+	        }
+	        
+	        ConcurrentHashMap<Integer, SkillEffect> effects = 
+	                ClientGameState.getClientGameState().skillEffects;
+	            
+	        for (Integer key : effects.keySet()) {
+	            SkillEffect d = effects.get(key);
+	            if (d.timeout()) {
+	                effects.remove(key);
+	            } else {
+	                d.move();
+		            d.draw(gl);
+	            }
+	        }
+	        
+	        long elapsed = System.currentTimeMillis() - time;
+	        GameActivity.display("fps: " + 1000 / elapsed);
+	        time = System.currentTimeMillis();
+	    }
     }
     
 }

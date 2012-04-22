@@ -36,10 +36,14 @@ public class GameActivity extends Activity implements SensorEventListener {
     private SensorManager sensorManager;
 
     private LinearLayout menuLayout;
+    
+    private GameRenderer renderer;
+    
+    private static TextView loseView = null;
 
     private static TextView debugView = null;
     private static String debugMsg = null;
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +86,10 @@ public class GameActivity extends Activity implements SensorEventListener {
             } catch (Exception e) {
             }
         }
-        mGLView.setRenderer(new GameRenderer(this));
+        
+        self.renderer = new GameRenderer(this);
+        mGLView.setRenderer(self.renderer);
+        self.renderer.startRendering();
         
         TextView statusDisplay = (TextView) this.findViewById(R.id.game_activity_status_dispaly);
         statusDisplay.getBackground().setAlpha(200);
@@ -102,9 +109,12 @@ public class GameActivity extends Activity implements SensorEventListener {
         skill2Button.getBackground().setAlpha(80);
         skill2Button.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                Client.castSkill(Skill.getSkill(BallCraft.Skill.PROPEL));
+                Client.castSkill(Skill.getSkill(BallCraft.Skill.BUMP));
             }
         });
+        
+        loseView = (TextView) this.findViewById(R.id.game_activity_lose_text);
+        loseView.setVisibility(View.INVISIBLE);
 
         debugView = (TextView) this.findViewById(R.id.game_activity_debug_view);
 
@@ -126,10 +136,13 @@ public class GameActivity extends Activity implements SensorEventListener {
         exitButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
+                renderer.stopRendering();
                 Server.stop();
                 Client.stop();
                 ClientGameState.clear();
-                if (BallCraft.isServer) ServerGameState.clear();
+                if (BallCraft.isServer) {
+                    ServerGameState.clear();
+                }
                 self.finish();
                 self.overridePendingTransition(android.R.anim.fade_in,
                         android.R.anim.fade_out);
@@ -169,6 +182,15 @@ public class GameActivity extends Activity implements SensorEventListener {
             menuLayout.setAnimation(alphaAnim);
         }
     }
+    
+    public static Handler loseViewHanlder = new Handler() {
+        
+        @Override
+        public void handleMessage(Message msg) {
+            loseView.setVisibility(msg.what);
+        }
+        
+    };
 
     /**
      * Used for displaying a debug message at the bottom of the screen

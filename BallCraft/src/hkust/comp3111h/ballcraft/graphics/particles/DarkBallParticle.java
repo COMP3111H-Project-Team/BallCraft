@@ -18,7 +18,7 @@ public class DarkBallParticle extends BallParticle {
     public DarkBallParticle(double theta, double rho, double r) {
         super(theta, rho, r);
         
-        this.size = 2;
+        this.size = 6;
         
         randGen = new Random();
         
