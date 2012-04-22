@@ -102,7 +102,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         skill2Button.getBackground().setAlpha(80);
         skill2Button.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                Client.castSkill(Skill.getSkill(BallCraft.Skill.Propel));
+                Client.castSkill(Skill.getSkill(BallCraft.Skill.PROPEL));
             }
         });
 
