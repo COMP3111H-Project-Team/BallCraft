@@ -390,7 +390,8 @@ public class BluetoothService {
                 Client.stop();
                 ClientGameState.clear();
                 if(BallCraft.isServer) ServerGameState.clear();
-                destroy();
+                if (BallCraft.isServer) ServerGameState.clear();
+                BluetoothService.this.destroy();
             }
         }
 
@@ -427,7 +428,7 @@ public class BluetoothService {
         bundle.putString(BluetoothActivity.TOAST, "Device connection was lost");
         msg.setData(bundle);
         handler.sendMessage(msg);
-        destroy();
+        this.destroy();
     }
     
     public void destroy(){

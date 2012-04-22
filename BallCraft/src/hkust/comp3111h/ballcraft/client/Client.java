@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.client;
 
+import hkust.comp3111h.MyApplication;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Slippery;
@@ -20,7 +21,6 @@ import android.os.Vibrator;
 public class Client extends IntentService {
     
     private static GameInput input;
-    private static Context context;
     private static Vibrator vibrator;
     private static boolean running = false;
 
@@ -45,7 +45,7 @@ public class Client extends IntentService {
     
     public Client() {
         super("ClientService");
-        vibrator = (Vibrator) context
+        vibrator = (Vibrator) MyApplication.getAppContext()
                 .getSystemService(Service.VIBRATOR_SERVICE);
         vibrOn = GameSettings.getVibrPref();
         input = new GameInput();
@@ -173,10 +173,6 @@ public class Client extends IntentService {
     protected void onHandleIntent(Intent intent) {
         running = true;
         this.run();
-    }
-
-    public static void setContext(Context context) {
-        Client.context = context;
     }
 
     public static void stop() {

@@ -43,10 +43,7 @@ public class SinglePlayerGameInitializer extends Activity {
         this.startService(serverIntent);        	
         
         this.startService(new Intent(this, Client.class)); // start running client
-        
-        MapParser.setContext(this);
-        Client.setContext(this);
-        
+                
         this.finish();
     }
     

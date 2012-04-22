@@ -67,7 +67,7 @@ public class MapSelectMenu extends Activity {
 
         GLSurfaceView glView = (GLSurfaceView) this
                 .findViewById(R.id.map_select_menu_gl_surface_view);
-        final MapRenderer renderer = new MapRenderer(this);
+        final MapRenderer renderer = new MapRenderer();
         
         renderer.setMap(this.mapFilenames.get(0));
         glView.setRenderer(renderer);
