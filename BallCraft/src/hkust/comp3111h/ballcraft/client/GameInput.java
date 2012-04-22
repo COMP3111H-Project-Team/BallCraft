@@ -53,7 +53,8 @@ public class GameInput {
         return serialized;
     }
 
-    public static GameInput fromSerializedString(String serialized) {
+    public static GameInput fromSerializedString(String serialized) 
+    {
         GameInput input = new GameInput();
 
         String[] parts = serialized.split("/");
