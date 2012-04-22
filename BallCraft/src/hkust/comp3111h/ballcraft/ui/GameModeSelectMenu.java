@@ -1,6 +1,8 @@
 package hkust.comp3111h.ballcraft.ui;
 
+import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
+import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
 import android.app.Activity;
 import android.content.Intent;
 import android.opengl.GLSurfaceView;
@@ -123,7 +125,7 @@ public class GameModeSelectMenu extends Activity {
             
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+                Intent intent = new Intent(self, MultiPlayerGameInitializer.class);
                 
                 if (self.limitedTimeRadioButton.isChecked()) {
                     intent.putExtra("GAME_MODE", "LIMITED_TIME");
@@ -148,6 +150,11 @@ public class GameModeSelectMenu extends Activity {
                         intent.putExtra("SCORE_LIMIT", 1000);
                     }
                 }
+                
+                intent.putExtra("ballSelected", 
+                        self.getIntent().getIntExtra("ballSelected", BallDef.WoodBall.id));
+                intent.putExtra("mapSelected", 
+                        self.getIntent().getStringExtra("mapSelected"));
                 
                 self.startActivity(intent);
             }

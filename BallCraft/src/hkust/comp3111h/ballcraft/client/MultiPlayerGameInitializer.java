@@ -47,6 +47,7 @@ public class MultiPlayerGameInitializer extends Activity {
                 BallDef.WoodBall.id);
         String mapSelected = intent.getStringExtra("mapSelected");
         
+        
         if (BallCraft.isServer)
         {
             Intent serverIntent = new Intent(this, Server.class);
