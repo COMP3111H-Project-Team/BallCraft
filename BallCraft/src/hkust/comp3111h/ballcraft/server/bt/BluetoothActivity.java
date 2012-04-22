@@ -15,8 +15,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class BluetoothActivity extends Activity {
-	
-	//final String kServerName = "sanya-htc";
+
 	//Debug
 	public final static String TAG = "bluetooth";
 	public final boolean D = true;
@@ -24,11 +23,12 @@ public class BluetoothActivity extends Activity {
 	private static BluetoothActivity context;
 	
 	// Message types sent from the BluetoothService Handler
-	public static final int MESSAGE_STATE_CHANGE = 1;
+	public static final int MESSAGE_LOST = 1;
 	public static final int MESSAGE_READ = 2;
 	public static final int MESSAGE_WRITE = 3;
 	public static final int MESSAGE_DEVICE_NAME = 4;
 	public static final int MESSAGE_TOAST = 5;
+	public static final int CANCLE = 6;
 	private static BluetoothService service;
 
 	// Intent request codes
@@ -59,24 +59,20 @@ public class BluetoothActivity extends Activity {
             finish();
             return;
         }
-        initialize();
+   	 	initialize();
     }
-
     
     public void initialize(){
-
-    	service = new BluetoothService(this, mHandler);
-    	
-    	setDiscoverableFor(300);
-    	
+    	service = new BluetoothService(this, mHandler);    	
+    	setDiscoverableFor(300);    	
     	Log.i(TAG,"initialize");
-
     }
     
     public void scanDevice(){
+    	Log.e(TAG,"start device activity");
     	 Intent serverIntent = new Intent(this, DeviceListActivity.class);
          startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
-
+         Log.e(TAG,"after start device activity");
          // Performing this check in onResume() covers the case in which BT was
          // not enabled during onStart(), so we were paused to enable it...
          // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
@@ -91,8 +87,7 @@ public class BluetoothActivity extends Activity {
     
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(D) Log.d(TAG, "onActivityResult " + resultCode);
-        Log.e(TAG,requestCode+"");
+        if(D) Log.e(TAG, "onActivityResult " + resultCode);
         switch (requestCode) {
         case REQUEST_CONNECT_DEVICE:
             // When DeviceListActivity returns with a device to connect
@@ -107,6 +102,8 @@ public class BluetoothActivity extends Activity {
                 // Attempt to connect to the device
                 service.connect(device);
 
+            } else if(resultCode == CANCLE){
+            	this.destroy();
             }
             break;
         case REQUEST_ENABLE_BT:
@@ -123,7 +120,12 @@ public class BluetoothActivity extends Activity {
             }
             break;
         case REQUEST_DISCOVERABLE:
-        	scanDevice();
+        	if (resultCode == Activity.RESULT_CANCELED) 
+        	{
+        		this.destroy();
+        	}else {
+        		scanDevice();
+        	}
         	break;
         }
         
@@ -141,7 +143,8 @@ public class BluetoothActivity extends Activity {
     public static void startGame()
     {
     	ServerAdapter.setService(service);
-        context.startActivity(new Intent(MainMenu.self, BallSelectMenu.class));
+        context.startActivity(new Intent(context, BallSelectMenu.class));
+        context.finish();
     }
    
     /**
@@ -168,15 +171,9 @@ public class BluetoothActivity extends Activity {
     	return recievedMessage;
     }
     
-    @Override
-    public void onPause(){
-    	super.onPause();
-    }
-
-    @Override
-    public synchronized void onResume() {
-        super.onResume();
-        if(D) Log.e(TAG, "+ ON RESUME +");
+    private void destroy(){
+    	service.stop();
+    	this.finish();
     }
     
     private final Handler mHandler = new Handler() {
@@ -184,22 +181,7 @@ public class BluetoothActivity extends Activity {
         public void handleMessage(Message msg) {
 //        	Log.e("msg received", "Some Message");
             switch (msg.what) {
-            case MESSAGE_STATE_CHANGE:
-                if(D) Log.i(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
-                switch (msg.arg1) {
-                case BluetoothService.STATE_CONNECTED:
-//                    mTitle.setText(R.string.title_connected_to);
-//                    mTitle.append(mConnectedDeviceName);
-                    break;
-                case BluetoothService.STATE_CONNECTING:
-//                    mTitle.setText(R.string.title_connecting);
-                    break;
-                case BluetoothService.STATE_LISTEN:
-                case BluetoothService.STATE_NONE:
-//                    mTitle.setText(R.string.title_not_connected);
-                    break;
-                }
-                break;
+            
             case MESSAGE_WRITE:
                 byte[] writeBuf = (byte[]) msg.obj;
                 // construct a string from the buffer
@@ -220,6 +202,9 @@ public class BluetoothActivity extends Activity {
                 Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST),
                                Toast.LENGTH_SHORT).show();
                 break;
+            case MESSAGE_LOST:
+            	destroy();
+            	break;
             }
         }
     };

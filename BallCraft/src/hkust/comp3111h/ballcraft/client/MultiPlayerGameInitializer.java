@@ -55,11 +55,9 @@ public class MultiPlayerGameInitializer extends Activity {
             serverIntent.putExtra("map", mapSelected);
             this.startService(serverIntent);        	
         }
-
+        
         this.startService(new Intent(this, Client.class)); // start running client
 
-        MapParser.setContext(this);
-        Client.setContext(this);
     }
     
     public static void handleInitMsg(String msg) {
@@ -105,7 +103,7 @@ public class MultiPlayerGameInitializer extends Activity {
 
         Intent gameIntent = new Intent(MainMenu.self, GameActivity.class);
         self.startActivity(gameIntent);
-
+    
         self.finish();
     }
 

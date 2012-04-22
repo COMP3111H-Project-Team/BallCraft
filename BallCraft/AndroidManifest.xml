@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hkust.comp3111h.ballcraft"
     android:versionCode="1"
+    android:installLocation="preferExternal"
     android:versionName="1.0" >
 
     <uses-sdk android:minSdkVersion="8" />
@@ -12,6 +13,7 @@
     <application
         android:icon="@drawable/icon"
         android:label="@string/app_name" 
+        android:name="hkust.comp3111h.MyApplication"
         android:debuggable="true">
         <activity
             android:name=".ui.SplashScreenUs"
