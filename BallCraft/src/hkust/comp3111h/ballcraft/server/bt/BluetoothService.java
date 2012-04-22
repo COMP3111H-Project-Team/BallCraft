@@ -41,7 +41,7 @@ public class BluetoothService {
 
     private BluetoothAdapter bluetoothAdapter = BluetoothAdapter
             .getDefaultAdapter();
-    private BluetoothServerSocket serverSocket;
+   // private BluetoothServerSocket serverSocket;
     private Handler handler;
     private Context context;
     private int state;
@@ -389,8 +389,9 @@ public class BluetoothService {
                 Server.stop();
                 Client.stop();
                 ClientGameState.clear();
+                if(BallCraft.isServer) ServerGameState.clear();
                 if (BallCraft.isServer) ServerGameState.clear();
-                destroy();
+                BluetoothService.this.destroy();
             }
         }
 
@@ -427,7 +428,7 @@ public class BluetoothService {
         bundle.putString(BluetoothActivity.TOAST, "Device connection was lost");
         msg.setData(bundle);
         handler.sendMessage(msg);
-        destroy();
+        this.destroy();
     }
     
     public void destroy(){
