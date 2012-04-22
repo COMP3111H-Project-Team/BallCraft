@@ -1,6 +1,5 @@
 package hkust.comp3111h.ballcraft.skills;
 
-import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
 import hkust.comp3111h.ballcraft.server.Unit;
 
@@ -17,6 +16,8 @@ public class Mine extends Skill {
         this.player = player;
         this.id = id;
         this.duration = -1;
+        
+        maxSkillNumber = 3;
 	}
 
 	@Override
