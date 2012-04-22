@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import org.jbox2d.common.Vec2;
 
+import android.util.Log;
+
 public class GameInput {
 
     public Vec2 acceleration;
@@ -67,7 +69,7 @@ public class GameInput {
             String[] skillVals = parts[1].split(",");
             for (int i = 0; i < skillVals.length; i++) {
             	String[] str = skillVals[i].split("&");
-                input.addSkill(Skill.getSkill(Integer.parseInt(str[0]),Integer.parseInt((str[1]))));
+                input.addSkill(Skill.getSkill(Integer.parseInt(str[0]),Integer.parseInt(str[1])));
             }
         }
 

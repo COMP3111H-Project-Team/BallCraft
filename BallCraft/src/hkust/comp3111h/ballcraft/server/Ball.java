@@ -172,7 +172,7 @@ public class Ball extends Unit {
 			
 			zv += g * 0.2;
 			z += zv * 0.2;	
-			if (z > 500)
+			if (z > 5000)
 			{
 				z = 0;
 				zv = 0;
