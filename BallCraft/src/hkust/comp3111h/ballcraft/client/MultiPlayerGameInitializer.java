@@ -17,7 +17,7 @@ import android.view.WindowManager;
 
 public class MultiPlayerGameInitializer extends Activity {
     
-	//Dubug
+	// Debug
 	public final String TAG = "MultiInit";
 	public final boolean D = true;
 	
@@ -37,6 +37,7 @@ public class MultiPlayerGameInitializer extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         this.setContentView(R.layout.game_initializer_layout);
+        
         initGame();
     }
 
@@ -58,8 +59,6 @@ public class MultiPlayerGameInitializer extends Activity {
 
         MapParser.setContext(this);
         Client.setContext(this);
-
-        this.finish();
     }
     
     public static void handleInitMsg(String msg) {
@@ -105,6 +104,8 @@ public class MultiPlayerGameInitializer extends Activity {
 
         Intent gameIntent = new Intent(MainMenu.self, GameActivity.class);
         self.startActivity(gameIntent);
+
+        self.finish();
     }
 
     @Override

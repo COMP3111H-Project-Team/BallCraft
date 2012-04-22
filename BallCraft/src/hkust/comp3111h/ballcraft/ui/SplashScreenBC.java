@@ -1,7 +1,7 @@
 package hkust.comp3111h.ballcraft.ui;
 
 import hkust.comp3111h.ballcraft.R;
-import hkust.comp3111h.ballcraft.settings.GameSettings;
+import hkust.comp3111h.ballcraft.data.GameData;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,7 +35,7 @@ public class SplashScreenBC extends Activity {
     }
     
     private void initPrefs() {
-        GameSettings.setContext(self);
+        GameData.setContext(self);
     }
 
     public Handler handler = new Handler() {

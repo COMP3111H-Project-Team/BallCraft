@@ -1,5 +1,7 @@
 package hkust.comp3111h.ballcraft;
 
+import hkust.comp3111h.ballcraft.data.GameData;
+
 /**
  * The super class of all the ball definitions, used to specific the static
  * data of different balls
@@ -14,6 +16,7 @@ public class BallDef {
 	    public static final int mass = 5;
 	    public static final int friction = 3;
 	    public static final int magic = 3;
+	    public static final int unlockExp = 0;
 	}
 	
 	public static final class RockBall {
@@ -24,6 +27,7 @@ public class BallDef {
 	    public static final int mass = 7;
 	    public static final int friction = 7;
 	    public static final int magic = 4;
+	    public static final int unlockExp = 50;
 	}
 	
 	public static final class WaterBall {
@@ -34,6 +38,7 @@ public class BallDef {
 	    public static final int mass = 6;
 	    public static final int friction = 3;
 	    public static final int magic = 6;
+	    public static final int unlockExp = 200;
 	}
 	
 	public static final class IronBall {
@@ -44,6 +49,7 @@ public class BallDef {
 	    public static final int mass = 10;
 	    public static final int friction = 4;
 	    public static final int magic = 7;
+	    public static final int unlockExp = 600;
 	}
 	
 	public static final class FireBall {
@@ -54,6 +60,7 @@ public class BallDef {
 	    public static final int mass = 4;
 	    public static final int friction = 5;
 	    public static final int magic = 8;
+	    public static final int unlockExp = 1500;
 	}
 	
 	public static final class DarkBall {
@@ -64,6 +71,7 @@ public class BallDef {
 	    public static final int mass = 4;
 	    public static final int friction = 4;
 	    public static final int magic = 10;
+	    public static final int unlockExp = 3000;
 	}
 	
     @SuppressWarnings("rawtypes")
@@ -148,14 +156,25 @@ public class BallDef {
 	    }
 	}
 	
+	public static int getBallUnlockExpById(int id) {
+	    if (id < balls.length) {
+	        try {
+	            return balls[id].getField("unlockExp").getInt(0);
+	        } catch(Exception e) {
+	            return 0;
+	        }
+	    } else {
+	        return 0;
+	    }
+	}
+	
 	/**
 	 * Check whether a ball has been unlocked
 	 * @param id The id of the ball
 	 * @return True if the ball is unlocked
 	 */
 	public static boolean ballUnlocked(int id) {
-	    // TODO: link this with shared preferences
-	    return id < 3;
+	    return GameData.getExperience() >= getBallUnlockExpById(id);
 	}
 	
 }
