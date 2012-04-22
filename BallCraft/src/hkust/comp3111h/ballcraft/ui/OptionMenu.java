@@ -1,13 +1,10 @@
 package hkust.comp3111h.ballcraft.ui;
 
 import hkust.comp3111h.ballcraft.R;
-import hkust.comp3111h.ballcraft.settings.GameSettings;
+import hkust.comp3111h.ballcraft.data.GameData;
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
@@ -46,14 +43,14 @@ public class OptionMenu extends Activity {
         CheckBox musicCheck = (CheckBox) self.findViewById(R.id.option_menu_music_checkbox);
         CheckBox vibrCheck = (CheckBox) self.findViewById(R.id.option_menu_vibration_checkbox);
         
-        musicCheck.setChecked(GameSettings.getMusicPref());
-        vibrCheck.setChecked(GameSettings.getVibrPref());
+        musicCheck.setChecked(GameData.getMusicPref());
+        vibrCheck.setChecked(GameData.getVibrPref());
         
         musicCheck.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
             public void onCheckedChanged(CompoundButton buttonView,
                     boolean isChecked) {
-                GameSettings.setMusicPref(isChecked);
+                GameData.setMusicPref(isChecked);
             }
             
         });
@@ -62,7 +59,7 @@ public class OptionMenu extends Activity {
 
             public void onCheckedChanged(CompoundButton buttonView,
                     boolean isChecked) {
-                GameSettings.setVibrPref(isChecked);
+                GameData.setVibrPref(isChecked);
             }
             
         });

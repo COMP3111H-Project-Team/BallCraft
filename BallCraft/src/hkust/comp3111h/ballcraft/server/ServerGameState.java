@@ -72,7 +72,16 @@ public class ServerGameState {
     		{
     			if(D) Log.e(TAG, i+"");
     			skills.get(i).setTime();
-	    		activeSkills.add(skills.get(i));
+    			
+    			int count = 0;
+    			for (Skill skill:activeSkills)
+    			{
+    				if (skill.getID() == skills.get(i).getID() && skill.getPlayer() == skills.get(i).getPlayer())
+    					count++;
+    			}
+    			if (count > skills.get(i).getMaxCount()) continue;
+	    		
+    			activeSkills.add(skills.get(i));
 	    		Server.extraMessage("skillInit:" + skills.get(i).getID() + "&" + skills.get(i).getInitMsg());
     		}
     	}
