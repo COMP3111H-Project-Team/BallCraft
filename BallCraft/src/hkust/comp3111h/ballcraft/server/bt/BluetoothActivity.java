@@ -120,7 +120,12 @@ public class BluetoothActivity extends Activity {
             }
             break;
         case REQUEST_DISCOVERABLE:
-        	scanDevice();
+        	if (resultCode == Activity.RESULT_CANCELED) 
+        	{
+        		this.destroy();
+        	}else {
+        		scanDevice();
+        	}
         	break;
         }
         
@@ -138,7 +143,8 @@ public class BluetoothActivity extends Activity {
     public static void startGame()
     {
     	ServerAdapter.setService(service);
-        context.startActivity(new Intent(MainMenu.self, BallSelectMenu.class));
+        context.startActivity(new Intent(context, BallSelectMenu.class));
+        context.finish();
     }
    
     /**

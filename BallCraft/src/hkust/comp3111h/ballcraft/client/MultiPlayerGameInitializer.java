@@ -55,6 +55,7 @@ public class MultiPlayerGameInitializer extends Activity {
         }
         
         this.startService(new Intent(this, Client.class)); // start running client
+
     }
     
     public static void handleInitMsg(String msg) {
@@ -100,7 +101,7 @@ public class MultiPlayerGameInitializer extends Activity {
 
         Intent gameIntent = new Intent(MainMenu.self, GameActivity.class);
         self.startActivity(gameIntent);
-        
+    
         self.finish();
     }
 

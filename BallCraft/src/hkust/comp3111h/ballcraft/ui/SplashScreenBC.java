@@ -31,13 +31,8 @@ public class SplashScreenBC extends Activity {
 
         handler.sendEmptyMessageDelayed(0, 500);
         
-        self.initPrefs();
     }
     
-    private void initPrefs() {
-        GameSettings.setContext(self);
-    }
-
     public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
