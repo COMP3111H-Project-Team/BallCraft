@@ -14,8 +14,13 @@ import java.util.Vector;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import android.util.Log;
+
 public class ServerGameState {
-    
+    //Debug
+	public boolean D = true;
+	final String TAG = "ServerGameState";
+	
     private static ArrayList<Unit> units;
     
     public static World world;
@@ -53,7 +58,7 @@ public class ServerGameState {
         activeSkills = new ArrayList<Skill>();
     }
 
-    public void processPlayerInput(int playerId, GameInput input) 
+    public synchronized void processPlayerInput(int playerId, GameInput input) 
     {
       	if (units.get(playerId).getStatus() == Status.NORMAL)
     	{
@@ -65,6 +70,7 @@ public class ServerGameState {
     		ArrayList<Skill> skills = input.getSkills();
     		for (int i = 0; i < skills.size(); i++)
     		{
+    			if(D) Log.e(TAG, i+"");
     			skills.get(i).setTime();
 	    		activeSkills.add(skills.get(i));
 	    		Server.extraMessage("skillInit:" + skills.get(i).getID() + "&" + skills.get(i).getInitMsg());

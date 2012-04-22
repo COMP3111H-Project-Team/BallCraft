@@ -2,10 +2,8 @@ package hkust.comp3111h.ballcraft.server.bt;
 
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.client.Client;
-import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
 import hkust.comp3111h.ballcraft.server.Server;
-import hkust.comp3111h.ballcraft.server.ServerGameState;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +14,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,7 +40,7 @@ public class BluetoothService {
             .getDefaultAdapter();
    // private BluetoothServerSocket serverSocket;
     private Handler handler;
-    private Context context;
+    private BluetoothActivity context;
     private int state;
     private AcceptThread acceptThread;
     private ConnectThread connectThread;
@@ -53,7 +50,7 @@ public class BluetoothService {
     
     private boolean serverInit;
     
-    public BluetoothService(Context context, Handler handler){
+    public BluetoothService(BluetoothActivity context, Handler handler){
     	this.context = context;
     	this.handler = handler;
     	
@@ -386,11 +383,11 @@ public class BluetoothService {
                         .sendToTarget();
             } catch (IOException e) {
                 Log.e(TAG, "Exception during write", e);
-                Server.stop();
+                /*Server.stop();
                 Client.stop();
                 ClientGameState.clear();
                 if(BallCraft.isServer) ServerGameState.clear();
-                if (BallCraft.isServer) ServerGameState.clear();
+                if (BallCraft.isServer) ServerGameState.clear();*/
                 BluetoothService.this.destroy();
             }
         }
@@ -416,7 +413,7 @@ public class BluetoothService {
         bundle.putString(BluetoothActivity.TOAST, "Unable to connect device");
         msg.setData(bundle);
         handler.sendMessage(msg);
-        destroy();
+        this.destroy();
     }
     
     private void connectionLost() {
@@ -432,7 +429,16 @@ public class BluetoothService {
     }
     
     public void destroy(){
-    	Message msg = handler.obtainMessage(BluetoothActivity.MESSAGE_LOST);
-        handler.sendMessage(msg);
+    	 // Cancel the thread that completed the connection
+        if (connectThread != null) {connectThread.cancel(); connectThread = null;}
+
+        // Cancel any thread currently running a connection
+        if (connectedThread != null) {connectedThread.cancel(); connectedThread = null;}
+        
+        // Cancel the accept thread because we only want to connect to one device
+        if (acceptThread != null) {acceptThread.cancel(); acceptThread = null;}
+    	if(D)Log.e(TAG,"service destroy");
+    	context.destroy();
+      //  handler.sendMessage(msg);
     }
 }
