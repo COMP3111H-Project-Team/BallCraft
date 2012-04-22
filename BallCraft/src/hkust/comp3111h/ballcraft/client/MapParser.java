@@ -1,5 +1,7 @@
 package hkust.comp3111h.ballcraft.client;
 
+import hkust.comp3111h.MyApplication;
+
 import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.IOException;
@@ -16,11 +18,6 @@ import android.content.Context;
 import android.util.Log;
 
 public class MapParser{
-	private static Context context;
-	
-	public static void setContext(Context con) {
-		context = con;
-	}
 	
 	public static Map getMapFromXML(String fileName) {
 		Map map = new Map();
@@ -36,7 +33,7 @@ public class MapParser{
 	    	
 	    	//load file
 	    	builder = factory.newDocumentBuilder();
-	    	inputStream = context.getResources().getAssets().open(fileName);
+	    	inputStream = MyApplication.getAppContext().getResources().getAssets().open(fileName);
 	    	document = builder.parse(inputStream);
 	    	//Log.d("map", "load document");
 	    	
@@ -118,7 +115,7 @@ public class MapParser{
         int[][] layer = new int[height][width];
         int i_data = 0;
         try {
-            InputStream inputStream = context.getResources().getAssets()
+            InputStream inputStream = MyApplication.getAppContext().getResources().getAssets()
                     .open(fileName);
             // Wrap the FileInputStream with a DataInputStream
             DataInputStream data_in = new DataInputStream(inputStream);

@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.ui;
 
+import hkust.comp3111h.MyApplication;
 import hkust.comp3111h.ballcraft.MapModeDef;
 import hkust.comp3111h.ballcraft.TerrainDef;
 import hkust.comp3111h.ballcraft.client.Map;
@@ -13,26 +14,20 @@ import java.util.Vector;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
-import android.util.Log;
 
 public class MapRenderer implements GLSurfaceView.Renderer {
     
     private Map currMap;
-    
-    private Context context;
-    
+        
     private Vector<Unit> units;
     
     private float rotateAngle = 0;
     
     private boolean shouldReload = true;
     
-    public MapRenderer(Context context) {
-        this.context = context;
-        MapParser.setContext(context);
+    public MapRenderer() {
     }
 
     @Override
@@ -98,9 +93,9 @@ public class MapRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onDrawFrame(GL10 gl) {
         if (this.shouldReload) {
-	        Wall.loadTexture(gl, context, 
+	        Wall.loadTexture(gl, MyApplication.getAppContext(), 
 	                TerrainDef.getTerrainWallTextureBallId(currMap.getTerrain()));
-	        Plane.loadTexture(gl, context, 
+	        Plane.loadTexture(gl, MyApplication.getAppContext(), 
 	                TerrainDef.getTerrainFloorTextureById(currMap.getTerrain()));
 	        this.loadLight(gl);
 	        this.shouldReload = false;
