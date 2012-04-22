@@ -7,6 +7,7 @@ import hkust.comp3111h.ballcraft.graphics.skilleffects.Slippery;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
+import hkust.comp3111h.ballcraft.server.ServerGameState;
 import hkust.comp3111h.ballcraft.settings.GameSettings;
 import hkust.comp3111h.ballcraft.skills.Skill;
 
@@ -14,9 +15,9 @@ import org.jbox2d.common.Vec2;
 
 import android.app.IntentService;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
+import android.util.Log;
 
 public class Client extends IntentService {
     
@@ -154,16 +155,32 @@ public class Client extends IntentService {
 	}
 
     public void run() {
+    	int time = 0;
+    	boolean started = false;
         while (running) {
             if (Server.inited || remoteServerInited) {
                 if (inputStarted) {
 	                ServerAdapter.sendToServer(input);
 	                input.clearSkills();
+	                started = true;
                 }
             }
             try {
                 Thread.sleep(20);
             } catch (InterruptedException e) {
+            }
+            if (!started)
+            {
+            	time++;
+            	if (time > 1500)
+            	{
+            		Log.e("Client waiting for server", "Time Out");
+                	Server.stop();
+                    Client.stop();
+                    ClientGameState.clear();
+                    if (BallCraft.isServer) {ServerGameState.clear();}
+                    return;
+            	}
             }
         }
 

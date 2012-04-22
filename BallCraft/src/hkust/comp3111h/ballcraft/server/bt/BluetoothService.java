@@ -43,7 +43,7 @@ public class BluetoothService {
             .getDefaultAdapter();
    // private BluetoothServerSocket serverSocket;
     private Handler handler;
-    private Context context;
+    
     private int state;
     private AcceptThread acceptThread;
     private ConnectThread connectThread;
@@ -54,7 +54,6 @@ public class BluetoothService {
     private boolean serverInit;
     
     public BluetoothService(Context context, Handler handler){
-    	this.context = context;
     	this.handler = handler;
     	
     	init = true;
