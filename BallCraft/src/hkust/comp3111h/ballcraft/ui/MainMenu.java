@@ -109,7 +109,7 @@ public class MainMenu extends Activity implements SensorEventListener {
                 self.startActivity(intent);
                 /*
                 Intent intent = new Intent(self,
-                        BallSelectMenu.class);
+                        GameModeSelectMenu.class);
                 self.startActivity(intent);
                 */
             }

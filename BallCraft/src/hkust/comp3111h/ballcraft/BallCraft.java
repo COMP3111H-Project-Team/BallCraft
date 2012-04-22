@@ -1,6 +1,5 @@
 package hkust.comp3111h.ballcraft;
 
-
 /**
  * This class includes the constants and definitions of the game
  */
