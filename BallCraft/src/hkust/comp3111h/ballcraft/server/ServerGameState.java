@@ -89,7 +89,6 @@ public class ServerGameState {
         }
     }
 
-
     private void afterStep() 
     {
         for (int i = 0; i < activeSkills.size(); i++)
