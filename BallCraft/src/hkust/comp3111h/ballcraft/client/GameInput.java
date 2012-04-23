@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 import org.jbox2d.common.Vec2;
 
-import android.util.Log;
-
 public class GameInput {
 
     public Vec2 acceleration;

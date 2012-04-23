@@ -29,10 +29,10 @@ public class GameModeSelectMenu extends Activity {
     private RadioButton time10MinRadioButton;
     
     private RelativeLayout scoreSelectLayout;
+    private RadioButton score10RadioButton;
+    private RadioButton score30RadioButton;
+    private RadioButton score50RadioButton;
     private RadioButton score100RadioButton;
-    private RadioButton score300RadioButton;
-    private RadioButton score500RadioButton;
-    private RadioButton score1000RadioButton;
     
     private ImageView selectButton;
     
@@ -83,17 +83,17 @@ public class GameModeSelectMenu extends Activity {
         self.scoreSelectLayout = 
                 (RelativeLayout) self.findViewById(R.id.game_mode_score_layout);
         
+        self.score10RadioButton = 
+                (RadioButton) self.findViewById(R.id.game_mode_score_10);
+        
+        self.score30RadioButton = 
+                (RadioButton) self.findViewById(R.id.game_mode_score_30);
+        
+        self.score50RadioButton = 
+                (RadioButton) self.findViewById(R.id.game_mode_score_50);
+        
         self.score100RadioButton = 
                 (RadioButton) self.findViewById(R.id.game_mode_score_100);
-        
-        self.score300RadioButton = 
-                (RadioButton) self.findViewById(R.id.game_mode_score_300);
-        
-        self.score500RadioButton = 
-                (RadioButton) self.findViewById(R.id.game_mode_score_500);
-        
-        self.score1000RadioButton = 
-                (RadioButton) self.findViewById(R.id.game_mode_score_1000);
         
         self.selectButton = 
                 (ImageView) self.findViewById(R.id.game_mode_select_view);
@@ -140,14 +140,14 @@ public class GameModeSelectMenu extends Activity {
                     }
                 } else if (self.limitedScoreRadioButton.isChecked()) {
                     intent.putExtra("GAME_MODE", "LIMITED_SCORE");
-                    if (self.score100RadioButton.isChecked()) {
+                    if (self.score10RadioButton.isChecked()) {
+                        intent.putExtra("SCORE_LIMIT", 10);
+                    } else if (self.score30RadioButton.isChecked()) {
+                        intent.putExtra("SCORE_LIMIT", 30);
+                    } else if (self.score50RadioButton.isChecked()) {
+                        intent.putExtra("SCORE_LIMIT", 50);
+                    } else if (self.score100RadioButton.isChecked()) {
                         intent.putExtra("SCORE_LIMIT", 100);
-                    } else if (self.score300RadioButton.isChecked()) {
-                        intent.putExtra("SCORE_LIMIT", 300);
-                    } else if (self.score500RadioButton.isChecked()) {
-                        intent.putExtra("SCORE_LIMIT", 500);
-                    } else if (self.score1000RadioButton.isChecked()) {
-                        intent.putExtra("SCORE_LIMIT", 1000);
                     }
                 }
                 
@@ -157,6 +157,9 @@ public class GameModeSelectMenu extends Activity {
                         self.getIntent().getStringExtra("mapSelected"));
                 
                 self.startActivity(intent);
+                self.overridePendingTransition(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                self.finish();
             }
             
         });

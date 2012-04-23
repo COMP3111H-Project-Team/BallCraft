@@ -36,8 +36,6 @@ import org.jbox2d.common.Vec3;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
-import android.os.Message;
-import android.view.View;
 
 public class GameRenderer implements GLSurfaceView.Renderer {
 
@@ -46,8 +44,6 @@ public class GameRenderer implements GLSurfaceView.Renderer {
     private Context context;
     
     private boolean rendering = false;
-    
-    private float lastZPos = 0;
     
     public GameRenderer(Context context) {
         this.context = context;

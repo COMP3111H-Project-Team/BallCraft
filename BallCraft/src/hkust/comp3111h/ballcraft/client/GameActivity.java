@@ -7,6 +7,7 @@ import hkust.comp3111h.ballcraft.SkillDef;
 import hkust.comp3111h.ballcraft.data.GameData;
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import hkust.comp3111h.ballcraft.server.Server;
+import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
 import hkust.comp3111h.ballcraft.skills.Skill;
 import android.app.Activity;
@@ -18,7 +19,6 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -81,13 +81,11 @@ public class GameActivity extends Activity implements SensorEventListener {
         this.setContentView(R.layout.game_layout);
 
         mGLView = (GLSurfaceView) this.findViewById(R.id.game_activity_gl_surface_view);
+        
         // here we need to wait for the init data to be sent from the server to create the render
         // and start drawing
-        int time = 0;
         while (!Client.isGameInited()) {
             try {
-            	Log.i("starting game", "waiting for server, " + time + " s");
-            	time++;
                 Thread.sleep(1000);                
             } catch (Exception e) {
             }
@@ -112,13 +110,11 @@ public class GameActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View v) {
                 Client.castSkill(Skill.getSkill(BallCraft.Skill.LANDMINE));
-                /*
                 skill1Button.setEnabled(false);
                 Message msg = new Message();
                 msg.what = 1;
                 skillCoolDownHandler.sendMessageDelayed(msg, 
                         SkillDef.getCoolDownTimeById(skills[0]));
-                        */
             }
             
         });
@@ -132,13 +128,11 @@ public class GameActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View v) {
                 Client.castSkill(Skill.getSkill(BallCraft.Skill.ROCK_BUMP));
-                /*
                 skill2Button.setEnabled(false);
                 Message msg = new Message();
                 msg.what = 2;
                 skillCoolDownHandler.sendMessageDelayed(msg, 
                         SkillDef.getCoolDownTimeById(skills[1]));
-                        */
             }
             
         });
@@ -176,6 +170,9 @@ public class GameActivity extends Activity implements SensorEventListener {
     }
     
     private void exitGame() {
+        if (!BallCraft.isSinglePlayer()) {
+            ServerAdapter.sendGameInterruptMessage();
+        }
         renderer.stopRendering();
         Server.stop();
         Client.stop();

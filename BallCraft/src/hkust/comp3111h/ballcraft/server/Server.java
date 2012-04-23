@@ -31,6 +31,15 @@ public class Server extends IntentService {
     
     static private int clientBall = 0;
     
+    static private String gameMode = "Limited Score";
+    
+    static private int limitValue = 100;
+    
+    static private int currScore;
+    
+    static private long initTime;
+    static private long currTime;
+    
     public Server() 
     {
         super("Server");
@@ -42,7 +51,6 @@ public class Server extends IntentService {
         String[] str = string.split(";");
         try
         {
-            // gameInputs[Integer.parseInt(str[0])] = GameInput.fromSerializedString(str[1]);        	
 	        ServerGameState.getStateInstance().processPlayerInput(Integer.parseInt(str[0]), 
 	                GameInput.fromSerializedString(str[1]));
         }
@@ -73,12 +81,6 @@ public class Server extends IntentService {
             long time = System.currentTimeMillis();
             gameState.onEveryFrame((int) (time - lastRun));
             lastRun = System.currentTimeMillis();
-
-            /*
-            for (int i = 0; i < BallCraft.maxPlayer; i++) {
-                ServerGameState.getStateInstance().processPlayerInput(i, gameInputs[i]); // process
-            }
-            */
             
             String temp = new String(msg);
 			msg = "";
@@ -90,16 +92,19 @@ public class Server extends IntentService {
 				        + generateGameUpdater().toSerializedString(), i);	
 	        }
 
-	        /*
             try {
-                long sleep = 30 + time - System.currentTimeMillis(); 
+                currTime = System.currentTimeMillis();
+                long sleep = 30 + time - currTime;
                 if (sleep > 0 ) {
                     Thread.sleep(sleep);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            */
+            
+            if (isGameEnded()) {
+                ServerAdapter.sendEndGameMessage();
+            }
         }
 
     }
@@ -124,11 +129,12 @@ public class Server extends IntentService {
             time++;
             if (time > 30)
             {
-            	Log.e("Server waiting for client", "Time Out");
             	Server.stop();
                 Client.stop();
                 ClientGameState.clear();
-                if (BallCraft.isServer) {ServerGameState.clear();}
+                if (BallCraft.isServer) {
+                    ServerGameState.clear();
+                }
             	return;
             }
         }
@@ -147,13 +153,29 @@ public class Server extends IntentService {
         lastRun = System.currentTimeMillis();
         msg = "";
         running = true;
+        
+        initTime = System.currentTimeMillis();
+        currTime = initTime;
+        
         run();
+    }
+    
+    public boolean isGameEnded() {
+        if (gameMode.equals("Limited Time")) { // limited time
+            return currTime - initTime > limitValue * 60 * 1000;
+        } else { // limited score
+            return currScore >= limitValue;
+        }
     }
     
     public static void serClientBall(int ball)
     {
     	clientBall = ball;
     	clientInited = true;
+    }
+    
+    public static void setScore(int score) {
+        currScore = score;
     }
 
     public static void stop() {

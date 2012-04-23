@@ -69,5 +69,18 @@ public class ServerAdapter {
             service.write(send);
         }
     }
+    
+    public static void sendScoreToServer(int score) {
+        Server.setScore(score);
+    }
+    
+    public static void sendEndGameMessage() {
+        // TODO
+    }
+    
+    // This method can be used to handle exceptions
+    public static void sendGameInterruptMessage() {
+        // TODO
+    }
 
 }
