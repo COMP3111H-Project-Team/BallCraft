@@ -16,7 +16,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,7 +42,7 @@ public class BluetoothService {
             .getDefaultAdapter();
    // private BluetoothServerSocket serverSocket;
     private Handler handler;
-    private Context context;
+    private BluetoothActivity context;
     private int state;
     private AcceptThread acceptThread;
     private ConnectThread connectThread;
@@ -53,7 +52,7 @@ public class BluetoothService {
     
     private boolean serverInit;
     
-    public BluetoothService(Context context, Handler handler){
+    public BluetoothService(BluetoothActivity context, Handler handler){
     	this.context = context;
     	this.handler = handler;
     	
@@ -393,11 +392,7 @@ public class BluetoothService {
                         .sendToTarget();
             } catch (IOException e) {
                 Log.e(TAG, "Exception during write", e);
-                Server.stop();
-                Client.stop();
-                ClientGameState.clear();
-                if(BallCraft.isServer) ServerGameState.clear();
-                if (BallCraft.isServer) ServerGameState.clear();
+                /**/
                 BluetoothService.this.destroy();
             }
         }
@@ -423,7 +418,7 @@ public class BluetoothService {
         bundle.putString(BluetoothActivity.TOAST, "Unable to connect device");
         msg.setData(bundle);
         handler.sendMessage(msg);
-        destroy();
+        this.destroy();
     }
     
     private void connectionLost() {
@@ -439,7 +434,21 @@ public class BluetoothService {
     }
     
     public void destroy(){
-    	Message msg = handler.obtainMessage(BluetoothActivity.MESSAGE_LOST);
-        handler.sendMessage(msg);
+    	 // Cancel the thread that completed the connection
+        if (connectThread != null) {connectThread.cancel(); connectThread = null;}
+
+        // Cancel any thread currently running a connection
+        if (connectedThread != null) {connectedThread.cancel(); connectedThread = null;}
+        
+        // Cancel the accept thread because we only want to connect to one device
+        if (acceptThread != null) {acceptThread.cancel(); acceptThread = null;}
+    	if(D)Log.e(TAG,"service destroy");
+    	Server.stop();
+        Client.stop();
+        ClientGameState.clear();
+        if(BallCraft.isServer) ServerGameState.clear();
+        if (BallCraft.isServer) ServerGameState.clear();
+    	context.destroy();
+      //  handler.sendMessage(msg);
     }
 }
