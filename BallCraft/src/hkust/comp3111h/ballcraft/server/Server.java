@@ -1,6 +1,8 @@
 package hkust.comp3111h.ballcraft.server;
 
 import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.client.Client;
+import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.GameUpdater;
 import android.app.IntentService;
@@ -36,6 +38,7 @@ public class Server extends IntentService {
 
     public static void setState(String string)
     {
+    	if (string.equals("")) return;
         String[] str = string.split(";");
         try
         {
@@ -106,6 +109,7 @@ public class Server extends IntentService {
     {
         ServerGameState.init();
         
+        int time = 0;
         while (!clientInited && BallCraft.maxPlayer == 2)
         {
         	Log.w("Server", "Waiting for client");
@@ -117,6 +121,16 @@ public class Server extends IntentService {
             {
 				Log.e("Server", e.toString());
 			}
+            time++;
+            if (time > 30)
+            {
+            	Log.e("Server waiting for client", "Time Out");
+            	Server.stop();
+                Client.stop();
+                ClientGameState.clear();
+                if (BallCraft.isServer) {ServerGameState.clear();}
+            	return;
+            }
         }
         
         gameState = ServerGameState.getStateInstance();

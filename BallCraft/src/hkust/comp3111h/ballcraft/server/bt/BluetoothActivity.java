@@ -1,6 +1,7 @@
 package hkust.comp3111h.ballcraft.server.bt;
 
 import hkust.comp3111h.ballcraft.R;
+import hkust.comp3111h.ballcraft.client.Client;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.ui.BallSelectMenu;
 import android.app.Activity;
@@ -170,7 +171,8 @@ public class BluetoothActivity extends Activity {
     	return recievedMessage;
     }
     
-    private void destroy(){
+    public void destroy(){
+    	Client.stop();
     	service.stop();
     	this.finish();
     }

@@ -1,27 +1,15 @@
 package hkust.comp3111h.ballcraft.data;
 
-import android.content.Context;
+import hkust.comp3111h.MyApplication;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class GameData {
     
-    private static Context context;
-    
     private static SharedPreferences pref;
     
-    public static void setContext(Context con) {
-        context = con;
-        setPref();
-    }
-    
-    public static void setPref() {
-        if (pref == null) {
-	        pref = PreferenceManager.getDefaultSharedPreferences(context);
-        }
-    }
-
     public static boolean getMusicPref() {
+        pref = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         return pref.getBoolean("music_pref", false);
     }
     
@@ -32,6 +20,7 @@ public class GameData {
     }
     
     public static boolean getVibrPref() {
+        pref = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         return pref.getBoolean("vibr_pref", false);
     }
     
@@ -42,6 +31,7 @@ public class GameData {
     }
     
     public static int getExperience() {
+        pref = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         return pref.getInt("exp", 0);
     }
     
