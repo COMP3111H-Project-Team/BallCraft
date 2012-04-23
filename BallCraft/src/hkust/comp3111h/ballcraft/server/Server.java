@@ -37,7 +37,14 @@ public class Server extends IntentService {
     public static void setState(String string)
     {
         String[] str = string.split(";");
-        gameInput[Integer.parseInt(str[0])] = GameInput.fromSerializedString(str[1]);
+        try
+        {
+            gameInput[Integer.parseInt(str[0])] = GameInput.fromSerializedString(str[1]);        	
+        }
+        catch(Exception e)
+        {
+        	Log.e("Error setting state for server", e.toString() + " : " + string);
+        }
     }
     
 	public static synchronized void extraMessage(String string)

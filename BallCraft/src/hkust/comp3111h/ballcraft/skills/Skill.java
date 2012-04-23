@@ -6,6 +6,8 @@ import hkust.comp3111h.ballcraft.server.Unit;
 
 import org.jbox2d.dynamics.Body;
 
+import android.util.Log;
+
 /**
  * Define a skill to be casted
  */
@@ -13,6 +15,7 @@ public abstract class Skill {
 
     private static int skillCount = 0;
     
+    protected int maxSkillNumber;
     protected int id;
     protected int skillID;
     protected int player;
@@ -23,10 +26,16 @@ public abstract class Skill {
     {
         return getSkill(BallCraft.myself, id);
     }
+    
+    public Skill()
+    {
+    	maxSkillNumber = 999;
+    }
 
     public static Skill getSkill(int player, int id) 
     {
-        switch (id) {
+        switch (id) 
+        {
         case BallCraft.Skill.TEST_SKILL_1:
             return new TestSkill1(player, id);
         case BallCraft.Skill.TEST_SKILL_2:
@@ -39,8 +48,10 @@ public abstract class Skill {
             return new Propel(player, id);
         case BallCraft.Skill.BUMP:
             return new Bump(player, id);
+        default:
+        	Log.e("Skill", "No Such Skill:" + id);
+            return new TestSkill1(player, id);
         }
-        return null;
     }
 
     public void setTime() 
@@ -104,5 +115,7 @@ public abstract class Skill {
         return ServerGameState.getStateInstance().getUnits().get(i).getBody();
     }
 
+	public int getMaxCount() {return maxSkillNumber;}
+	
 }
 

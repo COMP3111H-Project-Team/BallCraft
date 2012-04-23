@@ -19,7 +19,7 @@ public class ServerAdapter {
         	return;
         }
         
-        String message = BallCraft.myself + ";" + input.toSerializedString();
+        String message = "__MSG__"+BallCraft.myself + ";" + input.toSerializedString();
         // Check that there's actually something to send
         if (message.length() > 0) {
             // Get the message bytes and tell the BluetoothChatService to write

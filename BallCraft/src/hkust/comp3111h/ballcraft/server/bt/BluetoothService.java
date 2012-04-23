@@ -352,7 +352,14 @@ public class BluetoothService {
                 				Server.serClientBall(Integer.parseInt(message));
                 				serverInit = false;
                 			}
-                			else Server.setState(message);                			
+                			else
+                			{
+                    			String[] msgs = message.split("__MSG__");
+                    			for (String str:msgs)
+                    			{
+                    				Server.setState(str);               			
+                    			}
+                			}
                 		}
                 		else 
                 		{

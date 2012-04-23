@@ -8,7 +8,6 @@ import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.server.Wall;
-import hkust.comp3111h.ballcraft.ui.MainMenu;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -102,7 +101,7 @@ public class MultiPlayerGameInitializer extends Activity {
         Client.gameInited = true;
         Client.remoteServerInited = true;
 
-        Intent gameIntent = new Intent(MainMenu.self, GameActivity.class);
+        Intent gameIntent = new Intent(self, GameActivity.class);
         self.startActivity(gameIntent);
     
         self.finish();
