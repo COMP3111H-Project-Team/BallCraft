@@ -41,4 +41,18 @@ public class GameData {
         editor.commit();
     }
     
+    public static boolean isUsernameSet() {
+        return pref.getString("username", null) != null;
+    }
+    
+    public static String getUsername() {
+        return pref.getString("username", "");
+    }
+    
+    public static void setUsername(String username) {
+        SharedPreferences.Editor editor = pref.edit(); 
+        editor.putString("username", username);
+        editor.commit();
+    }
+    
 }

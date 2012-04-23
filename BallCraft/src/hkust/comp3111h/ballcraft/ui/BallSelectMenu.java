@@ -3,7 +3,7 @@ package hkust.comp3111h.ballcraft.ui;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
-import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
+import hkust.comp3111h.ballcraft.client.GameInitializer;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.bt.BluetoothActivity;
 import hkust.comp3111h.ballcraft.server.bt.BluetoothService;
@@ -243,7 +243,7 @@ public class BallSelectMenu extends Activity {
                     }
                     else
                     {
-                    	intent = new Intent(self, MultiPlayerGameInitializer.class);    
+                    	intent = new Intent(self, GameInitializer.class);    
                     	ServerAdapter.sendClientInitMsg("" + currBallPos);
                     }
                     intent.putExtra("ballSelected", currBallPos);

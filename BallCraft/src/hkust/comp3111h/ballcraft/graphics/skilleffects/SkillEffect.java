@@ -22,6 +22,7 @@ public abstract class SkillEffect implements Drawable {
         this.ballEffected = ballEffected;
         this.x = this.ballEffected.getPosition().x;
         this.y = this.ballEffected.getPosition().y;
+        this.z = this.ballEffected.z;
     }
     
     public void setBallEffected(Ball b) {
