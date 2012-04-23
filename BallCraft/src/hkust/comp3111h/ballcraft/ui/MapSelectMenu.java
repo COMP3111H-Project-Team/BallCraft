@@ -6,7 +6,7 @@ import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.TerrainDef;
 import hkust.comp3111h.ballcraft.client.Map;
 import hkust.comp3111h.ballcraft.client.MapParser;
-import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
+import hkust.comp3111h.ballcraft.client.GameInitializer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -140,7 +140,7 @@ public class MapSelectMenu extends Activity {
 
             public void onClick(View v) {
                 Intent intent = new Intent(self,
-                        MultiPlayerGameInitializer.class);
+                        GameInitializer.class);
                 intent.putExtra("ballSelected", ballSelected);
                 intent.putExtra("mapSelected", currMapName);
                 self.startActivity(intent);

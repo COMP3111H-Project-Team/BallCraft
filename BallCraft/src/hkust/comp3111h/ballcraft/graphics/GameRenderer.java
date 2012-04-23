@@ -17,8 +17,10 @@ import hkust.comp3111h.ballcraft.graphics.particles.WaterBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterPropelParticle;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Crush;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.ParticleSystemEffect;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.RockBump;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.SkillEffect;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.TextureEffect;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Wall;
@@ -44,6 +46,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
     private Context context;
     
     private boolean rendering = false;
+    
+    private float lastZPos = 0;
     
     public GameRenderer(Context context) {
         this.context = context;
@@ -146,16 +150,6 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	        float yPos = self.getPosition().y;
 	        float zPos = self.z;
 	        
-	        if (zPos > 200) {
-	            Message msg = new Message();
-	            msg.what = View.VISIBLE;
-	            GameActivity.loseViewHanlder.sendMessage(msg);
-	        } else {
-	            Message msg = new Message();
-	            msg.what = View.INVISIBLE;
-	            GameActivity.loseViewHanlder.sendMessage(msg);
-	        }
-	        
 	        GLU.gluLookAt(gl, xPos, yPos + 60 + zPos / 2, 200 - zPos, xPos, yPos, -zPos, 0, 0, 1);
 	        
 	        for (Plane p : ClientGameState.getClientGameState().planes) {
@@ -164,6 +158,22 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	       
 	        for (Wall w : ClientGameState.getClientGameState().walls) {
 	            w.draw(gl);
+	        }
+		        
+	        ConcurrentHashMap<Integer, SkillEffect> effects = 
+	                ClientGameState.getClientGameState().skillEffects;
+	        
+	        // draw all texture effects
+	        for (Integer key : effects.keySet()) {
+	            SkillEffect d = effects.get(key);
+	            if (d instanceof TextureEffect) {
+		            if (d.timeout()) {
+		                effects.remove(key);
+		            } else {
+		                d.move();
+			            d.draw(gl);
+		            }
+	            }
 	        }
 	         
 	        for (Ball b : balls) {
@@ -186,21 +196,27 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	            }
 	        }
 	        
-	        ConcurrentHashMap<Integer, SkillEffect> effects = 
-	                ClientGameState.getClientGameState().skillEffects;
-	            
+	        // draw all particle system effects
 	        for (Integer key : effects.keySet()) {
 	            SkillEffect d = effects.get(key);
-	            if (d.timeout()) {
-	                effects.remove(key);
-	            } else {
-	                d.move();
-		            d.draw(gl);
+	            if (d instanceof ParticleSystemEffect) {
+		            if (d.timeout()) {
+		                effects.remove(key);
+		            } else {
+		                d.move();
+			            d.draw(gl);
+		            }
 	            }
 	        }
 	        
 	        long elapsed = System.currentTimeMillis() - time;
-	        GameActivity.display("fps: " + 1000 / elapsed);
+	        if (elapsed < 30) {
+	            try {
+	                Thread.sleep(30 - elapsed);
+	            } catch (Exception e) {}
+	        }
+	                
+	        GameActivity.display("fps: " + 1000 / Math.max(30, elapsed));
 	        time = System.currentTimeMillis();
 	    }
     }

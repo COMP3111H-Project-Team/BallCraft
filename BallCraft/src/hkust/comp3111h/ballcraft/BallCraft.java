@@ -15,16 +15,6 @@ public class BallCraft {
 		NORMAL, DEAD, FROZEN, DIZZY
 	}
     
-    public static final class Skill {
-        public static final int DEACTIVATED = 0;
-        public static final int TEST_SKILL_1 = 1;
-        public static final int TEST_SKILL_2 = 2;
-        public static final int MINE = 3;
-        public static final int MASSOVERLOAD = 4;
-        public static final int PROPEL = 5;
-        public static final int BUMP = 6;
-    }
-    
     public static final class Ball {
         public static final int WOOD_BALL = 0;
         public static final int ROCK_BALL = 1;
@@ -47,5 +37,21 @@ public class BallCraft {
         public static final int DAY_MODE = 0;
         public static final int NIGHT_MODE = 1;
     }
-
+     
+    public static final class Skill {
+        public static final int DEACTIVATED = -1;
+        public static final int GROW_ROOT = 0;
+        public static final int NATURES_CURE = 1;
+        public static final int MASS_OVERLORD = 2;
+        public static final int ROCK_BUMP = 3;
+        public static final int WATER_PROPEL = 4;
+        public static final int SLIPPERY = 5;
+        public static final int IRON_WILL = 6;
+        public static final int CRUSH = 7;
+        public static final int FLAME_THROW = 8;
+        public static final int LANDMINE = 9;
+        public static final int STEALTH = 10;
+        public static final int MIDNIGHT = 11;
+    }
+    
 }

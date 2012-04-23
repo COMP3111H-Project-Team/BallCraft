@@ -28,6 +28,8 @@ public class SplashScreenBC extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         this.setContentView(R.layout.splash_screen_bc);
+        
+        GameData.setContext(self);
 
         handler.sendEmptyMessageDelayed(0, 500);
         
