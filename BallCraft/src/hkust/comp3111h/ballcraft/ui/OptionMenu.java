@@ -3,10 +3,14 @@ package hkust.comp3111h.ballcraft.ui;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.data.GameData;
 import android.app.Activity;
+import android.content.Intent;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -42,6 +46,7 @@ public class OptionMenu extends Activity {
     public void initLayout() {
         CheckBox musicCheck = (CheckBox) self.findViewById(R.id.option_menu_music_checkbox);
         CheckBox vibrCheck = (CheckBox) self.findViewById(R.id.option_menu_vibration_checkbox);
+        Button changeUsernameButton = (Button) self.findViewById(R.id.option_menu_change_username_button);
         
         musicCheck.setChecked(GameData.getMusicPref());
         vibrCheck.setChecked(GameData.getVibrPref());
@@ -60,6 +65,18 @@ public class OptionMenu extends Activity {
             public void onCheckedChanged(CompoundButton buttonView,
                     boolean isChecked) {
                 GameData.setVibrPref(isChecked);
+            }
+            
+        });
+        
+        changeUsernameButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(self, UsernameMenu.class);
+                self.startActivity(intent);
+                self.overridePendingTransition(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
             }
             
         });

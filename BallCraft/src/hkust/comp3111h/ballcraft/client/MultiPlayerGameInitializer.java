@@ -10,6 +10,7 @@ import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.server.Wall;
 import hkust.comp3111h.ballcraft.ui.MainMenu;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
@@ -109,7 +110,9 @@ public class MultiPlayerGameInitializer extends Activity {
 
     @Override
     public void onBackPressed() {
-        // do nothing
+        Dialog dialog = new Dialog(self);
+        dialog.setTitle("Exit Loading?");
+        dialog.show();
     }
 
 }

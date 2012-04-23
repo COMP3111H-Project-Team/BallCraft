@@ -12,10 +12,16 @@ public class GameData {
     
     public static void setContext(Context con) {
         context = con;
+        setPref();
+    }
+    
+    public static void setPref() {
+        if (pref == null) {
+	        pref = PreferenceManager.getDefaultSharedPreferences(context);
+        }
     }
 
     public static boolean getMusicPref() {
-        pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean("music_pref", false);
     }
     
@@ -26,7 +32,6 @@ public class GameData {
     }
     
     public static boolean getVibrPref() {
-        pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean("vibr_pref", false);
     }
     
@@ -37,13 +42,26 @@ public class GameData {
     }
     
     public static int getExperience() {
-        pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getInt("exp", 0);
     }
     
     public static void setExperience(int exp) {
         SharedPreferences.Editor editor = pref.edit(); 
         editor.putInt("exp", exp);
+        editor.commit();
+    }
+    
+    public static boolean isUsernameSet() {
+        return pref.getString("username", null) != null;
+    }
+    
+    public static String getUsername() {
+        return pref.getString("username", "");
+    }
+    
+    public static void setUsername(String username) {
+        SharedPreferences.Editor editor = pref.edit(); 
+        editor.putString("username", username);
         editor.commit();
     }
     

@@ -17,8 +17,10 @@ import hkust.comp3111h.ballcraft.graphics.particles.WaterBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterPropelParticle;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Crush;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.ParticleSystemEffect;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.RockBump;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.SkillEffect;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.TextureEffect;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Wall;
@@ -165,6 +167,22 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	        for (Wall w : ClientGameState.getClientGameState().walls) {
 	            w.draw(gl);
 	        }
+		        
+	        ConcurrentHashMap<Integer, SkillEffect> effects = 
+	                ClientGameState.getClientGameState().skillEffects;
+	        
+	        // draw all texture effects
+	        for (Integer key : effects.keySet()) {
+	            SkillEffect d = effects.get(key);
+	            if (d instanceof TextureEffect) {
+		            if (d.timeout()) {
+		                effects.remove(key);
+		            } else {
+		                d.move();
+			            d.draw(gl);
+		            }
+	            }
+	        }
 	         
 	        for (Ball b : balls) {
 	            if (b instanceof ParticleBall) {
@@ -186,16 +204,16 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	            }
 	        }
 	        
-	        ConcurrentHashMap<Integer, SkillEffect> effects = 
-	                ClientGameState.getClientGameState().skillEffects;
-	            
+	        // draw all particle system effects
 	        for (Integer key : effects.keySet()) {
 	            SkillEffect d = effects.get(key);
-	            if (d.timeout()) {
-	                effects.remove(key);
-	            } else {
-	                d.move();
-		            d.draw(gl);
+	            if (d instanceof ParticleSystemEffect) {
+		            if (d.timeout()) {
+		                effects.remove(key);
+		            } else {
+		                d.move();
+			            d.draw(gl);
+		            }
 	            }
 	        }
 	        

@@ -26,7 +26,7 @@ public class ServerGameState {
     
     private static int mapTerrain;
     private static int mapMode;
-
+    
     public static ServerGameState getStateInstance() 
     {
         if (stateInstance == null) 

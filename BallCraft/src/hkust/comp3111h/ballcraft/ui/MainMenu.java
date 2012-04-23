@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
+import hkust.comp3111h.ballcraft.data.GameData;
 import hkust.comp3111h.ballcraft.server.bt.BluetoothActivity;
 import android.app.Activity;
 import android.content.Intent;
@@ -124,11 +125,19 @@ public class MainMenu extends Activity implements SensorEventListener {
         multiPlayerButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                Intent Bluetooth = new Intent(MainMenu.this, BluetoothActivity.class);
-                MainMenu.this.startActivity(Bluetooth);
-                BallCraft.maxPlayer = 2;
-                self.overridePendingTransition(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
+                if (GameData.isUsernameSet()) {
+	                Intent Bluetooth = new Intent(MainMenu.this, BluetoothActivity.class);
+	                MainMenu.this.startActivity(Bluetooth);
+	                BallCraft.maxPlayer = 2;
+	                self.overridePendingTransition(android.R.anim.fade_in,
+	                        android.R.anim.fade_out);
+                } else {
+                    Intent intent = new Intent(MainMenu.this, UsernameMenu.class);
+                    intent.putExtra("start_multiplayer_game", true);
+                    self.startActivity(intent);
+	                self.overridePendingTransition(android.R.anim.fade_in,
+	                        android.R.anim.fade_out);
+                }
             }
 
         });
