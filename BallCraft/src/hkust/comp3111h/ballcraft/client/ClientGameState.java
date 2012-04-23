@@ -72,7 +72,7 @@ public class ClientGameState {
         }
         
         this.checkSelfBallState();
-        if (!this.isSinglePlayer()) {
+        if (!BallCraft.isSinglePlayer()) {
             this.checkEnemyBallState();
         }
     }
@@ -100,7 +100,7 @@ public class ClientGameState {
         
         if (selfLastZPos <= 200 && zPos > 200) {
             Message msg = new Message();
-            if (this.isSinglePlayer()) { // single player, no need to display score
+            if (BallCraft.isSinglePlayer()) { // single player, no need to display score
                 msg.what = 2;
                 GameActivity.loseViewHanlder.sendMessage(msg);
             } else { // multi-player
@@ -181,10 +181,6 @@ public class ClientGameState {
     
     public int getScoreEarned() {
         return this.selfScoreEarned;
-    }
-    
-    public boolean isSinglePlayer() {
-        return BallCraft.maxPlayer == 1;
     }
     
     public void clearAll() {

@@ -129,7 +129,6 @@ public class Server extends IntentService {
             time++;
             if (time > 30)
             {
-            	Log.e("Server waiting for client", "Time Out");
             	Server.stop();
                 Client.stop();
                 ClientGameState.clear();

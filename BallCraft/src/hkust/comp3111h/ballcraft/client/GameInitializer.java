@@ -52,10 +52,12 @@ public class GameInitializer extends Activity {
         String gameMode = intent.getStringExtra("GAME_MODE");
         int limitValue = 0;
         
-        if (gameMode.equals("LIMITED_TIME")) {
-            limitValue = intent.getIntExtra("TIME_LIMIT", 1);
-        } else {
-            limitValue = intent.getIntExtra("SCORE_LIMIT", 10);
+        if (!BallCraft.isSinglePlayer()) {
+	        if (gameMode.equals("LIMITED_TIME")) {
+	            limitValue = intent.getIntExtra("TIME_LIMIT", 1);
+	        } else {
+	            limitValue = intent.getIntExtra("SCORE_LIMIT", 10);
+	        }
         }
         
         if (BallCraft.isServer)
@@ -63,8 +65,11 @@ public class GameInitializer extends Activity {
             Intent serverIntent = new Intent(this, Server.class);
             serverIntent.putExtra("ball", ballSelected);
             serverIntent.putExtra("map", mapSelected);
-            serverIntent.putExtra("mode", gameMode);
-            serverIntent.putExtra("limit_value", limitValue);
+            
+            if (!BallCraft.isSinglePlayer()) {
+	            serverIntent.putExtra("GAME_MODE", gameMode);
+	            serverIntent.putExtra("LIMIT_VALUE", limitValue);
+            }
             this.startService(serverIntent);        	
         }
         

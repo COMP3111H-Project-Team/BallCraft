@@ -7,6 +7,7 @@ import hkust.comp3111h.ballcraft.SkillDef;
 import hkust.comp3111h.ballcraft.data.GameData;
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import hkust.comp3111h.ballcraft.server.Server;
+import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
 import hkust.comp3111h.ballcraft.skills.Skill;
 import android.app.Activity;
@@ -169,6 +170,9 @@ public class GameActivity extends Activity implements SensorEventListener {
     }
     
     private void exitGame() {
+        if (!BallCraft.isSinglePlayer()) {
+            ServerAdapter.sendGameInterruptMessage();
+        }
         renderer.stopRendering();
         Server.stop();
         Client.stop();

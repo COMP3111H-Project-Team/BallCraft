@@ -75,6 +75,12 @@ public class ServerAdapter {
     }
     
     public static void sendEndGameMessage() {
+        // TODO
+    }
+    
+    // This method can be used to handle exceptions
+    public static void sendGameInterruptMessage() {
+        // TODO
     }
 
 }
