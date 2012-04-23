@@ -76,11 +76,10 @@ public class Server extends IntentService {
 	        }
 
             try {
-                /*
-                long sleep = 30 + time - System.currentTimeMillis(); if
-                (sleep > 0 ) { Thread.sleep(sleep); }
-                */
-                Thread.sleep(20);
+                long sleep = 30 + time - System.currentTimeMillis(); 
+                if (sleep > 0 ) {
+                    Thread.sleep(sleep);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -95,7 +94,7 @@ public class Server extends IntentService {
         
         while (!clientInited && BallCraft.maxPlayer == 2)
         {
-        	Log.w("Server", "Witing for client");
+        	Log.w("Server", "Waiting for client");
             try 
             {
 				Thread.sleep(1000);

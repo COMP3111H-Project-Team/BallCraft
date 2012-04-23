@@ -3,7 +3,6 @@ package hkust.comp3111h.ballcraft.server.bt;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.ui.BallSelectMenu;
-import hkust.comp3111h.ballcraft.ui.MainMenu;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -69,20 +68,20 @@ public class BluetoothActivity extends Activity {
     }
     
     public void scanDevice(){
-    	Log.e(TAG,"start device activity");
-    	 Intent serverIntent = new Intent(this, DeviceListActivity.class);
-         startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
-         Log.e(TAG,"after start device activity");
-         // Performing this check in onResume() covers the case in which BT was
-         // not enabled during onStart(), so we were paused to enable it...
-         // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
-         if (service != null) {
-             // Only if the state is STATE_NONE, do we know that we haven't started already
-             if (service.getState() == BluetoothService.STATE_NONE) {
-               // Start the Bluetooth chat services
-               service.start();
-             }
-         }
+		Log.e(TAG,"start device activity");
+		Intent serverIntent = new Intent(this, DeviceListActivity.class);
+		startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+		Log.e(TAG,"after start device activity");
+		// Performing this check in onResume() covers the case in which BT was
+		// not enabled during onStart(), so we were paused to enable it...
+		// onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
+		if (service != null) {
+			// Only if the state is STATE_NONE, do we know that we haven't started already
+			if (service.getState() == BluetoothService.STATE_NONE) {
+				// Start the Bluetooth chat services
+				service.start();
+			}
+		}
     }
     
     @Override

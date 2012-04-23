@@ -218,7 +218,13 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	        }
 	        
 	        long elapsed = System.currentTimeMillis() - time;
-	        GameActivity.display("fps: " + 1000 / elapsed);
+	        if (elapsed < 30) {
+	            try {
+	                Thread.sleep(30 - elapsed);
+	            } catch (Exception e) {}
+	        }
+	                
+	        GameActivity.display("fps: " + 1000 / Math.max(30, elapsed));
 	        time = System.currentTimeMillis();
 	    }
     }
