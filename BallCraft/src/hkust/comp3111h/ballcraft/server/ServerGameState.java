@@ -108,10 +108,10 @@ public class ServerGameState {
     
     public void loadMap(String name, int serverBall, int clientBall) 
     {
+        Map map = MapParser.getMapFromXML(name);
+        
         units.add(new Ball(10, 50, 0.8f, new Vec2(0, 0)));
         units.add(new Ball(10, 5, 0.99f, new Vec2(30, 0)));
-
-        Map map = MapParser.getMapFromXML(name);
         
         mapTerrain = map.getTerrain();
         mapMode = map.getMode();

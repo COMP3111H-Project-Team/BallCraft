@@ -21,6 +21,8 @@ public class MultiPlayerGameInitializer extends Activity {
 	public final String TAG = "MultiInit";
 	public final boolean D = true;
 	
+	private static int ballSelected;
+	
 	private static MultiPlayerGameInitializer self;
 	
     @Override
@@ -43,7 +45,7 @@ public class MultiPlayerGameInitializer extends Activity {
 
     private void initGame() {
         Intent intent = this.getIntent();
-        int ballSelected = intent.getIntExtra("ballSelected",
+        ballSelected = intent.getIntExtra("ballSelected",
                 BallDef.WoodBall.id);
         String mapSelected = intent.getStringExtra("mapSelected");
         
@@ -102,6 +104,7 @@ public class MultiPlayerGameInitializer extends Activity {
         Client.remoteServerInited = true;
 
         Intent gameIntent = new Intent(self, GameActivity.class);
+        gameIntent.putExtra("ballSelected", ballSelected);
         self.startActivity(gameIntent);
     
         self.finish();

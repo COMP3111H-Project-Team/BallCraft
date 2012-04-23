@@ -14,7 +14,6 @@ import org.jbox2d.common.Vec2;
 
 import android.app.IntentService;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
 

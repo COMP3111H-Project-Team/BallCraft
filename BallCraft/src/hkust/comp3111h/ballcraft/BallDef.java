@@ -17,6 +17,7 @@ public class BallDef {
 	    public static final int friction = 3;
 	    public static final int magic = 3;
 	    public static final int unlockExp = 0;
+	    public static final String [] skills = { "Grow Root", "Nature's Cure" };
 	}
 	
 	public static final class RockBall {
@@ -28,6 +29,7 @@ public class BallDef {
 	    public static final int friction = 7;
 	    public static final int magic = 4;
 	    public static final int unlockExp = 50;
+	    public static final String [] skills = { "Mass Overlord", "Rock Bump" };
 	}
 	
 	public static final class WaterBall {
@@ -39,6 +41,7 @@ public class BallDef {
 	    public static final int friction = 3;
 	    public static final int magic = 6;
 	    public static final int unlockExp = 200;
+	    public static final String [] skills = { "Water Propel", "Slippery" };
 	}
 	
 	public static final class IronBall {
@@ -50,6 +53,7 @@ public class BallDef {
 	    public static final int friction = 4;
 	    public static final int magic = 7;
 	    public static final int unlockExp = 600;
+	    public static final String [] skills = { "Iron Will", "Crush" };
 	}
 	
 	public static final class FireBall {
@@ -61,6 +65,7 @@ public class BallDef {
 	    public static final int friction = 5;
 	    public static final int magic = 8;
 	    public static final int unlockExp = 1500;
+	    public static final String [] skills = { "Flame Throw", "Landmine" };
 	}
 	
 	public static final class DarkBall {
@@ -72,6 +77,7 @@ public class BallDef {
 	    public static final int friction = 4;
 	    public static final int magic = 10;
 	    public static final int unlockExp = 3000;
+	    public static final String [] skills = { "Stealth", "Midnight" };
 	}
 	
     @SuppressWarnings("rawtypes")
@@ -123,7 +129,7 @@ public class BallDef {
 	public static int getBallMassById(int id) {
 	    if (id < balls.length) {
 	        try {
-	            return balls[id].getField("mass").getInt(null);
+	            return balls[id].getField("mass").getInt(0);
 	        } catch (Exception e) {
 	            return 0;
 	        }
@@ -160,11 +166,23 @@ public class BallDef {
 	    if (id < balls.length) {
 	        try {
 	            return balls[id].getField("unlockExp").getInt(0);
-	        } catch(Exception e) {
+	        } catch (Exception e) {
 	            return 0;
 	        }
 	    } else {
 	        return 0;
+	    }
+	}
+	
+	public static String [] getSkillNamesById(int id) {
+	    if (id < balls.length) {
+	        try {
+	            return (String[]) balls[id].getField("skills").get(null);
+	        } catch (Exception e) {
+	            return null;
+	        }
+	    } else {
+	        return null;
 	    }
 	}
 	
