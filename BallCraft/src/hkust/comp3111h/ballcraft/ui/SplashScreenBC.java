@@ -1,7 +1,6 @@
 package hkust.comp3111h.ballcraft.ui;
 
 import hkust.comp3111h.ballcraft.R;
-import hkust.comp3111h.ballcraft.data.GameData;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,8 +28,6 @@ public class SplashScreenBC extends Activity {
 
         this.setContentView(R.layout.splash_screen_bc);
         
-        GameData.setContext(self);
-
         handler.sendEmptyMessageDelayed(0, 500);
         
     }

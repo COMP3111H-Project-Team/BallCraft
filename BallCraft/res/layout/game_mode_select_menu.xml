@@ -121,26 +121,26 @@
 	        android:layout_marginLeft="200dp">
 	        
 	        <RadioButton 
-	            android:id="@+id/game_mode_score_100"
+	            android:id="@+id/game_mode_score_10"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:checked="true"
 	            android:text="100" />
 	        
 	        <RadioButton 
-	            android:id="@+id/game_mode_score_300"
+	            android:id="@+id/game_mode_score_30"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="300" />
 	         
 	        <RadioButton 
-	            android:id="@+id/game_mode_score_500"
+	            android:id="@+id/game_mode_score_50"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="500" />
 	         
 	        <RadioButton 
-	            android:id="@+id/game_mode_score_1000"
+	            android:id="@+id/game_mode_score_100"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="1000" />

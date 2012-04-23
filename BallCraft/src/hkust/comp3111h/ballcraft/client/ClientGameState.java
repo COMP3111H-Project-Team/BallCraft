@@ -4,8 +4,8 @@ import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.SkillEffect;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
+import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.Wall;
-import hkust.comp3111h.ballcraft.skills.Skill;
 
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,8 +23,6 @@ public class ClientGameState {
     public ArrayList<Wall> walls;
     public ArrayList<Plane> planes;
     public ConcurrentHashMap<Integer, SkillEffect> skillEffects;
-    
-    private ArrayList<Skill> skills;
 
     public static World world;
     
@@ -46,8 +44,6 @@ public class ClientGameState {
         planes = new ArrayList<Plane>();
         skillEffects = new ConcurrentHashMap<Integer, SkillEffect>();
         
-        skills = new ArrayList<Skill>();
-
         Vec2 gravity = new Vec2(0.0f, 0.0f);
         boolean doSleep = true;
         world = new World(gravity, doSleep);
@@ -74,10 +70,19 @@ public class ClientGameState {
         for (int i = 0; i < ballStrs.length; i++) {
             balls.get(i).updateFromString(ballStrs[i]);
         }
+        
         this.checkSelfBallState();
-        if (!this.isSinglePlayer()) {
-	        this.checkEnemyBallState();
+        if (!BallCraft.isSinglePlayer()) {
+            this.checkEnemyBallState();
         }
+    }
+    
+    private void sendScore() {
+        if (BallCraft.isServer) {
+            ServerAdapter.sendScoreToServer(
+                    Math.max(this.selfScoreEarned, this.enemyScoreEarned));
+        }
+    
     }
     
     private void checkSelfBallState() {
@@ -95,7 +100,7 @@ public class ClientGameState {
         
         if (selfLastZPos <= 200 && zPos > 200) {
             Message msg = new Message();
-            if (this.isSinglePlayer()) { // single player, no need to display score
+            if (BallCraft.isSinglePlayer()) { // single player, no need to display score
                 msg.what = 2;
                 GameActivity.loseViewHanlder.sendMessage(msg);
             } else { // multi-player
@@ -111,6 +116,7 @@ public class ClientGameState {
         }
         
         selfLastZPos = zPos;
+        this.sendScore();
     }
     
     private void checkEnemyBallState() {
@@ -140,6 +146,7 @@ public class ClientGameState {
 		        }
 		        
 		        enemyLastZPos = zPos;
+		        this.sendScore();
             }
         }
     }
@@ -154,14 +161,6 @@ public class ClientGameState {
 
     public void deleteDrawable(int id) {
         this.skillEffects.remove(new Integer(id));
-    }
-    
-    public void addSkill(Skill skill) {
-        skills.add(skill);
-    }
-
-    public ArrayList<Skill> getSkills() {
-        return skills;
     }
 
     public void setMapTerrain(int terrain) {
@@ -184,16 +183,11 @@ public class ClientGameState {
         return this.selfScoreEarned;
     }
     
-    public boolean isSinglePlayer() {
-        return BallCraft.maxPlayer == 1;
-    }
-    
     public void clearAll() {
         balls.clear();
         walls.clear();
         planes.clear();
         skillEffects.clear();
-        skills.clear();
     }
 
 }

@@ -11,6 +11,10 @@ public class BallCraft {
     
     public static boolean isServer = true;
 
+    public static boolean isSinglePlayer() {
+        return maxPlayer == 1;
+    }
+    
     public enum Status {
 		NORMAL, DEAD, FROZEN, DIZZY
 	}
