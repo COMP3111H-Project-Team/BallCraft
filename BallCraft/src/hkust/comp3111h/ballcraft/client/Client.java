@@ -9,7 +9,6 @@ import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
-import hkust.comp3111h.ballcraft.settings.GameSettings;
 import hkust.comp3111h.ballcraft.skills.Skill;
 
 import org.jbox2d.common.Vec2;

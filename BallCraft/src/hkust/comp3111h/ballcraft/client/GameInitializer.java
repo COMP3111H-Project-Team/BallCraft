@@ -49,12 +49,22 @@ public class GameInitializer extends Activity {
         ballSelected = intent.getIntExtra("ballSelected",
                 BallDef.WoodBall.id);
         String mapSelected = intent.getStringExtra("mapSelected");
+        String gameMode = intent.getStringExtra("GAME_MODE");
+        int limitValue = 0;
+        
+        if (gameMode.equals("LIMITED_TIME")) {
+            limitValue = intent.getIntExtra("TIME_LIMIT", 1);
+        } else {
+            limitValue = intent.getIntExtra("SCORE_LIMIT", 10);
+        }
         
         if (BallCraft.isServer)
         {
             Intent serverIntent = new Intent(this, Server.class);
             serverIntent.putExtra("ball", ballSelected);
             serverIntent.putExtra("map", mapSelected);
+            serverIntent.putExtra("mode", gameMode);
+            serverIntent.putExtra("limit_value", limitValue);
             this.startService(serverIntent);        	
         }
         

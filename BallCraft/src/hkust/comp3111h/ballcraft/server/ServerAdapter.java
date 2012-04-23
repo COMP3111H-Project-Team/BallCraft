@@ -69,5 +69,12 @@ public class ServerAdapter {
             service.write(send);
         }
     }
+    
+    public static void sendScoreToServer(int score) {
+        Server.setScore(score);
+    }
+    
+    public static void sendEndGameMessage() {
+    }
 
 }
