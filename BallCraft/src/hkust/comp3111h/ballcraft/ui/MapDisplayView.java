@@ -1,18 +1,5 @@
 package hkust.comp3111h.ballcraft.ui;
 
-import hkust.comp3111h.ballcraft.client.Map;
-import hkust.comp3111h.ballcraft.client.Map.Data;
-import hkust.comp3111h.ballcraft.client.MapParser;
-
-import java.util.Vector;
-
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.SurfaceView;
 
 /*
 public class MapDisplayView extends SurfaceView {

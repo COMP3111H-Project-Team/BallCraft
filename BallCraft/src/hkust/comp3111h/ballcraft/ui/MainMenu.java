@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.R;
-import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
+import hkust.comp3111h.ballcraft.client.GameInitializer;
 import hkust.comp3111h.ballcraft.data.GameData;
 import hkust.comp3111h.ballcraft.server.bt.BluetoothActivity;
 import android.app.Activity;
@@ -104,7 +104,7 @@ public class MainMenu extends Activity implements SensorEventListener {
             public void onClick(View v) {
                 BallCraft.maxPlayer = 1;
                 Intent intent = new Intent(self,
-                        MultiPlayerGameInitializer.class);
+                        GameInitializer.class);
                 intent.putExtra("ballSelected", BallCraft.Ball.IRON_BALL);
                 intent.putExtra("mapSelected", "map02.xml");
                 self.startActivity(intent);

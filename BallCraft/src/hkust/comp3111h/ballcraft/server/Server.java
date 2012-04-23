@@ -13,7 +13,7 @@ public class Server extends IntentService {
 
     static private GameUpdater gameUpdater;
 
-    static private GameInput[] gameInput;
+    static private GameInput[] gameInputs;
 
     static private long lastRun;
 
@@ -39,12 +39,15 @@ public class Server extends IntentService {
         String[] str = string.split(";");
         try
         {
-            gameInput[Integer.parseInt(str[0])] = GameInput.fromSerializedString(str[1]);        	
+            // gameInputs[Integer.parseInt(str[0])] = GameInput.fromSerializedString(str[1]);        	
+	        ServerGameState.getStateInstance().processPlayerInput(Integer.parseInt(str[0]), 
+	                GameInput.fromSerializedString(str[1]));
         }
         catch(Exception e)
         {
         	Log.e("Error setting state for server", e.toString() + " : " + string);
         }
+        
     }
     
 	public static synchronized void extraMessage(String string)
@@ -68,9 +71,11 @@ public class Server extends IntentService {
             gameState.onEveryFrame((int) (time - lastRun));
             lastRun = System.currentTimeMillis();
 
+            /*
             for (int i = 0; i < BallCraft.maxPlayer; i++) {
-                ServerGameState.getStateInstance().processPlayerInput(i, gameInput[i]); // process
+                ServerGameState.getStateInstance().processPlayerInput(i, gameInputs[i]); // process
             }
+            */
             
             String temp = new String(msg);
 			msg = "";
@@ -82,6 +87,7 @@ public class Server extends IntentService {
 				        + generateGameUpdater().toSerializedString(), i);	
 	        }
 
+	        /*
             try {
                 long sleep = 30 + time - System.currentTimeMillis(); 
                 if (sleep > 0 ) {
@@ -90,6 +96,7 @@ public class Server extends IntentService {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            */
         }
 
     }
@@ -116,10 +123,10 @@ public class Server extends IntentService {
         gameState.loadMap(intent.getStringExtra("map"), intent.getIntExtra("ball", 0), clientBall);
         gameUpdater = new GameUpdater();
 
-        gameInput = new GameInput[BallCraft.maxPlayer];
+        gameInputs = new GameInput[BallCraft.maxPlayer];
         for (int i = 0; i < BallCraft.maxPlayer; i++)
         {
-            gameInput[i] = new GameInput();
+            gameInputs[i] = new GameInput();
         }
 
         inited = true;

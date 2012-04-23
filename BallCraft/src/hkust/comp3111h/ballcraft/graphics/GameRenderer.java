@@ -47,6 +47,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
     
     private boolean rendering = false;
     
+    private float lastZPos = 0;
+    
     public GameRenderer(Context context) {
         this.context = context;
     }
@@ -147,16 +149,6 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	        float xPos = self.getPosition().x;
 	        float yPos = self.getPosition().y;
 	        float zPos = self.z;
-	        
-	        if (zPos > 200) {
-	            Message msg = new Message();
-	            msg.what = View.VISIBLE;
-	            GameActivity.loseViewHanlder.sendMessage(msg);
-	        } else {
-	            Message msg = new Message();
-	            msg.what = View.INVISIBLE;
-	            GameActivity.loseViewHanlder.sendMessage(msg);
-	        }
 	        
 	        GLU.gluLookAt(gl, xPos, yPos + 60 + zPos / 2, 200 - zPos, xPos, yPos, -zPos, 0, 0, 1);
 	        

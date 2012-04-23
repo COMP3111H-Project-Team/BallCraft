@@ -117,7 +117,9 @@ public abstract class Skill {
         return ServerGameState.getStateInstance().getUnits().get(i).getBody();
     }
 
-	public int getMaxCount() {return maxSkillNumber;}
+	public int getMaxCount() {
+	    return maxSkillNumber;
+	}
 	
 }
 

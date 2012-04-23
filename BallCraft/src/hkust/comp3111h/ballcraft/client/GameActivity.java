@@ -4,6 +4,7 @@ import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.SkillDef;
+import hkust.comp3111h.ballcraft.data.GameData;
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
@@ -46,8 +47,8 @@ public class GameActivity extends Activity implements SensorEventListener {
     private static TextView debugView = null;
     private static String debugMsg = null;
     
-    private Button skill1Button;
-    private Button skill2Button;
+    private static Button skill1Button;
+    private static Button skill2Button;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,11 +112,13 @@ public class GameActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View v) {
                 Client.castSkill(Skill.getSkill(BallCraft.Skill.LANDMINE));
+                /*
                 skill1Button.setEnabled(false);
                 Message msg = new Message();
                 msg.what = 1;
                 skillCoolDownHandler.sendMessageDelayed(msg, 
                         SkillDef.getCoolDownTimeById(skills[0]));
+                        */
             }
             
         });
@@ -123,17 +126,19 @@ public class GameActivity extends Activity implements SensorEventListener {
         skill2Button = (Button) this
                 .findViewById(R.id.game_activity_skill_2_button);
         skill2Button.getBackground().setAlpha(80);
-        skill1Button.setText(SkillDef.getSkillNameById(skills[1]));
+        skill2Button.setText(SkillDef.getSkillNameById(skills[1]));
         skill2Button.setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick(View v) {
                 Client.castSkill(Skill.getSkill(BallCraft.Skill.ROCK_BUMP));
+                /*
                 skill2Button.setEnabled(false);
                 Message msg = new Message();
                 msg.what = 2;
                 skillCoolDownHandler.sendMessageDelayed(msg, 
                         SkillDef.getCoolDownTimeById(skills[1]));
+                        */
             }
             
         });
@@ -161,19 +166,25 @@ public class GameActivity extends Activity implements SensorEventListener {
         exitButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                renderer.stopRendering();
-                Server.stop();
-                Client.stop();
-                ClientGameState.clear();
-                if (BallCraft.isServer) {
-                    ServerGameState.clear();
-                }
+                self.exitGame();
                 self.finish();
                 self.overridePendingTransition(android.R.anim.fade_in,
                         android.R.anim.fade_out);
             }
 
         });
+    }
+    
+    private void exitGame() {
+        renderer.stopRendering();
+        Server.stop();
+        Client.stop();
+        ClientGameState.clear();
+        if (BallCraft.isServer) {
+            ServerGameState.clear();
+        }
+        int scoreEarned = ClientGameState.getClientGameState().getScoreEarned();
+        GameData.setExperience(GameData.getExperience() + scoreEarned);
     }
 
     private void initSensor() {
@@ -203,6 +214,26 @@ public class GameActivity extends Activity implements SensorEventListener {
         }
       
     };
+    
+    public static Handler skillDisableHandler = new Handler() {
+        
+        @Override
+        public void handleMessage(Message msg) {
+            skill1Button.setEnabled(false);
+            skill2Button.setEnabled(false);
+        }
+        
+    };
+    
+    public static Handler skillEnableHandler = new Handler() {
+        
+        @Override
+        public void handleMessage(Message msg) {
+            skill1Button.setEnabled(true);
+            skill2Button.setEnabled(true);
+        }
+        
+    };
 
     @Override
     public void onBackPressed() {
@@ -225,7 +256,14 @@ public class GameActivity extends Activity implements SensorEventListener {
         
         @Override
         public void handleMessage(Message msg) {
-            loseView.setVisibility(msg.what);
+            if (msg.what == 2) { // display died message
+                loseView.setVisibility(View.VISIBLE);
+            } else if (msg.what == 1) { // display score
+                loseView.setVisibility(View.VISIBLE);
+                loseView.setText(msg.arg1 + " : " + msg.arg2);
+            } else if (msg.what == 0) { // invisible
+                loseView.setVisibility(View.INVISIBLE);
+            }
         }
         
     };
