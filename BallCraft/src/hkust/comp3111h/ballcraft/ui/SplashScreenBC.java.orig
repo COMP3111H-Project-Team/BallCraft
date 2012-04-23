@@ -33,6 +33,13 @@ public class SplashScreenBC extends Activity {
         
     }
     
+<<<<<<< HEAD
+    private void initPrefs() {
+        GameData.setContext(self);
+    }
+
+=======
+>>>>>>> 43740af37f8d2763806575ae60237c96f02c0302
     public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

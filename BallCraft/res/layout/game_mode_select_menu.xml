@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/game_mode_select_menu_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    
+	<android.opengl.GLSurfaceView
+	    android:id="@+id/game_mode_select_menu_gl_surface_view"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" />
+
+	<LinearLayout
+	    android:id="@+id/game_mode_type_layout"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">
+	    
+	    <TextView
+	        android:id="@+id/game_mode_type_select"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="14pt"
+	        android:textColor="#FFFFFF"
+	        android:text="Game Mode" />
+	
+	    <RadioGroup
+	        android:id="@+id/game_mode_type_radio_group"
+	        android:orientation="horizontal"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content">
+	
+	        <RadioButton
+	            android:id="@+id/game_mode_type_limited_time"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:checked="true"
+	            android:text="Limited Time" />
+	
+	        <RadioButton
+	            android:id="@+id/game_mode_type_limited_score"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="Limited Score" />
+	
+	    </RadioGroup>
+	    
+	</LinearLayout>
+	
+	<RelativeLayout
+	    android:id="@+id/game_mode_time_layout"
+	    android:layout_below="@+id/game_mode_type_layout"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingTop="10dp">
+	    
+	    <TextView
+	        android:id="@+id/game_mode_time_select"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="14pt"
+	        android:textColor="#FFFFFF"
+	        android:text="Time\nLimit" />
+	    
+	    <RadioGroup
+	        android:id="@+id/game_mode_time_limit_group"
+	        android:orientation="vertical"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="200dp">
+	        
+	        <RadioButton 
+	            android:id="@+id/game_mode_time_1_min"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:checked="true"
+	            android:text="1 Minute" />
+	        
+	        <RadioButton 
+	            android:id="@+id/game_mode_time_3_min"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="3 Minutes" />
+	         
+	        <RadioButton 
+	            android:id="@+id/game_mode_time_5_min"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="5 Minutes" />
+	         
+	        <RadioButton 
+	            android:id="@+id/game_mode_time_10_min"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="10 Minutes" />
+	        
+	    </RadioGroup>
+	    
+	</RelativeLayout>
+
+	<RelativeLayout
+	    android:id="@+id/game_mode_score_layout"
+	    android:layout_below="@+id/game_mode_type_layout"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingTop="10dp">
+	    
+	    <TextView
+	        android:id="@+id/game_mode_score_select"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="15pt"
+	        android:textColor="#FFFFFF"
+	        android:text="Score\nLimit" />
+	    
+	    <RadioGroup
+	        android:id="@+id/game_mode_score_limit_group"
+	        android:orientation="vertical"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="200dp">
+	        
+	        <RadioButton 
+	            android:id="@+id/game_mode_score_100"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:checked="true"
+	            android:text="100" />
+	        
+	        <RadioButton 
+	            android:id="@+id/game_mode_score_300"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="300" />
+	         
+	        <RadioButton 
+	            android:id="@+id/game_mode_score_500"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="500" />
+	         
+	        <RadioButton 
+	            android:id="@+id/game_mode_score_1000"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="1000" />
+	        
+	    </RadioGroup>
+	    
+	</RelativeLayout>
+	 
+    <ImageView
+	        android:id="@+id/game_mode_select_view"
+	        android:layout_width="280dp"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignParentRight="true"
+	        android:src="@drawable/select" />
+
+</RelativeLayout>

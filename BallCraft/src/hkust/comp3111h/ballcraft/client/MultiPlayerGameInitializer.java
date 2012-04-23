@@ -16,7 +16,7 @@ import android.view.WindowManager;
 
 public class MultiPlayerGameInitializer extends Activity {
     
-	//Dubug
+	// Debug
 	public final String TAG = "MultiInit";
 	public final boolean D = true;
 	
@@ -36,6 +36,7 @@ public class MultiPlayerGameInitializer extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         this.setContentView(R.layout.game_initializer_layout);
+        
         initGame();
     }
 
@@ -44,6 +45,7 @@ public class MultiPlayerGameInitializer extends Activity {
         int ballSelected = intent.getIntExtra("ballSelected",
                 BallDef.WoodBall.id);
         String mapSelected = intent.getStringExtra("mapSelected");
+        
         
         if (BallCraft.isServer)
         {
