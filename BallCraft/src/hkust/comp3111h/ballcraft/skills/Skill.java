@@ -36,17 +36,19 @@ public abstract class Skill {
     {
         switch (id) 
         {
+        /*
         case BallCraft.Skill.TEST_SKILL_1:
             return new TestSkill1(player, id);
         case BallCraft.Skill.TEST_SKILL_2:
             return new TestSkill2(player, id);
-        case BallCraft.Skill.MINE:
+            */
+        case BallCraft.Skill.LANDMINE:
             return new Mine(player, id);
-        case BallCraft.Skill.MASSOVERLOAD:
+        case BallCraft.Skill.MASS_OVERLORD:
             return new MassOverload(player, id);
-        case BallCraft.Skill.PROPEL:
+        case BallCraft.Skill.WATER_PROPEL:
             return new Propel(player, id);
-        case BallCraft.Skill.BUMP:
+        case BallCraft.Skill.ROCK_BUMP:
             return new Bump(player, id);
         default:
         	Log.e("Skill", "No Such Skill:" + id);

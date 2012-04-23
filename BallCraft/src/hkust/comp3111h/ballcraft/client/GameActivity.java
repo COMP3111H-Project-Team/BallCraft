@@ -3,6 +3,7 @@ package hkust.comp3111h.ballcraft.client;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
+import hkust.comp3111h.ballcraft.SkillDef;
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
@@ -99,21 +100,22 @@ public class GameActivity extends Activity implements SensorEventListener {
         statusDisplay.getBackground().setAlpha(200);
         
         int ballSelected = self.getIntent().getIntExtra("ballSelected", BallCraft.Ball.WOOD_BALL);
-        String [] skillStrs = BallDef.getSkillNamesById(ballSelected);
+        final int [] skills = BallDef.getSkillNamesById(ballSelected);
 
         skill1Button = (Button) this
                 .findViewById(R.id.game_activity_skill_1_button);
         skill1Button.getBackground().setAlpha(80);
-        skill1Button.setText(skillStrs[0]);
+        skill1Button.setText(SkillDef.getSkillNameById(skills[0]));
         skill1Button.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Client.castSkill(Skill.getSkill(BallCraft.Skill.MINE));
+                Client.castSkill(Skill.getSkill(BallCraft.Skill.LANDMINE));
                 skill1Button.setEnabled(false);
                 Message msg = new Message();
                 msg.what = 1;
-                skillCoolDownHandler.sendMessageDelayed(msg, 5000);
+                skillCoolDownHandler.sendMessageDelayed(msg, 
+                        SkillDef.getCoolDownTimeById(skills[0]));
             }
             
         });
@@ -121,16 +123,17 @@ public class GameActivity extends Activity implements SensorEventListener {
         skill2Button = (Button) this
                 .findViewById(R.id.game_activity_skill_2_button);
         skill2Button.getBackground().setAlpha(80);
-        skill2Button.setText(skillStrs[1]);
+        skill1Button.setText(SkillDef.getSkillNameById(skills[1]));
         skill2Button.setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick(View v) {
-                Client.castSkill(Skill.getSkill(BallCraft.Skill.BUMP));
+                Client.castSkill(Skill.getSkill(BallCraft.Skill.ROCK_BUMP));
                 skill2Button.setEnabled(false);
                 Message msg = new Message();
                 msg.what = 2;
-                skillCoolDownHandler.sendMessageDelayed(msg, 10000);
+                skillCoolDownHandler.sendMessageDelayed(msg, 
+                        SkillDef.getCoolDownTimeById(skills[1]));
             }
             
         });
