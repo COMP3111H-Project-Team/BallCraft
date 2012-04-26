@@ -132,6 +132,8 @@ public class ServerGameState {
         String initMsg = mapTerrain + "," + mapMode + "," + serverBall +"," +  clientBall + "MAPDEF";
         for (int i = 0; i < units.size(); i++)
         {
+        	Log.e(TAG,units.size()+" "+i+" "+units.get(i).toString());
+        	
             initMsg += units.get(i).toSerializedString();
             if (i != units.size() - 1)
             { // not the last one
