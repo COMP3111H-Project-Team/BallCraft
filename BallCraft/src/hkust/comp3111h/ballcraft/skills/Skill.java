@@ -15,12 +15,12 @@ public abstract class Skill {
 
     private static int skillCount = 0;
     
-    protected int maxSkillNumber;
     protected int id;
     protected int skillID;
     protected int player;
     protected long time;
     protected long duration;
+    protected int maxSkillNumber;
 
     public static Skill getSkill(int id)
     {
@@ -36,12 +36,8 @@ public abstract class Skill {
     {
         switch (id) 
         {
-        /*
-        case BallCraft.Skill.TEST_SKILL_1:
-            return new TestSkill1(player, id);
-        case BallCraft.Skill.TEST_SKILL_2:
-            return new TestSkill2(player, id);
-            */
+        case BallCraft.Skill.GROW_ROOT:
+            return new GrowRoot(player, id);
         case BallCraft.Skill.LANDMINE:
             return new Mine(player, id);
         case BallCraft.Skill.MASS_OVERLORD:
@@ -50,9 +46,13 @@ public abstract class Skill {
             return new Propel(player, id);
         case BallCraft.Skill.ROCK_BUMP:
             return new Bump(player, id);
+        case BallCraft.Skill.NATURES_CURE:
+        	return new Cure(player, id);
+        case BallCraft.Skill.SLIPPERY:
+        	return new Slippery(player, id);
         default:
         	Log.e("Skill", "No Such Skill:" + id);
-            return new TestSkill1(player, id);
+            return new GrowRoot(player, id);
         }
     }
 
@@ -117,7 +117,8 @@ public abstract class Skill {
         return ServerGameState.getStateInstance().getUnits().get(i).getBody();
     }
 
-	public int getMaxCount() {
+	public int getMaxCount()
+	{
 	    return maxSkillNumber;
 	}
 	

@@ -28,7 +28,7 @@ public class BallDef {
 	    public static final int mass = 7;
 	    public static final int friction = 7;
 	    public static final int magic = 4;
-	    public static final int unlockExp = 50;
+	    public static final int unlockExp = 0;
 	    public static final int [] skills = { SkillDef.MassOverlord.id, SkillDef.RockBump.id };
 	}
 	
@@ -40,7 +40,7 @@ public class BallDef {
 	    public static final int mass = 6;
 	    public static final int friction = 3;
 	    public static final int magic = 6;
-	    public static final int unlockExp = 200;
+	    public static final int unlockExp = 0;
 	    public static final int [] skills = { SkillDef.WaterPropel.id, SkillDef.Slippery.id };
 	}
 	
@@ -52,7 +52,7 @@ public class BallDef {
 	    public static final int mass = 10;
 	    public static final int friction = 4;
 	    public static final int magic = 7;
-	    public static final int unlockExp = 600;
+	    public static final int unlockExp = 0;
 	    public static final int [] skills = { SkillDef.IronWill.id, SkillDef.Crush.id };
 	}
 	
@@ -64,7 +64,7 @@ public class BallDef {
 	    public static final int mass = 4;
 	    public static final int friction = 5;
 	    public static final int magic = 8;
-	    public static final int unlockExp = 1500;
+	    public static final int unlockExp = 0;
 	    public static final int [] skills = { SkillDef.FlameThrow.id, SkillDef.Landmine.id };
 	}
 	
@@ -76,7 +76,7 @@ public class BallDef {
 	    public static final int mass = 4;
 	    public static final int friction = 4;
 	    public static final int magic = 10;
-	    public static final int unlockExp = 3000;
+	    public static final int unlockExp = 0;
 	    public static final int [] skills = { SkillDef.Stealth.id, SkillDef.MidNight.id };
 	}
 	

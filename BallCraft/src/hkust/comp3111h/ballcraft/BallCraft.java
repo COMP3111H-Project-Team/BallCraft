@@ -15,8 +15,9 @@ public class BallCraft {
         return maxPlayer == 1;
     }
     
-    public enum Status {
-		NORMAL, DEAD, FROZEN, DIZZY
+    public enum Status
+    {
+		NORMAL, DEAD, FROZEN, DIZZY, INVINCIBLE
 	}
     
     public static final class Ball {

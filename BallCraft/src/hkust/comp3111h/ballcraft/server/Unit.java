@@ -45,24 +45,33 @@ public abstract class Unit implements Drawable {
         return null;
     }
 
-    public Unit() {
+    public Unit() 
+    {
 		status = Status.NORMAL;
 		id = ServerGameState.getStateInstance().getUnits().size();
     }
 
-    public void applyForce(Vec2 force) {
-        body.applyForce(force.mul(1.0f / (rate * rate)), O);
-        // Log.e("position:", body.getPosition().x + " , " +
-        // body.getPosition().y);
+    public void applyForce(Vec2 force) 
+    {    	
+    	if (status == Status.DIZZY)
+    	{
+            body.applyForce(force.mul(- 1.0f / (rate * rate)), O);
+    	}
+    	else
+    	{
+    		body.applyForce(force.mul(1.0f / (rate * rate)), O);
+    	}
     }
 
-    public Vec2 getPosition() {
+    public Vec2 getPosition() 
+    {
         return new Vec2(body.getPosition().x, body.getPosition().y);
     }
 
     public abstract String toSerializedString();
 
-    public Body getBody() {
+    public Body getBody()
+    {
         return body;
     }
 

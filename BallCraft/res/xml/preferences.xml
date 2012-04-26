@@ -16,7 +16,7 @@
     
     <Preference
         android:title="Experience"
-        android:defaultValue="0"
+        android:defaultValue="99999"
         android:summary="Experience earned"
         android:key="exp" />
     

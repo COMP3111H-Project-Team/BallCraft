@@ -60,10 +60,7 @@ public class ServerGameState {
 
     public synchronized void processPlayerInput(int playerId, GameInput input) 
     {
-      	if (units.get(playerId).getStatus() == Status.NORMAL)
-    	{
-    		units.get(playerId).applyForce(input.acceleration);
-    	}
+    	units.get(playerId).applyForce(input.acceleration);
     	
     	if (input.skillActive())
     	{
