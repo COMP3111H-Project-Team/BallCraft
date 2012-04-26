@@ -110,7 +110,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
             @Override
             public void onClick(View v) {
-                Client.castSkill(Skill.getSkill(BallCraft.Skill.LANDMINE));
+                Client.castSkill(Skill.getSkill(skills[0]));
                 skill1Button.setEnabled(false);
                 Message msg = new Message();
                 msg.what = 1;
@@ -128,7 +128,7 @@ public class GameActivity extends Activity implements SensorEventListener {
             
             @Override
             public void onClick(View v) {
-                Client.castSkill(Skill.getSkill(BallCraft.Skill.ROCK_BUMP));
+                Client.castSkill(Skill.getSkill(skills[1]));
                 skill2Button.setEnabled(false);
                 Message msg = new Message();
                 msg.what = 2;

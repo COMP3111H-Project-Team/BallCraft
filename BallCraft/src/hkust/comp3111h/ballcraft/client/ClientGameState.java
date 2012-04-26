@@ -158,6 +158,10 @@ public class ClientGameState {
     public ConcurrentHashMap<Integer, SkillEffect> getDrawables() {
         return this.skillEffects;
     }
+    
+    public SkillEffect getDrawable(int id) {
+        return this.skillEffects.get(new Integer(id));
+    }
 
     public void deleteDrawable(int id) {
         this.skillEffects.remove(new Integer(id));
