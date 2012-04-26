@@ -3,7 +3,7 @@ package hkust.comp3111h.ballcraft.server;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.client.Client;
 import hkust.comp3111h.ballcraft.client.GameInput;
-import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
+import hkust.comp3111h.ballcraft.client.GameInitializer;
 import hkust.comp3111h.ballcraft.server.bt.BluetoothService;
 
 public class ServerAdapter {
@@ -48,7 +48,7 @@ public class ServerAdapter {
             	
     	if(id == BallCraft.myself) 
         {
-        	MultiPlayerGameInitializer.handleInitMsg(msg);
+        	GameInitializer.handleInitMsg(msg);
         	return;
         }
     	
@@ -68,6 +68,19 @@ public class ServerAdapter {
             byte[] send = msg.getBytes();
             service.write(send);
         }
+    }
+    
+    public static void sendScoreToServer(int score) {
+        Server.setScore(score);
+    }
+    
+    public static void sendEndGameMessage() {
+        // TODO
+    }
+    
+    // This method can be used to handle exceptions
+    public static void sendGameInterruptMessage() {
+        // TODO
     }
 
 }

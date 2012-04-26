@@ -31,7 +31,7 @@ public class ServerGameState {
     
     private static int mapTerrain;
     private static int mapMode;
-
+    
     public static ServerGameState getStateInstance() 
     {
         if (stateInstance == null) 
@@ -79,7 +79,9 @@ public class ServerGameState {
     				if (skill.getID() == skills.get(i).getID() && skill.getPlayer() == skills.get(i).getPlayer())
     					count++;
     			}
-    			if (count > skills.get(i).getMaxCount()) continue;
+    			if (count > skills.get(i).getMaxCount()) {
+    			    continue;
+    			}
 	    		
     			activeSkills.add(skills.get(i));
 	    		Server.extraMessage("skillInit:" + skills.get(i).getID() + "&" + skills.get(i).getInitMsg());
@@ -114,10 +116,10 @@ public class ServerGameState {
     
     public void loadMap(String name, int serverBall, int clientBall) 
     {
+        Map map = MapParser.getMapFromXML(name);
+        
         units.add(new Ball(10, 50, 0.8f, new Vec2(0, 0)));
         units.add(new Ball(10, 5, 0.99f, new Vec2(30, 0)));
-
-        Map map = MapParser.getMapFromXML(name);
         
         mapTerrain = map.getTerrain();
         mapMode = map.getMode();

@@ -3,7 +3,7 @@ package hkust.comp3111h.ballcraft.server.bt;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.client.Client;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
-import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
+import hkust.comp3111h.ballcraft.client.GameInitializer;
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
@@ -366,7 +366,7 @@ public class BluetoothService {
                 			message = message.split("__MSG__")[1];
                 			if (init) 
                 			{
-                    			MultiPlayerGameInitializer.handleInitMsg(message);
+                    			GameInitializer.handleInitMsg(message);
                     			init = false;
                 			}
                 			else Client.processSerializedUpdate(message);
@@ -434,21 +434,13 @@ public class BluetoothService {
     }
     
     public void destroy(){
-    	 // Cancel the thread that completed the connection
-        if (connectThread != null) {connectThread.cancel(); connectThread = null;}
-
-        // Cancel any thread currently running a connection
-        if (connectedThread != null) {connectedThread.cancel(); connectedThread = null;}
-        
-        // Cancel the accept thread because we only want to connect to one device
-        if (acceptThread != null) {acceptThread.cancel(); acceptThread = null;}
+        context.destroy();
     	if(D)Log.e(TAG,"service destroy");
         GameRenderer.stopRendering();
     	Server.stop();
         Client.stop();
         ClientGameState.clear();
         if(BallCraft.isServer) ServerGameState.clear();
-        if (BallCraft.isServer) ServerGameState.clear();
-    	context.destroy();
+        if (BallCraft.isServer) ServerGameState.clear();   	
     }
 }

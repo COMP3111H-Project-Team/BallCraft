@@ -170,8 +170,8 @@ public class Ball extends Unit {
 				Server.extraMessage(str);
 			}
 			
-			zv += g * 0.2;
-			z += zv * 0.2;	
+			zv += g * 0.1;
+			z += zv * 0.1;	
 			if (z > 5000)
 			{
 				z = 0;
