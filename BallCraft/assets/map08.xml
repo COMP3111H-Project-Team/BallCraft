@@ -1,10 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <map>
-	<name>Map 08</name>
+	<name>Woods</name>
 	<height>400</height>
 	<width>400</width>
-	<initPosition>10,10</initPosition>
-	<wall>-200,-200,0,200</wall>
-	<wall>200,-200,0,200</wall>
+	<terrain>1</terrain>
+	<mode>0</mode>
+	<initPosition>50,50</initPosition>	
+	<plane>-180,-200,180,-180</plane>
+	<plane>180,-180,200,180</plane>
+	<plane>180,180,200,200</plane>
+	<plane>-180,180,180,200</plane>
+	<plane>-200,-180,0,-100</plane>
+	<plane>0,-180,180,-80</plane>
+	<plane>-20,-80,100,-20</plane>
+	<plane>100,-80,180,0</plane>
+	<plane>80,0,180,180</plane>
+	<plane>-200,-100,-80,0</plane>
+	<plane>-80,-100,-20,20</plane>
+	<plane>-100,20,-20,180</plane>
+	<plane>-200,0,-100,180</plane>
+	<plane>-20,-20,20,80</plane>
+	<plane>20,-20,80,100</plane>
+	<plane>0,100,80,180</plane>
+	<plane>-20,80,0,180</plane>
+	<wall>-100,-100,0,-100</wall>
+	<wall>0,-100,0,0</wall>
+	<wall>100,-100,100,0</wall>
+	<wall>0,0,100,0</wall>
+	<wall>100,100,0,100</wall>
+	<wall>0,0,0,100</wall>
+	<wall>-100,100,-100,0</wall>
+	<wall>-100,0,0,0</wall>
 	<wall>-200,-200,200,-200</wall>
+	<wall>200,-200,200,200</wall>
+	<wall>-200,200,200,200</wall>
+	<wall>-200,-200,-200,200</wall>
+
 </map>

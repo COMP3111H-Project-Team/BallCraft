@@ -10,6 +10,9 @@ import android.content.Intent;
 import android.util.Log;
 
 public class Server extends IntentService {
+	//debug
+	public static boolean D = false;
+	public final static String TAG="Intentservice";
     
     static private ServerGameState gameState = null;
 
@@ -56,13 +59,14 @@ public class Server extends IntentService {
         }
         catch(Exception e)
         {
-        	Log.e("Error setting state for server", e.toString() + " : " + string);
+        	if(D)Log.e("Error setting state for server", e.toString() + " : " + string);
         }
         
     }
     
 	public static synchronized void extraMessage(String string)
 	{
+		Log.e(TAG,"extramessage "+string+msg);
 		if(!msg.equals(""))
 		{
 			msg += "/";
@@ -112,6 +116,7 @@ public class Server extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent)
     {
+    	msg = "";
         ServerGameState.init();
         
         int time = 0;
@@ -151,7 +156,6 @@ public class Server extends IntentService {
 
         inited = true;
         lastRun = System.currentTimeMillis();
-        msg = "";
         running = true;
         
         initTime = System.currentTimeMillis();

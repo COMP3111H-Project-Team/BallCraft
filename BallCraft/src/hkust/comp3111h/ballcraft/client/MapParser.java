@@ -17,6 +17,8 @@ import org.w3c.dom.NodeList;
 import android.util.Log;
 
 public class MapParser{
+	//debug
+	public static boolean D=true;
 	
 	public static Map getMapFromXML(String fileName) {
 		Map map = new Map();
@@ -91,7 +93,7 @@ public class MapParser{
 			for(int i=0;i<nodes.getLength();i++){
 				Element wallElement=(Element)(nodes.item(i));
 				data = wallElement.getFirstChild().getNodeValue();
-				//Log.i("map", data);
+				if(D) Log.i("map", data);
 				map.addPlane(parseString(data));                     
 			}
 			
