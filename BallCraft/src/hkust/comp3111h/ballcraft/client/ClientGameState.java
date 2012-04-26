@@ -136,8 +136,8 @@ public class ClientGameState {
 		        if (enemyLastZPos <= 200 && zPos > 200) {
 		            Message msg = new Message();
 		            msg.what = 1;
-		            msg.arg1 = this.selfCombo;
-		            msg.arg2 = this.enemyCombo;
+		            msg.arg1 = this.selfScoreEarned;
+		            msg.arg2 = this.enemyScoreEarned;
 		            GameActivity.loseViewHanlder.sendMessage(msg);
 		        } else if (enemyLastZPos > 200 && zPos <= 200) {
 		            Message msg = new Message();
