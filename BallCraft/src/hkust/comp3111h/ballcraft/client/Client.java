@@ -3,6 +3,7 @@ package hkust.comp3111h.ballcraft.client;
 import hkust.comp3111h.MyApplication;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.data.GameData;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.Explosion;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Slippery;
 import hkust.comp3111h.ballcraft.server.Ball;
@@ -112,6 +113,9 @@ public class Client extends IntentService {
 				Ball b = ClientGameState.getClientGameState().balls.get(enemyID);
 				ClientGameState.getClientGameState().addSkillEffect(skillID, new Slippery(b));
 			    break;
+			    
+			case BallCraft.Skill.NATURES_CURE:
+			    break;
 			}
 		}
 		else if (parts[0].equals("skillFinish"))
@@ -126,22 +130,14 @@ public class Client extends IntentService {
 			case BallCraft.Skill.LANDMINE:
 				String [] position = str[1].split(",");
 				int id = Integer.valueOf(position[2]);
+				Mine m = (Mine) ClientGameState.getClientGameState().getDrawable(id);
+				ClientGameState.getClientGameState().addSkillEffect(-1, new Explosion(m.x, m.y, 0));
 				ClientGameState.getClientGameState().deleteDrawable(id);
 			    break;
 				
 			}
 		}
-		else if (parts[0].equals("propel"))
-		{
-			String [] position = parts[1].split(",");
-			float x = Float.valueOf(position[0]);
-			float y = Float.valueOf(position[1]);
-			int id = Integer.valueOf(position[2]);
-			/*
-			((WaterPropelParticleSystem) (ClientGameState.getClientGameState()
-			        .getDrawables().get(new Integer(id)))).refresh(x, y);
-			        */
-		}
+
 	}
 
 	public static void processSerializedUpdate(String serialized) {

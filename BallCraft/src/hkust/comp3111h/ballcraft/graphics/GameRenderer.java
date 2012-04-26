@@ -8,6 +8,7 @@ import hkust.comp3111h.ballcraft.client.GameActivity;
 import hkust.comp3111h.ballcraft.graphics.balls.ParticleBall;
 import hkust.comp3111h.ballcraft.graphics.balls.SolidBall;
 import hkust.comp3111h.ballcraft.graphics.particles.DarkBallParticle;
+import hkust.comp3111h.ballcraft.graphics.particles.ExplosionParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.FireBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.FlameThrowParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.MassOverlordParticle;
@@ -122,6 +123,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         NaturesCureParticle.loadTexture(gl, context);
         SlipperyParticle.loadTexture(gl, context);
         FlameThrowParticle.loadTexture(gl, context);
+        ExplosionParticle.loadTexture(gl, context);
     }
     
     public void startRendering() {
@@ -183,10 +185,11 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	            if (b instanceof SolidBall) {
 	                if (b.z <= 0) { // above the plane, draw shade
 		                if (b.useGraphicalPosForDrawing) {
-				            BallShade.draw(gl, b.getGraphicalPosition().x + 8, 
-				                    b.getGraphicalPosition().y - 2);
+				            BallShade.draw(gl, b.getRadius(), 
+				                    b.getGraphicalPosition().x + 8, b.getGraphicalPosition().y - 2);
 		                } else {
-				            BallShade.draw(gl, b.getPosition().x + 8, b.getPosition().y - 2);
+				            BallShade.draw(gl, b.getRadius(), 
+				                    b.getPosition().x + 8, b.getPosition().y - 2);
 		                }
 	                }
 	            }
