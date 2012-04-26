@@ -44,7 +44,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
     private Context context;
     
-    private boolean rendering = false;
+    private static boolean rendering = false;
     
     public GameRenderer(Context context) {
         this.context = context;
@@ -126,16 +126,16 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         ExplosionParticle.loadTexture(gl, context);
     }
     
-    public void startRendering() {
-        this.rendering = true;
+    public static void startRendering() {
+        rendering = true;
     }
     
-    public void stopRendering() {
-        this.rendering = false;
+    public static void stopRendering() {
+        rendering = false;
     }
     
     public void onDrawFrame(GL10 gl) {
-        if (this.rendering) {
+        if (rendering) {
 	        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 	        gl.glLoadIdentity();
 	        
