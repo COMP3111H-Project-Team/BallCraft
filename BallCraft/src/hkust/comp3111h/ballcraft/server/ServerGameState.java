@@ -18,7 +18,7 @@ import android.util.Log;
 
 public class ServerGameState {
     //Debug
-	public boolean D = true;
+	public boolean D = false;
 	final String TAG = "ServerGameState";
 	
     private static ArrayList<Unit> units;
