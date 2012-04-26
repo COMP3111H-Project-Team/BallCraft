@@ -21,8 +21,11 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 
-public class Ball extends Unit {
+import android.util.Log;
 
+public class Ball extends Unit {
+//debug
+	public final String TAG="Ball";
     public float z;
     private float zv;
     
@@ -182,12 +185,13 @@ public class Ball extends Unit {
 				body.setTransform(O, 0);
 			}
         }
-
+      //  Log.e(TAG,"before ball");
         String serialized = "";
         serialized += "ball:";
         serialized += body.getPosition().x * rate + "," + body.getPosition().y
                 * rate;
         serialized += "," + this.getRadius() * rate + "," + z;
+       // Log.e(TAG,"after ball"+serialized);
         return serialized;
     }
 
