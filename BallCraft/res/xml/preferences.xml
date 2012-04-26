@@ -20,4 +20,8 @@
         android:summary="Experience earned"
         android:key="exp" />
     
+    <EditTextPreference
+        android:title="Username"
+        android:key="username" />
+    
 </PreferenceScreen>

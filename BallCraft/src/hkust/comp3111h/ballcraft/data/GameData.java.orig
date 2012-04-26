@@ -8,8 +8,23 @@ public class GameData {
     
     private static SharedPreferences pref;
     
+<<<<<<< HEAD
+    public static void setContext(Context con) {
+        context = con;
+        setPref();
+    }
+    
+    public static void setPref() {
+        if (pref == null) {
+	        pref = PreferenceManager.getDefaultSharedPreferences(context);
+        }
+    }
+
+    public static boolean getMusicPref() {
+=======
     public static boolean getMusicPref() {
         pref = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+>>>>>>> 284cdf6dab9847f933fac4d2eb081010f02d16c0
         return pref.getBoolean("music_pref", false);
     }
     
@@ -20,7 +35,10 @@ public class GameData {
     }
     
     public static boolean getVibrPref() {
+<<<<<<< HEAD
+=======
         pref = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+>>>>>>> 284cdf6dab9847f933fac4d2eb081010f02d16c0
         return pref.getBoolean("vibr_pref", false);
     }
     
@@ -31,7 +49,10 @@ public class GameData {
     }
     
     public static int getExperience() {
+<<<<<<< HEAD
+=======
         pref = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+>>>>>>> 284cdf6dab9847f933fac4d2eb081010f02d16c0
         return pref.getInt("exp", 0);
     }
     
@@ -42,12 +63,10 @@ public class GameData {
     }
     
     public static boolean isUsernameSet() {
-        pref = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         return pref.getString("username", null) != null;
     }
     
     public static String getUsername() {
-        pref = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
         return pref.getString("username", "");
     }
     

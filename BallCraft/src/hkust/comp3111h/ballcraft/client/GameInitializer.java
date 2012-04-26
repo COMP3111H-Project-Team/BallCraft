@@ -9,13 +9,14 @@ import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.server.Wall;
 import android.app.Activity;
-import android.app.Dialog;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class MultiPlayerGameInitializer extends Activity {
+public class GameInitializer extends Activity {
     
 	// Debug
 	public final String TAG = "MultiInit";
@@ -23,7 +24,7 @@ public class MultiPlayerGameInitializer extends Activity {
 	
 	private static int ballSelected;
 	
-	private static MultiPlayerGameInitializer self;
+	private static GameInitializer self;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,13 +49,26 @@ public class MultiPlayerGameInitializer extends Activity {
         ballSelected = intent.getIntExtra("ballSelected",
                 BallDef.WoodBall.id);
         String mapSelected = intent.getStringExtra("mapSelected");
+        String gameMode = intent.getStringExtra("GAME_MODE");
+        int limitValue = 0;
         
-        
-        if (BallCraft.isServer)
-        {
+        if (BallCraft.isServer) {
+            if (!BallCraft.isSinglePlayer()) {
+		        if (gameMode.equals("LIMITED_TIME")) {
+		            limitValue = intent.getIntExtra("TIME_LIMIT", 1);
+		        } else {
+		            limitValue = intent.getIntExtra("SCORE_LIMIT", 10);
+		        }
+	        }
+	        
             Intent serverIntent = new Intent(this, Server.class);
             serverIntent.putExtra("ball", ballSelected);
             serverIntent.putExtra("map", mapSelected);
+            
+            if (!BallCraft.isSinglePlayer()) {
+	            serverIntent.putExtra("GAME_MODE", gameMode);
+	            serverIntent.putExtra("LIMIT_VALUE", limitValue);
+            }
             this.startService(serverIntent);        	
         }
         
@@ -105,16 +119,36 @@ public class MultiPlayerGameInitializer extends Activity {
 
         Intent gameIntent = new Intent(self, GameActivity.class);
         gameIntent.putExtra("ballSelected", ballSelected);
+        
         self.startActivity(gameIntent);
-    
         self.finish();
     }
 
     @Override
     public void onBackPressed() {
-        Dialog dialog = new Dialog(self);
-        dialog.setTitle("Exit Loading?");
-        dialog.show();
+    	AlertDialog.Builder builder = new AlertDialog.Builder(self);
+    	builder.setTitle("Exit?");
+    	builder.setMessage("Are you sure to stop loading game?");
+    	builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+            
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                self.finish();
+                self.overridePendingTransition(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+            }
+            
+        });
+    	
+    	builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+            
+        });
+    	
+    	builder.show();
     }
 
 }

@@ -9,7 +9,6 @@ import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
-import hkust.comp3111h.ballcraft.settings.GameSettings;
 import hkust.comp3111h.ballcraft.skills.Skill;
 
 import org.jbox2d.common.Vec2;
@@ -91,7 +90,7 @@ public class Client extends IntentService {
 			int skillID = Integer.parseInt(str[0]);
 			
 			switch (skillID) {
-			case BallCraft.Skill.PROPEL:
+			case BallCraft.Skill.WATER_PROPEL:
 			    /*
 				ClientGameState.getClientGameState().addSkillEffect(
 				        id, new WaterPropelParticleSystem(x, y, z));
@@ -100,7 +99,7 @@ public class Client extends IntentService {
 				        id, new MassOverlord(b));*/
 				break;
 				
-			case BallCraft.Skill.MINE:
+			case BallCraft.Skill.LANDMINE:
 				String [] position = str[1].split(",");
 				float x = Float.valueOf(position[0]);
 				float y = Float.valueOf(position[1]);
@@ -108,7 +107,7 @@ public class Client extends IntentService {
 				ClientGameState.getClientGameState().addSkillEffect(id, new Mine(new Vec2(x, y), id));
 			    break;
 			    
-			case BallCraft.Skill.BUMP:
+			case BallCraft.Skill.ROCK_BUMP:
 				int enemyID = Integer.parseInt(str[1]);
 				Ball b = ClientGameState.getClientGameState().balls.get(enemyID);
 				ClientGameState.getClientGameState().addSkillEffect(skillID, new Slippery(b));
@@ -121,10 +120,10 @@ public class Client extends IntentService {
 			int skillID = Integer.valueOf(str[0]);
 			switch (skillID) {
 			
-			case BallCraft.Skill.PROPEL:
+			case BallCraft.Skill.WATER_PROPEL:
 				break;
 				
-			case BallCraft.Skill.MINE:
+			case BallCraft.Skill.LANDMINE:
 				String [] position = str[1].split(",");
 				int id = Integer.valueOf(position[2]);
 				ClientGameState.getClientGameState().deleteDrawable(id);
