@@ -19,6 +19,7 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -170,6 +171,8 @@ public class GameActivity extends Activity implements SensorEventListener {
     }
     
     private void exitGame() {
+        int scoreEarned = ClientGameState.getClientGameState().getScoreEarned();
+        GameData.setExperience(GameData.getExperience() + scoreEarned);
         if (!BallCraft.isSinglePlayer()) {
             ServerAdapter.sendGameInterruptMessage();
         }
@@ -180,8 +183,6 @@ public class GameActivity extends Activity implements SensorEventListener {
         if (BallCraft.isServer) {
             ServerGameState.clear();
         }
-        int scoreEarned = ClientGameState.getClientGameState().getScoreEarned();
-        GameData.setExperience(GameData.getExperience() + scoreEarned);
     }
 
     private void initSensor() {
