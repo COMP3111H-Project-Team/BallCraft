@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.util.Log;
 
 public class Server extends IntentService {
+	//debug
+	public static boolean D = false;
     
     static private ServerGameState gameState = null;
 
@@ -43,7 +45,7 @@ public class Server extends IntentService {
         }
         catch(Exception e)
         {
-        	Log.e("Error setting state for server", e.toString() + " : " + string);
+        	if(D)Log.e("Error setting state for server", e.toString() + " : " + string);
         }
     }
     

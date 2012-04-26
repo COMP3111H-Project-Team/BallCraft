@@ -4,6 +4,7 @@ import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.client.Client;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.MultiPlayerGameInitializer;
+import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
 
@@ -392,8 +393,7 @@ public class BluetoothService {
                         .sendToTarget();
             } catch (IOException e) {
                 Log.e(TAG, "Exception during write", e);
-                /**/
-                BluetoothService.this.destroy();
+                connectionLost();
             }
         }
 
@@ -443,12 +443,12 @@ public class BluetoothService {
         // Cancel the accept thread because we only want to connect to one device
         if (acceptThread != null) {acceptThread.cancel(); acceptThread = null;}
     	if(D)Log.e(TAG,"service destroy");
+        GameRenderer.stopRendering();
     	Server.stop();
         Client.stop();
         ClientGameState.clear();
         if(BallCraft.isServer) ServerGameState.clear();
         if (BallCraft.isServer) ServerGameState.clear();
     	context.destroy();
-      //  handler.sendMessage(msg);
     }
 }
