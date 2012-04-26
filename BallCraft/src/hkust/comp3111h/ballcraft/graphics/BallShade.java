@@ -43,11 +43,11 @@ public class BallShade {
         textureBuffer = makeTextureBuffer();
     }
 
-    public static void draw(GL10 gl, float x, float y) {
+    public static void draw(GL10 gl, float radius, float x, float y) {
         gl.glPushMatrix();
         
             gl.glTranslatef(x, y, 1);
-            gl.glScalef(size, size, 0.1f);
+            gl.glScalef(radius * 1.5f, radius * 1.5f, 0.1f);
             gl.glEnable(GL10.GL_TEXTURE_2D);
             
             gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
