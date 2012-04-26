@@ -145,7 +145,7 @@ public class Wall extends Unit {
 		Vec2 vector = start.sub(end);
 		float length = vector.normalize() / 2;
 		Vec2 midPoint = start.add(end).mul(0.5f);
-		float angle = (float)Math.acos(Vec2.dot(vector, new Vec2(1, 0)));
+		float angle = -(float)Math.acos(Vec2.dot(vector, new Vec2(1, 0)));
 		shape.setAsBox(length, 2.5f / rate, midPoint, angle);
 		
 		body.createFixture(shape, 0); // bind the dense, friction-laden fixture to the body
