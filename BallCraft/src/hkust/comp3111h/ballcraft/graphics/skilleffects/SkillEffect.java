@@ -7,6 +7,8 @@ public abstract class SkillEffect implements Drawable {
 
     protected Ball ballEffected;
     
+    public boolean drawBeforeBalls;
+    
     protected long initTime; 
     protected long effectTime = -1; // normally no time limit
     
