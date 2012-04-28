@@ -37,15 +37,6 @@
 	    android:text="Tree Wall" 
 	    android:textStyle="bold"/>
 	
-	<TextView
-	    android:id="@+id/game_activity_debug_view"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentBottom="true"
-	    android:padding="10dp"
-	    android:text="Debug Message Display"
-	    android:textColor="#00FF00" />
-	
 	<LinearLayout
 	    android:id="@+id/game_activity_score_layout"
 	    android:orientation="horizontal"

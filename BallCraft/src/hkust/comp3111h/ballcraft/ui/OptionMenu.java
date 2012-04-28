@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.ui;
 
+import hkust.comp3111h.MyApplication;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.data.GameData;
 import android.app.Activity;
@@ -45,12 +46,8 @@ public class OptionMenu extends Activity {
     
     public void initLayout() {
         CheckBox musicCheck = (CheckBox) self.findViewById(R.id.option_menu_music_checkbox);
-        CheckBox vibrCheck = (CheckBox) self.findViewById(R.id.option_menu_vibration_checkbox);
-        Button changeUsernameButton = (Button) self.findViewById(R.id.option_menu_change_username_button);
-        
+        musicCheck.setTypeface(MyApplication.getFont());
         musicCheck.setChecked(GameData.getMusicPref());
-        vibrCheck.setChecked(GameData.getVibrPref());
-        
         musicCheck.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
             public void onCheckedChanged(CompoundButton buttonView,
@@ -60,6 +57,9 @@ public class OptionMenu extends Activity {
             
         });
         
+        CheckBox vibrCheck = (CheckBox) self.findViewById(R.id.option_menu_vibration_checkbox);
+        vibrCheck.setTypeface(MyApplication.getFont());
+        vibrCheck.setChecked(GameData.getVibrPref());
         vibrCheck.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
             public void onCheckedChanged(CompoundButton buttonView,
@@ -69,6 +69,8 @@ public class OptionMenu extends Activity {
             
         });
         
+        Button changeUsernameButton = (Button) self.findViewById(R.id.option_menu_change_username_button);
+        changeUsernameButton.setTypeface(MyApplication.getFont());
         changeUsernameButton.setOnClickListener(new OnClickListener() {
 
             @Override

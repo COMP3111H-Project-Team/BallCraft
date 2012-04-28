@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.ui;
 
+import hkust.comp3111h.MyApplication;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.data.GameData;
@@ -14,11 +15,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class UsernameMenu extends Activity {
     
     private UsernameMenu self;
     
+    private TextView usernameTitle;
     private EditText usernameInput;
     private Button okButton;
 
@@ -44,6 +47,9 @@ public class UsernameMenu extends Activity {
     }
     
     private void initLayout() {
+        self.usernameTitle = (TextView) self.findViewById(R.id.username_menu_title);
+        self.usernameTitle.setTypeface(MyApplication.getFont());
+                
         self.usernameInput = (EditText) self.findViewById(R.id.username_menu_input);
         
         if (GameData.isUsernameSet()) {
@@ -51,7 +57,8 @@ public class UsernameMenu extends Activity {
         }
         
         self.okButton = (Button) self.findViewById(R.id.username_menu_button);
-        okButton.setOnClickListener(new OnClickListener() {
+        self.okButton.setTypeface(MyApplication.getFont());
+        self.okButton.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {

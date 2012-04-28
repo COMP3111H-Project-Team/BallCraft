@@ -4,7 +4,6 @@ import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.MapModeDef;
 import hkust.comp3111h.ballcraft.TerrainDef;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
-import hkust.comp3111h.ballcraft.client.GameActivity;
 import hkust.comp3111h.ballcraft.graphics.balls.ParticleBall;
 import hkust.comp3111h.ballcraft.graphics.balls.SolidBall;
 import hkust.comp3111h.ballcraft.graphics.particles.DarkBallParticle;
@@ -237,9 +236,6 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	                Thread.sleep(30 - elapsed);
 	            } catch (Exception e) {}
 	        }
-	                
-	        GameActivity.display("fps: " + 1000 / Math.max(30, elapsed));
-	        time = System.currentTimeMillis();
 	    }
     }
     

@@ -2,10 +2,9 @@ package hkust.comp3111h;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
+import android.graphics.Typeface;
 
-public class MyApplication extends Application
-{
+public class MyApplication extends Application {
 
     private static Context context;
 
@@ -18,10 +17,11 @@ public class MyApplication extends Application
 
     public static Context getAppContext() 
     {
-    	if (context == null)
-    	{
-    		Log.e("MyApplication", "null context");
-    	}
     	return MyApplication.context;
     }
+    
+    public static Typeface getFont() {
+        return Typeface.createFromAsset(context.getAssets(), "comic.ttf");
+    }
+    
 }
