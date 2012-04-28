@@ -45,10 +45,12 @@ public abstract class TextureEffect extends SkillEffect {
     
     public TextureEffect() {
         super();
+        this.drawBeforeBalls = true;
     }
     
     public TextureEffect(Ball ballEffected) {
         super(ballEffected);
+        this.drawBeforeBalls = true;
     }
  
     public void draw(GL10 gl) {
@@ -56,6 +58,7 @@ public abstract class TextureEffect extends SkillEffect {
         
             gl.glTranslatef(this.x, this.y, this.z);
             gl.glRotatef(180, 0, 0, 1);
+            this.rotate(gl);
             gl.glScalef(size, size, 1);
 	        gl.glEnable(GL10.GL_TEXTURE_2D);
 	        
@@ -107,7 +110,10 @@ public abstract class TextureEffect extends SkillEffect {
     }
     
     protected abstract void bindTexture(GL10 gl);
-
+    
+    protected void rotate(GL10 gl) {
+    }
+    
     @Override
     public void move() {
     }

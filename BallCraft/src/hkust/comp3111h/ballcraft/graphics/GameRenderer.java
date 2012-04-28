@@ -8,19 +8,21 @@ import hkust.comp3111h.ballcraft.client.GameActivity;
 import hkust.comp3111h.ballcraft.graphics.balls.ParticleBall;
 import hkust.comp3111h.ballcraft.graphics.balls.SolidBall;
 import hkust.comp3111h.ballcraft.graphics.particles.DarkBallParticle;
+import hkust.comp3111h.ballcraft.graphics.particles.ExplosionParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.FireBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.FlameThrowParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.MassOverlordParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.NaturesCureParticle;
+import hkust.comp3111h.ballcraft.graphics.particles.RockBumpParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.SlipperyParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterPropelParticle;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Crush;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.GrowRoot;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.IronWill;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
-import hkust.comp3111h.ballcraft.graphics.skilleffects.ParticleSystemEffect;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.RockBump;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.SkillEffect;
-import hkust.comp3111h.ballcraft.graphics.skilleffects.TextureEffect;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Wall;
@@ -45,6 +47,9 @@ public class GameRenderer implements GLSurfaceView.Renderer {
     
     private static boolean rendering = false;
     
+    private static int mapMode;
+    private static boolean changeMapMode = false;
+    
     public GameRenderer(Context context) {
         this.context = context;
     }
@@ -61,26 +66,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         gl.glEnable(GL10.GL_LIGHT0);
 
         // set light according to whether it is day or night
-        int mapMode = ClientGameState.getClientGameState().getMapMode();
-        float [] lightAmbient = MapModeDef.getMapModeAmbientLightById(mapMode);
-        float [] lightDiffuse = MapModeDef.getMapModeDiffuseLightById(mapMode);
-        float [] lightSpecular = MapModeDef.getMapModeSpecularLightById(mapMode);
-        float [] lightPosition = { 300f, 0f, 50f, 1f };
-
-        float [] matAmbient = { 0.4f, 0.4f, 0.4f, 1f };
-        float [] matDiffuse = { 0.6f, 0.6f, 0.6f, 1f };
-        float [] matSpecular = { 0.9f, 0.9f, 0.9f, 1f };
-        float [] matShininess = { 8f };
-
-        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_AMBIENT, matAmbient, 0);
-        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_DIFFUSE, matDiffuse, 0);
-        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SPECULAR, matSpecular, 0);
-        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, matShininess, 0);
-
-        gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, lightAmbient, 0);
-        gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, lightDiffuse, 0);
-        gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, lightSpecular, 0);
-        gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPosition, 0);
+        mapMode = ClientGameState.getClientGameState().getMapMode();
+        this.loadMapMode(gl);
     }
 
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -110,6 +97,9 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         Mine.loadTexture(gl, context);
         BallShade.loadTexture(gl, context);
         
+        GrowRoot.loadTexture(gl, context);
+        IronWill.loadTexture(gl, context);
+        
         WaterBallParticle.loadTexture(gl, context);
         FireBallParticle.loadTexture(gl, context);
         DarkBallParticle.loadTexture(gl, context);
@@ -122,6 +112,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         NaturesCureParticle.loadTexture(gl, context);
         SlipperyParticle.loadTexture(gl, context);
         FlameThrowParticle.loadTexture(gl, context);
+        ExplosionParticle.loadTexture(gl, context);
+        RockBumpParticle.loadTexture(gl, context);
     }
     
     public static void startRendering() {
@@ -132,7 +124,38 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         rendering = false;
     }
     
+    public static void changeLightMode(int mode) {
+        mapMode = mode;
+        changeMapMode = true;
+    }
+    
+    private void loadMapMode(GL10 gl) {
+        float [] lightAmbient = MapModeDef.getMapModeAmbientLightById(mapMode);
+        float [] lightDiffuse = MapModeDef.getMapModeDiffuseLightById(mapMode);
+        float [] lightSpecular = MapModeDef.getMapModeSpecularLightById(mapMode);
+        float [] lightPosition = { 300f, 0f, 50f, 1f };
+
+        float [] matAmbient = { 0.4f, 0.4f, 0.4f, 1f };
+        float [] matDiffuse = { 0.6f, 0.6f, 0.6f, 1f };
+        float [] matSpecular = { 0.9f, 0.9f, 0.9f, 1f };
+        float [] matShininess = { 8f };
+
+        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_AMBIENT, matAmbient, 0);
+        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_DIFFUSE, matDiffuse, 0);
+        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SPECULAR, matSpecular, 0);
+        gl.glMaterialfv(GL10.GL_FRONT_AND_BACK, GL10.GL_SHININESS, matShininess, 0);
+
+        gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, lightAmbient, 0);
+        gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_DIFFUSE, lightDiffuse, 0);
+        gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_SPECULAR, lightSpecular, 0);
+        gl.glLightfv(GL10.GL_LIGHT0, GL10.GL_POSITION, lightPosition, 0);
+    }
+    
     public void onDrawFrame(GL10 gl) {
+        if (changeMapMode) {
+            this.loadMapMode(gl);
+            changeMapMode = false;
+        }
         if (rendering) {
 	        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 	        gl.glLoadIdentity();
@@ -162,7 +185,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	        // draw all texture effects
 	        for (Integer key : effects.keySet()) {
 	            SkillEffect d = effects.get(key);
-	            if (d instanceof TextureEffect) {
+	            // if (d instanceof TextureEffect) {
+	            if (d.drawBeforeBalls) {
 		            if (d.timeout()) {
 		                effects.remove(key);
 		            } else {
@@ -183,10 +207,11 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	            if (b instanceof SolidBall) {
 	                if (b.z <= 0) { // above the plane, draw shade
 		                if (b.useGraphicalPosForDrawing) {
-				            BallShade.draw(gl, b.getGraphicalPosition().x + 8, 
-				                    b.getGraphicalPosition().y - 2);
+				            BallShade.draw(gl, b.getRadius(), 
+				                    b.getGraphicalPosition().x + 8, b.getGraphicalPosition().y - 2);
 		                } else {
-				            BallShade.draw(gl, b.getPosition().x + 8, b.getPosition().y - 2);
+				            BallShade.draw(gl, b.getRadius(), 
+				                    b.getPosition().x + 8, b.getPosition().y - 2);
 		                }
 	                }
 	            }
@@ -195,7 +220,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	        // draw all particle system effects
 	        for (Integer key : effects.keySet()) {
 	            SkillEffect d = effects.get(key);
-	            if (d instanceof ParticleSystemEffect) {
+	            // if (d instanceof ParticleSystemEffect) {
+	            if (!d.drawBeforeBalls) {
 		            if (d.timeout()) {
 		                effects.remove(key);
 		            } else {

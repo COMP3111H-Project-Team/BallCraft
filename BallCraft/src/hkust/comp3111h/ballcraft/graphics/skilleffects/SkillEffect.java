@@ -7,12 +7,14 @@ public abstract class SkillEffect implements Drawable {
 
     protected Ball ballEffected;
     
+    public boolean drawBeforeBalls;
+    
     protected long initTime; 
     protected long effectTime = -1; // normally no time limit
     
-    protected float x;
-    protected float y;
-    protected float z;
+    public float x;
+    public float y;
+    public float z;
     
     public SkillEffect() {
         this.initTime = System.currentTimeMillis();

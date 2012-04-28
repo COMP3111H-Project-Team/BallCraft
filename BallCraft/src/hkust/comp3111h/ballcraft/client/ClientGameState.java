@@ -82,7 +82,6 @@ public class ClientGameState {
             ServerAdapter.sendScoreToServer(
                     Math.max(this.selfScoreEarned, this.enemyScoreEarned));
         }
-    
     }
     
     private void checkSelfBallState() {
@@ -157,6 +156,10 @@ public class ClientGameState {
     
     public ConcurrentHashMap<Integer, SkillEffect> getDrawables() {
         return this.skillEffects;
+    }
+    
+    public SkillEffect getDrawable(int id) {
+        return this.skillEffects.get(new Integer(id));
     }
 
     public void deleteDrawable(int id) {
