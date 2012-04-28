@@ -22,6 +22,10 @@ public abstract class ParticleSystemEffect extends SkillEffect {
      */
     protected ArrayList<Particle> particles;
     
+    {
+        this.drawBeforeBalls = false;
+    }
+    
     /**
      * Move every particle in the particle system
      */

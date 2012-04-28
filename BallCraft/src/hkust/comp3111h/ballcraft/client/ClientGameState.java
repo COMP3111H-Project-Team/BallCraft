@@ -82,7 +82,6 @@ public class ClientGameState {
             ServerAdapter.sendScoreToServer(
                     Math.max(this.selfScoreEarned, this.enemyScoreEarned));
         }
-    
     }
     
     private void checkSelfBallState() {
