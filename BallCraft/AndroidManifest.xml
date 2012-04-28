@@ -80,11 +80,15 @@
         
         <activity android:name=".Bluetooth"
                   android:label="@string/app_name"
+	              android:screenOrientation="landscape"
                   android:configChanges="orientation|keyboardHidden" />
+        
         <activity android:name=".DeviceListActivity"
                   android:label="@string/select_device"
                   android:theme="@android:style/Theme.Dialog"
+		          android:screenOrientation="landscape"
                   android:configChanges="orientation|keyboardHidden" />
+        
 		<activity android:name=".server.bt.BluetoothActivity"></activity>
 		<activity android:name=".server.bt.DeviceListActivity"></activity>
         <service android:name=".server.Server"></service>

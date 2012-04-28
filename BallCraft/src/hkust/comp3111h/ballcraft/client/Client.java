@@ -5,7 +5,7 @@ import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.data.GameData;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Explosion;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
-import hkust.comp3111h.ballcraft.graphics.skilleffects.Slippery;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.RockBumpParticleSystem;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
@@ -111,7 +111,8 @@ public class Client extends IntentService {
 			case BallCraft.Skill.ROCK_BUMP:
 				int enemyID = Integer.parseInt(str[1]);
 				Ball b = ClientGameState.getClientGameState().balls.get(enemyID);
-				ClientGameState.getClientGameState().addSkillEffect(skillID, new Slippery(b));
+				// ClientGameState.getClientGameState().addSkillEffect(skillID, new IronWill(b));
+				ClientGameState.getClientGameState().addSkillEffect(skillID, new RockBumpParticleSystem(b));
 			    break;
 			    
 			case BallCraft.Skill.NATURES_CURE:
