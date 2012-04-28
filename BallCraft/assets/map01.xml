@@ -6,9 +6,13 @@
 	<terrain>0</terrain>
 	<mode>0</mode>
 	<initPosition>100,100</initPosition>
+	<initPosition>-100,100</initPosition>
+	<initPosition>100,-100</initPosition>
+	<initPosition>-100,-100</initPosition>
 	<plane>-200,-200,200,200</plane>
 	<wall>-200,-200,150,-200</wall>
 	<wall>-200,-200,-200,200</wall>
 	<wall>200,-200,200,200</wall>
 	<wall>-200,200,200,200</wall>
+	
 </map>

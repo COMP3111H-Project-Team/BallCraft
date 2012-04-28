@@ -64,12 +64,18 @@ public class MapParser{
 	    	Element mode = (Element)root.getElementsByTagName("mode").item(0);
 	    	map.setMode(Integer.parseInt(mode.getFirstChild().getNodeValue()));
 	    	
-	    	//get init position
-	    	Element init = (Element)root.getElementsByTagName("initPosition").item(0);
-	    	map.setInitPosition(parseString(init.getFirstChild().getNodeValue()));
+	    	String data;
 	    	NodeList nodes;
 	    	
-	    	String data;
+	    	//get initPosition list
+	    	nodes = root.getElementsByTagName("initPosition");
+			for(int i=0;i<nodes.getLength();i++){
+				Element initElement=(Element)(nodes.item(i));
+				data = initElement.getFirstChild().getNodeValue();
+				//Log.i("map", data);
+				map.addInit(parseString(data));                     
+			}
+	    	
 	    	//get wall list
 	    	nodes=root.getElementsByTagName("wall");
 			for(int i=0;i<nodes.getLength();i++){
