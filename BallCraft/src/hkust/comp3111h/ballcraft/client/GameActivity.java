@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.client;
 
+import hkust.comp3111h.MyApplication;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
@@ -19,7 +20,6 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -45,16 +45,13 @@ public class GameActivity extends Activity implements SensorEventListener {
     
     private static TextView loseView = null;
 
-    private static TextView debugView = null;
-    private static String debugMsg = null;
-    
     private static Button skill1Button;
     private static Button skill2Button;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        
         self = this;
 
         this.getWindow().setFlags(
@@ -94,9 +91,10 @@ public class GameActivity extends Activity implements SensorEventListener {
         
         self.renderer = new GameRenderer(this);
         mGLView.setRenderer(self.renderer);
-        self.renderer.startRendering();
+        GameRenderer.startRendering();
         
         TextView statusDisplay = (TextView) this.findViewById(R.id.game_activity_status_dispaly);
+        statusDisplay.setTypeface(MyApplication.getFont());
         statusDisplay.getBackground().setAlpha(200);
         
         int ballSelected = self.getIntent().getIntExtra("ballSelected", BallCraft.Ball.WOOD_BALL);
@@ -104,6 +102,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
         skill1Button = (Button) this
                 .findViewById(R.id.game_activity_skill_1_button);
+        skill1Button.setTypeface(MyApplication.getFont());
         skill1Button.getBackground().setAlpha(80);
         skill1Button.setText(SkillDef.getSkillNameById(skills[0]));
         skill1Button.setOnClickListener(new OnClickListener() {
@@ -122,6 +121,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
         skill2Button = (Button) this
                 .findViewById(R.id.game_activity_skill_2_button);
+        skill2Button.setTypeface(MyApplication.getFont());
         skill2Button.getBackground().setAlpha(80);
         skill2Button.setText(SkillDef.getSkillNameById(skills[1]));
         skill2Button.setOnClickListener(new OnClickListener() {
@@ -139,15 +139,15 @@ public class GameActivity extends Activity implements SensorEventListener {
         });
         
         loseView = (TextView) this.findViewById(R.id.game_activity_lose_text);
+        loseView.setTypeface(MyApplication.getFont());
         loseView.setVisibility(View.INVISIBLE);
-
-        debugView = (TextView) this.findViewById(R.id.game_activity_debug_view);
 
         menuLayout = (LinearLayout) this.findViewById(R.id.game_activity_menu);
         menuLayout.setVisibility(View.INVISIBLE);
 
         Button resumeButton = (Button) this
                 .findViewById(R.id.game_activity_resume_button);
+        resumeButton.setTypeface(MyApplication.getFont());
         resumeButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
@@ -158,6 +158,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
         Button exitButton = (Button) this
                 .findViewById(R.id.game_activity_exit_button);
+        exitButton.setTypeface(MyApplication.getFont());
         exitButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
@@ -176,7 +177,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         if (!BallCraft.isSinglePlayer()) {
             ServerAdapter.sendGameInterruptMessage();
         }
-        renderer.stopRendering();
+        GameRenderer.stopRendering();
         Server.stop();
         Client.stop();
         ClientGameState.clear();
@@ -266,37 +267,4 @@ public class GameActivity extends Activity implements SensorEventListener {
         
     };
 
-    /**
-     * Used for displaying a debug message at the bottom of the screen
-     */
-    public static void displayDebugMsg() {
-        debugView.setText(debugMsg);
-    }
-
-    private static Handler debugMsgHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            displayDebugMsg();
-        }
-    };
-
-    public static void display(String msg) {
-        debugMsg = msg;
-        debugMsgHandler.sendEmptyMessage(0);
-    }
-
-    public static void display(float msg) {
-        debugMsg = "" + msg;
-        debugMsgHandler.sendEmptyMessage(0);
-    }
-
-    public static void display(double msg) {
-        debugMsg = "" + msg;
-        debugMsgHandler.sendEmptyMessage(0);
-    }
-
-    public static void display(int msg) {
-        debugMsg = "" + msg;
-        debugMsgHandler.sendEmptyMessage(0);
-    }
 }

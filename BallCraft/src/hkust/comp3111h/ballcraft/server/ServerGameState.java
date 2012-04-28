@@ -76,7 +76,6 @@ public class ServerGameState {
     		ArrayList<Skill> skills = input.getSkills();
     		for (int i = 0; i < skills.size(); i++)
     		{
-    			// if(D) Log.e(TAG, i+"");
     			skills.get(i).setTime();
     			
     			int count = 0;
@@ -141,7 +140,6 @@ public class ServerGameState {
         String initMsg = mapTerrain + "," + mapMode + "," + serverBall +"," +  clientBall + "MAPDEF";
         for (int i = 0; i < units.size(); i++)
         {
-        	// Log.e(TAG,units.size()+" "+i+" "+units.get(i).toString());
         	
             initMsg += units.get(i).toSerializedString();
             if (i != units.size() - 1)
@@ -193,7 +191,11 @@ public class ServerGameState {
     }
     
     public Vec2 getOneRespawnPoint() {
-        return respawnPoints.get(new Random().nextInt(respawnPoints.size()));
+        if (respawnPoints.isEmpty()) {
+            return new Vec2(0, 0);
+        } else {
+	        return respawnPoints.get(new Random().nextInt(respawnPoints.size()));
+        }
     }
 
 }

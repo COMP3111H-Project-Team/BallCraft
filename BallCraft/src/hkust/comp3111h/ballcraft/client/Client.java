@@ -18,7 +18,6 @@ import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Vibrator;
-import android.util.Log;
 
 public class Client extends IntentService {
     
@@ -171,7 +170,6 @@ public class Client extends IntentService {
             	time++;
             	if (time > 1500)
             	{
-            		Log.e("Client waiting for server", "Time Out");
                 	Server.stop();
                     Client.stop();
                     ClientGameState.clear();

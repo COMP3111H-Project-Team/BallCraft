@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.ui;
 
+import hkust.comp3111h.MyApplication;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
@@ -56,8 +57,7 @@ public class MapSelectMenu extends Activity {
         ballSelected = intent
                 .getIntExtra("ballSelected", BallDef.WoodBall.id);
 
-        this.initMaps(); // must be put before initLayout() because maps are
-                         // needed
+        this.initMaps(); // must be put before initLayout() because maps are needed
         this.initLayout();
     }
 
@@ -75,18 +75,21 @@ public class MapSelectMenu extends Activity {
 
         final TextView terrainTextView = 
                 (TextView) this.findViewById(R.id.map_select_menu_terrain_value);
+        terrainTextView.setTypeface(MyApplication.getFont());
         
         terrainTextView.setText(
                 TerrainDef.getTerrainNameById(initMap.getTerrain()));
         
         final TextView lightTextView = 
                 (TextView) this.findViewById(R.id.map_select_menu_light_value);
+        lightTextView.setTypeface(MyApplication.getFont());
         
         lightTextView.setText(
                 initMap.getMode() == BallCraft.MapMode.DAY_MODE ? "Daylight" : "Night");
                 
         final TextView benefitBallView = 
                 (TextView) this.findViewById(R.id.map_select_menu_benefit_ball_value);
+        benefitBallView.setTypeface(MyApplication.getFont());
         
         if (initMap.getMode() == BallCraft.MapMode.DAY_MODE) {
 	        benefitBallView.setText(
@@ -199,6 +202,7 @@ public class MapSelectMenu extends Activity {
             
             TextView mapNameView = (TextView) v
                     .findViewById(R.id.map_select_list_item_name);
+            mapNameView.setTypeface(MyApplication.getFont());
             
             mapNameView.setText(map.getName());
 
