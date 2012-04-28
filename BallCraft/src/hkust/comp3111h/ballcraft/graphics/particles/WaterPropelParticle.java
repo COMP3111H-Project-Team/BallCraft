@@ -11,8 +11,6 @@ import android.opengl.GLUtils;
 
 public class WaterPropelParticle extends MagicParticle {
     
-    private static int textureImg = R.drawable.water_particle;
-    
     private static int [] textures = new int[1];
     
     public WaterPropelParticle(float x, float y, float z) {
@@ -20,11 +18,15 @@ public class WaterPropelParticle extends MagicParticle {
         
         this.gravityInfluence = true;
         
-        this.size = 15;
+        this.size = 5;
+        
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     public static void loadTexture(GL10 gl, Context context) {
-        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), textureImg);
+        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.water_particle);
         gl.glGenTextures(1, textures, 0);
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
         gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
