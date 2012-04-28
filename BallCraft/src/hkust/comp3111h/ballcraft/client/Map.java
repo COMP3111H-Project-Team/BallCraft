@@ -1,9 +1,11 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.ballcraft.server.Plane;
+import hkust.comp3111h.ballcraft.server.ServerGameState;
 import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.server.Wall;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -19,11 +21,11 @@ public class Map {
 	private int heightCount;
 	private int terrain;
 	private int mode;
-	private Vec2 initPosition;
 	private Vector<Unit> units;
 	private Vector<Data> walls;
 	private Vector<Data> traps;
 	private Vector<Data> planes;
+	private ArrayList<Vec2> initPosition;
 	
 	public class Data {
 		public Data(Vec2 s, Vec2 e) {
@@ -39,6 +41,8 @@ public class Map {
 		walls = new Vector<Data>();
 		planes = new Vector<Data>();
 		traps = new Vector<Data>();
+		initPosition = new ArrayList<Vec2>();
+		ServerGameState.setInitPosition(initPosition);
 	}
 
 
@@ -82,14 +86,10 @@ public class Map {
 		return mode;
 	}
 	
-	public void setInitPosition(int[] p) {
-		initPosition = new Vec2(p[0],p[1]);
+	public void addInit(int[] p) {
+		initPosition.add(new Vec2(p[0],p[1]));
 	}
-	
-	public Vec2 getInitPosition() {
-		return initPosition;
-	}
-	
+		
 	public void addWall(int[] data) {
 		walls.add(new Data(new Vec2(data[0],data[1]), new Vec2(data[2],data[3])));
 	}

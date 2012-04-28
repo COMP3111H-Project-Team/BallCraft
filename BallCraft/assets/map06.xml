@@ -5,8 +5,10 @@
 	<width>400</width>
 	<terrain>5</terrain>
 	<mode>0</mode>
-	<initPosition>0,-100</initPosition>
-	<initPosition>0,100</initPosition>
+	<initPosition>100,100</initPosition>
+	<initPosition>-100,100</initPosition>
+	<initPosition>100,-100</initPosition>
+	<initPosition>-100,-100</initPosition>
 	<plane>-200,-200,-160,-10</plane>
 	<plane>-180,10,200,200</plane>
 	<plane>-200,-10,-180,200</plane>

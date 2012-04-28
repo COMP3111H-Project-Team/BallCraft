@@ -42,6 +42,10 @@ public class ServerGameState {
         return stateInstance;
     }
     
+    public static void setInitPosition(ArrayList<Vec2> initPosition){
+    	respawnPoints=initPosition;
+    }
+    
     public static void clear()
     {
         stateInstance = new ServerGameState();    	
