@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ball_unlock_menu_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+	<android.opengl.GLSurfaceView
+	    android:id="@+id/ball_unlockl_menu_gl_surface_view"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" />
+	
+	<TextView
+	    android:id="@+id/ball_unlock_menu_title_view"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	    android:textSize="15pt"
+	    android:textColor="#FFFFFF"
+	    android:text="New Ball Unlocked!" />
+	
+	<TextView
+	    android:id="@+id/ball_unlock_menu_subtitle_view"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/ball_unlock_menu_title_view"
+	    android:gravity="center"
+	    android:textSize="7pt"
+	    android:textColor="#CCCCCC"
+	    android:text="Tap the ball to continue" />
+	
+	<ImageView
+	    android:id="@+id/ball_unlock_menu_ball_image_view"
+	    android:layout_width="200dp"
+	    android:layout_height="200dp"
+	    android:layout_centerInParent="true"
+	    android:scaleType="fitXY" />
+	
+	<TextView 
+	    android:id="@+id/ball_unlock_menu_ball_name_view"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_marginBottom="15dp"
+	    android:gravity="center"
+	    android:textSize="15pt" />
+	 
+</RelativeLayout>

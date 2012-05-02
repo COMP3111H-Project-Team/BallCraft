@@ -5,6 +5,11 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     
+	<android.opengl.GLSurfaceView
+	    android:id="@+id/game_initializer_menu_gl_surface_view"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" />
+    
     <TextView
         android:id="@+id/game_initializer_loading_view"
         android:layout_width="wrap_content"

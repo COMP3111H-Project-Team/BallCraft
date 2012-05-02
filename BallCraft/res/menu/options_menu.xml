@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/test"
+        android:title="Single Player Test" />
     <item android:id="@+id/crash"
-          android:title="Crash!!!!!" />
+        android:title="Crash!!!!!" />
 </menu>

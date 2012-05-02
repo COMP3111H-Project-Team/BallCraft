@@ -90,15 +90,36 @@ public class Client extends IntentService {
 			int skillID = Integer.parseInt(str[0]);
 			
 			switch (skillID) {
+			case BallCraft.Skill.GROW_ROOT:
+			    break;
+			    
+			case BallCraft.Skill.NATURES_CURE:
+			    break;
+			    
+			case BallCraft.Skill.MASS_OVERLORD:
+			    break;
+				
+			case BallCraft.Skill.ROCK_BUMP:
+				int enemyID = Integer.parseInt(str[1]);
+				Ball b = ClientGameState.getClientGameState().balls.get(enemyID);
+				ClientGameState.getClientGameState().addSkillEffect(skillID, new RockBumpParticleSystem(b));
+			    break;
+			    
 			case BallCraft.Skill.WATER_PROPEL:
-			    /*
-				ClientGameState.getClientGameState().addSkillEffect(
-				        id, new WaterPropelParticleSystem(x, y, z));
-				        
-				ClientGameState.getClientGameState().addSkillEffect(
-				        id, new MassOverlord(b));*/
 				break;
 				
+			case BallCraft.Skill.SLIPPERY:
+			    break;
+			    
+			case BallCraft.Skill.IRON_WILL:
+			    break;
+			    
+			case BallCraft.Skill.CRUSH:
+			    break;
+			    
+			case BallCraft.Skill.FLAME_THROW:
+			    break;
+			    
 			case BallCraft.Skill.LANDMINE:
 				String [] position = str[1].split(",");
 				float x = Float.valueOf(position[0]);
@@ -107,14 +128,10 @@ public class Client extends IntentService {
 				ClientGameState.getClientGameState().addSkillEffect(id, new Mine(new Vec2(x, y), id));
 			    break;
 			    
-			case BallCraft.Skill.ROCK_BUMP:
-				int enemyID = Integer.parseInt(str[1]);
-				Ball b = ClientGameState.getClientGameState().balls.get(enemyID);
-				// ClientGameState.getClientGameState().addSkillEffect(skillID, new IronWill(b));
-				ClientGameState.getClientGameState().addSkillEffect(skillID, new RockBumpParticleSystem(b));
+			case BallCraft.Skill.STEALTH:
 			    break;
 			    
-			case BallCraft.Skill.NATURES_CURE:
+			case BallCraft.Skill.MIDNIGHT:
 			    break;
 			}
 		}
@@ -134,7 +151,6 @@ public class Client extends IntentService {
 				ClientGameState.getClientGameState().addSkillEffect(-1, new Explosion(m.x, m.y, 0));
 				ClientGameState.getClientGameState().deleteDrawable(id);
 			    break;
-				
 			}
 		}
 

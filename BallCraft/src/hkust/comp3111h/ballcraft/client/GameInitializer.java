@@ -1,5 +1,6 @@
 package hkust.comp3111h.ballcraft.client;
 
+import hkust.comp3111h.MyApplication;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
@@ -8,13 +9,16 @@ import hkust.comp3111h.ballcraft.server.Plane;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.Unit;
 import hkust.comp3111h.ballcraft.server.Wall;
+import hkust.comp3111h.ballcraft.ui.GameMenuRenderer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 public class GameInitializer extends Activity {
     
@@ -41,6 +45,18 @@ public class GameInitializer extends Activity {
 
         this.setContentView(R.layout.game_initializer_layout);
         
+        GLSurfaceView glView = (GLSurfaceView) this
+                .findViewById(R.id.game_initializer_menu_gl_surface_view);
+        glView.setRenderer(new GameMenuRenderer(this));
+        
+        final TextView loadingView = (TextView) this.findViewById(R.id.game_initializer_loading_view);
+        loadingView.setTypeface(MyApplication.getFont());
+        if (BallCraft.isServer) {
+            loadingView.setText("Loading...");
+        } else {
+            loadingView.setText("Waiting for server...");
+        }
+
         initGame();
     }
 

@@ -6,8 +6,6 @@ import hkust.comp3111h.ballcraft.server.Unit;
 
 import org.jbox2d.dynamics.Body;
 
-import android.util.Log;
-
 /**
  * Define a skill to be casted
  */
@@ -36,23 +34,44 @@ public abstract class Skill {
     {
         switch (id) 
         {
-        /*
-        case BallCraft.Skill.TEST_SKILL_1:
+        case BallCraft.Skill.GROW_ROOT:
             return new TestSkill1(player, id);
-        case BallCraft.Skill.TEST_SKILL_2:
-            return new TestSkill2(player, id);
-            */
-        case BallCraft.Skill.LANDMINE:
-            return new Mine(player, id);
+            
+        case BallCraft.Skill.NATURES_CURE:
+            return new TestSkill1(player, id);
+            
         case BallCraft.Skill.MASS_OVERLORD:
             return new MassOverload(player, id);
-        case BallCraft.Skill.WATER_PROPEL:
-            return new Propel(player, id);
+            
         case BallCraft.Skill.ROCK_BUMP:
             return new Bump(player, id);
-        default:
-        	Log.e("Skill", "No Such Skill:" + id);
+            
+        case BallCraft.Skill.WATER_PROPEL:
+            return new Propel(player, id);
+            
+        case BallCraft.Skill.SLIPPERY:
             return new TestSkill1(player, id);
+            
+        case BallCraft.Skill.IRON_WILL:
+            return new TestSkill1(player, id);
+            
+        case BallCraft.Skill.CRUSH:
+            return new TestSkill1(player, id);
+            
+        case BallCraft.Skill.FLAME_THROW:
+            return new TestSkill1(player, id);
+            
+        case BallCraft.Skill.LANDMINE:
+            return new Mine(player, id);
+            
+        case BallCraft.Skill.STEALTH:
+            return new TestSkill1(player, id);
+            
+        case BallCraft.Skill.MIDNIGHT:
+            return new TestSkill1(player, id);
+            
+        default:
+            return null;
         }
     }
 
