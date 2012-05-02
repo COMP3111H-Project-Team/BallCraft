@@ -78,6 +78,12 @@
             android:screenOrientation="landscape">
         </activity>
         
+        <activity
+            android:name=".ui.BallUnlockedMenu"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape">
+        </activity>
+        
         <activity android:name=".Bluetooth"
                   android:label="@string/app_name"
 	              android:screenOrientation="landscape"

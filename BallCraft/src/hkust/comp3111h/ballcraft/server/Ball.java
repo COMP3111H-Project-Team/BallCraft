@@ -162,7 +162,9 @@ public class Ball extends Unit {
     public String toSerializedString() {
         if (this.isOutOfBound(ServerGameState.getStateInstance().getUnits()) || this.dead)
         {
-
+            if (z == 0) {
+                z = 20;
+            }
 			if (status == Status.NORMAL)
 			{
 				status = Status.DEAD;

@@ -77,30 +77,30 @@ public class Wall extends Unit {
 	};
 	
 	private static final float [] texture = {
-            0.0f, 1.0f,
+            0.0f, 0.1f,
             0.0f, 0.0f,
-            1.0f, 1.0f,
-            1.0f, 0.0f,
+            0.1f, 0.1f,
+            0.1f, 0.0f,
             
-            0.0f, 1.0f,
+            0.0f, 0.1f,
             0.0f, 0.0f,
-            1.0f, 1.0f,
-            1.0f, 0.0f,
+            0.1f, 0.1f,
+            0.1f, 0.0f,
             
-            0.0f, 1.0f,
+            0.0f, 0.1f,
             0.0f, 0.0f,
-            1.0f, 1.0f,
-            1.0f, 0.0f,
+            0.1f, 0.1f,
+            0.1f, 0.0f,
             
-            0.0f, 1.0f,
+            0.0f, 0.1f,
             0.0f, 0.0f,
-            1.0f, 1.0f,
-            1.0f, 0.0f,
+            0.1f, 0.1f,
+            0.1f, 0.0f,
             
-            0.0f, 1.0f,
+            0.0f, 0.1f,
             0.0f, 0.0f,
-            1.0f, 1.0f,
-            1.0f, 0.0f,
+            0.1f, 0.1f,
+            0.1f, 0.0f,
 	};
 	
     private static int [] textures = new int[1];

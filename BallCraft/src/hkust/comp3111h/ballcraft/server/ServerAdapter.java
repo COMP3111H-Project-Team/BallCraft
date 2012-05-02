@@ -74,7 +74,11 @@ public class ServerAdapter {
         Server.setScore(score);
     }
     
-    public static void sendEndGameMessage() {
+    public static void sendEndGameMessageToClient() {
+        // TODO
+    }
+    
+    public static void sendEndGameMessageToServer() {
         // TODO
     }
     

@@ -231,6 +231,8 @@ public class BallSelectMenu extends Activity {
                     {
                     	intent = new Intent(self, GameInitializer.class);    
                     	ServerAdapter.sendClientInitMsg("" + currBallPos);
+		                self.overridePendingTransition(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
                     }
                     intent.putExtra("ballSelected", currBallPos);
                     self.startActivity(intent);
