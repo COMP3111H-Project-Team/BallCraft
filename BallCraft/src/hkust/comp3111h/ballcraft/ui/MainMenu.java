@@ -98,6 +98,9 @@ public class MainMenu extends Activity implements SensorEventListener {
 
         });
         
+        Animation opacityChange1 = AnimationUtils.loadAnimation(self, R.anim.opacity_change_1);
+        Animation opacityChange2 = AnimationUtils.loadAnimation(self, R.anim.opacity_change_2);
+        
         final ImageView startGameButton = (ImageView) this
                 .findViewById(R.id.main_menu_start_game_image_view);
         startGameButton.setOnClickListener(new OnClickListener() {
@@ -120,8 +123,38 @@ public class MainMenu extends Activity implements SensorEventListener {
             
         });
         
-        Animation opacityChange = AnimationUtils.loadAnimation(self, R.anim.opacity_change_2);
-        startGameButton.startAnimation(opacityChange);
+        startGameButton.startAnimation(opacityChange1);
+        
+        final ImageView profileButton = (ImageView) this
+                .findViewById(R.id.main_menu_profile_image_view);
+        profileButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(self, ProfileMenu.class);
+                self.startActivity(intent);
+                self.overridePendingTransition(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+            }
+            
+        });
+        
+        profileButton.startAnimation(opacityChange2);
+        
+        final ImageView aboutButton = (ImageView) this
+                .findViewById(R.id.main_menu_about_image_view);
+        aboutButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                
+                self.overridePendingTransition(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+            }
+            
+        });
+        
+        aboutButton.startAnimation(opacityChange1);
     }
 
     public void onAccuracyChanged(Sensor sensor, int accuracy) {

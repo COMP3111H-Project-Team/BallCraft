@@ -68,20 +68,7 @@ public class OptionMenu extends Activity {
             }
             
         });
-        
-        Button changeUsernameButton = (Button) self.findViewById(R.id.option_menu_change_username_button);
-        changeUsernameButton.setTypeface(MyApplication.getFont());
-        changeUsernameButton.setOnClickListener(new OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(self, UsernameMenu.class);
-                self.startActivity(intent);
-                self.overridePendingTransition(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-            }
-            
-        });
     }
 
     @Override

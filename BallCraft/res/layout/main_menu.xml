@@ -20,11 +20,31 @@
 	    android:layout_marginRight="10dp"
 	    android:src="@drawable/setting" />
 	
-	<ImageView
-	    android:id="@+id/main_menu_start_game_image_view"
+	<LinearLayout
+	    android:id="@+id/main_menu_button_container"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_centerInParent="true"
-	    android:src="@drawable/start_game" />
+	    android:orientation="vertical"
+	    android:layout_centerInParent="true">
+	    
+		<ImageView
+		    android:id="@+id/main_menu_start_game_image_view"
+		    android:layout_width="wrap_content"
+		    android:layout_height="80dp"
+		    android:src="@drawable/main_menu_start" />
+		
+		<ImageView
+		    android:id="@+id/main_menu_profile_image_view"
+		    android:layout_width="wrap_content"
+		    android:layout_height="80dp"
+		    android:src="@drawable/main_menu_profile" />
+		
+		<ImageView
+		    android:id="@+id/main_menu_about_image_view"
+		    android:layout_width="wrap_content"
+		    android:layout_height="80dp"
+		    android:src="@drawable/main_menu_about" />
+		
+	</LinearLayout>
 	
 </RelativeLayout>

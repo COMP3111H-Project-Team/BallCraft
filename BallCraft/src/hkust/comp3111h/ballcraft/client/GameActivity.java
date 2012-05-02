@@ -14,7 +14,6 @@ import hkust.comp3111h.ballcraft.skills.Skill;
 import hkust.comp3111h.ballcraft.ui.BallUnlockedMenu;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;

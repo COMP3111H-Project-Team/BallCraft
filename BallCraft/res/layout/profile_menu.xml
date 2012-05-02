@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/profile_menu_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <android.opengl.GLSurfaceView
+        android:id="@+id/profile_menu_gl_surface_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+    
+    <LinearLayout
+        android:id="@+id/profile_menu_content_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <LinearLayout
+            android:id="@+id/profile_menu_username_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            
+            <TextView 
+                android:id="@+id/profile_menu_username_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="9pt" />
+            
+            <Button
+                android:id="@+id/profile_menu_username_change_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Change"
+                android:textSize="9pt" />
+            
+        </LinearLayout>
+        
+        <TextView
+            android:id="@+id/profile_menu_exp_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="9pt" />
+        
+        <TextView
+            android:id="@+id/profile_menu_game_log_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="9pt" />
+        
+        <Button
+            android:id="@+id/profile_menu_clear_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear all"
+            android:textSize="9pt" />
+       
+    </LinearLayout>
+
+</RelativeLayout>
