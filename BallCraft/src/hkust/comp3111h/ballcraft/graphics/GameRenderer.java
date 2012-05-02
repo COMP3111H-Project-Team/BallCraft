@@ -161,7 +161,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	        
 	        ArrayList<Ball> balls = ClientGameState.getClientGameState().balls;
 	        
-	        if (balls.size() > BallCraft.maxPlayer) {
+	        if (balls.size() >= BallCraft.maxPlayer) {
 		        Ball self = (Ball) balls.get(BallCraft.myself);
 		        self.useGraphicalPosForDrawing = true;
 		
