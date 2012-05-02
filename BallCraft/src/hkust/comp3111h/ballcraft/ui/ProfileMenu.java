@@ -93,6 +93,11 @@ public class ProfileMenu extends Activity {
         expDisplay.setTypeface(MyApplication.getFont());
         expDisplay.setText("Experience: " + GameData.getExperience());
         
+        final TextView logDisplay = (TextView) self.findViewById(R.id.profile_menu_game_log_display);
+        logDisplay.setTypeface(MyApplication.getFont());
+        logDisplay.setText("Win: " + GameData.getWinCount() + " Lose: " + GameData.getLoseCount()
+                + " Draw: " + GameData.getDrawCount());
+        
         Button clearAllButton = (Button) self.findViewById(R.id.profile_menu_clear_button);
         clearAllButton.setTypeface(MyApplication.getFont());
         clearAllButton.setOnClickListener(new OnClickListener() {
@@ -107,7 +112,11 @@ public class ProfileMenu extends Activity {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         GameData.setExperience(0);
+                        GameData.setWinCount(0);
+                        GameData.setLoseCount(0);
+                        GameData.setDrawCount(0);
                         expDisplay.setText("Experience: 0");
+                        logDisplay.setTag("Win: 0 Lose: 0 Draw: 0");
                     }
                     
                 });

@@ -229,26 +229,33 @@ public class GameActivity extends Activity implements SensorEventListener {
             endGameTitle.setText("An Incredible Triumph !!!");
             endGameTitle.setTextColor(Color.RED);
             finalScore += 30;
+            GameData.setWinCount(GameData.getWinCount() + 1);
         } else if (selfScore > 2 * enemyScore) {
             endGameTitle.setText("Significant Victory !!!");
             endGameTitle.setTextColor(Color.MAGENTA);
             finalScore += 20;
+            GameData.setWinCount(GameData.getWinCount() + 1);
         } else if (selfScore > enemyScore) {
             endGameTitle.setText("You Win !!!");
             endGameTitle.setTextColor(Color.YELLOW);
             finalScore += 10;
+            GameData.setWinCount(GameData.getWinCount() + 1);
         } else if (selfScore == enemyScore) {
             endGameTitle.setText("Well, well, it's a Draw.");
             endGameTitle.setTextColor(Color.WHITE);
+            GameData.setDrawCount(GameData.getDrawCount() + 1);
         } else if (selfScore * 3 < enemyScore) {
             endGameTitle.setText("A Total Failure ...");
             endGameTitle.setTextColor(Color.DKGRAY);
+            GameData.setLoseCount(GameData.getLoseCount() + 1);
         } else if (selfScore * 2 < enemyScore) {
             endGameTitle.setText("Terrible Defeat ...");
             endGameTitle.setTextColor(Color.GRAY);
+            GameData.setLoseCount(GameData.getLoseCount() + 1);
         } else if (selfScore < enemyScore) {
             endGameTitle.setText("You Lose ...");
             endGameTitle.setTextColor(Color.LTGRAY);
+            GameData.setLoseCount(GameData.getLoseCount() + 1);
         }
         
         TextView endGameScoreDisplay = (TextView) self.findViewById(R.id.game_activity_end_game_score_view);
