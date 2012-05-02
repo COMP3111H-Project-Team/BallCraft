@@ -137,6 +137,8 @@ public class GameInitializer extends Activity {
         gameIntent.putExtra("ballSelected", ballSelected);
         
         self.startActivity(gameIntent);
+        self.overridePendingTransition(android.R.anim.fade_in,
+                android.R.anim.fade_out);
         self.finish();
     }
 

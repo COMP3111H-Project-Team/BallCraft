@@ -1,12 +1,13 @@
 package hkust.comp3111h.ballcraft.ui;
 
-import java.util.ArrayList;
-
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.client.GameInitializer;
 import hkust.comp3111h.ballcraft.data.GameData;
 import hkust.comp3111h.ballcraft.server.bt.BluetoothActivity;
+
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -147,7 +148,6 @@ public class MainMenu extends Activity implements SensorEventListener {
  	        ArrayList<Integer> list = new ArrayList<Integer>();
  	        list.get(0);
  	    } else if (item.getItemId() == R.id.test) {
- 	        /*
             BallCraft.maxPlayer = 1;
             Intent intent = new Intent(self,
                     GameInitializer.class);
@@ -157,10 +157,11 @@ public class MainMenu extends Activity implements SensorEventListener {
             self.startActivity(intent);
             self.overridePendingTransition(android.R.anim.fade_in,
                     android.R.anim.fade_out);
-            */
+ 	        /*
  	        Intent intent = new Intent(self, BallUnlockedMenu.class);
  	        intent.putExtra(BallUnlockedMenu.unlockedIndicator, 2);
  	        self.startActivity(intent);
+            */
  	    }
         return super.onOptionsItemSelected(item);
     }
