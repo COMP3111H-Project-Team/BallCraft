@@ -12,6 +12,7 @@ import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
 import hkust.comp3111h.ballcraft.skills.Skill;
 import android.app.Activity;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -27,6 +28,7 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class GameActivity extends Activity implements SensorEventListener {
@@ -39,6 +41,7 @@ public class GameActivity extends Activity implements SensorEventListener {
     private GLSurfaceView mGLView;
     private SensorManager sensorManager;
 
+    private RelativeLayout backScreen;
     private LinearLayout menuLayout;
     
     private GameRenderer renderer;
@@ -47,6 +50,11 @@ public class GameActivity extends Activity implements SensorEventListener {
 
     private static Button skill1Button;
     private static Button skill2Button;
+    
+    private static boolean skill1CooledDown = true;
+    private static boolean skill2CooledDown = true;
+    
+    private static boolean dead = false;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,17 +101,21 @@ public class GameActivity extends Activity implements SensorEventListener {
         mGLView.setRenderer(self.renderer);
         GameRenderer.startRendering();
         
+        /*
         TextView statusDisplay = (TextView) this.findViewById(R.id.game_activity_status_dispaly);
         statusDisplay.setTypeface(MyApplication.getFont());
         statusDisplay.getBackground().setAlpha(200);
+        */
         
         int ballSelected = self.getIntent().getIntExtra("ballSelected", BallCraft.Ball.WOOD_BALL);
-        final int [] skills = BallDef.getSkillNamesById(ballSelected);
+        final int [] skills = BallDef.getSkillsById(ballSelected);
 
+        int [] RGB1 = SkillDef.getRGBById(skills[0]);
         skill1Button = (Button) this
                 .findViewById(R.id.game_activity_skill_1_button);
         skill1Button.setTypeface(MyApplication.getFont());
-        skill1Button.getBackground().setAlpha(80);
+        skill1Button.setTextColor(Color.rgb(RGB1[0], RGB1[1], RGB1[2]));
+        skill1Button.getBackground().setAlpha(100);
         skill1Button.setText(SkillDef.getSkillNameById(skills[0]));
         skill1Button.setOnClickListener(new OnClickListener() {
 
@@ -111,6 +123,7 @@ public class GameActivity extends Activity implements SensorEventListener {
             public void onClick(View v) {
                 Client.castSkill(Skill.getSkill(skills[0]));
                 skill1Button.setEnabled(false);
+                skill1CooledDown = false;
                 Message msg = new Message();
                 msg.what = 1;
                 skillCoolDownHandler.sendMessageDelayed(msg, 
@@ -119,10 +132,12 @@ public class GameActivity extends Activity implements SensorEventListener {
             
         });
 
+        int [] RGB2 = SkillDef.getRGBById(skills[1]);
         skill2Button = (Button) this
                 .findViewById(R.id.game_activity_skill_2_button);
         skill2Button.setTypeface(MyApplication.getFont());
-        skill2Button.getBackground().setAlpha(80);
+        skill2Button.setTextColor(Color.rgb(RGB2[0], RGB2[1], RGB2[2]));
+        skill2Button.getBackground().setAlpha(100);
         skill2Button.setText(SkillDef.getSkillNameById(skills[1]));
         skill2Button.setOnClickListener(new OnClickListener() {
             
@@ -130,6 +145,7 @@ public class GameActivity extends Activity implements SensorEventListener {
             public void onClick(View v) {
                 Client.castSkill(Skill.getSkill(skills[1]));
                 skill2Button.setEnabled(false);
+                skill2CooledDown = false;
                 Message msg = new Message();
                 msg.what = 2;
                 skillCoolDownHandler.sendMessageDelayed(msg, 
@@ -142,8 +158,10 @@ public class GameActivity extends Activity implements SensorEventListener {
         loseView.setTypeface(MyApplication.getFont());
         loseView.setVisibility(View.INVISIBLE);
 
+        backScreen = (RelativeLayout) this.findViewById(R.id.game_activity_back_screen);
+        backScreen.setVisibility(View.INVISIBLE);
+        
         menuLayout = (LinearLayout) this.findViewById(R.id.game_activity_menu);
-        menuLayout.setVisibility(View.INVISIBLE);
 
         Button resumeButton = (Button) this
                 .findViewById(R.id.game_activity_resume_button);
@@ -206,18 +224,25 @@ public class GameActivity extends Activity implements SensorEventListener {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
-                skill1Button.setEnabled(true);
+                if (!dead) {
+	                skill1Button.setEnabled(true);
+                }
+                skill1CooledDown = true;
             } else if (msg.what == 2) {
-                skill2Button.setEnabled(true);
+                if (!dead) {
+	                skill2Button.setEnabled(true);
+                }
+                skill2CooledDown = true;
             }
         }
       
     };
-    
+   
     public static Handler skillDisableHandler = new Handler() {
         
         @Override
         public void handleMessage(Message msg) {
+            dead = true;
             skill1Button.setEnabled(false);
             skill2Button.setEnabled(false);
         }
@@ -228,26 +253,31 @@ public class GameActivity extends Activity implements SensorEventListener {
         
         @Override
         public void handleMessage(Message msg) {
-            skill1Button.setEnabled(true);
-            skill2Button.setEnabled(true);
+            dead = false;
+            if (skill1CooledDown) {
+	            skill1Button.setEnabled(true);
+            }
+            if (skill2CooledDown) {
+	            skill2Button.setEnabled(true);
+            }
         }
         
     };
 
     @Override
     public void onBackPressed() {
-       if (menuLayout.getVisibility() == View.INVISIBLE) {
-            menuLayout.setVisibility(View.VISIBLE);
-            AlphaAnimation alphaAnim = new AlphaAnimation(0.5f, 0.5f);
-            alphaAnim.setDuration(0);
-            alphaAnim.setFillAfter(true);
-            menuLayout.setAnimation(alphaAnim);
+       if (backScreen.getVisibility() == View.INVISIBLE) {
+            backScreen.setVisibility(View.VISIBLE);
+            AlphaAnimation screenAnim = new AlphaAnimation(0.5f, 0.5f);
+            screenAnim.setDuration(0);
+            screenAnim.setFillAfter(true);
+            backScreen.setAnimation(screenAnim);
         } else {
-            menuLayout.setVisibility(View.INVISIBLE);
-            AlphaAnimation alphaAnim = new AlphaAnimation(0f, 0f);
-            alphaAnim.setDuration(0);
-            alphaAnim.setFillAfter(true);
-            menuLayout.setAnimation(alphaAnim);
+            backScreen.setVisibility(View.INVISIBLE);
+            AlphaAnimation screenAnim = new AlphaAnimation(0f, 0f);
+            screenAnim.setDuration(0);
+            screenAnim.setFillAfter(true);
+            backScreen.setAnimation(screenAnim);
         }
     }
     

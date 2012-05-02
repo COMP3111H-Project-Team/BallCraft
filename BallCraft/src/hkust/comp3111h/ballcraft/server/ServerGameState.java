@@ -75,7 +75,7 @@ public class ServerGameState {
     			skills.get(i).setTime();
     			
     			int count = 0;
-    			for (Skill skill:activeSkills)
+    			for (Skill skill : activeSkills)
     			{
     				if (skill.getID() == skills.get(i).getID() && skill.getPlayer() == skills.get(i).getPlayer())
     					count++;

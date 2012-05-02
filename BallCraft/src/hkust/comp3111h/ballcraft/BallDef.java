@@ -174,7 +174,7 @@ public class BallDef {
 	    }
 	}
 	
-	public static int [] getSkillNamesById(int id) {
+	public static int [] getSkillsById(int id) {
 	    if (id < balls.length) {
 	        try {
 	            return (int[]) balls[id].getField("skills").get(0);

@@ -16,8 +16,8 @@ import android.opengl.GLUtils;
 public class Plane extends Unit {
 
     private static FloatBuffer vertexBuffer = null;
-    private static FloatBuffer textureBuffer = null;
     private static FloatBuffer normalBuffer = null;
+    private FloatBuffer textureBuffer = null;
 
     private static final float[] vertices = { 
             -0.5f, -0.5f, 0,
@@ -33,13 +33,6 @@ public class Plane extends Unit {
             0, 0, 1, 
     };
 
-    private static final float[] texture = { 
-            0, 1,
-            0, 0,
-            1, 1,
-            1, 0,
-    };
-
     private static int [] textures = new int[1];
 
     private Vec2 pos;
@@ -51,7 +44,6 @@ public class Plane extends Unit {
     
     static {
         vertexBuffer = makeVertexBuffer();
-        textureBuffer = makeTextureBuffer();
         normalBuffer = makeNormalBuffer();
     }
 
@@ -61,14 +53,20 @@ public class Plane extends Unit {
         yScale = Math.abs(end.y - start.y);
         this.start = start;
         this.end = end;
+        
+        Vec2 texStart = new Vec2((this.start.x + 200) / 400, (this.start.y + 200) / 400);
+        Vec2 texEnd = new Vec2((this.end.x + 200) / 400, (this.end.y + 200) / 400);
+        
+        float [] texture = {
+                texStart.x, texEnd.y,
+                texStart.x, texStart.y,
+                texEnd.x, texEnd.y,
+                texEnd.x, texStart.y,
+        };
+        
+        this.textureBuffer = makeTextureBuffer(texture);
     }
     
-    public Plane(Vec2 pos, float xScale, float yScale) {
-        this.pos = pos;
-        this.xScale = xScale;
-        this.yScale = yScale;
-    }
-
     public void draw(GL10 gl) {
         gl.glPushMatrix();
         
@@ -84,7 +82,7 @@ public class Plane extends Unit {
 	        gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
 	        
 	        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
-	        gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer);
+	        gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, this.textureBuffer);
 	        gl.glNormalPointer(GL10.GL_FLOAT, 0, normalBuffer);
 	        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
 	        
@@ -106,7 +104,7 @@ public class Plane extends Unit {
         return buffer;
     }
 
-    private static FloatBuffer makeTextureBuffer() {
+    private FloatBuffer makeTextureBuffer(float [] texture) {
         ByteBuffer bb = ByteBuffer.allocateDirect(texture.length * 4);
         bb.order(ByteOrder.nativeOrder());
         FloatBuffer buffer = bb.asFloatBuffer();
@@ -140,8 +138,11 @@ public class Plane extends Unit {
     public String toSerializedString() {
 		String serialized = "";
 		serialized += "plane:";
+		/*
 		serialized += pos.x + "," + pos.y + ",";
 		serialized += xScale + "," + yScale;
+		*/
+		serialized += start.x + "," + start.y + "," + end.x + "," + end.y;
 		return serialized;
     }
 
