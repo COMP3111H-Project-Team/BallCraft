@@ -11,7 +11,9 @@ import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
 import hkust.comp3111h.ballcraft.skills.Skill;
+import hkust.comp3111h.ballcraft.ui.BallUnlockedMenu;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -71,12 +73,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 
         this.initLayout();
         this.initSensor();
-        
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
     }
 
     /**
@@ -92,7 +88,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         // and start drawing
         while (!Client.isGameInited()) {
             try {
-                Thread.sleep(1000);                
+                Thread.sleep(100);
             } catch (Exception e) {
             }
         }
@@ -162,6 +158,11 @@ public class GameActivity extends Activity implements SensorEventListener {
         backScreen.setVisibility(View.INVISIBLE);
         
         menuLayout = (LinearLayout) this.findViewById(R.id.game_activity_menu);
+        
+        TextView scoreValueView = (TextView) this.findViewById(R.id.game_activity_back_score_value);
+        String scoreValue = ClientGameState.getClientGameState().selfScoreEarned
+                + " : " + ClientGameState.getClientGameState().enemyScoreEarned;
+        scoreValueView.setText(scoreValue);
 
         Button resumeButton = (Button) this
                 .findViewById(R.id.game_activity_resume_button);
@@ -190,17 +191,36 @@ public class GameActivity extends Activity implements SensorEventListener {
     }
     
     private void exitGame() {
+        ServerAdapter.sendEndGameMessageToServer();
+        
         int scoreEarned = ClientGameState.getClientGameState().getScoreEarned();
-        GameData.setExperience(GameData.getExperience() + scoreEarned);
+        int oldScore = GameData.getExperience();
+        int newScore = oldScore + scoreEarned;
+        
+        GameData.setExperience(newScore);
         if (!BallCraft.isSinglePlayer()) {
             ServerAdapter.sendGameInterruptMessage();
         }
+        
         GameRenderer.stopRendering();
         Server.stop();
         Client.stop();
         ClientGameState.clear();
+        
         if (BallCraft.isServer) {
             ServerGameState.clear();
+        }
+        
+        for (int i = 0; i < BallDef.balls.length; i++) {
+            int updateExp = BallDef.getBallUnlockExpById(i);
+            if (oldScore < updateExp && newScore >= updateExp) {
+                Intent intent = new Intent(self, BallUnlockedMenu.class);
+                intent.putExtra(BallUnlockedMenu.unlockedIndicator, i);
+                self.startActivity(intent);
+		        self.overridePendingTransition(android.R.anim.fade_in,
+		                android.R.anim.fade_out);
+                break;
+            }
         }
     }
 
@@ -211,9 +231,11 @@ public class GameActivity extends Activity implements SensorEventListener {
                 SensorManager.SENSOR_DELAY_NORMAL);
     }
 
+    @Override
     public void onAccuracyChanged(Sensor arg0, int arg1) {
     }
 
+    @Override
     public void onSensorChanged(SensorEvent event) {
         Client.setInputAcceleration(event.values[SensorManager.DATA_Y] * 2,
                 -event.values[SensorManager.DATA_X] * 2);

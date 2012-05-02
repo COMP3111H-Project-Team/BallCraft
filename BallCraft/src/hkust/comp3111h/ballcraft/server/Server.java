@@ -109,7 +109,7 @@ public class Server extends IntentService {
             }
             
             if (isGameEnded()) {
-                ServerAdapter.sendEndGameMessage();
+                ServerAdapter.sendEndGameMessageToClient();
             }
         }
 

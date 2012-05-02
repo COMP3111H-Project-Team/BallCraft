@@ -147,6 +147,7 @@ public class MainMenu extends Activity implements SensorEventListener {
  	        ArrayList<Integer> list = new ArrayList<Integer>();
  	        list.get(0);
  	    } else if (item.getItemId() == R.id.test) {
+ 	        /*
             BallCraft.maxPlayer = 1;
             Intent intent = new Intent(self,
                     GameInitializer.class);
@@ -156,6 +157,10 @@ public class MainMenu extends Activity implements SensorEventListener {
             self.startActivity(intent);
             self.overridePendingTransition(android.R.anim.fade_in,
                     android.R.anim.fade_out);
+            */
+ 	        Intent intent = new Intent(self, BallUnlockedMenu.class);
+ 	        intent.putExtra(BallUnlockedMenu.unlockedIndicator, 2);
+ 	        self.startActivity(intent);
  	    }
         return super.onOptionsItemSelected(item);
     }

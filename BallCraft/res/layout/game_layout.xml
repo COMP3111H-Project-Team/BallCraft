@@ -81,6 +81,30 @@
         android:layout_height="fill_parent"
         android:background="#000000">
 	    
+        <LinearLayout 
+            android:id="@+id/game_activity_back_score_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true">
+            
+            <TextView 
+                android:id="@+id/game_activity_back_score_title"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="Score"
+	            android:textColor="#FFFFFF"
+	            android:textSize="14pt" />
+            
+            <TextView 
+                android:id="@+id/game_activity_back_score_value"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textColor="#FFFFFF"
+	            android:textSize="12pt" />
+            
+        </LinearLayout>
+	    
 		<LinearLayout
 		    android:id="@+id/game_activity_menu"
 		    android:orientation="vertical"
