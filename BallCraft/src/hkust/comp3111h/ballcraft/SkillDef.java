@@ -14,7 +14,7 @@ public class SkillDef {
 	public static final class NaturesCure {
 	    public static final int id = BallCraft.Skill.NATURES_CURE;
 	    public static final String name = "Nature's Cure";
-	    public static final int effectTime = -1;
+	    public static final int effectTime = 0;
 	    public static final int coolDownTime = 30000;
 	    public static final int [] RGB = {124, 255, 0};
 	    public static final int button = R.drawable.green_button;
@@ -41,7 +41,7 @@ public class SkillDef {
 	public static final class WaterPropel {
 	    public static final int id = BallCraft.Skill.WATER_PROPEL;
 	    public static final String name = "Water Propel";
-	    public static final int effectTime = -1;
+	    public static final int effectTime = 5000;
 	    public static final int coolDownTime = 20000;
 	    public static final int [] RGB = {0, 0, 205};
 	    public static final int button = R.drawable.blue_button;
@@ -50,7 +50,7 @@ public class SkillDef {
 	public static final class Slippery {
 	    public static final int id = BallCraft.Skill.SLIPPERY;
 	    public static final String name = "Slippery";
-	    public static final int effectTime = 1500;
+	    public static final int effectTime = 15000;
 	    public static final int coolDownTime = 45000;
 	    public static final int [] RGB = {0, 191, 255};
 	    public static final int button = R.drawable.blue_button;
