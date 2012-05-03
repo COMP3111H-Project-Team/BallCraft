@@ -52,7 +52,7 @@ public class BallCraft {
         public static final int WATER_PROPEL = 4;
         public static final int SLIPPERY = 5;
         public static final int IRON_WILL = 6;
-        public static final int CRUSH = 7;
+        public static final int FLASHBANG = 7;
         public static final int FLAME_THROW = 8;
         public static final int LANDMINE = 9;
         public static final int STEALTH = 10;

@@ -1,6 +1,7 @@
 package hkust.comp3111h.ballcraft.graphics.skilleffects;
 
 import hkust.comp3111h.ballcraft.R;
+import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.server.Ball;
 
 import javax.microedition.khronos.opengles.GL10;
