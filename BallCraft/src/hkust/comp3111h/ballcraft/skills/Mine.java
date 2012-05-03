@@ -1,5 +1,7 @@
 package hkust.comp3111h.ballcraft.skills;
 
+import hkust.comp3111h.ballcraft.SkillDef;
+import hkust.comp3111h.ballcraft.BallCraft.Status;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
 import hkust.comp3111h.ballcraft.server.Unit;
 
@@ -15,7 +17,7 @@ public class Mine extends Skill {
 	{
         this.player = player;
         this.id = id;
-        this.duration = -1;
+        this.duration = SkillDef.Landmine.effectTime;
         
         maxSkillNumber = 3;
 	}
@@ -50,14 +52,14 @@ public class Mine extends Skill {
 		for (int i = 0; i < 2; i++)
 		{
 			if (i == player) continue;
-			if (units.get(i).getPosition().sub(position).lengthSquared() < 1000 / (Unit.rate * Unit.rate))
+			if (getUnit(i).getStatus() != Status.INVINCIBLE && units.get(i).getPosition().sub(position).lengthSquared() < 1000 / (Unit.rate * Unit.rate))
 			{
 				Vec2 v = units.get(i).getPosition().sub(position);
 				v.normalize();
 				v = v.mul(100);
 				getBody(i).setLinearVelocity(v);		        	
 		    	
-				duration = 3000;
+				duration = 0;
 				return;
 			}
 		}

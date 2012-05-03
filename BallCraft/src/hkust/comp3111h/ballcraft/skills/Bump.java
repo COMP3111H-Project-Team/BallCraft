@@ -2,6 +2,7 @@ package hkust.comp3111h.ballcraft.skills;
 
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallCraft.Status;
+import hkust.comp3111h.ballcraft.SkillDef;
 
 public class Bump extends Skill{
 	
@@ -11,7 +12,7 @@ public class Bump extends Skill{
 	{
         this.player = player;
         this.id = id;
-        this.duration = 9000;
+        this.duration = SkillDef.RockBump.effectTime;
         done = false;
 	}
 	
@@ -29,6 +30,7 @@ public class Bump extends Skill{
 	{
 		if (!done && System.currentTimeMillis() - time > 1000)
 		{
+			if (getUnit(1 - player).getStatus() == Status.INVINCIBLE) return;
 			getUnit(1 - player).setStatus(BallCraft.Status.DIZZY);
 		}
 	}

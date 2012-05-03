@@ -71,6 +71,7 @@ public class Ball extends Unit {
         bodyDef.type = BodyType.DYNAMIC; // dynamic means it is subject to
                                          // forces
         bodyDef.position = position;
+        bodyDef.linearDamping = 0.0f;
         body = ServerGameState.world.createBody(bodyDef);
         CircleShape shape = new CircleShape();
         shape.m_radius = size;
@@ -81,6 +82,8 @@ public class Ball extends Unit {
                                   // rectangle)
         fixtureDef.density = mass; // ... its density is 1 (default is zero)
         fixtureDef.friction = friction; // ... its surface has some friction
+        fixtureDef.restitution = 0.65f;
+        
                                         // coefficient
         body.createFixture(fixtureDef); // bind the dense, friction-laden
                                         // fixture to the body
