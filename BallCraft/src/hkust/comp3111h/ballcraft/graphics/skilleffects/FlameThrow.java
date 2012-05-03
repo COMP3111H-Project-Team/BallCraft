@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class FlameThrow extends ParticleSystemEffect {
 
-    public FlameThrow(float x, float y, float z, float angle) {
+    public FlameThrow(float x, float y, float z, double angle) {
         COUNT = 30;
         
         particles = new ArrayList<Particle>();
@@ -22,10 +22,9 @@ public class FlameThrow extends ParticleSystemEffect {
             
             float speedVal = randGen.nextFloat() * 3 + 5;
             float offset = (randGen.nextFloat() * 20 - 10) / speedVal;
-            angle += offset;
             
-            float xSpeed = (float) (speedVal * Math.cos(angle / 180 * Math.PI));
-            float ySpeed = (float) (speedVal * Math.sin(angle / 180 * Math.PI));
+            float xSpeed = (float) (speedVal * Math.cos(angle + offset / 180 * Math.PI));
+            float ySpeed = (float) (speedVal * Math.sin(angle + offset / 180 * Math.PI));
             
             fp.setSpeed(xSpeed, ySpeed, 0);
             
