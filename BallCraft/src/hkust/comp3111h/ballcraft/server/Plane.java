@@ -58,10 +58,10 @@ public class Plane extends Unit {
         Vec2 texEnd = new Vec2((this.end.x + 200) / 400, (this.end.y + 200) / 400);
         
         float [] texture = {
-                texStart.x, texEnd.y,
                 texStart.x, texStart.y,
-                texEnd.x, texEnd.y,
+                texStart.x, texEnd.y,
                 texEnd.x, texStart.y,
+                texEnd.x, texEnd.y,
         };
         
         this.textureBuffer = makeTextureBuffer(texture);
@@ -71,7 +71,6 @@ public class Plane extends Unit {
         gl.glPushMatrix();
         
             gl.glTranslatef(pos.x, pos.y, 0);
-            gl.glRotatef(180, 0, 0, 1);
             gl.glScalef(xScale, yScale, 1);
         
 	        gl.glEnable(GL10.GL_TEXTURE_2D);

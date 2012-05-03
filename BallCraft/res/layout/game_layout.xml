@@ -75,6 +75,14 @@
         android:textColor="#FF0000"
         android:textStyle="bold"
         android:text="You Lose" />
+    
+    <RelativeLayout
+        android:id="@+id/game_activity_flashbang_mask"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#FFFFFF">
+        
+    </RelativeLayout>
  
     <!-- the menu that is shown when "back" is pressed" -->
 	<RelativeLayout
