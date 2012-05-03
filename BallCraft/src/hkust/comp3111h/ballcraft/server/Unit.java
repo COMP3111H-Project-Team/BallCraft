@@ -52,8 +52,6 @@ public abstract class Unit implements Drawable {
 
     public void applyForce(Vec2 force) {
         body.applyForce(force.mul(1.0f / (rate * rate)), O);
-        // Log.e("position:", body.getPosition().x + " , " +
-        // body.getPosition().y);
     }
 
     public Vec2 getPosition() {
