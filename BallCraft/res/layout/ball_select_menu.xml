@@ -42,7 +42,7 @@
 	    
 	    <ImageView
 	        android:id="@+id/ball_select_item_select_view"
-	        android:layout_width="280dp"
+	        android:layout_width="200dp"
 	        android:layout_height="wrap_content"
 	        android:layout_centerInParent="true"
 	        android:src="@drawable/select" />

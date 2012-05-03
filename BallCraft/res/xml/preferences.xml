@@ -24,4 +24,22 @@
         android:title="Username"
         android:key="username" />
     
+    <Preference
+        android:title="Win Count"
+        android:defaultValue="0"
+        android:summary="Number of games won"
+        android:key="winCount" />
+    
+    <Preference
+        android:title="Lose Count"
+        android:defaultValue="0"
+        android:summary="Number of games lose"
+        android:key="loseCount" />
+    
+    <Preference
+        android:title="Draw Count"
+        android:defaultValue="0"
+        android:summary="Number of draw games"
+        android:key="drawCount" />
+    
 </PreferenceScreen>
