@@ -1,7 +1,6 @@
 package hkust.comp3111h.ballcraft.server;
 
 import hkust.comp3111h.ballcraft.BallCraft;
-import hkust.comp3111h.ballcraft.BallCraft.Status;
 import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.Map;
 import hkust.comp3111h.ballcraft.client.MapParser;
@@ -12,6 +11,7 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Vector;
 
+import org.jbox2d.common.Settings;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
@@ -59,17 +59,16 @@ public class ServerGameState {
         boolean doSleep = true;
         world = new World(gravity, doSleep);
         world.setContactListener(new BallContactListener());
-
+        
+        Settings.velocityThreshold = 0.05f;
+        
         activeSkills = new ArrayList<Skill>();
         respawnPoints = new ArrayList<Vec2>();
     }
 
     public synchronized void processPlayerInput(int playerId, GameInput input) 
     {
-      	if (units.get(playerId).getStatus() == Status.NORMAL)
-    	{
-    		units.get(playerId).applyForce(input.acceleration);
-    	}
+    	units.get(playerId).applyForce(input.acceleration);
     	
     	if (input.skillActive())
     	{
@@ -123,8 +122,8 @@ public class ServerGameState {
     {
         Map map = MapParser.getMapFromXML(name);
         
-        units.add(new Ball(10, 50, 0.8f, new Vec2(0, 0)));
-        units.add(new Ball(10, 5, 0.99f, new Vec2(30, 0)));
+        units.add(new Ball(10, 50, 1.8f, new Vec2(0, 0)));
+        units.add(new Ball(10, 5, 0f, new Vec2(30, 0)));
         
         mapTerrain = map.getTerrain();
         mapMode = map.getMode();

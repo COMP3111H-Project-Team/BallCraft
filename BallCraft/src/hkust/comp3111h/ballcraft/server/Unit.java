@@ -9,7 +9,7 @@ import org.jbox2d.dynamics.Body;
 
 public abstract class Unit implements Drawable {
 
-    public final static float rate = 3.0f;
+    public final static float rate = 5.0f;
     public final static float g = 9.8f;
     protected Body body;
 	protected Status status;
@@ -45,22 +45,33 @@ public abstract class Unit implements Drawable {
         return null;
     }
 
-    public Unit() {
+    public Unit() 
+    {
 		status = Status.NORMAL;
 		id = ServerGameState.getStateInstance().getUnits().size();
     }
 
-    public void applyForce(Vec2 force) {
-        body.applyForce(force.mul(1.0f / (rate * rate)), O);
+    public void applyForce(Vec2 force) 
+    {    	
+    	if (status == Status.DIZZY)
+    	{
+            body.applyForce(force.mul(- 0.8f / (rate * rate)), O);
+    	}
+    	else
+    	{
+    		body.applyForce(force.mul(0.8f / (rate * rate)), O);
+    	}
     }
 
-    public Vec2 getPosition() {
+    public Vec2 getPosition() 
+    {
         return new Vec2(body.getPosition().x, body.getPosition().y);
     }
 
     public abstract String toSerializedString();
 
-    public Body getBody() {
+    public Body getBody()
+    {
         return body;
     }
 

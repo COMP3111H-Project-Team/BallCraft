@@ -6,6 +6,8 @@ import hkust.comp3111h.ballcraft.server.Unit;
 
 import org.jbox2d.dynamics.Body;
 
+import android.util.Log;
+
 /**
  * Define a skill to be casted
  */
@@ -13,12 +15,12 @@ public abstract class Skill {
 
     private static int skillCount = 0;
     
-    protected int maxSkillNumber;
     protected int id;
     protected int skillID;
     protected int player;
     protected long time;
     protected long duration;
+    protected int maxSkillNumber;
 
     public static Skill getSkill(int id)
     {
@@ -35,43 +37,21 @@ public abstract class Skill {
         switch (id) 
         {
         case BallCraft.Skill.GROW_ROOT:
-            return new TestSkill1(player, id);
-            
-        case BallCraft.Skill.NATURES_CURE:
-            return new TestSkill1(player, id);
-            
+            return new GrowRoot(player, id);
+        case BallCraft.Skill.LANDMINE:
+            return new Mine(player, id);
         case BallCraft.Skill.MASS_OVERLORD:
             return new MassOverload(player, id);
             
         case BallCraft.Skill.ROCK_BUMP:
             return new Bump(player, id);
-            
-        case BallCraft.Skill.WATER_PROPEL:
-            return new Propel(player, id);
-            
+        case BallCraft.Skill.NATURES_CURE:
+        	return new Cure(player, id);
         case BallCraft.Skill.SLIPPERY:
-            return new TestSkill1(player, id);
-            
-        case BallCraft.Skill.IRON_WILL:
-            return new TestSkill1(player, id);
-            
-        case BallCraft.Skill.CRUSH:
-            return new TestSkill1(player, id);
-            
-        case BallCraft.Skill.FLAME_THROW:
-            return new TestSkill1(player, id);
-            
-        case BallCraft.Skill.LANDMINE:
-            return new Mine(player, id);
-            
-        case BallCraft.Skill.STEALTH:
-            return new TestSkill1(player, id);
-            
-        case BallCraft.Skill.MIDNIGHT:
-            return new TestSkill1(player, id);
-            
+        	return new Slippery(player, id);
         default:
-            return null;
+        	Log.e("Skill", "No Such Skill:" + id);
+            return new GrowRoot(player, id);
         }
     }
 
@@ -92,8 +72,8 @@ public abstract class Skill {
     public abstract void beforeStep();
     public abstract void afterStep();
     public abstract void finish();
-    public String getFinishMsg(){return "";}
-    public String getInitMsg(){return "";}
+    public String getFinishMsg(){return "" + player;}
+    public String getInitMsg(){return "" + player;}
 
     public int getID() 
     {
@@ -136,7 +116,8 @@ public abstract class Skill {
         return ServerGameState.getStateInstance().getUnits().get(i).getBody();
     }
 
-	public int getMaxCount() {
+	public int getMaxCount()
+	{
 	    return maxSkillNumber;
 	}
 	
