@@ -6,6 +6,8 @@ import hkust.comp3111h.ballcraft.server.Unit;
 
 import org.jbox2d.dynamics.Body;
 
+import android.util.Log;
+
 /**
  * Define a skill to be casted
  */
@@ -39,14 +41,19 @@ public abstract class Skill {
         case BallCraft.Skill.LANDMINE:
             return new Mine(player, id);
         case BallCraft.Skill.MASS_OVERLORD:
-            return new MassOverload(player, id);
-            
+            return new MassOverload(player, id);            
         case BallCraft.Skill.ROCK_BUMP:
             return new Bump(player, id);
         case BallCraft.Skill.NATURES_CURE:
         	return new Cure(player, id);
         case BallCraft.Skill.SLIPPERY:
         	return new Slippery(player, id);
+        case BallCraft.Skill.FLAME_THROW:
+        	return new FlameThrow(player, id);
+        case BallCraft.Skill.MIDNIGHT:
+        	return new Midnight(player, id);
+        case BallCraft.Skill.STEALTH:
+        	return new Stealth(player, id);
         default:
         	Log.e("Skill", "No Such Skill:" + id);
             return new GrowRoot(player, id);
