@@ -73,8 +73,8 @@ public abstract class Skill {
     public abstract void beforeStep();
     public abstract void afterStep();
     public abstract void finish();
-    public String getFinishMsg(){return "";}
-    public String getInitMsg(){return "";}
+    public String getFinishMsg(){return "" + player;}
+    public String getInitMsg(){return "" + player;}
 
     public int getID() 
     {
