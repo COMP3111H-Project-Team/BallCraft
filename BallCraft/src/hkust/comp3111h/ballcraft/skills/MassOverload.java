@@ -1,14 +1,16 @@
 package hkust.comp3111h.ballcraft.skills;
 
+import hkust.comp3111h.ballcraft.SkillDef;
+
 public class MassOverload extends Skill
 {
-	private final static float rate = 1.3f;
+	private final static float rate = 1.6f;
 
 	public MassOverload(int player, int id) 
 	{
         this.player = player;
         this.id = id;
-        this.duration = 10000;
+        this.duration = SkillDef.MassOverlord.effectTime;
 	}
 	
 	@Override

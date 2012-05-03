@@ -10,6 +10,7 @@ import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.FixtureDef;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -141,14 +142,19 @@ public class Wall extends Unit {
 		bodyDef.type = BodyType.STATIC;
 		body = ServerGameState.world.createBody(bodyDef);
 		PolygonShape shape = new PolygonShape();
-		
+
 		Vec2 vector = start.sub(end);
 		float length = vector.normalize() / 2;
 		Vec2 midPoint = start.add(end).mul(0.5f);
 		float angle = -(float)Math.acos(Vec2.dot(vector, new Vec2(1, 0)));
 		shape.setAsBox(length, 2.5f / rate, midPoint, angle);
+
 		
-		body.createFixture(shape, 0); // bind the dense, friction-laden fixture to the body
+		FixtureDef fixtureDef = new FixtureDef(); 
+		fixtureDef.shape = shape;
+		fixtureDef.restitution = 0.4f;
+
+		body.createFixture(fixtureDef); // bind the dense, friction-laden fixture to the body
 	}
 	
 	public void draw(GL10 gl) {

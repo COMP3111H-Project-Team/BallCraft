@@ -6,6 +6,9 @@
 	<terrain>2</terrain>
 	<mode>0</mode>
 	<initPosition>100,100</initPosition>
+	<initPosition>-100,100</initPosition>
+	<initPosition>100,-100</initPosition>
+	<initPosition>-100,-100</initPosition>
 	<plane>-80,-200,200,-80</plane>
 	<plane>-200,-100,-100,200</plane>
 	<plane>-200,-200,-160,-170</plane>

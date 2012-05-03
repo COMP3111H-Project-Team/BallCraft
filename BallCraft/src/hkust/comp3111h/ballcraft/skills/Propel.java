@@ -1,7 +1,7 @@
 package hkust.comp3111h.ballcraft.skills;
 
-import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallCraft.Status;
+import hkust.comp3111h.ballcraft.SkillDef;
 import hkust.comp3111h.ballcraft.server.Server;
 
 import org.jbox2d.common.Vec2;
@@ -14,7 +14,7 @@ public class Propel extends Skill
 	{
         this.player = player;
         this.id = id;
-        this.duration = 1500;
+        this.duration = SkillDef.WaterPropel.effectTime;
 	}
 	
 	@Override
@@ -26,7 +26,14 @@ public class Propel extends Skill
 	@Override
 	public void beforeStep()
 	{
-		Vec2 v = getBody(BallCraft.enemy).getPosition().sub(getBody().getPosition());
+		if (getUnit(1 - player).getStatus() == Status.INVINCIBLE)
+		{
+			getUnit().setStatus(Status.NORMAL);
+			return;
+		}
+		
+		getUnit().setStatus(Status.FROZEN);
+		Vec2 v = getBody(1 - player).getPosition().sub(getBody().getPosition());
 		v.normalize();
 		v.mul(rate);
 		getBody().setLinearVelocity(v);
