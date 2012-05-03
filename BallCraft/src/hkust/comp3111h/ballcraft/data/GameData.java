@@ -57,4 +57,37 @@ public class GameData {
         editor.commit();
     }
     
+    public static int getWinCount() {
+        pref = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return pref.getInt("winCount", 0);
+    }
+    
+    public static void setWinCount(int winCount) {
+        SharedPreferences.Editor editor = pref.edit(); 
+        editor.putInt("winCount", winCount);
+        editor.commit();
+    }
+    
+    public static int getLoseCount() {
+        pref = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return pref.getInt("loseCount", 0);
+    }
+    
+    public static void setLoseCount(int loseCount) {
+        SharedPreferences.Editor editor = pref.edit(); 
+        editor.putInt("loseCount", loseCount);
+        editor.commit();
+    }
+    
+    public static int getDrawCount() {
+        pref = PreferenceManager.getDefaultSharedPreferences(MyApplication.getAppContext());
+        return pref.getInt("drawCount", 0);
+    }
+    
+    public static void setDrawCount(int drawCount) {
+        SharedPreferences.Editor editor = pref.edit(); 
+        editor.putInt("drawCount", drawCount);
+        editor.commit();
+    }
+    
 }

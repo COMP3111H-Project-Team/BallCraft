@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_menu_layout"
+    android:id="@+id/option_menu_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     
@@ -33,14 +33,7 @@
 	        android:text="Music On"
 	        android:textSize="12pt"
 	        android:textColor="#FFFFFF" />
-	    
-	    <Button 
-	        android:id="@+id/option_menu_change_username_button"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textSize="10pt"
-	        android:text="Change Username"/>
-	    
+
     </LinearLayout>
     
 </RelativeLayout>

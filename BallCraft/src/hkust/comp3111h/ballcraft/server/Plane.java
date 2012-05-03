@@ -71,6 +71,7 @@ public class Plane extends Unit {
         gl.glPushMatrix();
         
             gl.glTranslatef(pos.x, pos.y, 0);
+            gl.glRotatef(180, 0, 0, 1);
             gl.glScalef(xScale, yScale, 1);
         
 	        gl.glEnable(GL10.GL_TEXTURE_2D);

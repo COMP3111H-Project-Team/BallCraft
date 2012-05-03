@@ -16,8 +16,8 @@ public class TerrainDef {
         public static final int id = BallCraft.Terrain.FOREST_TERRAIN;
         public static final String name = "Forest";
         public static final String description = "Beneficial to the Wood Ball";
-        public static final int floorTexture = R.drawable.forest_floor;
-        public static final int wallTexture = R.drawable.forest_wall;
+        public static final int floorTexture = R.drawable.forest_wall;
+        public static final int wallTexture = R.drawable.forest_floor;
         public static final int friction = 7;
         public static final int benefitBall = BallCraft.Ball.WOOD_BALL;
     }
