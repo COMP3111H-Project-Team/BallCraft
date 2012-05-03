@@ -9,7 +9,7 @@ import java.util.Random;
 public class WaterPropelParticleSystem extends ParticleSystemEffect {
 
     public WaterPropelParticleSystem(float x, float y, float z) {
-        COUNT = 10;
+        COUNT = 20;
         
         particles = new ArrayList<Particle>();
         

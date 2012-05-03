@@ -8,13 +8,12 @@ import hkust.comp3111h.ballcraft.skills.Skill;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Vector;
 
 import org.jbox2d.common.Settings;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
-
-import android.util.Log;
 
 public class ServerGameState {
     //Debug
@@ -29,6 +28,8 @@ public class ServerGameState {
 
     private static ServerGameState stateInstance;
     
+    private static ArrayList<Vec2> respawnPoints;
+    
     private static int mapTerrain;
     private static int mapMode;
     
@@ -39,6 +40,10 @@ public class ServerGameState {
             stateInstance = new ServerGameState();
         }
         return stateInstance;
+    }
+    
+    public static void setInitPosition(ArrayList<Vec2> initPosition){
+    	respawnPoints=initPosition;
     }
     
     public static void clear()
@@ -58,6 +63,7 @@ public class ServerGameState {
         Settings.velocityThreshold = 0.05f;
         
         activeSkills = new ArrayList<Skill>();
+        respawnPoints = new ArrayList<Vec2>();
     }
 
     public synchronized void processPlayerInput(int playerId, GameInput input) 
@@ -69,11 +75,10 @@ public class ServerGameState {
     		ArrayList<Skill> skills = input.getSkills();
     		for (int i = 0; i < skills.size(); i++)
     		{
-    			if(D) Log.e(TAG, i+"");
     			skills.get(i).setTime();
     			
     			int count = 0;
-    			for (Skill skill:activeSkills)
+    			for (Skill skill : activeSkills)
     			{
     				if (skill.getID() == skills.get(i).getID() && skill.getPlayer() == skills.get(i).getPlayer())
     					count++;
@@ -134,7 +139,6 @@ public class ServerGameState {
         String initMsg = mapTerrain + "," + mapMode + "," + serverBall +"," +  clientBall + "MAPDEF";
         for (int i = 0; i < units.size(); i++)
         {
-        	Log.e(TAG,units.size()+" "+i+" "+units.get(i).toString());
         	
             initMsg += units.get(i).toSerializedString();
             if (i != units.size() - 1)
@@ -156,17 +160,6 @@ public class ServerGameState {
         world.step(msecElapsed, 6, 2);
         afterStep();
     }
-
-    /*
-     * used for serialization: ByteArrayOutputStream bos = new
-     * ByteArrayOutputStream(); ObjectOutput out; byte[] bytes = null; try { out
-     * = new ObjectOutputStream(bos); // out.writeObject(Unit.data);
-     * 
-     * bytes = bos.toByteArray();
-     * 
-     * out.close(); return bytes; //bos.close(); } catch (IOException e) {
-     * e.printStackTrace(); } return bytes; //return Unit.data;
-     */
 
     public void addUnit(Unit unit)
     {
@@ -194,6 +187,14 @@ public class ServerGameState {
     public static void init()
     {
         stateInstance = new ServerGameState();
+    }
+    
+    public Vec2 getOneRespawnPoint() {
+        if (respawnPoints.isEmpty()) {
+            return new Vec2(0, 0);
+        } else {
+	        return respawnPoints.get(new Random().nextInt(respawnPoints.size()));
+        }
     }
 
 }

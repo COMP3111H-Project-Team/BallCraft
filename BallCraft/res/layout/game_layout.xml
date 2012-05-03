@@ -10,6 +10,7 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent" />
 	   
+	<!--
 	<TextView 
 	    android:id="@+id/game_activity_status_dispaly"
 	    android:layout_width="fill_parent"
@@ -19,32 +20,26 @@
 	    android:textColor="#FFF"
 	    android:textSize="9pt"
 	    android:background="#000" />
+    -->
 	
 	<Button
 	    android:id="@+id/game_activity_skill_1_button"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:padding="30dp"
-	    android:text="Grow Root" 
+	    android:layout_width="160dp"
+	    android:layout_height="160dp"
+	    android:padding="20dp"
+	    android:textSize="10pt"
+	    android:textColor="#FFFFFF"
 	    android:textStyle="bold"/>
 	
 	<Button
 	    android:id="@+id/game_activity_skill_2_button"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
+	    android:layout_width="160dp"
+	    android:layout_height="160dp"
 	    android:layout_alignParentRight="true"
-	    android:padding="30dp"
-	    android:text="Tree Wall" 
+	    android:padding="20dp"
+	    android:textSize="10pt"
+	    android:textColor="#FFFFFF"
 	    android:textStyle="bold"/>
-	
-	<TextView
-	    android:id="@+id/game_activity_debug_view"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentBottom="true"
-	    android:padding="10dp"
-	    android:text="Debug Message Display"
-	    android:textColor="#00FF00" />
 	
 	<LinearLayout
 	    android:id="@+id/game_activity_score_layout"
@@ -81,31 +76,90 @@
         android:textStyle="bold"
         android:text="You Lose" />
  
-	<LinearLayout
+    <!-- the menu that is shown when "back" is pressed" -->
+	<RelativeLayout
 	    android:id="@+id/game_activity_menu"
 	    android:orientation="vertical"
 	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_centerInParent="true"
-	    android:padding="30dp"
-	    android:background="#000000">
+	    android:layout_height="fill_parent"
+	    android:layout_centerHorizontal="true"
+	    android:paddingLeft="60dp"
+	    android:paddingTop="20dp"
+	    android:paddingBottom="20dp"
+	    android:background="#FFFFFF">
 	    
-	    <Button
+	    <TextView
+	        android:id="@+id/game_activity_pause_button"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text="Pause"
+	        android:textColor="#000000"
+	        android:textSize="18pt" />
+	    
+	    <TextView
 	        android:id="@+id/game_activity_resume_button"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/game_activity_pause_button"
 	        android:text="Resume"
 	        android:textColor="#000000"
-	        android:textSize="16pt" />
+	        android:textSize="18pt" />
 	    
-	    <Button
+	    <TextView
 	        android:id="@+id/game_activity_exit_button"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
 	        android:text="Exit"
 	        android:textColor="#000000"
-	        android:textSize="16pt" />
+	        android:textSize="18pt" />
 	    
-	</LinearLayout>
+	</RelativeLayout>
+	
+    <!-- This layout is displayed when the game ends -->
+    <RelativeLayout
+        android:id="@+id/game_activity_end_game_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#000000">
+        
+        <TextView
+            android:id="@+id/game_activity_end_game_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="18pt" />
+        
+        <TextView
+            android:id="@+id/game_activity_end_game_score_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/game_activity_end_game_title"
+            android:gravity="center"
+            android:textSize="16pt"
+            android:textColor="#CCCC00" />
+        
+        <TextView
+            android:id="@+id/game_activity_end_game_exp_earned"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/game_activity_end_game_score_view"
+            android:gravity="center"
+            android:textColor="#FF0000"
+            android:textSize="16pt" />
+        
+        <Button
+            android:id="@+id/game_activity_end_game_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:textSize="12pt"
+            android:text="OK" />
+        
+    </RelativeLayout>
 	
 </RelativeLayout>

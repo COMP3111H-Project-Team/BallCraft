@@ -2,8 +2,6 @@ package hkust.comp3111h.ballcraft.graphics.particles;
 
 import hkust.comp3111h.ballcraft.R;
 
-import java.util.Random;
-
 import javax.microedition.khronos.opengles.GL10;
 
 import android.content.Context;
@@ -15,7 +13,7 @@ public class FlameThrowParticle extends MagicParticle {
 
     private static int [] textures = new int[1];
     
-    public FlameThrowParticle(float x, float y, float z, Random randGen, float theta) {
+    public FlameThrowParticle(float x, float y, float z) {
         super(x, y, z);
         
 	    this.size = 5;
@@ -25,8 +23,6 @@ public class FlameThrowParticle extends MagicParticle {
 	    this.z = z;
 	    
         this.gravityInfluence = false;
-        
-        // TODO: add speed initialization
     }
       
     public static void loadTexture(GL10 gl, Context context) {

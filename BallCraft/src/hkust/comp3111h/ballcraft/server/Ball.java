@@ -21,8 +21,6 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 
-import android.util.Log;
-
 public class Ball extends Unit {
 //debug
 	public final String TAG="Ball";
@@ -167,7 +165,9 @@ public class Ball extends Unit {
     public String toSerializedString() {
         if (this.isOutOfBound(ServerGameState.getStateInstance().getUnits()) || this.dead)
         {
-
+            if (z == 0) {
+                z = 20;
+            }
 			if (status == Status.NORMAL)
 			{
 				status = Status.DEAD;
@@ -185,16 +185,15 @@ public class Ball extends Unit {
 				status = Status.NORMAL; 
 				dead = false;
 				body.setLinearVelocity(O);
-				body.setTransform(O, 0);
+				Vec2 newPos = ServerGameState.getStateInstance().getOneRespawnPoint();
+				body.setTransform(newPos, 0);
 			}
         }
-      //  Log.e(TAG,"before ball");
         String serialized = "";
         serialized += "ball:";
         serialized += body.getPosition().x * rate + "," + body.getPosition().y
                 * rate;
         serialized += "," + this.getRadius() * rate + "," + z;
-       // Log.e(TAG,"after ball"+serialized);
         return serialized;
     }
 

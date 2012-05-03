@@ -59,14 +59,16 @@ public class Server extends IntentService {
         }
         catch(Exception e)
         {
-        	if(D)Log.e("Error setting state for server", e.toString() + " : " + string);
+        	if(D) {
+        	    Log.e("Error setting state for server", e.toString() + " : " + string);
+        	}
         }
         
     }
     
 	public static synchronized void extraMessage(String string)
 	{
-		Log.e(TAG,"extramessage "+string+msg);
+		Log.w(TAG,"extramessage "+string+msg);
 		if(!msg.equals(""))
 		{
 			msg += "/";
@@ -107,7 +109,7 @@ public class Server extends IntentService {
             }
             
             if (isGameEnded()) {
-                ServerAdapter.sendEndGameMessage();
+                ServerAdapter.sendEndGameMessageToClient();
             }
         }
 
@@ -129,7 +131,7 @@ public class Server extends IntentService {
 			} 
             catch (InterruptedException e) 
             {
-				Log.e("Server", e.toString());
+				Log.w("Server", e.toString());
 			}
             time++;
             if (time > 30)

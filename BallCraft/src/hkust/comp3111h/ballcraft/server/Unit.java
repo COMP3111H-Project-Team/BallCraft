@@ -36,11 +36,11 @@ public abstract class Unit implements Drawable {
             return new Wall(new Vec2(x1, y1), new Vec2(x2, y2));
         } else if (parts[0].equals("plane")) {
             String[] vals = parts[1].split(",");
-            float x = Float.valueOf(vals[0]);
-            float y = Float.valueOf(vals[1]);
-            float xScale = Float.valueOf(vals[2]);
-            float yScale = Float.valueOf(vals[3]);
-            return new Plane(new Vec2(x, y), xScale, yScale);
+            float x1 = Float.valueOf(vals[0]);
+            float y1 = Float.valueOf(vals[1]);
+            float x2 = Float.valueOf(vals[2]);
+            float y2 = Float.valueOf(vals[3]);
+            return new Plane(new Vec2(x1, y1), new Vec2(x2, y2));
         }
         return null;
     }

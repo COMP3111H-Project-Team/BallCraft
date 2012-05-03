@@ -1,12 +1,13 @@
 package hkust.comp3111h.ballcraft.ui;
 
-import java.util.ArrayList;
-
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.client.GameInitializer;
 import hkust.comp3111h.ballcraft.data.GameData;
 import hkust.comp3111h.ballcraft.server.bt.BluetoothActivity;
+
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -96,39 +97,16 @@ public class MainMenu extends Activity implements SensorEventListener {
             }
 
         });
-
-        final ImageView singlePlayerButton = (ImageView) this
-                .findViewById(R.id.main_menu_single_player_button);
-        singlePlayerButton.setOnClickListener(new OnClickListener() {
-
+        
+        Animation opacityChange1 = AnimationUtils.loadAnimation(self, R.anim.opacity_change_1);
+        Animation opacityChange2 = AnimationUtils.loadAnimation(self, R.anim.opacity_change_2);
+        
+        final ImageView startGameButton = (ImageView) this
+                .findViewById(R.id.main_menu_start_game_image_view);
+        startGameButton.setOnClickListener(new OnClickListener() {
+            
             public void onClick(View v) {
-                BallCraft.maxPlayer = 1;
-               /*
-                Intent intent = new Intent(self,
-                        GameInitializer.class);
-                intent.putExtra("ballSelected", BallCraft.Ball.IRON_BALL);
-                intent.putExtra("mapSelected", "map08.xml");
-                
-                self.startActivity(intent);
-                */
-                
-                Intent intent = new Intent(self,
-                        MapSelectMenu.class);
-                self.startActivity(intent);
-                
-            }
-
-        });
-
-		Animation opacityChange1 = AnimationUtils.loadAnimation(self, R.anim.opacity_change_1);
-		singlePlayerButton.startAnimation(opacityChange1);
-
-        ImageView multiPlayerButton = (ImageView) this
-                .findViewById(R.id.main_menu_multi_player_button);
-        multiPlayerButton.setOnClickListener(new OnClickListener() {
-
-            public void onClick(View v) {
-                if (GameData.isUsernameSet()) {
+			    if (GameData.isUsernameSet()) {
 	                Intent Bluetooth = new Intent(MainMenu.this, BluetoothActivity.class);
 	                MainMenu.this.startActivity(Bluetooth);
 	                BallCraft.maxPlayer = 2;
@@ -142,23 +120,57 @@ public class MainMenu extends Activity implements SensorEventListener {
 	                        android.R.anim.fade_out);
                 }
             }
-
+            
         });
         
-        Animation opacityChange2 = AnimationUtils.loadAnimation(self, R.anim.opacity_change_2);
-        multiPlayerButton.startAnimation(opacityChange2);
+        startGameButton.startAnimation(opacityChange1);
+        
+        final ImageView profileButton = (ImageView) this
+                .findViewById(R.id.main_menu_profile_image_view);
+        profileButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(self, ProfileMenu.class);
+                self.startActivity(intent);
+                self.overridePendingTransition(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+            }
+            
+        });
+        
+        profileButton.startAnimation(opacityChange2);
+        
+        /*
+        final ImageView aboutButton = (ImageView) this
+                .findViewById(R.id.main_menu_about_image_view);
+        aboutButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(self, AboutMenu.class);
+                self.startActivity(intent);
+                self.overridePendingTransition(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+            }
+            
+        });
+        
+        aboutButton.startAnimation(opacityChange1);
+        */
     }
 
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
     public void onSensorChanged(SensorEvent event) {
-        turnX = event.values[SensorManager.DATA_Y] / 3f;
-        turnY = event.values[SensorManager.DATA_X] / 3f;
+        turnX = event.values[SensorManager.DATA_Y] / 2f;
+        turnY = event.values[SensorManager.DATA_X] / 2f;
     }
     
  	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
+ 	    menu.clear();
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.options_menu, menu);
 		
@@ -171,6 +183,21 @@ public class MainMenu extends Activity implements SensorEventListener {
  	    if (item.getItemId() == R.id.crash) {
  	        ArrayList<Integer> list = new ArrayList<Integer>();
  	        list.get(0);
+ 	    } else if (item.getItemId() == R.id.test) {
+            BallCraft.maxPlayer = 1;
+            Intent intent = new Intent(self,
+                    GameInitializer.class);
+            intent.putExtra("ballSelected", BallCraft.Ball.WOOD_BALL);
+            intent.putExtra("mapSelected", "map08.xml");
+            
+            self.startActivity(intent);
+            self.overridePendingTransition(android.R.anim.fade_in,
+                    android.R.anim.fade_out);
+ 	        /*
+ 	        Intent intent = new Intent(self, BallUnlockedMenu.class);
+ 	        intent.putExtra(BallUnlockedMenu.unlockedIndicator, 2);
+ 	        self.startActivity(intent);
+            */
  	    }
         return super.onOptionsItemSelected(item);
     }

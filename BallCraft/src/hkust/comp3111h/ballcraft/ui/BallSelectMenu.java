@@ -1,12 +1,11 @@
 package hkust.comp3111h.ballcraft.ui;
 
+import hkust.comp3111h.MyApplication;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.client.GameInitializer;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
-import hkust.comp3111h.ballcraft.server.bt.BluetoothActivity;
-import hkust.comp3111h.ballcraft.server.bt.BluetoothService;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,8 +16,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,8 +25,6 @@ public class BallSelectMenu extends Activity {
     private BallSelectMenu self;
 
     private int currBallPos = 0;
-
-    private RelativeLayout ballDisplayView;
 
     private TextView ballNameView;
     private TextView ballDescriptionView;
@@ -47,11 +42,6 @@ public class BallSelectMenu extends Activity {
 
     private ImageView prevBallView;
     private ImageView nextBallView;
-
-    private Animation fadeOut;
-    private Animation fadeIn;
-
-    private boolean init = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,13 +67,12 @@ public class BallSelectMenu extends Activity {
     }
 
     private void initLayout() {
-        ballDisplayView = (RelativeLayout) this
-                .findViewById(R.id.ball_select_item_layout);
-
         ballNameView = (TextView) this
                 .findViewById(R.id.ball_select_item_name_display);
+        ballNameView.setTypeface(MyApplication.getFont());
         ballDescriptionView = (TextView) this
                 .findViewById(R.id.ball_select_item_description_display);
+        ballDescriptionView.setTypeface(MyApplication.getFont());
 
         ballImageView = (ImageView) this
                 .findViewById(R.id.ball_select_item_image);
@@ -129,9 +118,6 @@ public class BallSelectMenu extends Activity {
                 }
             }
         });
-
-        fadeOut = AnimationUtils.loadAnimation(self, R.anim.fade_out);
-        fadeIn = AnimationUtils.loadAnimation(self, R.anim.fade_in);
 
         this.updateLayout();
     }
@@ -245,6 +231,8 @@ public class BallSelectMenu extends Activity {
                     {
                     	intent = new Intent(self, GameInitializer.class);    
                     	ServerAdapter.sendClientInitMsg("" + currBallPos);
+		                self.overridePendingTransition(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
                     }
                     intent.putExtra("ballSelected", currBallPos);
                     self.startActivity(intent);
@@ -285,14 +273,6 @@ public class BallSelectMenu extends Activity {
             // nextBallView.setTextColor(Color.rgb(60, 60, 60));
             nextBallView.setColorFilter(Color.BLACK);
         }
-    }
-
-    private String getValueDisplayFromInt(int value) {
-        String display = "";
-        for (int i = 0; i < value; i++) {
-            display += "+";
-        }
-        return display;
     }
 
     public void onBackPressed() {

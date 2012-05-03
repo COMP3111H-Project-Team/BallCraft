@@ -18,6 +18,7 @@ public class BallDef {
 	    public static final int magic = 3;
 	    public static final int unlockExp = 0;
 	    public static final int [] skills = { SkillDef.GrowRoot.id, SkillDef.NaturesCure.id };
+	    public static final int [] RGB = {205, 133, 63};
 	}
 	
 	public static final class RockBall {
@@ -30,6 +31,7 @@ public class BallDef {
 	    public static final int magic = 4;
 	    public static final int unlockExp = 0;
 	    public static final int [] skills = { SkillDef.MassOverlord.id, SkillDef.RockBump.id };
+	    public static final int [] RGB = {205, 205, 180};
 	}
 	
 	public static final class WaterBall {
@@ -42,6 +44,7 @@ public class BallDef {
 	    public static final int magic = 6;
 	    public static final int unlockExp = 0;
 	    public static final int [] skills = { SkillDef.WaterPropel.id, SkillDef.Slippery.id };
+	    public static final int [] RGB = {72, 118, 255};
 	}
 	
 	public static final class IronBall {
@@ -54,6 +57,7 @@ public class BallDef {
 	    public static final int magic = 7;
 	    public static final int unlockExp = 0;
 	    public static final int [] skills = { SkillDef.IronWill.id, SkillDef.Crush.id };
+	    public static final int [] RGB = {224, 238, 238};
 	}
 	
 	public static final class FireBall {
@@ -66,6 +70,7 @@ public class BallDef {
 	    public static final int magic = 8;
 	    public static final int unlockExp = 0;
 	    public static final int [] skills = { SkillDef.FlameThrow.id, SkillDef.Landmine.id };
+	    public static final int [] RGB = {255, 69, 0};
 	}
 	
 	public static final class DarkBall {
@@ -78,6 +83,7 @@ public class BallDef {
 	    public static final int magic = 10;
 	    public static final int unlockExp = 0;
 	    public static final int [] skills = { SkillDef.Stealth.id, SkillDef.MidNight.id };
+	    public static final int [] RGB = {125, 38, 205};
 	}
 	
     @SuppressWarnings("rawtypes")
@@ -174,10 +180,22 @@ public class BallDef {
 	    }
 	}
 	
-	public static int [] getSkillNamesById(int id) {
+	public static int [] getSkillsById(int id) {
 	    if (id < balls.length) {
 	        try {
 	            return (int[]) balls[id].getField("skills").get(0);
+	        } catch (Exception e) {
+	            return null;
+	        }
+	    } else {
+	        return null;
+	    }
+	}
+	
+	public static int [] getRGBById(int id) {
+	    if (id < balls.length) {
+	        try {
+	            return (int[]) balls[id].getField("RGB").get(0);
 	        } catch (Exception e) {
 	            return null;
 	        }

@@ -6,8 +6,6 @@ import hkust.comp3111h.ballcraft.server.Unit;
 
 import org.jbox2d.dynamics.Body;
 
-import android.util.Log;
-
 /**
  * Define a skill to be casted
  */
@@ -42,8 +40,7 @@ public abstract class Skill {
             return new Mine(player, id);
         case BallCraft.Skill.MASS_OVERLORD:
             return new MassOverload(player, id);
-        case BallCraft.Skill.WATER_PROPEL:
-            return new Propel(player, id);
+            
         case BallCraft.Skill.ROCK_BUMP:
             return new Bump(player, id);
         case BallCraft.Skill.NATURES_CURE:

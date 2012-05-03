@@ -3,11 +3,14 @@
 	<name>Jiong</name>
 	<height>400</height>
 	<width>400</width>
-	<initPosition>10,10</initPosition>
+	<initPosition>100,100</initPosition>
+	<initPosition>-100,100</initPosition>
+	<initPosition>100,-100</initPosition>
+	<initPosition>-100,-100</initPosition>
 	<terrain>5</terrain>
 	<mode>0</mode>
-	<wall>-250,250,-250,250</wall>
-	<wall>250,250,350,350</wall>
+	<wall>-50,-50,-150,50</wall>
+	<wall>50,-50,150,50</wall>
 	<wall>-200,-200,200,-200</wall>
 	<wall>-200,-200,-200,200</wall>
 	<wall>200,-200,200,200</wall>

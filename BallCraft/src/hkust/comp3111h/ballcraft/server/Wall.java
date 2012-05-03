@@ -78,30 +78,30 @@ public class Wall extends Unit {
 	};
 	
 	private static final float [] texture = {
-            0.0f, 1.0f,
+            0.0f, 0.1f,
             0.0f, 0.0f,
-            1.0f, 1.0f,
-            1.0f, 0.0f,
+            0.1f, 0.1f,
+            0.1f, 0.0f,
             
-            0.0f, 1.0f,
+            0.0f, 0.1f,
             0.0f, 0.0f,
-            1.0f, 1.0f,
-            1.0f, 0.0f,
+            0.1f, 0.1f,
+            0.1f, 0.0f,
             
-            0.0f, 1.0f,
+            0.0f, 0.1f,
             0.0f, 0.0f,
-            1.0f, 1.0f,
-            1.0f, 0.0f,
+            0.1f, 0.1f,
+            0.1f, 0.0f,
             
-            0.0f, 1.0f,
+            0.0f, 0.1f,
             0.0f, 0.0f,
-            1.0f, 1.0f,
-            1.0f, 0.0f,
+            0.1f, 0.1f,
+            0.1f, 0.0f,
             
-            0.0f, 1.0f,
+            0.0f, 0.1f,
             0.0f, 0.0f,
-            1.0f, 1.0f,
-            1.0f, 0.0f,
+            0.1f, 0.1f,
+            0.1f, 0.0f,
 	};
 	
     private static int [] textures = new int[1];
@@ -146,7 +146,7 @@ public class Wall extends Unit {
 		Vec2 vector = start.sub(end);
 		float length = vector.normalize() / 2;
 		Vec2 midPoint = start.add(end).mul(0.5f);
-		float angle = (float)Math.acos(Vec2.dot(vector, new Vec2(1, 0)));
+		float angle = -(float)Math.acos(Vec2.dot(vector, new Vec2(1, 0)));
 		shape.setAsBox(length, 2.5f / rate, midPoint, angle);
 
 		

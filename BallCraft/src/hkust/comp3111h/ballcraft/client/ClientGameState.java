@@ -32,10 +32,10 @@ public class ClientGameState {
     private float selfLastZPos;
     private float enemyLastZPos;
     
-    private int selfScoreEarned = 0;
+    public int selfScoreEarned = 0;
     private int selfCombo = 0;
     
-    private int enemyScoreEarned = 0;
+    public int enemyScoreEarned = 0;
     private int enemyCombo = 0;
 
     private ClientGameState() {
@@ -82,7 +82,6 @@ public class ClientGameState {
             ServerAdapter.sendScoreToServer(
                     Math.max(this.selfScoreEarned, this.enemyScoreEarned));
         }
-    
     }
     
     private void checkSelfBallState() {
@@ -157,6 +156,10 @@ public class ClientGameState {
     
     public ConcurrentHashMap<Integer, SkillEffect> getDrawables() {
         return this.skillEffects;
+    }
+    
+    public SkillEffect getDrawable(int id) {
+        return this.skillEffects.get(new Integer(id));
     }
 
     public void deleteDrawable(int id) {

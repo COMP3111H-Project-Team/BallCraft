@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 public class BluetoothActivity extends Activity {
@@ -50,6 +52,14 @@ public class BluetoothActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        
+        this.getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        
         // Get local Bluetooth adapter
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -65,14 +75,13 @@ public class BluetoothActivity extends Activity {
     public void initialize(){
     	service = new BluetoothService(this, mHandler);    	
     	setDiscoverableFor(300);    	
-    	Log.i(TAG,"initialize");
     }
     
     public void scanDevice(){
-		Log.e(TAG,"start device activity");
+		Log.w(TAG,"start device activity");
 		Intent serverIntent = new Intent(this, DeviceListActivity.class);
 		startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
-		Log.e(TAG,"after start device activity");
+		Log.w(TAG,"after start device activity");
 		// Performing this check in onResume() covers the case in which BT was
 		// not enabled during onStart(), so we were paused to enable it...
 		// onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
@@ -87,16 +96,16 @@ public class BluetoothActivity extends Activity {
     
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(D) Log.e(TAG, "onActivityResult " + resultCode);
+        if(D) Log.w(TAG, "onActivityResult " + resultCode);
         switch (requestCode) {
         case REQUEST_CONNECT_DEVICE:
             // When DeviceListActivity returns with a device to connect
-        	Log.e(TAG, "connect:" + resultCode);	
+        	Log.w(TAG, "connect:" + resultCode);	
             if (resultCode == Activity.RESULT_OK) {
                 // Get the device MAC address
                 String address = data.getExtras()
                                      .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
-                Log.e(TAG,address);
+                Log.w(TAG,address);
                 // Get the BLuetoothDevice object
                 BluetoothDevice device = bluetoothAdapter.getRemoteDevice(address);
                 // Attempt to connect to the device
@@ -114,7 +123,7 @@ public class BluetoothActivity extends Activity {
                 
             } else {
                 // User did not enable Bluetooth or an error occured
-                Log.d(TAG, "BT not enabled");
+                Log.w(TAG, "BT not enabled");
                 //Toast.makeText(this, R.string.bt_not_enabled_leaving, Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -180,18 +189,21 @@ public class BluetoothActivity extends Activity {
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-//        	Log.e("msg received", "Some Message");
             switch (msg.what) {
             
             case MESSAGE_WRITE:
+                /*
                 byte[] writeBuf = (byte[]) msg.obj;
                 // construct a string from the buffer
                 String writeMessage = new String(writeBuf);
+                */
                 break;
             case MESSAGE_READ:
+                /*
                 byte[] readBuf = (byte[]) msg.obj;
-            	Log.e("msg received", "MESSAGE_READ");
+            	Log.w("msg received", "MESSAGE_READ");
                 // construct a string from the valid bytes in the buffer
+                */
                 break;
             case MESSAGE_DEVICE_NAME:
                 // save the connected device's name

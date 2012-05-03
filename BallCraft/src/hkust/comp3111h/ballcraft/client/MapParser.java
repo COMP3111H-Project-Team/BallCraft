@@ -14,8 +14,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import android.util.Log;
-
 public class MapParser{
 	//debug
 	public static boolean D=true;
@@ -30,21 +28,17 @@ public class MapParser{
 	    //find the xml file first,just two layers now
 	    factory = DocumentBuilderFactory.newInstance();
 	    try {
-	    	//Log.d("map", "find document");
 	    	
 	    	//load file
 	    	builder = factory.newDocumentBuilder();
 	    	inputStream = MyApplication.getAppContext().getResources().getAssets().open(fileName);
 	    	document = builder.parse(inputStream);
-	    	//Log.d("map", "load document");
 	    	
 	    	//get root
 	    	Element root = document.getDocumentElement();
 	    	
 	    	//get map name
 	    	Element mapName = (Element)root.getElementsByTagName("name").item(0);
-	    	String msg = mapName.getFirstChild().getNodeValue();
-	    	Log.d("map", msg);
 	    	map.setName(mapName.getFirstChild().getNodeValue());
 	    	
 	        //get height count
@@ -58,24 +52,28 @@ public class MapParser{
 	    	//get terrain
 	    	Element terrain = (Element)root.getElementsByTagName("terrain").item(0);
 	    	map.setTerrain(Integer.parseInt(terrain.getFirstChild().getNodeValue()));
-	    	Log.w("terrain", "" + map.getTerrain());
 	    	
 	    	//get map mode
 	    	Element mode = (Element)root.getElementsByTagName("mode").item(0);
 	    	map.setMode(Integer.parseInt(mode.getFirstChild().getNodeValue()));
 	    	
-	    	//get init position
-	    	Element init = (Element)root.getElementsByTagName("initPosition").item(0);
-	    	map.setInitPosition(parseString(init.getFirstChild().getNodeValue()));
+	    	String data;
 	    	NodeList nodes;
 	    	
-	    	String data;
+	    	//get initPosition list
+	    	nodes = root.getElementsByTagName("initPosition");
+			for(int i=0;i<nodes.getLength();i++){
+				Element initElement=(Element)(nodes.item(i));
+				data = initElement.getFirstChild().getNodeValue();
+				//Log.i("map", data);
+				map.addInit(parseString(data));                     
+			}
+	    	
 	    	//get wall list
 	    	nodes=root.getElementsByTagName("wall");
 			for(int i=0;i<nodes.getLength();i++){
 				Element wallElement=(Element)(nodes.item(i));
 				data = wallElement.getFirstChild().getNodeValue();
-				//Log.i("map", data);
 				map.addWall(parseString(data));                     
 			}
 			
@@ -84,7 +82,6 @@ public class MapParser{
 			for(int i=0;i<nodes.getLength();i++){
 				Element TrapElement=(Element)(nodes.item(i));
 				data = TrapElement.getFirstChild().getNodeValue();
-				//Log.i("map", data);
 				map.addTrap(parseString(data));                     
 			}
 			
@@ -93,7 +90,6 @@ public class MapParser{
 			for(int i=0;i<nodes.getLength();i++){
 				Element wallElement=(Element)(nodes.item(i));
 				data = wallElement.getFirstChild().getNodeValue();
-				if(D) Log.i("map", data);
 				map.addPlane(parseString(data));                     
 			}
 			
