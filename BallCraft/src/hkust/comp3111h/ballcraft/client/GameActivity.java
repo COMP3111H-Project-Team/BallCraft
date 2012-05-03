@@ -479,5 +479,4 @@ public class GameActivity extends Activity implements SensorEventListener {
         
     };
     
-
 }

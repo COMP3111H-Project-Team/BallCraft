@@ -434,13 +434,9 @@ public class BluetoothService {
     }
     
     public void destroy(){
-        context.destroy();
+        this.stop();
     	if(D)Log.e(TAG,"service destroy");
         GameRenderer.stopRendering();
-    	Server.stop();
-        Client.stop();
-        ClientGameState.clear();
-        if(BallCraft.isServer) ServerGameState.clear();
-        if (BallCraft.isServer) ServerGameState.clear();   	
+    	
     }
 }
