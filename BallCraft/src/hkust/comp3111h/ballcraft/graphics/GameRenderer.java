@@ -170,6 +170,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		        float yPos = self.getPosition().y;
 		        float zPos = self.z;
 		        
+		        Log.w("" + xPos, "" + yPos);
+		        
 		        GLU.gluLookAt(gl, xPos, yPos + 60 + zPos / 2, 200 - zPos, xPos, yPos, -zPos, 0, 0, 1);
 		        
 		        for (Plane p : ClientGameState.getClientGameState().planes) {
