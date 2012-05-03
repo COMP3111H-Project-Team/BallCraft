@@ -45,7 +45,7 @@ public class MassOverlordParticle extends MagicParticle {
     
     @Override
     public void move() {
-        this.motionRadius--;
+        // this.motionRadius--;
         this.theta++;
         this.x = this.motionRadius * (float) (Math.cos(this.theta));
         this.y = this.motionRadius * (float) (Math.sin(this.theta));

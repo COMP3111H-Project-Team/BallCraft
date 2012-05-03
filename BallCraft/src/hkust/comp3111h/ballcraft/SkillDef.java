@@ -65,9 +65,9 @@ public class SkillDef {
 	    public static final int button = R.drawable.grey_button;
 	}
 	
-	public static final class Crush {
-	    public static final int id = BallCraft.Skill.CRUSH;
-	    public static final String name = "Crush";
+	public static final class FlashBang {
+	    public static final int id = BallCraft.Skill.FLASHBANG;
+	    public static final String name = "Flashbang";
 	    public static final int effectTime = 5000;
 	    public static final int coolDownTime = 30000;
 	    public static final int [] RGB = {105, 105, 105};
@@ -119,7 +119,7 @@ public class SkillDef {
         WaterPropel.class,
         Slippery.class,
         IronWill.class,
-        Crush.class,
+        FlashBang.class,
         FlameThrow.class,
         Landmine.class,
         Stealth.class,
