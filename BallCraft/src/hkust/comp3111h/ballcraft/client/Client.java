@@ -4,6 +4,7 @@ import hkust.comp3111h.MyApplication;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.data.GameData;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Explosion;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.GrowRoot;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.RockBumpParticleSystem;
 import hkust.comp3111h.ballcraft.server.Ball;
@@ -88,11 +89,14 @@ public class Client extends IntentService {
 		else if (parts[0].equals("skillInit"))
 		{
 			String [] str = parts[1].split("&");
-			
 			int skillID = Integer.parseInt(str[0]);
 			
 			switch (skillID) {
 			case BallCraft.Skill.GROW_ROOT:
+			    int playerID = Integer.parseInt(str[1]);
+			    Ball rootBall = ClientGameState.getClientGameState().balls.get(playerID);
+			    ClientGameState.getClientGameState().addSkillEffect(
+			            skillID, new GrowRoot(rootBall));
 			    break;
 			    
 			case BallCraft.Skill.NATURES_CURE:
@@ -103,8 +107,9 @@ public class Client extends IntentService {
 				
 			case BallCraft.Skill.ROCK_BUMP:
 				int enemyID = Integer.parseInt(str[1]);
-				Ball b = ClientGameState.getClientGameState().balls.get(enemyID);
-				ClientGameState.getClientGameState().addSkillEffect(skillID, new RockBumpParticleSystem(b));
+				Ball bumpedBall = ClientGameState.getClientGameState().balls.get(enemyID);
+				ClientGameState.getClientGameState().addSkillEffect(
+				        skillID, new RockBumpParticleSystem(bumpedBall));
 			    break;
 			    
 			case BallCraft.Skill.WATER_PROPEL:
