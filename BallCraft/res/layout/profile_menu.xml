@@ -14,11 +14,13 @@
         android:id="@+id/profile_menu_content_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
         android:orientation="vertical">
         
         <LinearLayout
             android:id="@+id/profile_menu_username_layout"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             
@@ -27,14 +29,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
-                android:textSize="9pt" />
+                android:textSize="10pt" />
             
             <Button
                 android:id="@+id/profile_menu_username_change_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Change"
-                android:textSize="9pt" />
+                android:textSize="10pt" />
             
         </LinearLayout>
         
@@ -43,21 +45,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:textSize="9pt" />
+            android:textSize="10pt" />
         
         <TextView
             android:id="@+id/profile_menu_game_log_display"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:textSize="9pt" />
+            android:textSize="10pt" />
         
         <Button
             android:id="@+id/profile_menu_clear_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="Clear all"
-            android:textSize="9pt" />
+            android:textSize="10pt" />
        
     </LinearLayout>
 

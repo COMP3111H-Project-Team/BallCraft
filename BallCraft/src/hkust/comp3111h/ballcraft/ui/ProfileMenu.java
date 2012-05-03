@@ -51,6 +51,7 @@ public class ProfileMenu extends Activity {
         
         Button changeUsernameButton = (Button) self.findViewById(R.id.profile_menu_username_change_button);
         changeUsernameButton.setTypeface(MyApplication.getFont());
+        changeUsernameButton.getBackground().setAlpha(100);
         changeUsernameButton.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -59,7 +60,7 @@ public class ProfileMenu extends Activity {
                 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(self);
                 dialog.setTitle("Player Name");
-                dialog.setMessage("Please input a player name");
+                dialog.setMessage("Enter your player name here");
                 dialog.setView(usernameInput);
                 dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     
@@ -95,11 +96,12 @@ public class ProfileMenu extends Activity {
         
         final TextView logDisplay = (TextView) self.findViewById(R.id.profile_menu_game_log_display);
         logDisplay.setTypeface(MyApplication.getFont());
-        logDisplay.setText("Win: " + GameData.getWinCount() + " Lose: " + GameData.getLoseCount()
-                + " Draw: " + GameData.getDrawCount());
+        logDisplay.setText("Win: " + GameData.getWinCount() + "\nLose: " + GameData.getLoseCount()
+                + "\nDraw: " + GameData.getDrawCount());
         
         Button clearAllButton = (Button) self.findViewById(R.id.profile_menu_clear_button);
         clearAllButton.setTypeface(MyApplication.getFont());
+        clearAllButton.getBackground().setAlpha(100);
         clearAllButton.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -116,7 +118,7 @@ public class ProfileMenu extends Activity {
                         GameData.setLoseCount(0);
                         GameData.setDrawCount(0);
                         expDisplay.setText("Experience: 0");
-                        logDisplay.setTag("Win: 0 Lose: 0 Draw: 0");
+                        logDisplay.setText("Win: 0\nLose: 0\nDraw: 0");
                     }
                     
                 });

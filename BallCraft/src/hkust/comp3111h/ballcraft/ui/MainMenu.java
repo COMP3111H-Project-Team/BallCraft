@@ -141,13 +141,15 @@ public class MainMenu extends Activity implements SensorEventListener {
         
         profileButton.startAnimation(opacityChange2);
         
+        /*
         final ImageView aboutButton = (ImageView) this
                 .findViewById(R.id.main_menu_about_image_view);
         aboutButton.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                
+                Intent intent = new Intent(self, AboutMenu.class);
+                self.startActivity(intent);
                 self.overridePendingTransition(android.R.anim.fade_in,
                         android.R.anim.fade_out);
             }
@@ -155,6 +157,7 @@ public class MainMenu extends Activity implements SensorEventListener {
         });
         
         aboutButton.startAnimation(opacityChange1);
+        */
     }
 
     public void onAccuracyChanged(Sensor sensor, int accuracy) {

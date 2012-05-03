@@ -31,19 +31,13 @@
 		    android:id="@+id/main_menu_start_game_image_view"
 		    android:layout_width="wrap_content"
 		    android:layout_height="80dp"
-		    android:src="@drawable/main_menu_start" />
+		    android:src="@drawable/start_button" />
 		
 		<ImageView
 		    android:id="@+id/main_menu_profile_image_view"
 		    android:layout_width="wrap_content"
 		    android:layout_height="80dp"
-		    android:src="@drawable/main_menu_profile" />
-		
-		<ImageView
-		    android:id="@+id/main_menu_about_image_view"
-		    android:layout_width="wrap_content"
-		    android:layout_height="80dp"
-		    android:src="@drawable/main_menu_about" />
+		    android:src="@drawable/profile_button" />
 		
 	</LinearLayout>
 	
