@@ -56,7 +56,7 @@ public class BallDef {
 	    public static final int friction = 4;
 	    public static final int magic = 7;
 	    public static final int unlockExp = 0;
-	    public static final int [] skills = { SkillDef.IronWill.id, SkillDef.Crush.id };
+	    public static final int [] skills = { SkillDef.IronWill.id, SkillDef.FlashBang.id };
 	    public static final int [] RGB = {224, 238, 238};
 	}
 	

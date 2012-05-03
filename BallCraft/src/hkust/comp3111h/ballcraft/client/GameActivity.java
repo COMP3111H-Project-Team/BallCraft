@@ -41,6 +41,8 @@ public class GameActivity extends Activity implements SensorEventListener {
     
     private GLSurfaceView mGLView;
     private SensorManager sensorManager;
+    
+    private static RelativeLayout flashBangMask;
 
     private RelativeLayout backScreen;
     
@@ -162,6 +164,12 @@ public class GameActivity extends Activity implements SensorEventListener {
         loseView = (TextView) this.findViewById(R.id.game_activity_lose_text);
         loseView.setTypeface(MyApplication.getFont());
         loseView.setVisibility(View.INVISIBLE);
+        
+        flashBangMask = (RelativeLayout) this.findViewById(R.id.game_activity_flashbang_mask);
+        AlphaAnimation flashBangAnim = new AlphaAnimation(0, 0);
+        flashBangAnim.setDuration(0);
+        flashBangAnim.setFillAfter(true);
+        flashBangMask.setAnimation(flashBangAnim);
 
         backScreen = (RelativeLayout) this.findViewById(R.id.game_activity_menu);
         backScreen.setVisibility(View.INVISIBLE);
@@ -446,5 +454,30 @@ public class GameActivity extends Activity implements SensorEventListener {
         }
         
     };
+    
+    public static Handler flashBangStartHandler = new Handler() {
+        
+        @Override
+        public void handleMessage(Message msg) {
+	        AlphaAnimation flashBangAnim = new AlphaAnimation(0, 1);
+	        flashBangAnim.setDuration(200);
+	        flashBangAnim.setFillAfter(true);
+	        flashBangMask.setAnimation(flashBangAnim);
+        }
+        
+    };
+    
+    public static Handler flashBangEndHandler = new Handler() {
+        
+        @Override
+        public void handleMessage(Message msg) {
+	        AlphaAnimation flashBangAnim = new AlphaAnimation(1, 0);
+	        flashBangAnim.setDuration(3000);
+	        flashBangAnim.setFillAfter(true);
+	        flashBangMask.setAnimation(flashBangAnim);
+        }
+        
+    };
+    
 
 }
