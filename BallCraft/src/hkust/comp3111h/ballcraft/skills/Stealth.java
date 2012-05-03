@@ -1,7 +1,6 @@
 package hkust.comp3111h.ballcraft.skills;
 
 import hkust.comp3111h.ballcraft.SkillDef;
-import hkust.comp3111h.ballcraft.BallCraft.Status;
 
 public class Stealth extends Skill
 {
@@ -14,10 +13,7 @@ public class Stealth extends Skill
 	}
 		
 	@Override
-	public void init()
-	{
-		getUnit().setStatus(Status.NORMAL);
-	}
+	public void init() {}
 
 	@Override
 	public void beforeStep() {}

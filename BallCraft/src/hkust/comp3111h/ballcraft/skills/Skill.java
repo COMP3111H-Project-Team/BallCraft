@@ -44,8 +44,8 @@ public abstract class Skill {
             return new MassOverload(player, id);            
         case BallCraft.Skill.ROCK_BUMP:
             return new Bump(player, id);
-        case BallCraft.Skill.NATURES_CURE:
-        	return new Cure(player, id);
+        case BallCraft.Skill.POISON:
+        	return new Poison(player, id);
         case BallCraft.Skill.SLIPPERY:
         	return new Slippery(player, id);
         case BallCraft.Skill.FLAME_THROW:
@@ -54,6 +54,12 @@ public abstract class Skill {
         	return new Midnight(player, id);
         case BallCraft.Skill.STEALTH:
         	return new Stealth(player, id);
+        case BallCraft.Skill.FLASHBANG:
+        	return new Flashbang(player, id);
+        case BallCraft.Skill.IRON_WILL:
+        	return new IronWill(player, id);
+        case BallCraft.Skill.WATER_PROPEL:
+        	return new Propel(player, id);
         default:
         	Log.e("Skill", "No Such Skill:" + id);
             return new GrowRoot(player, id);

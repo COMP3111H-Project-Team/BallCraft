@@ -26,7 +26,7 @@ public class FlameThrow extends Skill
 	public void beforeStep()
 	{
 		Vec2 v = getBody(1 - player).getPosition().sub(getBody().getPosition());
-		if (v.lengthSquared() < 10000 / (Unit.rate * Unit.rate))
+		if (getUnit(1 - player).getStatus() != Status.INVINCIBLE && v.lengthSquared() < 10000 / (Unit.rate * Unit.rate))
 		{
 			v.normalize();
 			v = v.mul(100);

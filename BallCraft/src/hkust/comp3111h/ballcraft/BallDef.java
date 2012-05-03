@@ -17,7 +17,7 @@ public class BallDef {
 	    public static final int friction = 3;
 	    public static final int magic = 3;
 	    public static final int unlockExp = 0;
-	    public static final int [] skills = { SkillDef.GrowRoot.id, SkillDef.NaturesCure.id };
+	    public static final int [] skills = { SkillDef.GrowRoot.id, SkillDef.Poison.id };
 	    public static final int [] RGB = {205, 133, 63};
 	}
 	
