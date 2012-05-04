@@ -17,7 +17,7 @@ public class FireBall extends ParticleBall {
         for (int i = 0; i < COUNT; i++) {
             double theta = randGen.nextDouble() * 180 / Math.PI;
             double rho = randGen.nextDouble() * 360 / Math.PI;
-            FireBallParticle p = new FireBallParticle(theta, rho, 10);
+            FireBallParticle p = new FireBallParticle(theta, rho, radius);
             particles.add(p);
         }
     }

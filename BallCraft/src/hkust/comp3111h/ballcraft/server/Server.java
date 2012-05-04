@@ -88,6 +88,8 @@ public class Server extends IntentService {
             gameState.onEveryFrame((int) (time - lastRun));
             lastRun = System.currentTimeMillis();
             
+            extraMessage("Time:" + ((currTime - initTime) / 1000 - 60 * limitValue));
+                        
             String temp = new String(msg);
 			msg = "";
 
