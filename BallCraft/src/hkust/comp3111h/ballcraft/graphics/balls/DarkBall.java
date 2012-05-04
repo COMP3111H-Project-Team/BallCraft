@@ -17,7 +17,7 @@ public class DarkBall extends ParticleBall {
         for (int i = 0; i < COUNT; i++) {
             double theta = randGen.nextDouble() * 180 / Math.PI;
             double rho = randGen.nextDouble() * 360 / Math.PI;
-            DarkBallParticle p = new DarkBallParticle(theta, rho, 10);
+            DarkBallParticle p = new DarkBallParticle(theta, rho, radius);
             particles.add(p);
         }
     }
