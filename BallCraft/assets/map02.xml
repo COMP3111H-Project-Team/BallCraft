@@ -11,5 +11,4 @@
 	<initPosition>-100,-100</initPosition>
 	<plane>-200,-50,200,50</plane>
 	<plane>-50,-200,50,200</plane>
-	<wall>-100,-100,0,-100</wall>
 </map>
