@@ -53,7 +53,7 @@ public class Client extends IntentService {
     public static int selfScore = 0;
     public static int enemyScore = 0;
     
-    // private static boolean active = false;
+    private static boolean active = false;
     
     public Client() {
         super("ClientService");
@@ -191,7 +191,8 @@ public class Client extends IntentService {
 			    ClientGameState.getClientGameState().deleteDrawable(Integer.parseInt(str[1]));
 	            
 	        case BallCraft.Skill.FLASHBANG:
-	            GameActivity.flashBangEndHandler.sendEmptyMessage(0);
+	            // GameActivity.flashBangEndHandler.sendEmptyMessage(0);
+	            GameRenderer.setFlashBang(false);
                 break;
 				
 			case BallCraft.Skill.LANDMINE:
@@ -204,7 +205,7 @@ public class Client extends IntentService {
 			    
 			case BallCraft.Skill.STEALTH:
 			    if (Integer.parseInt(str[1]) == BallCraft.enemy) {
-				    GameRenderer.setEnemyStealth(true);
+				    GameRenderer.setEnemyStealth(false);
 			    }
 			    break;
 			}
@@ -218,7 +219,8 @@ public class Client extends IntentService {
 		} else if (parts[0].equals("FlashBangEffect")) {
 			String [] str = parts[1].split("&");
 			if (Integer.parseInt(str[1]) == BallCraft.myself) {
-			    GameActivity.flashBangStartHandler.sendEmptyMessage(0);
+			    // GameActivity.flashBangStartHandler.sendEmptyMessage(0);
+	            GameRenderer.setFlashBang(false);
 			}
 		}
 
@@ -238,30 +240,32 @@ public class Client extends IntentService {
     	int time = 0;
     	boolean started = false;
         while (running) {
-            if (Server.inited || remoteServerInited) {
-                if (inputStarted) {
-	                ServerAdapter.sendToServer(input);
-	                input.clearSkills();
-	                started = true;
-                }
-            }
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException e) {}
-            
-            if (!started)
-            {
-            	time++;
-            	if (time > 1500)
-            	{
-                	Server.stop();
-                    Client.stop();
-                    ClientGameState.clear();
-                    if (BallCraft.isServer) {
-                        ServerGameState.clear();
-                    }
-                    return;
-            	}
+            if (active) {
+	            if (Server.inited || remoteServerInited) {
+	                if (inputStarted) {
+		                ServerAdapter.sendToServer(input);
+		                input.clearSkills();
+		                started = true;
+	                }
+	            }
+	            try {
+	                Thread.sleep(20);
+	            } catch (InterruptedException e) {}
+	            
+	            if (!started)
+	            {
+	            	time++;
+	            	if (time > 1500)
+	            	{
+	                	Server.stop();
+	                    Client.stop();
+	                    ClientGameState.clear();
+	                    if (BallCraft.isServer) {
+	                        ServerGameState.clear();
+	                    }
+	                    return;
+	            	}
+	            }
             }
         }
 
@@ -270,7 +274,7 @@ public class Client extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         running = true;
-        // active = true;
+        active = true;
         this.run();
     }
 
@@ -286,10 +290,8 @@ public class Client extends IntentService {
         return gameInited;
     }
  	
- 	/*
  	public static void deactivate() {
  	    active = false;
  	}
- 	*/
  	
 }

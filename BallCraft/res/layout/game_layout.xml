@@ -76,12 +76,14 @@
         android:textStyle="bold"
         android:text="You Lose" />
     
+    <!--
     <RelativeLayout
         android:id="@+id/game_activity_flashbang_mask"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="#FFFFFF">
     </RelativeLayout>
+    -->
     
     <TextView
         android:id="@+id/game_activity_remaining_time_view"
