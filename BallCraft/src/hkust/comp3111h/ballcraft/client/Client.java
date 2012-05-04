@@ -3,6 +3,7 @@ package hkust.comp3111h.ballcraft.client;
 import hkust.comp3111h.MyApplication;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.data.GameData;
+import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Explosion;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.FlameThrow;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.FlashBang;
@@ -12,6 +13,7 @@ import hkust.comp3111h.ballcraft.graphics.skilleffects.MassOverlord;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.RockBump;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.RockBumpParticleSystem;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.Slippery;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
@@ -118,6 +120,10 @@ public class Client extends IntentService {
 				break;
 				
 			case BallCraft.Skill.SLIPPERY:
+			    Ball slipperyBall = ClientGameState.getClientGameState()
+			            .balls.get(Integer.parseInt(str[1]));
+			    ClientGameState.getClientGameState().addSkillEffect(
+			            skillID, new Slippery(slipperyBall));
 			    break;
 			    
 			case BallCraft.Skill.IRON_WILL:
@@ -157,6 +163,9 @@ public class Client extends IntentService {
 			    break;
 			    
 			case BallCraft.Skill.STEALTH:
+			    if (Integer.parseInt(str[1]) == BallCraft.enemy) {
+				    GameRenderer.setEnemyStealth(true);
+			    }
 			    break;
 			    
 			case BallCraft.Skill.MIDNIGHT:
@@ -174,12 +183,29 @@ public class Client extends IntentService {
 			case BallCraft.Skill.WATER_PROPEL:
 				break;
 				
+			case BallCraft.Skill.SLIPPERY:
+			    ClientGameState.getClientGameState().deleteDrawable(Integer.parseInt(str[1]));
+			    break;
+			    
+	        case BallCraft.Skill.IRON_WILL:
+			    ClientGameState.getClientGameState().deleteDrawable(Integer.parseInt(str[1]));
+	            
+	        case BallCraft.Skill.FLASHBANG:
+	            GameActivity.flashBangEndHandler.sendEmptyMessage(0);
+                break;
+				
 			case BallCraft.Skill.LANDMINE:
 				String [] position = str[1].split(",");
 				int id = Integer.valueOf(position[2]);
 				Mine m = (Mine) ClientGameState.getClientGameState().getDrawable(id);
 				ClientGameState.getClientGameState().deleteDrawable(id);
 				ClientGameState.getClientGameState().addSkillEffect(id, new Explosion(m.x, m.y, 0));
+			    break;
+			    
+			case BallCraft.Skill.STEALTH:
+			    if (Integer.parseInt(str[1]) == BallCraft.enemy) {
+				    GameRenderer.setEnemyStealth(true);
+			    }
 			    break;
 			}
 		} else if (parts[0].equals("RockBumpEffect")) {
