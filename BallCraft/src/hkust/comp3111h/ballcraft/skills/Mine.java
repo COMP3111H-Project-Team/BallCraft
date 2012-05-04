@@ -54,7 +54,7 @@ public class Mine extends Skill {
 			if (i == player) continue;
 			if (getUnit(i).getStatus() != Status.INVINCIBLE && units.get(i).getPosition().sub(position).lengthSquared() < 1000 / (Unit.rate * Unit.rate))
 			{
-				Vec2 v = units.get(i).getPosition().sub(position);
+				Vec2 v = new Vec2((float)Math.random(), (float)Math.random());
 				v.normalize();
 				v = v.mul(100);
 				getBody(i).setLinearVelocity(v);		        	

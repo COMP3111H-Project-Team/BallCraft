@@ -57,6 +57,13 @@ public abstract class Unit implements Drawable {
     	{
             body.applyForce(force.mul(- 0.8f / (rate * rate)), O);
     	}
+    	else if(status == Status.POISONED)
+    	{
+    		Vec2 f = new Vec2((float)Math.random() - 0.5f, (float)Math.random() - 0.5f);
+    		f = f.mul(10);
+    		f = f.add(force);
+    		body.applyForce(f.mul(0.8f / (rate * rate)), O);
+    	}
     	else
     	{
     		body.applyForce(force.mul(0.8f / (rate * rate)), O);
