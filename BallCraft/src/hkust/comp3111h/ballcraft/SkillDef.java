@@ -11,10 +11,10 @@ public class SkillDef {
 	    public static final int button = R.drawable.skill_grow_root;
 	}
 	
-	public static final class NaturesCure {
-	    public static final int id = BallCraft.Skill.NATURES_CURE;
-	    public static final String name = "Nature's Cure";
-	    public static final int effectTime = 0;
+	public static final class Poison {
+	    public static final int id = BallCraft.Skill.POISON;
+	    public static final String name = "POISON";
+	    public static final int effectTime = 8000;
 	    public static final int coolDownTime = 30000;
 	    public static final int [] RGB = {124, 255, 0};
 	    public static final int button = R.drawable.skill_grow_root;
@@ -113,7 +113,7 @@ public class SkillDef {
     @SuppressWarnings("rawtypes")
     public static final Class [] skills = {
         GrowRoot.class,
-        NaturesCure.class,
+        Poison.class,
         MassOverlord.class,
         RockBump.class,
         WaterPropel.class,

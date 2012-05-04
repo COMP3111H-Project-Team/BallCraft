@@ -102,7 +102,7 @@ public class Client extends IntentService {
 			            skillID, new GrowRoot(rootBall));
 			    break;
 			    
-			case BallCraft.Skill.NATURES_CURE:
+			case BallCraft.Skill.POISON:
 			    break;
 			    
 			case BallCraft.Skill.MASS_OVERLORD:

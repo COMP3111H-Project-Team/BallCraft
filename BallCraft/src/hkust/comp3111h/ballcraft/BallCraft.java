@@ -17,7 +17,7 @@ public class BallCraft {
     
     public enum Status
     {
-		NORMAL, DEAD, FROZEN, DIZZY, INVINCIBLE
+		NORMAL, DEAD, FROZEN, DIZZY, INVINCIBLE, POISONED
 	}
     
     public static final class Ball {
@@ -46,7 +46,7 @@ public class BallCraft {
     public static final class Skill {
         public static final int DEACTIVATED = -1;
         public static final int GROW_ROOT = 0;
-        public static final int NATURES_CURE = 1;
+        public static final int POISON = 1;
         public static final int MASS_OVERLORD = 2;
         public static final int ROCK_BUMP = 3;
         public static final int WATER_PROPEL = 4;
