@@ -2,6 +2,7 @@ package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.MyApplication;
 import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.MapModeDef;
 import hkust.comp3111h.ballcraft.data.GameData;
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Explosion;
@@ -169,6 +170,7 @@ public class Client extends IntentService {
 			    break;
 			    
 			case BallCraft.Skill.MIDNIGHT:
+			    GameRenderer.changeLightMode(BallCraft.MapMode.NIGHT_MODE);
 			    break;
 			}
 		} else if (parts[0].equals("skillFinish")) {
@@ -180,15 +182,23 @@ public class Client extends IntentService {
 			    ClientGameState.getClientGameState().deleteDrawable(skillID);
 			    break;
 			    
+			case BallCraft.Skill.MASS_OVERLORD:
+			    ClientGameState.getClientGameState().deleteDrawable(skillID);
+			    break;
+			    
+	        case BallCraft.Skill.ROCK_BUMP:
+			    ClientGameState.getClientGameState().deleteDrawable(skillID);
+                break;
+			    
 			case BallCraft.Skill.WATER_PROPEL:
 				break;
 				
 			case BallCraft.Skill.SLIPPERY:
-			    ClientGameState.getClientGameState().deleteDrawable(Integer.parseInt(str[1]));
+			    ClientGameState.getClientGameState().deleteDrawable(skillID);
 			    break;
 			    
 	        case BallCraft.Skill.IRON_WILL:
-			    ClientGameState.getClientGameState().deleteDrawable(Integer.parseInt(str[1]));
+			    ClientGameState.getClientGameState().deleteDrawable(skillID);
 	            
 	        case BallCraft.Skill.FLASHBANG:
 	            // GameActivity.flashBangEndHandler.sendEmptyMessage(0);
@@ -208,6 +218,10 @@ public class Client extends IntentService {
 				    GameRenderer.setEnemyStealth(false);
 			    }
 			    break;
+			    
+			case BallCraft.Skill.MIDNIGHT:
+			    GameRenderer.changeLightMode(BallCraft.MapMode.DAY_MODE);
+			    break;
 			}
 		} else if (parts[0].equals("RockBumpEffect")) {
 			String [] str = parts[1].split("&");
@@ -220,7 +234,7 @@ public class Client extends IntentService {
 			String [] str = parts[1].split("&");
 			if (Integer.parseInt(str[1]) == BallCraft.myself) {
 			    // GameActivity.flashBangStartHandler.sendEmptyMessage(0);
-	            GameRenderer.setFlashBang(false);
+	            GameRenderer.setFlashBang(true);
 			}
 		}
 
