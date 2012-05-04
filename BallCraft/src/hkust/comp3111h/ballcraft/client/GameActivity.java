@@ -51,15 +51,26 @@ public class GameActivity extends Activity implements SensorEventListener {
     private GameRenderer renderer;
     
     private static TextView loseView = null;
-
+    
     private static Button skill1Button;
     private static Button skill2Button;
     
+    private static TextView remainingTimeView;
+    private static TextView scoreView;
+
     private static boolean skill1CooledDown = true;
     private static boolean skill2CooledDown = true;
     
     private static int skill1;
     private static int skill2;
+    
+    private static TextView pauseButton;
+    private static TextView resumeButton;
+    private static TextView exitButton;
+    
+    private static TextView endGameScoreDisplay;
+    private static TextView endGameExpEarned;
+    private static Button exitGameButton; 
     
     private static boolean dead = false;
     
@@ -127,8 +138,8 @@ public class GameActivity extends Activity implements SensorEventListener {
             public void onClick(View v) {
                 Client.castSkill(Skill.getSkill(skill1));
                 skill1Button.setEnabled(false);
-	            skill1Button.setBackgroundResource(R.drawable.disabled_button);
-		        skill1Button.getBackground().setAlpha(180);
+	            // skill1Button.setBackgroundResource(R.drawable.disabled_button);
+		        skill1Button.getBackground().setAlpha(50);
                 skill1CooledDown = false;
                 Message msg = new Message();
                 msg.what = 1;
@@ -150,8 +161,8 @@ public class GameActivity extends Activity implements SensorEventListener {
             public void onClick(View v) {
                 Client.castSkill(Skill.getSkill(skill2));
                 skill2Button.setEnabled(false);
-	            skill2Button.setBackgroundResource(R.drawable.disabled_button);
-		        skill2Button.getBackground().setAlpha(180);
+	            // skill2Button.setBackgroundResource(R.drawable.disabled_button);
+		        skill2Button.getBackground().setAlpha(50);
                 skill2CooledDown = false;
                 Message msg = new Message();
                 msg.what = 2;
@@ -165,6 +176,15 @@ public class GameActivity extends Activity implements SensorEventListener {
         loseView.setTypeface(MyApplication.getFont());
         loseView.setVisibility(View.INVISIBLE);
         
+        remainingTimeView = (TextView) this.findViewById(R.id.game_activity_remaining_time_view);
+        remainingTimeView.setTypeface(MyApplication.getFont());
+        remainingTimeView.setVisibility(View.INVISIBLE);
+        
+        scoreView = (TextView) this.findViewById(R.id.game_activity_score_view);
+        scoreView.setTypeface(MyApplication.getFont());
+        scoreView.setText("0 : 0");
+        scoreView.setTextColor(Color.YELLOW);
+        
         flashBangMask = (RelativeLayout) this.findViewById(R.id.game_activity_flashbang_mask);
         AlphaAnimation flashBangAnim = new AlphaAnimation(0, 0);
         flashBangAnim.setDuration(0);
@@ -174,10 +194,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         backScreen = (RelativeLayout) this.findViewById(R.id.game_activity_menu);
         backScreen.setVisibility(View.INVISIBLE);
         
-        endGameLayout = (RelativeLayout) this.findViewById(R.id.game_activity_end_game_layout);
-        endGameLayout.setVisibility(View.INVISIBLE);
-        
-        TextView pauseButton = (TextView) this
+        pauseButton = (TextView) this
                 .findViewById(R.id.game_activity_pause_button);
         pauseButton.setTypeface(MyApplication.getFont());
         pauseButton.setOnClickListener(new OnClickListener() {
@@ -189,7 +206,7 @@ public class GameActivity extends Activity implements SensorEventListener {
             
         });
         
-        TextView resumeButton = (TextView) this
+        resumeButton = (TextView) this
                 .findViewById(R.id.game_activity_resume_button);
         resumeButton.setTypeface(MyApplication.getFont());
         resumeButton.setOnClickListener(new OnClickListener() {
@@ -200,7 +217,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
         });
 
-        TextView exitButton = (TextView) this
+        exitButton = (TextView) this
                 .findViewById(R.id.game_activity_exit_button);
         exitButton.setTypeface(MyApplication.getFont());
         exitButton.setOnClickListener(new OnClickListener() {
@@ -210,13 +227,18 @@ public class GameActivity extends Activity implements SensorEventListener {
             }
 
         });
+        
+        endGameLayout = (RelativeLayout) this.findViewById(R.id.game_activity_end_game_layout);
+        endGameLayout.setVisibility(View.INVISIBLE);
     }
     
     /**
      * end the game but not yet exit, still stay in the game activity
      */
     private static void endGame() {
-        Client.deactivate();
+        Server.stop();
+        Client.stop();
+        // Client.deactivate();
         
         // hide the back key menu
         backScreen.setVisibility(View.INVISIBLE);
@@ -224,6 +246,10 @@ public class GameActivity extends Activity implements SensorEventListener {
         screenAnim.setDuration(0);
         screenAnim.setFillAfter(true);
         backScreen.setAnimation(screenAnim);
+        
+        pauseButton.setEnabled(false);
+        resumeButton.setEnabled(false);
+        exitButton.setEnabled(false);
         
         // show the end game menu
         endGameLayout.setVisibility(View.VISIBLE);
@@ -276,15 +302,15 @@ public class GameActivity extends Activity implements SensorEventListener {
             GameData.setLoseCount(GameData.getLoseCount() + 1);
         }
         
-        TextView endGameScoreDisplay = (TextView) self.findViewById(R.id.game_activity_end_game_score_view);
+        endGameScoreDisplay = (TextView) self.findViewById(R.id.game_activity_end_game_score_view);
         endGameScoreDisplay.setTypeface(MyApplication.getFont());
         endGameScoreDisplay.setText(selfScore + " : " + enemyScore);
         
-        TextView endGameExpEarned = (TextView) self.findViewById(R.id.game_activity_end_game_exp_earned);
+        endGameExpEarned = (TextView) self.findViewById(R.id.game_activity_end_game_exp_earned);
         endGameExpEarned.setTypeface(MyApplication.getFont());
         endGameExpEarned.setText("EXP EARNED: " + finalScore);
         
-        Button exitGameButton = (Button) self.findViewById(R.id.game_activity_end_game_button);
+        exitGameButton = (Button) self.findViewById(R.id.game_activity_end_game_button);
         exitGameButton.setTypeface(MyApplication.getFont());
         exitGameButton.setOnClickListener(new OnClickListener() {
 
@@ -297,14 +323,13 @@ public class GameActivity extends Activity implements SensorEventListener {
             }
             
         });
+        
     }
     
     /**
      * exit the game and deal with relevant settings
      */
     private void exitGame() {
-        Server.stop();
-        Client.stop();
         ClientGameState.clear();
         
         if (BallCraft.isServer) {
@@ -360,14 +385,14 @@ public class GameActivity extends Activity implements SensorEventListener {
             if (msg.what == 1) {
                 if (!dead) {
 	                skill1Button.setEnabled(true);
-		            skill1Button.setBackgroundResource(SkillDef.getButtonById(skill1));
+		            // skill1Button.setBackgroundResource(SkillDef.getButtonById(skill1));
 		            skill1Button.getBackground().setAlpha(180);
                 }
                 skill1CooledDown = true;
             } else if (msg.what == 2) {
                 if (!dead) {
 	                skill2Button.setEnabled(true);
-		            skill2Button.setBackgroundResource(SkillDef.getButtonById(skill2));
+		            // skill2Button.setBackgroundResource(SkillDef.getButtonById(skill2));
 		            skill2Button.getBackground().setAlpha(180);
                 }
                 skill2CooledDown = true;
@@ -382,12 +407,12 @@ public class GameActivity extends Activity implements SensorEventListener {
         public void handleMessage(Message msg) {
             dead = true;
             skill1Button.setEnabled(false);
-            skill1Button.setBackgroundResource(R.drawable.disabled_button);
-            skill1Button.getBackground().setAlpha(180);
+            // skill1Button.setBackgroundResource(R.drawable.disabled_button);
+            skill1Button.getBackground().setAlpha(50);
             
             skill2Button.setEnabled(false);
-            skill2Button.setBackgroundResource(R.drawable.disabled_button);
-            skill2Button.getBackground().setAlpha(180);
+            // skill2Button.setBackgroundResource(R.drawable.disabled_button);
+            skill2Button.getBackground().setAlpha(50);
         }
         
     };
@@ -399,12 +424,12 @@ public class GameActivity extends Activity implements SensorEventListener {
             dead = false;
             if (skill1CooledDown) {
 	            skill1Button.setEnabled(true);
-	            skill1Button.setBackgroundResource(SkillDef.getButtonById(skill1));
+	            // skill1Button.setBackgroundResource(SkillDef.getButtonById(skill1));
 	            skill1Button.getBackground().setAlpha(180);
             }
             if (skill2CooledDown) {
 	            skill2Button.setEnabled(true);
-	            skill2Button.setBackgroundResource(SkillDef.getButtonById(skill2));
+	            // skill2Button.setBackgroundResource(SkillDef.getButtonById(skill2));
 	            skill2Button.getBackground().setAlpha(180);
             }
         }
@@ -424,8 +449,14 @@ public class GameActivity extends Activity implements SensorEventListener {
             screenAnim.setFillAfter(true);
             backScreen.setAnimation(screenAnim);
             
+	        pauseButton.setEnabled(true);
+	        resumeButton.setEnabled(true);
+	        exitButton.setEnabled(true);
+	        
+            /*
             skill1Button.setVisibility(View.INVISIBLE);
             skill2Button.setVisibility(View.INVISIBLE);
+            */
         } else {
             backScreen.setVisibility(View.INVISIBLE);
             
@@ -434,8 +465,14 @@ public class GameActivity extends Activity implements SensorEventListener {
             screenAnim.setFillAfter(true);
             backScreen.setAnimation(screenAnim);
             
+	        pauseButton.setEnabled(false);
+	        resumeButton.setEnabled(false);
+	        exitButton.setEnabled(false);
+	        
+            /*
             skill1Button.setVisibility(View.VISIBLE);
             skill2Button.setVisibility(View.VISIBLE);
+            */
         }
     }
     
@@ -447,7 +484,19 @@ public class GameActivity extends Activity implements SensorEventListener {
                 loseView.setVisibility(View.VISIBLE);
             } else if (msg.what == 1) { // display score
                 loseView.setVisibility(View.VISIBLE);
-                loseView.setText(msg.arg1 + " : " + msg.arg2);
+                int selfScore = msg.arg1;
+                int enemyScore = msg.arg2;
+                
+                loseView.setText(selfScore + " : " + enemyScore);
+                scoreView.setText(selfScore + " : " + enemyScore);
+                
+                if (selfScore > enemyScore) {
+                    scoreView.setTextColor(Color.GREEN);
+                } else if (selfScore == enemyScore) {
+                    scoreView.setTextColor(Color.YELLOW);
+                } else {
+                    scoreView.setTextColor(Color.RED);
+                }
             } else if (msg.what == 0) { // invisible
                 loseView.setVisibility(View.INVISIBLE);
             }
@@ -487,5 +536,14 @@ public class GameActivity extends Activity implements SensorEventListener {
         }
         
     };
-
+    
+    public static Handler remainingTimeHandler = new Handler() {
+        
+        @Override
+        public void handleMessage(Message msg) {
+            // TODO
+        }
+        
+    };
+    
 }

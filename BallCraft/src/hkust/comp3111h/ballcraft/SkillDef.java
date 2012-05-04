@@ -8,7 +8,7 @@ public class SkillDef {
 	    public static final int effectTime = 5000;
 	    public static final int coolDownTime = 20000;
 	    public static final int [] RGB = {184, 134, 11};
-	    public static final int button = R.drawable.brown_button;
+	    public static final int button = R.drawable.skill_grow_root;
 	}
 	
 	public static final class NaturesCure {
@@ -17,7 +17,7 @@ public class SkillDef {
 	    public static final int effectTime = 0;
 	    public static final int coolDownTime = 30000;
 	    public static final int [] RGB = {124, 255, 0};
-	    public static final int button = R.drawable.green_button;
+	    public static final int button = R.drawable.skill_grow_root;
 	}
 	
 	public static final class MassOverlord {
@@ -26,7 +26,7 @@ public class SkillDef {
 	    public static final int effectTime = 10000;
 	    public static final int coolDownTime = 30000;
 	    public static final int [] RGB = {139, 139, 122};
-	    public static final int button = R.drawable.brown_button;
+	    public static final int button = R.drawable.skill_mass_overlord;
 	}
 	
 	public static final class RockBump {
@@ -35,7 +35,7 @@ public class SkillDef {
 	    public static final int effectTime = 8000;
 	    public static final int coolDownTime = 20000;
 	    public static final int [] RGB = {205, 186, 150};
-	    public static final int button = R.drawable.grey_button;
+	    public static final int button = R.drawable.skill_rock_bump;
 	}
 	
 	public static final class WaterPropel {
@@ -44,7 +44,7 @@ public class SkillDef {
 	    public static final int effectTime = 5000;
 	    public static final int coolDownTime = 20000;
 	    public static final int [] RGB = {0, 0, 205};
-	    public static final int button = R.drawable.blue_button;
+	    public static final int button = R.drawable.skill_water_propel;
 	}
 	
 	public static final class Slippery {
@@ -53,7 +53,7 @@ public class SkillDef {
 	    public static final int effectTime = 15000;
 	    public static final int coolDownTime = 45000;
 	    public static final int [] RGB = {0, 191, 255};
-	    public static final int button = R.drawable.blue_button;
+	    public static final int button = R.drawable.skill_slippery;
 	}
 	
 	public static final class IronWill {
@@ -62,7 +62,7 @@ public class SkillDef {
 	    public static final int effectTime = 15000;
 	    public static final int coolDownTime = 30000;
 	    public static final int [] RGB = {211, 211, 211};
-	    public static final int button = R.drawable.grey_button;
+	    public static final int button = R.drawable.skill_iron_will;
 	}
 	
 	public static final class FlashBang {
@@ -71,7 +71,7 @@ public class SkillDef {
 	    public static final int effectTime = 5000;
 	    public static final int coolDownTime = 30000;
 	    public static final int [] RGB = {105, 105, 105};
-	    public static final int button = R.drawable.grey_button;
+	    public static final int button = R.drawable.skill_flashbang;
 	}
 	
 	public static final class FlameThrow {
@@ -80,7 +80,7 @@ public class SkillDef {
 	    public static final int effectTime = 8000;
 	    public static final int coolDownTime = 30000;
 	    public static final int [] RGB = {255, 69, 0};
-	    public static final int button = R.drawable.red_button;
+	    public static final int button = R.drawable.skill_flame_throw;
 	}
 	
 	public static final class Landmine {
@@ -89,7 +89,7 @@ public class SkillDef {
 	    public static final int effectTime = -1;
 	    public static final int coolDownTime = -1;
 	    public static final int [] RGB = {139, 0, 0};
-	    public static final int button = R.drawable.red_button;
+	    public static final int button = R.drawable.skill_landmine;
 	}
 	
 	public static final class Stealth {
@@ -98,7 +98,7 @@ public class SkillDef {
 	    public static final int effectTime = 10000;
 	    public static final int coolDownTime = 50000;
 	    public static final int [] RGB = {125, 38, 205};
-	    public static final int button = R.drawable.purple_button;
+	    public static final int button = R.drawable.skill_stealth;
 	}
 	
 	public static final class MidNight {
@@ -107,7 +107,7 @@ public class SkillDef {
 	    public static final int effectTime = 20000;
 	    public static final int coolDownTime = 80000;
 	    public static final int [] RGB = {34, 34, 34};
-	    public static final int button = R.drawable.grey_button;
+	    public static final int button = R.drawable.skill_sunset;
 	}
 		
     @SuppressWarnings("rawtypes")
