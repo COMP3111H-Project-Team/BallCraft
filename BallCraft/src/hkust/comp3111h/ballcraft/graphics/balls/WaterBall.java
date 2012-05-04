@@ -18,7 +18,7 @@ public class WaterBall extends ParticleBall {
         for (int i = 0; i < COUNT; i++) {
             double theta = randGen.nextDouble() * 180 / Math.PI;
             double rho = randGen.nextDouble() * 360 / Math.PI;
-            WaterBallParticle p = new WaterBallParticle(theta, rho, 10);
+            WaterBallParticle p = new WaterBallParticle(theta, rho, radius);
             particles.add(p);
         }
     }

@@ -42,7 +42,7 @@ public class GameActivity extends Activity implements SensorEventListener {
     private GLSurfaceView mGLView;
     private SensorManager sensorManager;
     
-    private static RelativeLayout flashBangMask;
+    // private static RelativeLayout flashBangMask;
 
     private static RelativeLayout backScreen;
     
@@ -185,11 +185,13 @@ public class GameActivity extends Activity implements SensorEventListener {
         scoreView.setText("0 : 0");
         scoreView.setTextColor(Color.YELLOW);
         
+        /*
         flashBangMask = (RelativeLayout) this.findViewById(R.id.game_activity_flashbang_mask);
         AlphaAnimation flashBangAnim = new AlphaAnimation(0, 0);
         flashBangAnim.setDuration(0);
         flashBangAnim.setFillAfter(true);
         flashBangMask.setAnimation(flashBangAnim);
+        */
 
         backScreen = (RelativeLayout) this.findViewById(R.id.game_activity_menu);
         backScreen.setVisibility(View.INVISIBLE);
@@ -236,9 +238,7 @@ public class GameActivity extends Activity implements SensorEventListener {
      * end the game but not yet exit, still stay in the game activity
      */
     private static void endGame() {
-        Server.stop();
-        Client.stop();
-        // Client.deactivate();
+        Client.deactivate();
         
         // hide the back key menu
         backScreen.setVisibility(View.INVISIBLE);
@@ -330,6 +330,8 @@ public class GameActivity extends Activity implements SensorEventListener {
      * exit the game and deal with relevant settings
      */
     private void exitGame() {
+        Server.stop();
+        Client.stop();
         ClientGameState.clear();
         
         if (BallCraft.isServer) {
@@ -504,6 +506,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         
     };
     
+    /*
     public static Handler flashBangStartHandler = new Handler() {
         
         @Override
@@ -527,6 +530,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         }
         
     };
+    */
     
     public static Handler endGameHandler = new Handler() {
         
