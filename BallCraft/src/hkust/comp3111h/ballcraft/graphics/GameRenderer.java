@@ -17,6 +17,7 @@ import hkust.comp3111h.ballcraft.graphics.particles.SlipperyParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterPropelParticle;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Crush;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.FlashBang;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.GrowRoot;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.IronWill;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
@@ -49,6 +50,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
     
     private static int mapMode;
     private static boolean changeMapMode = false;
+    
+    private static boolean enemyStealth = false;
     
     public GameRenderer(Context context) {
         this.context = context;
@@ -114,6 +117,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         FlameThrowParticle.loadTexture(gl, context);
         ExplosionParticle.loadTexture(gl, context);
         RockBumpParticle.loadTexture(gl, context);
+        FlashBang.loadTexture(gl, context);
     }
     
     public static void startRendering() {
@@ -127,6 +131,10 @@ public class GameRenderer implements GLSurfaceView.Renderer {
     public static void changeLightMode(int mode) {
         mapMode = mode;
         changeMapMode = true;
+    }
+    
+    public static void setEnemyStealth(boolean stealth) {
+        enemyStealth = stealth;
     }
     
     private void loadMapMode(GL10 gl) {
@@ -170,8 +178,6 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		        float yPos = self.getPosition().y;
 		        float zPos = self.z;
 		        
-		        Log.w("" + xPos, "" + yPos);
-		        
 		        GLU.gluLookAt(gl, xPos, yPos + 60 + zPos / 2, 200 - zPos, xPos, yPos, -zPos, 0, 0, 1);
 		        
 		        for (Plane p : ClientGameState.getClientGameState().planes) {
@@ -199,7 +205,11 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		            }
 		        }
 		         
-		        for (Ball b : balls) {
+		        for (int i = 0; i < balls.size(); i++) {
+		            if (i == BallCraft.enemy && enemyStealth) {
+		                continue;
+		            }
+		            Ball b = balls.get(i);
 		            if (b instanceof ParticleBall) {
 		                ((ParticleBall) b).move();
 		            }
