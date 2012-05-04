@@ -45,5 +45,10 @@ public class FlashBang extends TextureEffect {
         this.y += this.speed.y;
         this.z += this.speed.z;
     }
+    
+    @Override
+    public boolean timeout() {
+        return this.z < 0;
+    }
 
 }

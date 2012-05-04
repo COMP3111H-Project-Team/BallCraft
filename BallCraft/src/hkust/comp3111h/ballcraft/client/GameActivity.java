@@ -37,16 +37,16 @@ public class GameActivity extends Activity implements SensorEventListener {
 	public final String TAG = "gameActivity";
 	public final boolean D = true;
 
-    private GameActivity self;
+    private static GameActivity self;
     
     private GLSurfaceView mGLView;
     private SensorManager sensorManager;
     
     private static RelativeLayout flashBangMask;
 
-    private RelativeLayout backScreen;
+    private static RelativeLayout backScreen;
     
-    private RelativeLayout endGameLayout;
+    private static RelativeLayout endGameLayout;
     
     private GameRenderer renderer;
     
@@ -63,7 +63,7 @@ public class GameActivity extends Activity implements SensorEventListener {
     
     private static boolean dead = false;
     
-    private int finalScore;
+    private static int finalScore;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -174,8 +174,8 @@ public class GameActivity extends Activity implements SensorEventListener {
         backScreen = (RelativeLayout) this.findViewById(R.id.game_activity_menu);
         backScreen.setVisibility(View.INVISIBLE);
         
-        self.endGameLayout = (RelativeLayout) this.findViewById(R.id.game_activity_end_game_layout);
-        self.endGameLayout.setVisibility(View.INVISIBLE);
+        endGameLayout = (RelativeLayout) this.findViewById(R.id.game_activity_end_game_layout);
+        endGameLayout.setVisibility(View.INVISIBLE);
         
         TextView pauseButton = (TextView) this
                 .findViewById(R.id.game_activity_pause_button);
@@ -206,7 +206,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         exitButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                self.endGame();
+                endGame();
             }
 
         });
@@ -215,22 +215,22 @@ public class GameActivity extends Activity implements SensorEventListener {
     /**
      * end the game but not yet exit, still stay in the game activity
      */
-    private void endGame() {
+    private static void endGame() {
         Client.deactivate();
         
         // hide the back key menu
-        self.backScreen.setVisibility(View.INVISIBLE);
+        backScreen.setVisibility(View.INVISIBLE);
         AlphaAnimation screenAnim = new AlphaAnimation(0, 0);
         screenAnim.setDuration(0);
         screenAnim.setFillAfter(true);
-        self.backScreen.setAnimation(screenAnim);
+        backScreen.setAnimation(screenAnim);
         
         // show the end game menu
-        self.endGameLayout.setVisibility(View.VISIBLE);
+        endGameLayout.setVisibility(View.VISIBLE);
         AlphaAnimation endGameLayoutAnim = new AlphaAnimation(0.8f, 0.8f);
         endGameLayoutAnim.setDuration(0);
         endGameLayoutAnim.setFillAfter(true);
-        self.endGameLayout.setAnimation(endGameLayoutAnim);
+        endGameLayout.setAnimation(endGameLayoutAnim);
         
         skill1Button.setVisibility(View.INVISIBLE);
         skill2Button.setVisibility(View.INVISIBLE);
@@ -479,4 +479,13 @@ public class GameActivity extends Activity implements SensorEventListener {
         
     };
     
+    public static Handler endGameHandler = new Handler() {
+        
+        @Override
+        public void handleMessage(Message msg) {
+            endGame();
+        }
+        
+    };
+
 }
