@@ -2,7 +2,6 @@ package hkust.comp3111h.ballcraft.ui;
 
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.R;
-import hkust.comp3111h.ballcraft.client.GameInitializer;
 import hkust.comp3111h.ballcraft.data.GameData;
 import hkust.comp3111h.ballcraft.server.bt.BluetoothActivity;
 
