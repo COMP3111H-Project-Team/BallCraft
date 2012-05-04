@@ -87,7 +87,7 @@ public class Map {
 	}
 	
 	public void addInit(int[] p) {
-		initPosition.add(new Vec2(p[0],p[1]));
+		initPosition.add(new Vec2(p[0]/Unit.rate,p[1]/Unit.rate));
 	}
 		
 	public void addWall(int[] data) {

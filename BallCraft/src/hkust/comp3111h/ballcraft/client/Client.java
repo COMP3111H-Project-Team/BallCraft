@@ -4,7 +4,10 @@ import hkust.comp3111h.MyApplication;
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.data.GameData;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Explosion;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.FlameThrow;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.FlashBang;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.GrowRoot;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.IronWill;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.MassOverlord;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.RockBump;
@@ -46,7 +49,7 @@ public class Client extends IntentService {
     public static int selfScore = 0;
     public static int enemyScore = 0;
     
-    private static boolean active = false;
+    // private static boolean active = false;
     
     public Client() {
         super("ClientService");
@@ -94,8 +97,7 @@ public class Client extends IntentService {
 			
 			switch (skillID) {
 			case BallCraft.Skill.GROW_ROOT:
-			    int rootPlayer = Integer.parseInt(str[1]);
-			    Ball rootBall = ClientGameState.getClientGameState().balls.get(rootPlayer);
+			    Ball rootBall = ClientGameState.getClientGameState().balls.get(Integer.parseInt(str[1]));
 			    ClientGameState.getClientGameState().addSkillEffect(
 			            skillID, new GrowRoot(rootBall));
 			    break;
@@ -104,15 +106,15 @@ public class Client extends IntentService {
 			    break;
 			    
 			case BallCraft.Skill.MASS_OVERLORD:
-			    int massPlayer = Integer.parseInt(str[1]);
-			    Ball massBall = ClientGameState.getClientGameState().balls.get(massPlayer);
+			    Ball massBall = ClientGameState.getClientGameState()
+					    .balls.get(Integer.parseInt(str[1]));
 			    ClientGameState.getClientGameState().addSkillEffect(
 			            skillID, new MassOverlord(massBall));
 			    break;
 				
 			case BallCraft.Skill.ROCK_BUMP:
-				int enemyID = Integer.parseInt(str[1]);
-				Ball bumpedBall = ClientGameState.getClientGameState().balls.get(enemyID);
+				Ball bumpedBall = ClientGameState.getClientGameState()
+						.balls.get(Integer.parseInt(str[1]));
 				ClientGameState.getClientGameState().addSkillEffect(
 				        skillID, new RockBump(bumpedBall));
 			    break;
@@ -124,12 +126,31 @@ public class Client extends IntentService {
 			    break;
 			    
 			case BallCraft.Skill.IRON_WILL:
+			    Ball ironBall = ClientGameState.getClientGameState()
+			            .balls.get(Integer.parseInt(str[1]));
+			    ClientGameState.getClientGameState().addSkillEffect(
+			            skillID, new IronWill(ironBall));
 			    break;
 			    
 			case BallCraft.Skill.FLASHBANG:
+		        Ball flashBall = ClientGameState.getClientGameState()
+		                .balls.get(Integer.parseInt(str[1]));
+		        ClientGameState.getClientGameState().addSkillEffect(
+		                skillID, new FlashBang(flashBall));
 			    break;
 			    
 			case BallCraft.Skill.FLAME_THROW:
+			    Ball throwingBall = ClientGameState.getClientGameState()
+					    .balls.get(Integer.parseInt(str[1]));
+			    Ball thrownBall = ClientGameState.getClientGameState()
+			            .balls.get(1 - Integer.parseInt(str[1]));
+			    double slope = (thrownBall.getPosition().y - throwingBall.getPosition().y)
+			            / (thrownBall.getPosition().x - throwingBall.getPosition().x);
+			    
+			    // TODO
+			    ClientGameState.getClientGameState().addSkillEffect(
+			            skillID, new FlameThrow(throwingBall.getPosition().x,
+			                    throwingBall.getPosition().y, throwingBall.z, Math.atan(slope)));
 			    break;
 			    
 			case BallCraft.Skill.LANDMINE:
@@ -186,32 +207,30 @@ public class Client extends IntentService {
     	int time = 0;
     	boolean started = false;
         while (running) {
-            if (active) {
-	            if (Server.inited || remoteServerInited) {
-	                if (inputStarted) {
-		                ServerAdapter.sendToServer(input);
-		                input.clearSkills();
-		                started = true;
-	                }
-	            }
-	            try {
-	                Thread.sleep(20);
-	            } catch (InterruptedException e) {}
-	            
-	            if (!started)
-	            {
-	            	time++;
-	            	if (time > 1500)
-	            	{
-	                	Server.stop();
-	                    Client.stop();
-	                    ClientGameState.clear();
-	                    if (BallCraft.isServer) {
-	                        ServerGameState.clear();
-	                    }
-	                    return;
-	            	}
-	            }
+            if (Server.inited || remoteServerInited) {
+                if (inputStarted) {
+	                ServerAdapter.sendToServer(input);
+	                input.clearSkills();
+	                started = true;
+                }
+            }
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {}
+            
+            if (!started)
+            {
+            	time++;
+            	if (time > 1500)
+            	{
+                	Server.stop();
+                    Client.stop();
+                    ClientGameState.clear();
+                    if (BallCraft.isServer) {
+                        ServerGameState.clear();
+                    }
+                    return;
+            	}
             }
         }
 
@@ -220,7 +239,7 @@ public class Client extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         running = true;
-        active = true;
+        // active = true;
         this.run();
     }
 
@@ -236,8 +255,10 @@ public class Client extends IntentService {
         return gameInited;
     }
  	
+ 	/*
  	public static void deactivate() {
  	    active = false;
  	}
+ 	*/
  	
 }
