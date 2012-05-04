@@ -103,7 +103,7 @@ public class MapParser{
         int length = parts.length;
         int[] data = new int[length];
         for (int j = 0; j < length; j++) {
-            data[j] = Integer.parseInt(parts[j]);
+            data[j] = (int) (Integer.parseInt(parts[j])*1);
         }
         return data;
     }
