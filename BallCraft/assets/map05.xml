@@ -11,29 +11,29 @@
 	<initPosition>-100,100</initPosition>
 	<initPosition>100,-100</initPosition>
 	<initPosition>-100,-100</initPosition>
-	<plane>-160,80,200,200</plane>
-	<plane>-200,60,-160,200</plane>
-	<plane>160,-200,200,80</plane>
-	<plane>-140,60,140,80</plane>
-	<plane>-140,-200,160,-80</plane>
-	<plane>140,-60,160,60</plane>
-	<plane>-140,-80,140,60</plane>
-	<plane>-200,-200,-140,-80</plane>
-	<plane>-160,-60,-140,60</plane>
-	<plane>-200,-80,-160,60</plane>
+	
+	<plane>-200,-200,-150,80</plane>
+	<plane>-200,80,-110,200</plane>
+	<plane>150,40,200,80</plane>
+	<plane>110,80,200,200</plane>
+	<plane>-110,40,110,200</plane>
+	<plane>-150,-200,150,-80</plane>
+	<plane>150,-200,200,-40</plane>
+	<plane>110,-40,200,40</plane>
+	<plane>-110,-80,110,-40</plane>
+	<plane>-150,-40,110,40</plane>
 	<wall>-200,-200,200,-200</wall>
 	<wall>-200,-200,-200,200</wall>
 	<wall>200,-200,200,200</wall>
 	<wall>-200,200,200,200</wall>
-	<wall>-170,80,-56,80</wall>
-	
-    <wall>56,80,170,80</wall>
-    <wall>112,0,170,80</wall>
-    <wall>170,-80,112,0</wall>
-    <wall>170,-80,56,-80</wall>
-   
-    <wall>-56,-80,-170,-80</wall>
-	<wall>-170,-80,-112,0</wall>
-	<wall>-112,0,-170,80</wall>
+		
+	<wall>-150,80,-56,80</wall>
+    <wall>56,80,150,80</wall>
+    <wall>112,0,150,80</wall>
+    <wall>150,-80,112,0</wall>
+    <wall>150,-80,56,-80</wall>
+    <wall>-56,-80,-150,-80</wall>
+	<wall>-150,-80,-112,0</wall>
+	<wall>-112,0,-150,80</wall>
 	
 </map>
