@@ -74,12 +74,18 @@ public class ServerAdapter {
         Server.setScore(score);
     }
     
-    public static void sendEndGameMessageToClient() {
-        // TODO
+    public static void sendEndGameMessageToClient() 
+    {
+        Server.extraMessage("End:");
     }
     
-    public static void sendEndGameMessageToServer() {
-        // TODO
+    public static void sendEndGameMessageToServer() 
+    {
+        if(BallCraft.isServer) 
+        {
+        	sendEndGameMessageToClient();
+        	return;
+        }
     }
     
     // This method can be used to handle exceptions

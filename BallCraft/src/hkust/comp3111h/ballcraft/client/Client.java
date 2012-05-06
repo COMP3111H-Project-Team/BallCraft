@@ -85,7 +85,18 @@ public class Client extends IntentService {
 			    }
 			}	
 			
-		} else if (parts[0].equals("time")) {
+		}
+		else if (parts[0].equals("End"))
+		{
+			GameActivity.endGameHandler.sendEmptyMessage(0);
+		}
+		else if (parts[0].equals("Score"))
+		{
+			String [] str = parts[1].split("&");
+			int score1 = Integer.parseInt(str[0]);
+			int score2 = Integer.parseInt(str[1]);
+		}
+		else if (parts[0].equals("time")) {
 		    Log.w("time", parts[1]);
 		} else if (parts[0].equals("skillInit"))
 		{
@@ -220,7 +231,7 @@ public class Client extends IntentService {
 			String [] str = parts[1].split("&");
 			if (Integer.parseInt(str[1]) == BallCraft.myself) {
 			    // GameActivity.flashBangStartHandler.sendEmptyMessage(0);
-	            GameRenderer.setFlashBang(false);
+	            GameRenderer.setFlashBang(true);
 			}
 		}
 

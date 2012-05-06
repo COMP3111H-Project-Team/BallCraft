@@ -1,6 +1,7 @@
 package hkust.comp3111h.ballcraft.server;
 
 import hkust.comp3111h.ballcraft.BallCraft;
+import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.Map;
 import hkust.comp3111h.ballcraft.client.MapParser;
@@ -122,8 +123,8 @@ public class ServerGameState {
     {
         Map map = MapParser.getMapFromXML(name);
         
-        units.add(new Ball(10, 50, 1.8f, new Vec2(0, 0)));
-        units.add(new Ball(10, 5, 0f, new Vec2(30, 0)));
+        units.add(new Ball(20, BallDef.getBallMassById(serverBall), BallDef.getBallFrictionById(serverBall), new Vec2(0, 0)));
+        units.add(new Ball(20, BallDef.getBallMassById(clientBall), BallDef.getBallFrictionById(clientBall), new Vec2(30, 0)));
         
         mapTerrain = map.getTerrain();
         mapMode = map.getMode();

@@ -67,9 +67,7 @@ public class Mine extends Skill {
 
 	@Override
 	public void finish() 
-	{
-		// TODO Auto-generated method stub
-		
+	{		
 	}
 	
 
