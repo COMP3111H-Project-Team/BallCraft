@@ -5,13 +5,8 @@ import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.SkillDef;
-import hkust.comp3111h.ballcraft.data.GameData;
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
-import hkust.comp3111h.ballcraft.server.Server;
-import hkust.comp3111h.ballcraft.server.ServerAdapter;
-import hkust.comp3111h.ballcraft.server.ServerGameState;
 import hkust.comp3111h.ballcraft.skills.Skill;
-import hkust.comp3111h.ballcraft.ui.BallUnlockedMenu;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -46,7 +41,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
     private static RelativeLayout backScreen;
     
-    private static RelativeLayout endGameLayout;
+    // private static RelativeLayout endGameLayout;
     
     private GameRenderer renderer;
     
@@ -67,13 +62,7 @@ public class GameActivity extends Activity implements SensorEventListener {
     private static TextView resumeButton;
     private static TextView exitButton;
     
-    private static TextView endGameScoreDisplay;
-    private static TextView endGameExpEarned;
-    private static Button exitGameButton; 
-    
     private static boolean dead = false;
-    
-    private static int finalScore;
     
     public static boolean readyForDisplay;
     
@@ -183,7 +172,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         
         remainingTimeView = (TextView) this.findViewById(R.id.game_activity_remaining_time_view);
         remainingTimeView.setTypeface(MyApplication.getFont());
-        
+       
         scoreView = (TextView) this.findViewById(R.id.game_activity_score_view);
         scoreView.setTypeface(MyApplication.getFont());
         scoreView.setText("0 : 0");
@@ -214,140 +203,22 @@ public class GameActivity extends Activity implements SensorEventListener {
 
         });
         
-        endGameLayout = (RelativeLayout) this.findViewById(R.id.game_activity_end_game_layout);
-        endGameLayout.setVisibility(View.INVISIBLE);
-        
         readyForDisplay = true;
     }
     
     /**
      * end the game but not yet exit, still stay in the game activity
      */
-    private static void endGame() {
+    public static void endGame() {
         Client.deactivate();
-        Server.stop();
-        Client.stop();
         
-        // hide the back key menu
-        backScreen.setVisibility(View.INVISIBLE);
-        AlphaAnimation screenAnim = new AlphaAnimation(0, 0);
-        screenAnim.setDuration(0);
-        screenAnim.setFillAfter(true);
-        backScreen.setAnimation(screenAnim);
-        
-        resumeButton.setEnabled(false);
-        exitButton.setEnabled(false);
-        
-        // show the end game menu
-        endGameLayout.setVisibility(View.VISIBLE);
-        AlphaAnimation endGameLayoutAnim = new AlphaAnimation(0.8f, 0.8f);
-        endGameLayoutAnim.setDuration(0);
-        endGameLayoutAnim.setFillAfter(true);
-        endGameLayout.setAnimation(endGameLayoutAnim);
-        
-        skill1Button.setVisibility(View.INVISIBLE);
-        skill2Button.setVisibility(View.INVISIBLE);
-        
-        TextView endGameTitle = (TextView) self.findViewById(R.id.game_activity_end_game_title);
-        endGameTitle.setTypeface(MyApplication.getFont());
-        
-        int selfScore = ClientGameState.getClientGameState().selfScoreEarned;
-        int enemyScore = ClientGameState.getClientGameState().enemyScoreEarned;
-        
-        finalScore = selfScore;
-        
-        if (selfScore > 3 * enemyScore) {
-            endGameTitle.setText("An Incredible Triumph !!!");
-            endGameTitle.setTextColor(Color.RED);
-            finalScore += 30;
-            GameData.setWinCount(GameData.getWinCount() + 1);
-        } else if (selfScore > 2 * enemyScore) {
-            endGameTitle.setText("Significant Victory !!!");
-            endGameTitle.setTextColor(Color.MAGENTA);
-            finalScore += 20;
-            GameData.setWinCount(GameData.getWinCount() + 1);
-        } else if (selfScore > enemyScore) {
-            endGameTitle.setText("You Win !!!");
-            endGameTitle.setTextColor(Color.YELLOW);
-            finalScore += 10;
-            GameData.setWinCount(GameData.getWinCount() + 1);
-        } else if (selfScore == enemyScore) {
-            endGameTitle.setText("Well, well, it's a Draw.");
-            endGameTitle.setTextColor(Color.WHITE);
-            GameData.setDrawCount(GameData.getDrawCount() + 1);
-        } else if (selfScore * 3 < enemyScore) {
-            endGameTitle.setText("A Total Failure ...");
-            endGameTitle.setTextColor(Color.DKGRAY);
-            GameData.setLoseCount(GameData.getLoseCount() + 1);
-        } else if (selfScore * 2 < enemyScore) {
-            endGameTitle.setText("Terrible Defeat ...");
-            endGameTitle.setTextColor(Color.GRAY);
-            GameData.setLoseCount(GameData.getLoseCount() + 1);
-        } else if (selfScore < enemyScore) {
-            endGameTitle.setText("You Lose ...");
-            endGameTitle.setTextColor(Color.LTGRAY);
-            GameData.setLoseCount(GameData.getLoseCount() + 1);
-        }
-        
-        endGameScoreDisplay = (TextView) self.findViewById(R.id.game_activity_end_game_score_view);
-        endGameScoreDisplay.setTypeface(MyApplication.getFont());
-        endGameScoreDisplay.setText(selfScore + " : " + enemyScore);
-        
-        endGameExpEarned = (TextView) self.findViewById(R.id.game_activity_end_game_exp_earned);
-        endGameExpEarned.setTypeface(MyApplication.getFont());
-        endGameExpEarned.setText("EXP EARNED: " + finalScore);
-        
-        exitGameButton = (Button) self.findViewById(R.id.game_activity_end_game_button);
-        exitGameButton.setTypeface(MyApplication.getFont());
-        exitGameButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                self.exitGame();
-                self.finish();
-                self.overridePendingTransition(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-            }
-            
-        });
-        
+        Intent intent = new Intent(self, EndGameMenu.class);
+        self.startActivity(intent);
+        self.finish();
+        self.overridePendingTransition(android.R.anim.fade_in,
+                android.R.anim.fade_out);
     }
     
-    /**
-     * exit the game and deal with relevant settings
-     */
-    private void exitGame() {
-        ClientGameState.clear();
-        
-        if (BallCraft.isServer) {
-            ServerGameState.clear();
-        }
-        
-        GameRenderer.stopRendering();
-       
-        ServerAdapter.sendEndGameMessageToServer();
-        
-        int oldScore = GameData.getExperience();
-        int newScore = oldScore + finalScore;
-        
-        GameData.setExperience(newScore);
-        if (!BallCraft.isSinglePlayer()) {
-            ServerAdapter.sendGameInterruptMessage();
-        }
-        
-        for (int i = 0; i < BallDef.balls.length; i++) {
-            int updateExp = BallDef.getBallUnlockExpById(i);
-            if (oldScore < updateExp && newScore >= updateExp) {
-                Intent intent = new Intent(self, BallUnlockedMenu.class);
-                intent.putExtra(BallUnlockedMenu.unlockedIndicator, i);
-                self.startActivity(intent);
-		        self.overridePendingTransition(android.R.anim.fade_in,
-		                android.R.anim.fade_out);
-                break;
-            }
-        }
-    }
-
     private void initSensor() {
         sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
         sensorManager.registerListener(this,
@@ -431,10 +302,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
     @Override
     public void onBackPressed() {
-        if (endGameLayout.getVisibility() == View.VISIBLE) {
-            // simply ignore
-            return;
-        } else if (backScreen.getVisibility() == View.INVISIBLE) {
+        if (backScreen.getVisibility() == View.INVISIBLE) {
             backScreen.setVisibility(View.VISIBLE);
             
             AlphaAnimation screenAnim = new AlphaAnimation(0.5f, 0.5f);
@@ -495,6 +363,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         
     };
     
+    /*
     public static Handler endGameHandler = new Handler() {
         
         @Override
@@ -503,12 +372,13 @@ public class GameActivity extends Activity implements SensorEventListener {
         }
         
     };
+    */
     
     public static Handler remainingTimeHandler = new Handler() {
         
         @Override
         public void handleMessage(Message msg) {
-            // remainingTimeView.setText("" + msg.what);
+            remainingTimeView.setText("" + msg.what);
         }
         
     };
