@@ -88,9 +88,11 @@ public class Client extends IntentService {
 			}	
 			
 		} else if (parts[0].equals("Time")) {
-		    Message msg = new Message();
-		    msg.what = Integer.parseInt(parts[1]);
-		    GameActivity.remainingTimeHandler.sendMessage(msg);
+		    if (GameActivity.readyForDisplay) {
+			    Message msg = new Message();
+			    msg.what = Integer.parseInt(parts[1]);
+			    GameActivity.remainingTimeHandler.sendMessage(msg);
+		    }
 		} else if (parts[0].equals("skillInit"))
 		{
 			String [] str = parts[1].split("&");

@@ -33,10 +33,10 @@ public class ClientGameState {
     private float enemyLastZPos;
     
     public int selfScoreEarned = 0;
-    private int selfCombo = 0;
+    // private int selfCombo = 0;
     
     public int enemyScoreEarned = 0;
-    private int enemyCombo = 0;
+    // private int enemyCombo = 0;
 
     private ClientGameState() {
         balls = new ArrayList<Ball>();
@@ -89,9 +89,10 @@ public class ClientGameState {
         float zPos = self.z;
 	        
         if (selfLastZPos <= 0 && zPos > 0) { // just died
-            this.selfCombo = 0;
-            this.enemyCombo++;
-            this.enemyScoreEarned += this.enemyCombo;
+            // this.selfCombo = 0;
+            // this.enemyCombo++;
+            // this.enemyScoreEarned += this.enemyCombo;
+            this.enemyScoreEarned++;
             GameActivity.skillDisableHandler.sendEmptyMessage(0);
         } else if (selfLastZPos > 0 && zPos <= 0) { // just respawned
             GameActivity.skillEnableHandler.sendEmptyMessage(0);
@@ -127,9 +128,10 @@ public class ClientGameState {
 		        float zPos = enemy.z;
 		        
 		        if (enemyLastZPos <= 0 && zPos > 0) { // enemy just died
-		            this.enemyCombo = 0;
-		            this.selfCombo++;
-		            this.selfScoreEarned += this.selfCombo;
+		            // this.enemyCombo = 0;
+		            // this.selfCombo++;
+		            // this.selfScoreEarned += this.selfCombo;
+		            this.selfScoreEarned++;
 		        }
 		        
 		        if (enemyLastZPos <= 200 && zPos > 200) {
