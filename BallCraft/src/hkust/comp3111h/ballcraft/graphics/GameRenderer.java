@@ -39,6 +39,7 @@ import org.jbox2d.common.Vec3;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
+import android.util.Log;
 
 public class GameRenderer implements GLSurfaceView.Renderer {
 
