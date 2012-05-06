@@ -123,8 +123,8 @@ public class ServerGameState {
     {
         Map map = MapParser.getMapFromXML(name);
         
-        units.add(new Ball(20, BallDef.getBallMassById(serverBall), BallDef.getBallFrictionById(serverBall), new Vec2(0, 0)));
-        units.add(new Ball(20, BallDef.getBallMassById(clientBall), BallDef.getBallFrictionById(clientBall), new Vec2(30, 0)));
+        units.add(new Ball(10, BallDef.getBallMassById(serverBall), BallDef.getBallFrictionById(serverBall), new Vec2(0, 0)));
+        units.add(new Ball(10, BallDef.getBallMassById(clientBall), BallDef.getBallFrictionById(clientBall), new Vec2(30, 0)));
         
         mapTerrain = map.getTerrain();
         mapMode = map.getMode();
