@@ -37,7 +37,7 @@ public class Server extends IntentService {
     
     static private int clientBall = 0;
     
-    static private String gameMode = "Limited Score";
+    static private String gameMode;
     
     static private int limitValue = 100;
     
@@ -92,7 +92,9 @@ public class Server extends IntentService {
             lastRun = System.currentTimeMillis();
 
     		ArrayList<Ball> balls = gameState.getBalls();
-            extraMessage("Time:" + -((currTime - initTime) / 1000 + 60 * limitValue));
+    		if (gameMode.equals("LIMITED_TIME")) {
+	            extraMessage("Time:" + -((currTime - initTime) / 1000 + 60 * limitValue));
+    		}
             extraMessage("Score:" + balls.get(0).getScore() + "&" + balls.get(1).getScore());
                         
             String temp = new String(msg);
@@ -155,6 +157,12 @@ public class Server extends IntentService {
         
         gameState = ServerGameState.getStateInstance();
         gameState.loadMap(intent.getStringExtra("map"), intent.getIntExtra("ball", 0), clientBall);
+        gameMode = intent.getStringExtra("GAME_MODE");
+        if (gameMode == "LIMITED_TIME") {
+	        limitValue = intent.getIntExtra("TIME_LIMIT", 1);
+        } else {
+	        limitValue = intent.getIntExtra("SCORE_LIMIT", 10);
+        }
         gameUpdater = new GameUpdater();
 
         gameInputs = new GameInput[BallCraft.maxPlayer];
@@ -174,7 +182,7 @@ public class Server extends IntentService {
     }
     
     public boolean isGameEnded() {
-        if (gameMode.equals("Limited Time")) { // limited time
+        if (gameMode.equals("LIMITED_TIME")) { // limited time
             return currTime - initTime > limitValue * 60 * 1000;
         } else { // limited score
             return currScore >= limitValue;
