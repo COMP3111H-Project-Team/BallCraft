@@ -27,8 +27,8 @@ import org.jbox2d.common.Vec2;
 import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Message;
 import android.os.Vibrator;
-import android.util.Log;
 
 public class Client extends IntentService {
     
@@ -97,6 +97,11 @@ public class Client extends IntentService {
 			String [] str = parts[1].split("&");
 			int score1 = Integer.parseInt(str[0]);
 			int score2 = Integer.parseInt(str[1]);
+			Message msg = new Message();
+			msg.what = 1;
+			msg.arg1 = score1;
+			msg.arg2 = score2;
+			GameActivity.loseViewHanlder.sendMessage(msg);
 		}
 		else if (parts[0].equals("Time")) {
 		    if (GameActivity.readyForDisplay) {

@@ -5,6 +5,9 @@ import hkust.comp3111h.ballcraft.client.Client;
 import hkust.comp3111h.ballcraft.client.ClientGameState;
 import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.GameUpdater;
+
+import java.util.ArrayList;
+
 import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
@@ -87,9 +90,10 @@ public class Server extends IntentService {
             long time = System.currentTimeMillis();
             gameState.onEveryFrame((int) (time - lastRun));
             lastRun = System.currentTimeMillis();
-            
+
+    		ArrayList<Ball> balls = gameState.getBalls();
             extraMessage("Time:" + -((currTime - initTime) / 1000 + 60 * limitValue));
-            extraMessage("Score:");
+            extraMessage("Score:" + balls.get(0).getScore() + "&" + balls.get(1).getScore());
                         
             String temp = new String(msg);
 			msg = "";
