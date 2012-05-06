@@ -90,7 +90,7 @@ public class Client extends IntentService {
 		}
 		else if (parts[0].equals("End"))
 		{
-			GameActivity.endGameHandler.sendEmptyMessage(0);
+		    GameActivity.endGame();
 		}
 		else if (parts[0].equals("Score"))
 		{
@@ -102,6 +102,7 @@ public class Client extends IntentService {
 			msg.arg1 = score1;
 			msg.arg2 = score2;
 			GameActivity.loseViewHanlder.sendMessage(msg);
+			ClientGameState.getClientGameState().setScoreEarned(score1);
 		}
 		else if (parts[0].equals("Time")) {
 		    if (GameActivity.readyForDisplay) {
@@ -109,7 +110,8 @@ public class Client extends IntentService {
 			    msg.what = Integer.parseInt(parts[1]);
 			    GameActivity.remainingTimeHandler.sendMessage(msg);
 		    }
-		}  else if (parts[0].equals("skillInit"))
+		}
+		else if (parts[0].equals("skillInit"))
 		{
 			String [] str = parts[1].split("&");
 			int skillID = Integer.parseInt(str[0]);
