@@ -1,8 +1,7 @@
 package hkust.comp3111h.ballcraft.skills;
 
-import hkust.comp3111h.ballcraft.BallCraft;
-import hkust.comp3111h.ballcraft.SkillDef;
 import hkust.comp3111h.ballcraft.BallCraft.Status;
+import hkust.comp3111h.ballcraft.SkillDef;
 import hkust.comp3111h.ballcraft.server.Server;
 
 public class Flashbang extends Skill
@@ -27,7 +26,6 @@ public class Flashbang extends Skill
 		if (!done && System.currentTimeMillis() - time > 500)
 		{
 			if (getUnit(1 - player).getStatus() == Status.INVINCIBLE) return;
-			getUnit(1 - player).setStatus(BallCraft.Status.DIZZY);
 			Server.extraMessage("FlashBangEffect:" + id + "&" + (1 - player));
 			done = true;
 		}

@@ -102,17 +102,17 @@ public class ClientGameState {
             Message msg = new Message();
             if (BallCraft.isSinglePlayer()) { // single player, no need to display score
                 msg.what = 2;
-                GameActivity.loseViewHanlder.sendMessage(msg);
+                //GameActivity.loseViewHanlder.sendMessage(msg);
             } else { // multi-player
 	            msg.what = 1;
 	            msg.arg1 = this.selfScoreEarned;
 	            msg.arg2 = this.enemyScoreEarned;
-	            GameActivity.loseViewHanlder.sendMessage(msg);
+	            //GameActivity.loseViewHanlder.sendMessage(msg);
             }
         } else if (selfLastZPos > 200 && zPos <= 200) {
             Message msg = new Message();
             msg.what = 0;
-            GameActivity.loseViewHanlder.sendMessage(msg);
+            //GameActivity.loseViewHanlder.sendMessage(msg);
         }
         
         selfLastZPos = zPos;
@@ -139,11 +139,11 @@ public class ClientGameState {
 		            msg.what = 1;
 		            msg.arg1 = this.selfScoreEarned;
 		            msg.arg2 = this.enemyScoreEarned;
-		            GameActivity.loseViewHanlder.sendMessage(msg);
+		            //GameActivity.loseViewHanlder.sendMessage(msg);
 		        } else if (enemyLastZPos > 200 && zPos <= 200) {
 		            Message msg = new Message();
 		            msg.what = 0;
-		            GameActivity.loseViewHanlder.sendMessage(msg);
+		            //GameActivity.loseViewHanlder.sendMessage(msg);
 		        }
 		        
 		        enemyLastZPos = zPos;

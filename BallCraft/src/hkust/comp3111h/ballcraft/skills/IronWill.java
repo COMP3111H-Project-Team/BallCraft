@@ -13,11 +13,6 @@ public class IronWill  extends Skill
         this.duration = SkillDef.IronWill.effectTime;
 	}
 	
-	@Override
-	public String getInitMsg()
-	{
-		return "" + (1 - player); 
-	}
 	
 	@Override
 	public void init()
