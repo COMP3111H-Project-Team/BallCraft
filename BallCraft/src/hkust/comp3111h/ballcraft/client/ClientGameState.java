@@ -1,10 +1,8 @@
 package hkust.comp3111h.ballcraft.client;
 
-import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.SkillEffect;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
-import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.Wall;
 
 import java.util.ArrayList;
@@ -12,8 +10,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
-
-import android.os.Message;
 
 public class ClientGameState {
 
@@ -29,15 +25,9 @@ public class ClientGameState {
     private int mapTerrain;
     private int mapMode;
     
-    private float selfLastZPos;
-    private float enemyLastZPos;
+    private int scoreEarned;
+    private int enemyScore;
     
-    public int selfScoreEarned = 0;
-    // private int selfCombo = 0;
-    
-    public int enemyScoreEarned = 0;
-    // private int enemyCombo = 0;
-
     private ClientGameState() {
         balls = new ArrayList<Ball>();
         walls = new ArrayList<Wall>();
@@ -70,87 +60,8 @@ public class ClientGameState {
         for (int i = 0; i < ballStrs.length; i++) {
             balls.get(i).updateFromString(ballStrs[i]);
         }
-        
-        this.checkSelfBallState();
-        if (!BallCraft.isSinglePlayer()) {
-            this.checkEnemyBallState();
-        }
     }
     
-    private void sendScore() {
-        if (BallCraft.isServer) {
-            ServerAdapter.sendScoreToServer(
-                    Math.max(this.selfScoreEarned, this.enemyScoreEarned));
-        }
-    }
-    
-    private void checkSelfBallState() {
-        Ball self = balls.get(BallCraft.myself);
-        float zPos = self.z;
-	        
-        if (selfLastZPos <= 0 && zPos > 0) { // just died
-            // this.selfCombo = 0;
-            // this.enemyCombo++;
-            // this.enemyScoreEarned += this.enemyCombo;
-            this.enemyScoreEarned++;
-            GameActivity.skillDisableHandler.sendEmptyMessage(0);
-        } else if (selfLastZPos > 0 && zPos <= 0) { // just respawned
-            GameActivity.skillEnableHandler.sendEmptyMessage(0);
-        }
-        
-        if (selfLastZPos <= 200 && zPos > 200) {
-            Message msg = new Message();
-            if (BallCraft.isSinglePlayer()) { // single player, no need to display score
-                msg.what = 2;
-                //GameActivity.loseViewHanlder.sendMessage(msg);
-            } else { // multi-player
-	            msg.what = 1;
-	            msg.arg1 = this.selfScoreEarned;
-	            msg.arg2 = this.enemyScoreEarned;
-	            //GameActivity.loseViewHanlder.sendMessage(msg);
-            }
-        } else if (selfLastZPos > 200 && zPos <= 200) {
-            Message msg = new Message();
-            msg.what = 0;
-            //GameActivity.loseViewHanlder.sendMessage(msg);
-        }
-        
-        selfLastZPos = zPos;
-        this.sendScore();
-    }
-    
-    private void checkEnemyBallState() {
-        Ball enemy;
-        // only 2 players for now
-        for (int i = 0; i < BallCraft.maxPlayer; i++) {
-            if (i != BallCraft.myself) {
-                enemy = balls.get(i);
-		        float zPos = enemy.z;
-		        
-		        if (enemyLastZPos <= 0 && zPos > 0) { // enemy just died
-		            // this.enemyCombo = 0;
-		            // this.selfCombo++;
-		            // this.selfScoreEarned += this.selfCombo;
-		            this.selfScoreEarned++;
-		        }
-		        
-		        if (enemyLastZPos <= 200 && zPos > 200) {
-		            Message msg = new Message();
-		            msg.what = 1;
-		            msg.arg1 = this.selfScoreEarned;
-		            msg.arg2 = this.enemyScoreEarned;
-		            //GameActivity.loseViewHanlder.sendMessage(msg);
-		        } else if (enemyLastZPos > 200 && zPos <= 200) {
-		            Message msg = new Message();
-		            msg.what = 0;
-		            //GameActivity.loseViewHanlder.sendMessage(msg);
-		        }
-		        
-		        enemyLastZPos = zPos;
-		        this.sendScore();
-            }
-        }
-    }
 
     public void addSkillEffect(int id, SkillEffect effect) {
         this.skillEffects.put(id, effect);
@@ -184,8 +95,20 @@ public class ClientGameState {
         return this.mapMode;
     }
     
+    public void setScoreEarned(int s) {
+        scoreEarned = s;
+    }
+    
     public int getScoreEarned() {
-        return this.selfScoreEarned;
+        return scoreEarned;
+    }
+    
+    public void setEnemyScore(int s) {
+        enemyScore = s;
+    }
+    
+    public int getEnemyScore() {
+        return enemyScore;
     }
     
     public void clearAll() {
