@@ -97,12 +97,19 @@ public class Client extends IntentService {
 			String [] str = parts[1].split("&");
 			int score1 = Integer.parseInt(str[0]);
 			int score2 = Integer.parseInt(str[1]);
+			
 			Message msg = new Message();
-			msg.what = 1;
-			msg.arg1 = score1;
-			msg.arg2 = score2;
-			GameActivity.loseViewHanlder.sendMessage(msg);
-			ClientGameState.getClientGameState().setScoreEarned(score1);
+			if (BallCraft.myself == 1) {
+				msg.arg1 = score1;
+				msg.arg2 = score2;
+			} else {
+				msg.arg1 = score2;
+				msg.arg2 = score1;
+			}
+			
+			GameActivity.scoreViewHandler.sendMessage(msg);
+			ClientGameState.getClientGameState().setScoreEarned(msg.arg1);
+			ClientGameState.getClientGameState().setEnemyScore(msg.arg2);
 		}
 		else if (parts[0].equals("Time")) {
 			Message msg = new Message();
@@ -199,7 +206,9 @@ public class Client extends IntentService {
 			    break;
 			    
 			case BallCraft.Skill.MIDNIGHT:
-			    GameRenderer.changeLightMode(BallCraft.MapMode.NIGHT_MODE);
+				if (Integer.parseInt(str[1]) == BallCraft.enemy) {
+					GameRenderer.changeLightMode(BallCraft.MapMode.NIGHT_MODE);
+				}
 			    break;
 			}
 		} else if (parts[0].equals("skillFinish")) {
@@ -247,7 +256,7 @@ public class Client extends IntentService {
 			    
 			case BallCraft.Skill.STEALTH:
 			    if (Integer.parseInt(str[1]) == BallCraft.enemy) {
-				    GameRenderer.setEnemyStealth(true);
+				    GameRenderer.setEnemyStealth(false);
 			    }
 			    break;
 			    

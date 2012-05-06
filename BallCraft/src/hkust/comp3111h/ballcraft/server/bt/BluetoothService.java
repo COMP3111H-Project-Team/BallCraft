@@ -4,7 +4,6 @@ import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.client.Client;
 import hkust.comp3111h.ballcraft.client.GameActivity;
 import hkust.comp3111h.ballcraft.client.GameInitializer;
-import hkust.comp3111h.ballcraft.graphics.GameRenderer;
 import hkust.comp3111h.ballcraft.server.Server;
 
 import java.io.IOException;
@@ -61,6 +60,9 @@ public class BluetoothService {
     	init = true;
     	serverInit = true;
     	isEnded = false;
+    	BallCraft.isServer = true;
+        BallCraft.enemy = 1;
+        BallCraft.myself = 0;
     }
       
     

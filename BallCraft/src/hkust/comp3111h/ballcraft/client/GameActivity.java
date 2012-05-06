@@ -10,6 +10,9 @@ import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.ServerGameState;
 import hkust.comp3111h.ballcraft.skills.Skill;
+
+import java.util.Random;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -344,28 +347,38 @@ public class GameActivity extends Activity implements SensorEventListener {
         }
     }
     
-    public static Handler loseViewHanlder = new Handler() {
+    public static Handler scoreViewHandler = new Handler() {
         
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == 2) { // display died message
-                loseView.setVisibility(View.VISIBLE);
-            } else if (msg.what == 1) { // display score
-                loseView.setVisibility(View.VISIBLE);
-                int selfScore = msg.arg1;
-                int enemyScore = msg.arg2;
+            int selfScore = msg.arg1;
+            int enemyScore = msg.arg2;
                 
-                loseView.setText(selfScore + " : " + enemyScore);
-                scoreView.setText(selfScore + " : " + enemyScore);
+            scoreView.setText(selfScore + " : " + enemyScore);
                 
-                if (selfScore > enemyScore) {
-                    scoreView.setTextColor(Color.GREEN);
-                } else if (selfScore == enemyScore) {
-                    scoreView.setTextColor(Color.YELLOW);
-                } else {
-                    scoreView.setTextColor(Color.RED);
-                }
-            } else if (msg.what == 0) { // invisible
+            if (selfScore > enemyScore) {
+                scoreView.setTextColor(Color.GREEN);
+            } else if (selfScore == enemyScore) {
+                scoreView.setTextColor(Color.YELLOW);
+            } else {
+                scoreView.setTextColor(Color.RED);
+            }
+        }
+        
+    };
+
+    
+    public static Handler loseViewHandler = new Handler() {
+        
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                loseView.setVisibility(View.VISIBLE);
+                String [] strs = { "What a FALL!", "You Lose!", "OUT!!!" };
+                Random randGen = new Random();
+                int index = randGen.nextInt(strs.length);
+                loseView.setText(strs[index]);
+            } else {
                 loseView.setVisibility(View.INVISIBLE);
             }
         }
@@ -376,9 +389,12 @@ public class GameActivity extends Activity implements SensorEventListener {
         
         @Override
         public void handleMessage(Message msg) {
-            // TODO
+            remainingTimeView.setText("" + msg.what);
+            if (msg.what <= 10) {
+                remainingTimeView.setTextColor(Color.RED);
+                remainingTimeView.setTextSize(40);
+            }
         }
         
     };
-    
 }

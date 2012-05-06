@@ -1,14 +1,9 @@
 package hkust.comp3111h.ballcraft.client;
 
 import hkust.comp3111h.MyApplication;
-import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.data.GameData;
-import hkust.comp3111h.ballcraft.graphics.GameRenderer;
-import hkust.comp3111h.ballcraft.server.Server;
-import hkust.comp3111h.ballcraft.server.ServerAdapter;
-import hkust.comp3111h.ballcraft.server.ServerGameState;
 import hkust.comp3111h.ballcraft.ui.BallUnlockedMenu;
 import hkust.comp3111h.ballcraft.ui.GameMenuRenderer;
 import android.app.Activity;
@@ -29,8 +24,6 @@ public class EndGameMenu extends Activity {
     private EndGameMenu self;
     
     private int finalScore;
-    
-    private static boolean isBTStopped = false;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,12 +50,10 @@ public class EndGameMenu extends Activity {
     private void initLayout() {
         TextView endGameTitle = (TextView) self.findViewById(R.id.end_game_menu_end_game_title);
         endGameTitle.setTypeface(MyApplication.getFont());
-        /*
+        
         int selfScore = ClientGameState.getClientGameState().getScoreEarned();
         int enemyScore = ClientGameState.getClientGameState().getEnemyScore();
-        */
-        int selfScore = 0;
-        int enemyScore = 0;
+
         finalScore = selfScore;
         
         if (selfScore > 3 * enemyScore) {

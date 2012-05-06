@@ -206,6 +206,11 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 				            if (d.timeout()) {
 				                effects.remove(key);
 				            } else {
+				            	if (d instanceof Mine) {
+				            		if (((Mine) d).playerID != BallCraft.myself) {
+				            			continue;
+				            		}
+				            	}
 				                d.move();
 					            d.draw(gl);
 				            }

@@ -4,7 +4,6 @@ import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.SkillEffect;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Plane;
-import hkust.comp3111h.ballcraft.server.ServerAdapter;
 import hkust.comp3111h.ballcraft.server.Wall;
 
 import java.util.ArrayList;
@@ -29,11 +28,10 @@ public class ClientGameState {
     private int mapTerrain;
     private int mapMode;
     
-    private float selfLastZPos;
-    private float enemyLastZPos;
-    
     public int selfScoreEarned = 0;
     public int enemyScoreEarned = 0;
+    
+    private float lastZPos = 0;
 
     private ClientGameState() {
         balls = new ArrayList<Ball>();
@@ -67,7 +65,27 @@ public class ClientGameState {
         for (int i = 0; i < ballStrs.length; i++) {
             balls.get(i).updateFromString(ballStrs[i]);
         }
+        
+        float zPos = balls.get(BallCraft.myself).z;
+        
+        if (lastZPos <= 0 && zPos > 0) {
+            GameActivity.skillDisableHandler.sendEmptyMessage(0);
+        } else if (lastZPos > 0 && zPos <= 0) {
+            GameActivity.skillEnableHandler.sendEmptyMessage(0);
+        }
+        
+        if (lastZPos <= 200 && zPos > 200) {
+            Message msg = new Message();
+            msg.what = 1;
+            GameActivity.loseViewHandler.sendMessage(msg);
+        } else if (lastZPos > 0 && zPos <= 0) {
+            Message msg = new Message();
+            msg.what = 0;
+            GameActivity.loseViewHandler.sendMessage(msg);
+        }
+        lastZPos = zPos;
     }
+
 
     public void addSkillEffect(int id, SkillEffect effect) {
         this.skillEffects.put(id, effect);
@@ -101,10 +119,6 @@ public class ClientGameState {
         return this.mapMode;
     }
     
-    public int getScoreEarned() {
-        return this.selfScoreEarned;
-    }
-    
     public void clearAll() {
         balls.clear();
         walls.clear();
@@ -112,7 +126,19 @@ public class ClientGameState {
         skillEffects.clear();
     }
     
+    public int getScoreEarned() {
+        return this.selfScoreEarned;
+    }
+    
     public void setScoreEarned(int s) {
+    	this.selfScoreEarned = s;
+    }
+    
+    public int getEnemyScore() {
+    	return this.enemyScoreEarned;
+    }
+    
+    public void setEnemyScore(int s) {
     	this.selfScoreEarned = s;
     }
 
