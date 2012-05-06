@@ -2,6 +2,7 @@ package hkust.comp3111h.ballcraft.server;
 
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.BallDef;
+import hkust.comp3111h.ballcraft.TerrainDef;
 import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.Map;
 import hkust.comp3111h.ballcraft.client.MapParser;
@@ -123,8 +124,25 @@ public class ServerGameState {
     {
         Map map = MapParser.getMapFromXML(name);
         
-        units.add(new Ball(10, BallDef.getBallMassById(serverBall), BallDef.getBallFrictionById(serverBall), new Vec2(0, 0)));
-        units.add(new Ball(10, BallDef.getBallMassById(clientBall), BallDef.getBallFrictionById(clientBall), new Vec2(30, 0)));
+        int BenefitBall = TerrainDef.getTerrainBenefitBallById(map.getTerrain());
+        
+        if (serverBall == BenefitBall)
+        {
+        	units.add(new Ball(10, (int) (1.5f * BallDef.getBallMassById(serverBall)), BallDef.getBallFrictionById(serverBall) * 1.5f, new Vec2(0, 0)));
+        }
+        else
+        {
+        	units.add(new Ball(10, BallDef.getBallMassById(serverBall), BallDef.getBallFrictionById(serverBall), new Vec2(0, 0)));
+        }
+        
+        if (serverBall == BenefitBall)
+        {
+        	units.add(new Ball(10, (int) (1.5f * BallDef.getBallMassById(clientBall)), BallDef.getBallFrictionById(clientBall) * 1.5f, new Vec2(30, 0)));
+        }
+        else
+        {
+        	units.add(new Ball(10, BallDef.getBallMassById(clientBall), BallDef.getBallFrictionById(clientBall), new Vec2(30, 0)));
+        }
         
         mapTerrain = map.getTerrain();
         mapMode = map.getMode();
