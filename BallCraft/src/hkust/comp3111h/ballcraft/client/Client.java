@@ -11,9 +11,11 @@ import hkust.comp3111h.ballcraft.graphics.skilleffects.GrowRoot;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.IronWill;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.MassOverlord;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Mine;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.Poison;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.RockBump;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.RockBumpParticleSystem;
 import hkust.comp3111h.ballcraft.graphics.skilleffects.Slippery;
+import hkust.comp3111h.ballcraft.graphics.skilleffects.WaterPropel;
 import hkust.comp3111h.ballcraft.server.Ball;
 import hkust.comp3111h.ballcraft.server.Server;
 import hkust.comp3111h.ballcraft.server.ServerAdapter;
@@ -96,9 +98,13 @@ public class Client extends IntentService {
 			int score1 = Integer.parseInt(str[0]);
 			int score2 = Integer.parseInt(str[1]);
 		}
-		else if (parts[0].equals("time")) {
-		    Log.w("time", parts[1]);
-		} else if (parts[0].equals("skillInit"))
+		else if (parts[0].equals("Time")) {
+		    if (GameActivity.readyForDisplay) {
+			    Message msg = new Message();
+			    msg.what = Integer.parseInt(parts[1]);
+			    GameActivity.remainingTimeHandler.sendMessage(msg);
+		    }
+		}  else if (parts[0].equals("skillInit"))
 		{
 			String [] str = parts[1].split("&");
 			int skillID = Integer.parseInt(str[0]);
@@ -111,6 +117,10 @@ public class Client extends IntentService {
 			    break;
 			    
 			case BallCraft.Skill.POISON:
+			    Ball poisonBall = ClientGameState.getClientGameState()
+			            .balls.get(1 - Integer.parseInt(str[1]));
+			    ClientGameState.getClientGameState().addSkillEffect(
+			            skillID, new Poison(poisonBall));
 			    break;
 			    
 			case BallCraft.Skill.MASS_OVERLORD:
@@ -128,18 +138,24 @@ public class Client extends IntentService {
 			    break;
 			    
 			case BallCraft.Skill.WATER_PROPEL:
+			    Ball propellingBall = ClientGameState.getClientGameState()
+					    .balls.get(Integer.parseInt(str[1]));
+			    Ball targetBall = ClientGameState.getClientGameState()
+			            .balls.get(1 - Integer.parseInt(str[1]));
+			    ClientGameState.getClientGameState().addSkillEffect(
+			            skillID, new WaterPropel(propellingBall.getPosition(), targetBall.getPosition()));
 				break;
 				
 			case BallCraft.Skill.SLIPPERY:
 			    Ball slipperyBall = ClientGameState.getClientGameState()
-			            .balls.get(Integer.parseInt(str[1]));
+			            .balls.get(1 - Integer.parseInt(str[1]));
 			    ClientGameState.getClientGameState().addSkillEffect(
 			            skillID, new Slippery(slipperyBall));
 			    break;
 			    
 			case BallCraft.Skill.IRON_WILL:
 			    Ball ironBall = ClientGameState.getClientGameState()
-			            .balls.get(Integer.parseInt(str[1]));
+			            .balls.get(1 - Integer.parseInt(str[1]));
 			    ClientGameState.getClientGameState().addSkillEffect(
 			            skillID, new IronWill(ironBall));
 			    break;
@@ -147,8 +163,10 @@ public class Client extends IntentService {
 			case BallCraft.Skill.FLASHBANG:
 		        Ball flashBall = ClientGameState.getClientGameState()
 		                .balls.get(Integer.parseInt(str[1]));
+		        Ball fromBall = ClientGameState.getClientGameState()
+		                .balls.get(1 - Integer.parseInt(str[1]));
 		        ClientGameState.getClientGameState().addSkillEffect(
-		                skillID, new FlashBang(flashBall));
+		                skillID, new FlashBang(flashBall, fromBall));
 			    break;
 			    
 			case BallCraft.Skill.FLAME_THROW:
@@ -156,13 +174,8 @@ public class Client extends IntentService {
 					    .balls.get(Integer.parseInt(str[1]));
 			    Ball thrownBall = ClientGameState.getClientGameState()
 			            .balls.get(1 - Integer.parseInt(str[1]));
-			    double slope = (thrownBall.getPosition().y - throwingBall.getPosition().y)
-			            / (thrownBall.getPosition().x - throwingBall.getPosition().x);
-			    
-			    // TODO
 			    ClientGameState.getClientGameState().addSkillEffect(
-			            skillID, new FlameThrow(throwingBall.getPosition().x,
-			                    throwingBall.getPosition().y, throwingBall.z, Math.atan(slope)));
+			            skillID, new FlameThrow(throwingBall.getPosition(), thrownBall.getPosition()));
 			    break;
 			    
 			case BallCraft.Skill.LANDMINE:
@@ -180,6 +193,7 @@ public class Client extends IntentService {
 			    break;
 			    
 			case BallCraft.Skill.MIDNIGHT:
+			    GameRenderer.changeLightMode(BallCraft.MapMode.NIGHT_MODE);
 			    break;
 			}
 		} else if (parts[0].equals("skillFinish")) {
@@ -191,18 +205,29 @@ public class Client extends IntentService {
 			    ClientGameState.getClientGameState().deleteDrawable(skillID);
 			    break;
 			    
+			case BallCraft.Skill.POISON:
+			    ClientGameState.getClientGameState().deleteDrawable(skillID);
+			    break;
+			    
+			case BallCraft.Skill.MASS_OVERLORD:
+			    ClientGameState.getClientGameState().deleteDrawable(skillID);
+			    break;
+			    
+	        case BallCraft.Skill.ROCK_BUMP:
+			    ClientGameState.getClientGameState().deleteDrawable(skillID);
+                break;
+			    
 			case BallCraft.Skill.WATER_PROPEL:
 				break;
 				
 			case BallCraft.Skill.SLIPPERY:
-			    ClientGameState.getClientGameState().deleteDrawable(Integer.parseInt(str[1]));
+			    ClientGameState.getClientGameState().deleteDrawable(skillID);
 			    break;
 			    
 	        case BallCraft.Skill.IRON_WILL:
-			    ClientGameState.getClientGameState().deleteDrawable(Integer.parseInt(str[1]));
+			    ClientGameState.getClientGameState().deleteDrawable(skillID);
 	            
 	        case BallCraft.Skill.FLASHBANG:
-	            // GameActivity.flashBangEndHandler.sendEmptyMessage(0);
 	            GameRenderer.setFlashBang(false);
                 break;
 				
@@ -216,8 +241,12 @@ public class Client extends IntentService {
 			    
 			case BallCraft.Skill.STEALTH:
 			    if (Integer.parseInt(str[1]) == BallCraft.enemy) {
-				    GameRenderer.setEnemyStealth(false);
+				    GameRenderer.setEnemyStealth(true);
 			    }
+			    break;
+			    
+			case BallCraft.Skill.MIDNIGHT:
+			    GameRenderer.changeLightMode(BallCraft.MapMode.DAY_MODE);
 			    break;
 			}
 		} else if (parts[0].equals("RockBumpEffect")) {

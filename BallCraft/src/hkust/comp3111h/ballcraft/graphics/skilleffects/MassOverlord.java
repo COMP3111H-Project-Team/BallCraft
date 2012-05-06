@@ -11,8 +11,6 @@ public class MassOverlord extends ParticleSystemEffect {
     public MassOverlord(Ball b) {
         COUNT = 18;
         
-        this.effectTime = 1000;
-        
         this.particles = new ArrayList<Particle>();
         
         this.ballEffected = b;

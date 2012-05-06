@@ -17,7 +17,7 @@ public class SkillDef {
 	    public static final int effectTime = 8000;
 	    public static final int coolDownTime = 30000;
 	    public static final int [] RGB = {124, 255, 0};
-	    public static final int button = R.drawable.skill_grow_root;
+	    public static final int button = R.drawable.skill_poison;
 	}
 	
 	public static final class MassOverlord {

@@ -39,7 +39,6 @@ import org.jbox2d.common.Vec3;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
-import android.util.Log;
 
 public class GameRenderer implements GLSurfaceView.Renderer {
 
@@ -175,7 +174,11 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	        if (flashBangOn) {
 	            gl.glClearColor(1, 1, 1, 1);
 	        } else {
+<<<<<<< HEAD
+	            gl.glClearColor(0, 0, 0, 1);
+=======
 	        	gl.glClearColor(0, 0, 0, 1);
+>>>>>>> ad65e064a9be6aa23ad4eadc28685c1d853eedad
 		        ArrayList<Ball> balls = ClientGameState.getClientGameState().balls;
 		        
 		        if (balls.size() >= BallCraft.maxPlayer) {

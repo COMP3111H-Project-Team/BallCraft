@@ -9,22 +9,21 @@
 	<initPosition>-100,100</initPosition>
 	<initPosition>100,-100</initPosition>
 	<initPosition>-100,-100</initPosition>
-	<plane>-200,-200,-160,-10</plane>
-	<plane>-180,10,200,200</plane>
-	<plane>-200,-10,-180,200</plane>
-	<plane>-160,-200,180,-10</plane>
-	<plane>180,-200,200,10</plane>
-	<plane>-160,-10,160,10</plane>
+	<plane>-200,-200,-160,-20</plane>
+	<plane>-200,20,200,200</plane>
+	<plane>-160,-200,200,-20</plane>
+	<plane>-160,-20,160,20</plane>
 	<wall>-200,-200,200,-200</wall>
 	<wall>-200,-200,-200,200</wall>
 	<wall>200,-200,200,200</wall>
 	<wall>-200,200,200,200</wall>
-	<wall>-160,-160,-20,-120</wall>
-	<wall>-160,-20,-20,-80</wall>
-	<wall>160,-160,20,-120</wall>
-	<wall>160,-20,20,-80</wall>
-	<wall>-160,160,-20,120</wall>
-	<wall>-160,20,-20,80</wall>
-	<wall>160,160,20,120</wall>
-	<wall>160,20,20,80</wall>
+	
+	<wall>-150,-150,-30,-120</wall>
+	<wall>-30,-80,-150,-30</wall>
+	<wall>150,-150,30,-120</wall>
+	<wall>30,-80,150,-30</wall>
+	<wall>-30,120,-150,150</wall>
+	<wall>-150,30,-30,80</wall>
+	<wall>30,120,150,150</wall>
+	<wall>150,30,30,80</wall>
 </map>

@@ -6,25 +6,28 @@ import hkust.comp3111h.ballcraft.graphics.particles.Particle;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.jbox2d.common.Vec2;
+
 public class FlameThrow extends ParticleSystemEffect {
 
-    public FlameThrow(float x, float y, float z, double angle) {
-        COUNT = 30;
+    public FlameThrow(Vec2 selfPos, Vec2 enemyPos) {
+        COUNT = 20;
         
         particles = new ArrayList<Particle>();
         
-        this.effectTime = 5000;
+        this.effectTime = 3000;
+        
+        this.x = selfPos.x;
+        this.y = selfPos.y;
+        this.z = 10;
         
         Random randGen = new Random();
         
         for (int i = 0; i < COUNT; i++) {
-            FlameThrowParticle fp = new FlameThrowParticle(x, y, z);
+            FlameThrowParticle fp = new FlameThrowParticle(0, 0, 0);
             
-            float speedVal = randGen.nextFloat() * 3 + 5;
-            float offset = (randGen.nextFloat() * 20 - 10) / speedVal;
-            
-            float xSpeed = (float) (speedVal * Math.cos(angle + offset / 180 * Math.PI));
-            float ySpeed = (float) (speedVal * Math.sin(angle + offset / 180 * Math.PI));
+            float xSpeed = (enemyPos.x - selfPos.x) * (randGen.nextFloat() / 2 + 0.75f) / 10;
+            float ySpeed = (enemyPos.y - selfPos.y) * (randGen.nextFloat() / 2 + 0.75f) / 10;
             
             fp.setSpeed(xSpeed, ySpeed, 0);
             
