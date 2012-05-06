@@ -7,14 +7,14 @@
 	<initPosition>-100,100</initPosition>
 	<initPosition>100,-100</initPosition>
 	<initPosition>-100,-100</initPosition>
-	<terrain>5</terrain>
+	<terrain>4</terrain>
 	<mode>0</mode>
 	<wall>-50,-50,-150,50</wall>
 	<wall>50,-50,150,50</wall>
-	<wall>-200,-200,200,-200</wall>
 	<wall>-200,-200,-200,200</wall>
 	<wall>200,-200,200,200</wall>
-	<wall>-200,200,200,200</wall>
+	<wall>-160,-200,160,-200</wall>
+	<wall>-160,200,160,200</wall>
 	<plane>-200,-200,50,50</plane>
     <plane>50,-200,200,150</plane>
 	<plane>-50,150,200,200</plane>
