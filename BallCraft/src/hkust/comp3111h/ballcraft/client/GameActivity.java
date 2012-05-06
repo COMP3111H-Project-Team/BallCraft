@@ -75,6 +75,8 @@ public class GameActivity extends Activity implements SensorEventListener {
     
     private static int finalScore;
     
+    public static boolean readyForDisplay;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +89,8 @@ public class GameActivity extends Activity implements SensorEventListener {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        
+        readyForDisplay = false;
 
         this.initLayout();
         this.initSensor();
@@ -212,6 +216,8 @@ public class GameActivity extends Activity implements SensorEventListener {
         
         endGameLayout = (RelativeLayout) this.findViewById(R.id.game_activity_end_game_layout);
         endGameLayout.setVisibility(View.INVISIBLE);
+        
+        readyForDisplay = true;
     }
     
     /**
@@ -219,6 +225,8 @@ public class GameActivity extends Activity implements SensorEventListener {
      */
     private static void endGame() {
         Client.deactivate();
+        Server.stop();
+        Client.stop();
         
         // hide the back key menu
         backScreen.setVisibility(View.INVISIBLE);
@@ -309,8 +317,6 @@ public class GameActivity extends Activity implements SensorEventListener {
      * exit the game and deal with relevant settings
      */
     private void exitGame() {
-        Server.stop();
-        Client.stop();
         ClientGameState.clear();
         
         if (BallCraft.isServer) {
@@ -502,7 +508,7 @@ public class GameActivity extends Activity implements SensorEventListener {
         
         @Override
         public void handleMessage(Message msg) {
-            // remainingTimeView.setText(msg.what);
+            // remainingTimeView.setText("" + msg.what);
         }
         
     };

@@ -102,7 +102,7 @@
 	    android:layout_centerHorizontal="true"
 	    android:padding="20dp"
 	    android:paddingBottom="20dp"
-	    android:background="#FFFFFF">
+	    android:background="#000000">
     
 	    <TextView
 	        android:id="@+id/game_activity_resume_button"
@@ -110,7 +110,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_centerHorizontal="true"
 	        android:text="Resume"
-	        android:textColor="#000000"
+	        android:textColor="#FFFFFF"
 	        android:textSize="18pt" />
 	    
 	    <TextView
@@ -120,7 +120,7 @@
 	        android:layout_centerHorizontal="true"
 	        android:layout_alignParentBottom="true"
 	        android:text="Exit"
-	        android:textColor="#000000"
+	        android:textColor="#FFFFFF"
 	        android:textSize="18pt" />
 	    
 	</RelativeLayout>
