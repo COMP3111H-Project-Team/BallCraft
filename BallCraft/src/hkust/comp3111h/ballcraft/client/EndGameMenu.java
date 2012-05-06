@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -29,7 +30,7 @@ public class EndGameMenu extends Activity {
     
     private int finalScore;
     
-    private boolean isBTStopped = false;
+    private static boolean isBTStopped = false;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,22 +112,18 @@ public class EndGameMenu extends Activity {
 
             @Override
             public void onClick(View arg0) {
-               
-            	if (!isBTStopped) {
-            		isBTStopped = true;
-            		ServerAdapter.stopBTService();
-            	}
-
             	self.exitGame();
             	self.finish();
-               // self.overridePendingTransition(android.R.anim.fade_in,
-                 //       android.R.anim.fade_out);
+                self.overridePendingTransition(android.R.anim.fade_in,
+                       android.R.anim.fade_out);
             }
             
         }); 
     }
     
     private void exitGame() {
+    	Log.e("endgame","exit game");
+    	/*
         Server.stop();
         Client.stop();
         ClientGameState.clear();
@@ -136,21 +133,19 @@ public class EndGameMenu extends Activity {
         }
         
         GameRenderer.stopRendering();
-        
+        */
         int oldScore = GameData.getExperience();
         int newScore = oldScore + finalScore;
         
         GameData.setExperience(newScore);
-        if (!BallCraft.isSinglePlayer()) {
-            ServerAdapter.sendGameInterruptMessage();
-        }
-        
+
         for (int i = 0; i < BallDef.balls.length; i++) {
             int updateExp = BallDef.getBallUnlockExpById(i);
             if (oldScore < updateExp && newScore >= updateExp) {
                 Intent intent = new Intent(self, BallUnlockedMenu.class);
                 intent.putExtra(BallUnlockedMenu.unlockedIndicator, i);
                 self.startActivity(intent);
+                self.finish();
                 self.overridePendingTransition(android.R.anim.fade_in,
                         android.R.anim.fade_out);
                 break;

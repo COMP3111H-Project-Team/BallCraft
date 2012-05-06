@@ -52,12 +52,15 @@ public class BluetoothService {
     
     private boolean serverInit;
     
+    public boolean isEnded;
+    
     public BluetoothService(BluetoothActivity context, Handler handler){
     	this.context = context;
     	this.handler = handler;
     	
     	init = true;
     	serverInit = true;
+    	isEnded = false;
     }
       
     
@@ -94,6 +97,7 @@ public class BluetoothService {
     }
     
     public void stop(){
+    	isEnded = true;
     	// Cancel the thread that completed the connection
         if (connectThread != null) {connectThread.cancel(); connectThread = null;}
 
@@ -433,9 +437,11 @@ public class BluetoothService {
     }
     
     public void destroy(){
-        this.stop();
-    	if(D)Log.e(TAG,"service destroy");
-        GameRenderer.stopRendering();
-        GameActivity.endGame();
+    	if (!isEnded) {	
+	        this.stop();
+	    	if(D)Log.e(TAG,"service destroy");
+    		GameActivity.endGame();
+    	}
     }
+    
 }

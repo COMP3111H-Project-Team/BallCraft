@@ -233,6 +233,18 @@ public class GameActivity extends Activity implements SensorEventListener {
      */
     public static void endGame() {
         Client.deactivate();
+        
+        Server.stop();
+        Client.stop();
+        ClientGameState.clear();
+        if (BallCraft.isServer) {
+            ServerGameState.clear();
+        }
+        
+        GameRenderer.stopRendering();
+        
+        ServerAdapter.stopBTService();
+        
         Intent intent = new Intent(self, EndGameMenu.class);
         self.startActivity(intent);
         self.finish();
