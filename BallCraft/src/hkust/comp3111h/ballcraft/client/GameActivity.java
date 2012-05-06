@@ -67,11 +67,7 @@ public class GameActivity extends Activity implements SensorEventListener {
     private static TextView pauseButton;
     private static TextView resumeButton;
     private static TextView exitButton;
-    
-    private static TextView endGameScoreDisplay;
-    private static TextView endGameExpEarned;
-    private static Button exitGameButton; 
-    
+
     private static boolean dead = false;
     
     private static int finalScore;
@@ -229,140 +225,20 @@ public class GameActivity extends Activity implements SensorEventListener {
             }
 
         });
-        
-        endGameLayout = (RelativeLayout) this.findViewById(R.id.game_activity_end_game_layout);
-        endGameLayout.setVisibility(View.INVISIBLE);
+
     }
     
     /**
      * end the game but not yet exit, still stay in the game activity
      */
-    private static void endGame() {
+    public static void endGame() {
         Client.deactivate();
-        
-        // hide the back key menu
-        backScreen.setVisibility(View.INVISIBLE);
-        AlphaAnimation screenAnim = new AlphaAnimation(0, 0);
-        screenAnim.setDuration(0);
-        screenAnim.setFillAfter(true);
-        backScreen.setAnimation(screenAnim);
-        
-        pauseButton.setEnabled(false);
-        resumeButton.setEnabled(false);
-        exitButton.setEnabled(false);
-        
-        // show the end game menu
-        endGameLayout.setVisibility(View.VISIBLE);
-        AlphaAnimation endGameLayoutAnim = new AlphaAnimation(0.8f, 0.8f);
-        endGameLayoutAnim.setDuration(0);
-        endGameLayoutAnim.setFillAfter(true);
-        endGameLayout.setAnimation(endGameLayoutAnim);
-        
-        skill1Button.setVisibility(View.INVISIBLE);
-        skill2Button.setVisibility(View.INVISIBLE);
-        
-        TextView endGameTitle = (TextView) self.findViewById(R.id.game_activity_end_game_title);
-        endGameTitle.setTypeface(MyApplication.getFont());
-        
-        int selfScore = ClientGameState.getClientGameState().selfScoreEarned;
-        int enemyScore = ClientGameState.getClientGameState().enemyScoreEarned;
-        
-        finalScore = selfScore;
-        
-        if (selfScore > 3 * enemyScore) {
-            endGameTitle.setText("An Incredible Triumph !!!");
-            endGameTitle.setTextColor(Color.RED);
-            finalScore += 30;
-            GameData.setWinCount(GameData.getWinCount() + 1);
-        } else if (selfScore > 2 * enemyScore) {
-            endGameTitle.setText("Significant Victory !!!");
-            endGameTitle.setTextColor(Color.MAGENTA);
-            finalScore += 20;
-            GameData.setWinCount(GameData.getWinCount() + 1);
-        } else if (selfScore > enemyScore) {
-            endGameTitle.setText("You Win !!!");
-            endGameTitle.setTextColor(Color.YELLOW);
-            finalScore += 10;
-            GameData.setWinCount(GameData.getWinCount() + 1);
-        } else if (selfScore == enemyScore) {
-            endGameTitle.setText("Well, well, it's a Draw.");
-            endGameTitle.setTextColor(Color.WHITE);
-            GameData.setDrawCount(GameData.getDrawCount() + 1);
-        } else if (selfScore * 3 < enemyScore) {
-            endGameTitle.setText("A Total Failure ...");
-            endGameTitle.setTextColor(Color.DKGRAY);
-            GameData.setLoseCount(GameData.getLoseCount() + 1);
-        } else if (selfScore * 2 < enemyScore) {
-            endGameTitle.setText("Terrible Defeat ...");
-            endGameTitle.setTextColor(Color.GRAY);
-            GameData.setLoseCount(GameData.getLoseCount() + 1);
-        } else if (selfScore < enemyScore) {
-            endGameTitle.setText("You Lose ...");
-            endGameTitle.setTextColor(Color.LTGRAY);
-            GameData.setLoseCount(GameData.getLoseCount() + 1);
-        }
-        
-        endGameScoreDisplay = (TextView) self.findViewById(R.id.game_activity_end_game_score_view);
-        endGameScoreDisplay.setTypeface(MyApplication.getFont());
-        endGameScoreDisplay.setText(selfScore + " : " + enemyScore);
-        
-        endGameExpEarned = (TextView) self.findViewById(R.id.game_activity_end_game_exp_earned);
-        endGameExpEarned.setTypeface(MyApplication.getFont());
-        endGameExpEarned.setText("EXP EARNED: " + finalScore);
-        
-        exitGameButton = (Button) self.findViewById(R.id.game_activity_end_game_button);
-        exitGameButton.setTypeface(MyApplication.getFont());
-        exitGameButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                self.exitGame();
-                self.finish();
-                self.overridePendingTransition(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-            }
-            
-        });
-        
+        Intent intent = new Intent(self, EndGameMenu.class);
+        self.startActivity(intent);
+        self.finish();
+        self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
     
-    /**
-     * exit the game and deal with relevant settings
-     */
-    private void exitGame() {
-        Server.stop();
-        Client.stop();
-        ClientGameState.clear();
-        
-        if (BallCraft.isServer) {
-            ServerGameState.clear();
-        }
-        
-        GameRenderer.stopRendering();
-       
-        ServerAdapter.sendEndGameMessageToServer();
-        
-        int oldScore = GameData.getExperience();
-        int newScore = oldScore + finalScore;
-        
-        GameData.setExperience(newScore);
-        if (!BallCraft.isSinglePlayer()) {
-            ServerAdapter.sendGameInterruptMessage();
-        }
-        
-        for (int i = 0; i < BallDef.balls.length; i++) {
-            int updateExp = BallDef.getBallUnlockExpById(i);
-            if (oldScore < updateExp && newScore >= updateExp) {
-                Intent intent = new Intent(self, BallUnlockedMenu.class);
-                intent.putExtra(BallUnlockedMenu.unlockedIndicator, i);
-                self.startActivity(intent);
-		        self.overridePendingTransition(android.R.anim.fade_in,
-		                android.R.anim.fade_out);
-                break;
-            }
-        }
-    }
-
     private void initSensor() {
         sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
         sensorManager.registerListener(this,
@@ -440,10 +316,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
     @Override
     public void onBackPressed() {
-        if (endGameLayout.getVisibility() == View.VISIBLE) {
-            // simply ignore
-            return;
-        } else if (backScreen.getVisibility() == View.INVISIBLE) {
+        if (backScreen.getVisibility() == View.INVISIBLE) {
             backScreen.setVisibility(View.VISIBLE);
             
             AlphaAnimation screenAnim = new AlphaAnimation(0.5f, 0.5f);
@@ -502,41 +375,6 @@ public class GameActivity extends Activity implements SensorEventListener {
             } else if (msg.what == 0) { // invisible
                 loseView.setVisibility(View.INVISIBLE);
             }
-        }
-        
-    };
-    
-    /*
-    public static Handler flashBangStartHandler = new Handler() {
-        
-        @Override
-        public void handleMessage(Message msg) {
-	        AlphaAnimation flashBangAnim = new AlphaAnimation(0, 1);
-	        flashBangAnim.setDuration(200);
-	        flashBangAnim.setFillAfter(true);
-	        flashBangMask.setAnimation(flashBangAnim);
-        }
-        
-    };
-    
-    public static Handler flashBangEndHandler = new Handler() {
-        
-        @Override
-        public void handleMessage(Message msg) {
-	        AlphaAnimation flashBangAnim = new AlphaAnimation(1, 0);
-	        flashBangAnim.setDuration(3000);
-	        flashBangAnim.setFillAfter(true);
-	        flashBangMask.setAnimation(flashBangAnim);
-        }
-        
-    };
-    */
-    
-    public static Handler endGameHandler = new Handler() {
-        
-        @Override
-        public void handleMessage(Message msg) {
-            endGame();
         }
         
     };

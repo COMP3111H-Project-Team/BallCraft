@@ -91,6 +91,12 @@
             android:screenOrientation="landscape">
         </activity>
         
+        <activity
+            android:name=".client.EndGameMenu"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape">
+        </activity>
+        
         <activity android:name=".Bluetooth"
                   android:label="@string/app_name"
 	              android:screenOrientation="landscape"

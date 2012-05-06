@@ -10,9 +10,12 @@
 	<initPosition>100,-100</initPosition>
 	<initPosition>-100,-100</initPosition>
 	<plane>-200,-200,200,200</plane>
-	<wall>-200,-200,150,-200</wall>
-	<wall>-200,-200,-200,200</wall>
-	<wall>200,-200,200,200</wall>
-	<wall>-200,200,200,200</wall>
-	
+	<wall>-160,-200,160,-200</wall>
+	<wall>-160,200,160,200</wall>
+	<wall>-200,-160,-200,-20</wall>
+	<wall>200,-160,200,-20</wall>
+	<wall>-200,20,-200,160</wall>
+	<wall>200,20,200,160</wall>
+
+
 </map>

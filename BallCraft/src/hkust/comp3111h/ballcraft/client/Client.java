@@ -240,6 +240,7 @@ public class Client extends IntentService {
     	int time = 0;
     	boolean started = false;
         while (running) {
+//        	Log.w("running", "" + BallCraft.isServer);
             if (active) {
 	            if (Server.inited || remoteServerInited) {
 	                if (inputStarted) {

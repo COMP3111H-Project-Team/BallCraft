@@ -11,7 +11,7 @@
 	<initPosition>-100,100</initPosition>
 	<initPosition>100,-100</initPosition>
 	<initPosition>-100,-100</initPosition>
-	
+
 	<plane>-200,-200,-150,80</plane>
 	<plane>-200,80,-110,200</plane>
 	<plane>150,40,200,80</plane>
@@ -26,7 +26,7 @@
 	<wall>-200,-200,-200,200</wall>
 	<wall>200,-200,200,200</wall>
 	<wall>-200,200,200,200</wall>
-		
+
 	<wall>-150,80,-56,80</wall>
     <wall>56,80,150,80</wall>
     <wall>112,0,150,80</wall>
@@ -35,5 +35,5 @@
     <wall>-56,-80,-150,-80</wall>
 	<wall>-150,-80,-112,0</wall>
 	<wall>-112,0,-150,80</wall>
-	
+
 </map>

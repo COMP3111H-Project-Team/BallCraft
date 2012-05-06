@@ -2,15 +2,29 @@ package hkust.comp3111h.ballcraft.server;
 
 import hkust.comp3111h.ballcraft.BallCraft;
 import hkust.comp3111h.ballcraft.client.Client;
-import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.client.GameInitializer;
+import hkust.comp3111h.ballcraft.client.GameInput;
 import hkust.comp3111h.ballcraft.server.bt.BluetoothService;
+import android.util.Log;
 
 public class ServerAdapter {
 
 	private static BluetoothService service;
 	
 	public static void setService(BluetoothService s) {service = s;}
+	
+	public static void stopBTService()
+	{
+		if (service == null) return;
+		try
+		{
+			service.stop();
+		}
+		catch (Exception e)
+		{
+			Log.e("Server Adapter", e.toString());
+		}
+	}
 	
     public static void sendToServer(GameInput input) {
         if(BallCraft.isServer) 
