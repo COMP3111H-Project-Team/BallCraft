@@ -79,14 +79,9 @@ public class Client extends IntentService {
 		String[] parts = string.split(":");
 
 		if (parts[0].equals("collision")) {
-			String [] collision = parts[1].split(",");
-			if ((collision[0].equals(myself) || collision[1].equals(myself)) && 
-				(collision[0].equals(enemy) || collision[1].equals(enemy))) {
-			    if (vibrOn) {
-					vibrator.vibrate(50);
-			    }
-			}	
-			
+			if (vibrOn) {
+			    vibrator.vibrate(10);
+			}
 		}
 		else if (parts[0].equals("End"))
 		{
@@ -102,14 +97,16 @@ public class Client extends IntentService {
 			if (BallCraft.myself == 1) {
 				msg.arg1 = score1;
 				msg.arg2 = score2;
+				ClientGameState.getClientGameState().setScoreEarned(score1);
+				ClientGameState.getClientGameState().setEnemyScore(score2);
 			} else {
 				msg.arg1 = score2;
 				msg.arg2 = score1;
+				ClientGameState.getClientGameState().setScoreEarned(score2);
+				ClientGameState.getClientGameState().setEnemyScore(score1);
 			}
 			
 			GameActivity.scoreViewHandler.sendMessage(msg);
-			ClientGameState.getClientGameState().setScoreEarned(msg.arg1);
-			ClientGameState.getClientGameState().setEnemyScore(msg.arg2);
 		}
 		else if (parts[0].equals("Time")) {
 			Message msg = new Message();

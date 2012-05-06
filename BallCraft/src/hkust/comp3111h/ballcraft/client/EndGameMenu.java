@@ -51,8 +51,10 @@ public class EndGameMenu extends Activity {
         TextView endGameTitle = (TextView) self.findViewById(R.id.end_game_menu_end_game_title);
         endGameTitle.setTypeface(MyApplication.getFont());
         
-        int selfScore = ClientGameState.getClientGameState().getScoreEarned();
-        int enemyScore = ClientGameState.getClientGameState().getEnemyScore();
+        Intent intent = self.getIntent();
+        
+        int selfScore = intent.getIntExtra("selfScore", 0);
+        int enemyScore = intent.getIntExtra("enemyScore", 0);
 
         finalScore = selfScore;
         

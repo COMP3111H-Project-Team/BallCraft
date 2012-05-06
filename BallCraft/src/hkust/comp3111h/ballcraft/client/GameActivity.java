@@ -68,13 +68,17 @@ public class GameActivity extends Activity implements SensorEventListener {
 
     private static boolean dead = false;
     
-    private static int finalScore;
+    private static int selfScore;
+    private static int enemyScore;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         self = this;
+        
+        selfScore = 0;
+        enemyScore = 0;
 
         this.getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
@@ -109,12 +113,6 @@ public class GameActivity extends Activity implements SensorEventListener {
         mGLView.setRenderer(self.renderer);
         GameRenderer.startRendering();
         
-        /*
-        TextView statusDisplay = (TextView) this.findViewById(R.id.game_activity_status_dispaly);
-        statusDisplay.setTypeface(MyApplication.getFont());
-        statusDisplay.getBackground().setAlpha(200);
-        */
-        
         int ballSelected = self.getIntent().getIntExtra("ballSelected", BallCraft.Ball.WOOD_BALL);
         final int [] skills = BallDef.getSkillsById(ballSelected);
         skill1 = skills[0];
@@ -132,7 +130,7 @@ public class GameActivity extends Activity implements SensorEventListener {
             public void onClick(View v) {
                 Client.castSkill(Skill.getSkill(skill1));
                 skill1Button.setEnabled(false);
-	            // skill1Button.setBackgroundResource(R.drawable.disabled_button);
+                skill1Button.setTextColor(Color.GRAY);
 		        skill1Button.getBackground().setAlpha(50);
                 skill1CooledDown = false;
                 Message msg = new Message();
@@ -155,7 +153,7 @@ public class GameActivity extends Activity implements SensorEventListener {
             public void onClick(View v) {
                 Client.castSkill(Skill.getSkill(skill2));
                 skill2Button.setEnabled(false);
-	            // skill2Button.setBackgroundResource(R.drawable.disabled_button);
+                skill2Button.setTextColor(Color.GRAY);
 		        skill2Button.getBackground().setAlpha(50);
                 skill2CooledDown = false;
                 Message msg = new Message();
@@ -172,20 +170,11 @@ public class GameActivity extends Activity implements SensorEventListener {
         
         remainingTimeView = (TextView) this.findViewById(R.id.game_activity_remaining_time_view);
         remainingTimeView.setTypeface(MyApplication.getFont());
-        remainingTimeView.setVisibility(View.INVISIBLE);
         
         scoreView = (TextView) this.findViewById(R.id.game_activity_score_view);
         scoreView.setTypeface(MyApplication.getFont());
         scoreView.setText("0 : 0");
         scoreView.setTextColor(Color.YELLOW);
-        
-        /*
-        flashBangMask = (RelativeLayout) this.findViewById(R.id.game_activity_flashbang_mask);
-        AlphaAnimation flashBangAnim = new AlphaAnimation(0, 0);
-        flashBangAnim.setDuration(0);
-        flashBangAnim.setFillAfter(true);
-        flashBangMask.setAnimation(flashBangAnim);
-        */
 
         backScreen = (RelativeLayout) this.findViewById(R.id.game_activity_menu);
         backScreen.setVisibility(View.INVISIBLE);
@@ -232,6 +221,8 @@ public class GameActivity extends Activity implements SensorEventListener {
         ServerAdapter.stopBTService();
         
         Intent intent = new Intent(self, EndGameMenu.class);
+        intent.putExtra("selfScore", selfScore);
+        intent.putExtra("enemyScore", enemyScore);
         self.startActivity(intent);
         self.finish();
         self.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -261,6 +252,7 @@ public class GameActivity extends Activity implements SensorEventListener {
             if (msg.what == 1) {
                 if (!dead) {
 	                skill1Button.setEnabled(true);
+	                skill1Button.setTextColor(Color.WHITE);
 		            // skill1Button.setBackgroundResource(SkillDef.getButtonById(skill1));
 		            skill1Button.getBackground().setAlpha(180);
                 }
@@ -268,6 +260,7 @@ public class GameActivity extends Activity implements SensorEventListener {
             } else if (msg.what == 2) {
                 if (!dead) {
 	                skill2Button.setEnabled(true);
+	                skill2Button.setTextColor(Color.GRAY);
 		            // skill2Button.setBackgroundResource(SkillDef.getButtonById(skill2));
 		            skill2Button.getBackground().setAlpha(180);
                 }
@@ -283,10 +276,12 @@ public class GameActivity extends Activity implements SensorEventListener {
         public void handleMessage(Message msg) {
             dead = true;
             skill1Button.setEnabled(false);
+            skill1Button.setTextColor(Color.GRAY);
             // skill1Button.setBackgroundResource(R.drawable.disabled_button);
             skill1Button.getBackground().setAlpha(50);
             
             skill2Button.setEnabled(false);
+            skill2Button.setTextColor(Color.GRAY);
             // skill2Button.setBackgroundResource(R.drawable.disabled_button);
             skill2Button.getBackground().setAlpha(50);
         }
@@ -300,11 +295,13 @@ public class GameActivity extends Activity implements SensorEventListener {
             dead = false;
             if (skill1CooledDown) {
 	            skill1Button.setEnabled(true);
+	            skill1Button.setTextColor(Color.WHITE);
 	            // skill1Button.setBackgroundResource(SkillDef.getButtonById(skill1));
 	            skill1Button.getBackground().setAlpha(180);
             }
             if (skill2CooledDown) {
 	            skill2Button.setEnabled(true);
+	            skill2Button.setTextColor(Color.WHITE);
 	            // skill2Button.setBackgroundResource(SkillDef.getButtonById(skill2));
 	            skill2Button.getBackground().setAlpha(180);
             }
@@ -324,11 +321,6 @@ public class GameActivity extends Activity implements SensorEventListener {
             
 	        resumeButton.setEnabled(true);
 	        exitButton.setEnabled(true);
-	        
-            /*
-            skill1Button.setVisibility(View.INVISIBLE);
-            skill2Button.setVisibility(View.INVISIBLE);
-            */
         } else {
             backScreen.setVisibility(View.INVISIBLE);
             
@@ -339,11 +331,6 @@ public class GameActivity extends Activity implements SensorEventListener {
             
 	        resumeButton.setEnabled(false);
 	        exitButton.setEnabled(false);
-	        
-            /*
-            skill1Button.setVisibility(View.VISIBLE);
-            skill2Button.setVisibility(View.VISIBLE);
-            */
         }
     }
     
@@ -351,8 +338,8 @@ public class GameActivity extends Activity implements SensorEventListener {
         
         @Override
         public void handleMessage(Message msg) {
-            int selfScore = msg.arg1;
-            int enemyScore = msg.arg2;
+            selfScore = msg.arg1;
+            enemyScore = msg.arg2;
                 
             scoreView.setText(selfScore + " : " + enemyScore);
                 

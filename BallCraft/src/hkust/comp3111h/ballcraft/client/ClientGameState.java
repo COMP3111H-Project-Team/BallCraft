@@ -53,7 +53,12 @@ public class ClientGameState {
     
     public static void clear()
     {
-        stateInstance = new ClientGameState();    	
+        // stateInstance = new ClientGameState();
+    	stateInstance.balls.clear();
+    	stateInstance.walls.clear();
+    	stateInstance.planes.clear();
+    	stateInstance.skillEffects.clear();
+    	stateInstance.lastZPos = 0;
     }
 
     /**

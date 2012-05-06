@@ -70,6 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:padding="10dp"
         android:textSize="12pt" />
     
     <TextView
@@ -78,6 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:padding="10dp"
         android:textSize="12pt" />
  
     <!-- the menu that is shown when "back" is pressed" -->
