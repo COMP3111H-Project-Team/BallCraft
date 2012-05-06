@@ -228,7 +228,7 @@ public class Client extends IntentService {
 			    
 			case BallCraft.Skill.STEALTH:
 			    if (Integer.parseInt(str[1]) == BallCraft.enemy) {
-				    GameRenderer.setEnemyStealth(false);
+				    GameRenderer.setEnemyStealth(true);
 			    }
 			    break;
 			    

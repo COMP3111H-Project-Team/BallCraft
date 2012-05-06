@@ -174,7 +174,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	        if (flashBangOn) {
 	            gl.glClearColor(1, 1, 1, 1);
 	        } else {
-	            gl.glClearColor(0, 0, 0, 1);
+	        	gl.glClearColor(0, 0, 0, 1);
 		        ArrayList<Ball> balls = ClientGameState.getClientGameState().balls;
 		        
 		        if (balls.size() >= BallCraft.maxPlayer) {
