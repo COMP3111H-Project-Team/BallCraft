@@ -27,6 +27,9 @@ public class Ball extends Unit {
     public float z;
     private float zv;
     
+    private int score = 0;
+    private float lastZPos = 0;
+    
     private Vec3 graphicalPos;
     
     public boolean useGraphicalPosForDrawing = false;
@@ -163,6 +166,10 @@ public class Ball extends Unit {
     }
     
     public String toSerializedString() {
+        if (this.z > 200 && this.lastZPos <= 200) {
+            this.score++;
+        }
+        this.lastZPos = this.z;
         if (this.isOutOfBound(ServerGameState.getStateInstance().getUnits()) || this.dead)
         {
             if (z == 0) {
@@ -212,6 +219,10 @@ public class Ball extends Unit {
         z = Float.valueOf(vals[3]);
         body.getFixtureList().m_shape.m_radius = radius;
         body.setTransform(new Vec2(x, y), 0);
+    }
+    
+    public int getScore() {
+        return this.score;
     }
     
 }
