@@ -18,9 +18,14 @@ public class FlashBang extends TextureEffect {
     
     private Vec3 speed;
     
-    public FlashBang(Ball ballEffected) {
+    public FlashBang(Ball ballEffected, Ball throwingBall) {
         super(ballEffected);
-        speed = new Vec3(5, -2, 5);
+        
+        float xSpeed = (throwingBall.getPosition().x - ballEffected.getPosition().x) / 20;
+        float ySpeed = (throwingBall.getPosition().y - ballEffected.getPosition().y) / 20;
+        speed = new Vec3(xSpeed, ySpeed, 3);
+        
+        this.drawBeforeBalls = false;
     }
     
     public static void loadTexture(GL10 gl, Context context) {
@@ -40,7 +45,7 @@ public class FlashBang extends TextureEffect {
     
     @Override
     public void move() {
-        this.speed.z -= 0.01;
+        this.speed.z -= 0.1;
         this.x += this.speed.x;
         this.y += this.speed.y;
         this.z += this.speed.z;

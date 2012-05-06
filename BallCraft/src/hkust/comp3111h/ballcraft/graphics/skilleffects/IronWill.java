@@ -9,6 +9,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
+import android.util.Log;
 
 public class IronWill extends TextureEffect {
     
@@ -38,9 +39,15 @@ public class IronWill extends TextureEffect {
     
     @Override
     public void move() {
-        this.x = this.ballEffected.getPosition().x;
-        this.y = this.ballEffected.getPosition().y - 10;
-        this.z = this.ballEffected.z + 40;
+        if (ballEffected.useGraphicalPosForDrawing) {
+            this.x = this.ballEffected.getGraphicalPosition().x;
+            this.y = this.ballEffected.getGraphicalPosition().y - 10;
+            this.z = this.ballEffected.getGraphicalPosition().z + 40;
+        } else {
+	        this.x = this.ballEffected.getPosition().x;
+	        this.y = this.ballEffected.getPosition().y - 10;
+	        this.z = this.ballEffected.z + 40;
+        }
     }
     
     @Override
