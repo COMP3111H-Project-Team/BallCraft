@@ -12,6 +12,7 @@ import hkust.comp3111h.ballcraft.graphics.particles.FireBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.FlameThrowParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.MassOverlordParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.NaturesCureParticle;
+import hkust.comp3111h.ballcraft.graphics.particles.PoisonParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.RockBumpParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.SlipperyParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterBallParticle;
@@ -38,7 +39,6 @@ import org.jbox2d.common.Vec3;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
-import android.util.Log;
 
 public class GameRenderer implements GLSurfaceView.Renderer {
 
@@ -119,6 +119,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         FlameThrowParticle.loadTexture(gl, context);
         ExplosionParticle.loadTexture(gl, context);
         RockBumpParticle.loadTexture(gl, context);
+        PoisonParticle.loadTexture(gl, context);
         FlashBang.loadTexture(gl, context);
     }
     
@@ -177,78 +178,81 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		        ArrayList<Ball> balls = ClientGameState.getClientGameState().balls;
 		        
 		        if (balls.size() >= BallCraft.maxPlayer) {
-			        Ball self = (Ball) balls.get(BallCraft.myself);
-			        self.useGraphicalPosForDrawing = true;
-			
-			        float xPos = self.getPosition().x;
-			        float yPos = self.getPosition().y;
-			        float zPos = self.z;
-			        
-			        GLU.gluLookAt(gl, xPos, yPos + 60 + zPos / 2, 200 - zPos, xPos, yPos, -zPos, 0, 0, 1);
-			        
-			        for (Plane p : ClientGameState.getClientGameState().planes) {
-			            p.draw(gl);
-			        }
-			       
-			        for (Wall w : ClientGameState.getClientGameState().walls) {
-			            w.draw(gl);
-			        }
+		            try {
+				        Ball self = (Ball) balls.get(BallCraft.myself);
+				        self.useGraphicalPosForDrawing = true;
+				
+				        float xPos = self.getPosition().x;
+				        float yPos = self.getPosition().y;
+				        float zPos = self.z;
 				        
-			        ConcurrentHashMap<Integer, SkillEffect> effects = 
-			                ClientGameState.getClientGameState().skillEffects;
-			        
-			        // draw all texture effects
-			        for (Integer key : effects.keySet()) {
-			            SkillEffect d = effects.get(key);
-			            // if (d instanceof TextureEffect) {
-			            if (d.drawBeforeBalls) {
-				            if (d.timeout()) {
-				                effects.remove(key);
-				            } else {
-				                d.move();
-					            d.draw(gl);
+				        GLU.gluLookAt(gl, xPos, yPos + 60 + zPos / 2, 200 - zPos, xPos, yPos, -zPos, 0, 0, 1);
+				        
+				        for (Plane p : ClientGameState.getClientGameState().planes) {
+				            p.draw(gl);
+				        }
+				       
+				        for (Wall w : ClientGameState.getClientGameState().walls) {
+				            w.draw(gl);
+				        }
+					        
+				        ConcurrentHashMap<Integer, SkillEffect> effects = 
+				                ClientGameState.getClientGameState().skillEffects;
+				        
+				        // draw all texture effects
+				        for (Integer key : effects.keySet()) {
+				            SkillEffect d = effects.get(key);
+				            // if (d instanceof TextureEffect) {
+				            if (d.drawBeforeBalls) {
+					            if (d.timeout()) {
+					                effects.remove(key);
+					            } else {
+					                d.move();
+						            d.draw(gl);
+					            }
 				            }
-			            }
-			        }
-			         
-			        for (int i = 0; i < balls.size(); i++) {
-			            if (i == BallCraft.enemy && enemyStealth) {
-			                continue;
-			            }
-			            Ball b = balls.get(i);
-			            if (b instanceof ParticleBall) {
-			                ((ParticleBall) b).move();
-			            }
-			            if (b.useGraphicalPosForDrawing) {
-			                b.setGraphicalPosition(new Vec3(xPos, yPos, zPos));
-			            }
-			            b.draw(gl);
-			            if (b instanceof SolidBall) {
-			                if (b.z <= 0) { // above the plane, draw shade
-				                if (b.useGraphicalPosForDrawing) {
-						            BallShade.draw(gl, b.getRadius(), 
-						                    b.getGraphicalPosition().x + 8, b.getGraphicalPosition().y - 2);
-				                } else {
-						            BallShade.draw(gl, b.getRadius(), 
-						                    b.getPosition().x + 8, b.getPosition().y - 2);
+				        }
+				         
+				        for (int i = 0; i < balls.size(); i++) {
+				            if (i == BallCraft.enemy && enemyStealth) {
+				                continue;
+				            }
+				            Ball b = balls.get(i);
+				            if (b instanceof ParticleBall) {
+				                ((ParticleBall) b).move();
+				            }
+				            if (b.useGraphicalPosForDrawing) {
+				                b.setGraphicalPosition(new Vec3(xPos, yPos, zPos));
+				            }
+				            b.draw(gl);
+				            if (b instanceof SolidBall) {
+				                if (b.z <= 0) { // above the plane, draw shade
+					                if (b.useGraphicalPosForDrawing) {
+							            BallShade.draw(gl, b.getRadius(), 
+							                    b.getGraphicalPosition().x + 8, b.getGraphicalPosition().y - 2);
+					                } else {
+							            BallShade.draw(gl, b.getRadius(), 
+							                    b.getPosition().x + 8, b.getPosition().y - 2);
+					                }
 				                }
-			                }
-			            }
-			        }
-			        
-			        // draw all particle system effects
-			        for (Integer key : effects.keySet()) {
-			            SkillEffect d = effects.get(key);
-			            // if (d instanceof ParticleSystemEffect) {
-			            if (!d.drawBeforeBalls) {
-				            if (d.timeout()) {
-				                effects.remove(key);
-				            } else {
-				                d.move();
-					            d.draw(gl);
 				            }
-			            }
-			        }
+				        }
+				        
+				        // draw all particle system effects
+				        for (Integer key : effects.keySet()) {
+				            SkillEffect d = effects.get(key);
+				            // if (d instanceof ParticleSystemEffect) {
+				            if (!d.drawBeforeBalls) {
+					            if (d.timeout()) {
+					                effects.remove(key);
+					            } else {
+					                d.move();
+						            d.draw(gl);
+					            }
+				            }
+				        }
+		            } catch (Exception e) {
+		            }
 		        }
 			        
 		        long elapsed = System.currentTimeMillis() - time;

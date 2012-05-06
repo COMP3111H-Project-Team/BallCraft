@@ -18,6 +18,7 @@ public class GrowRoot extends TextureEffect {
     
     public GrowRoot(Ball ballEffected) {
         super(ballEffected);
+        this.z = 5;
     }
     
     public static void loadTexture(GL10 gl, Context context) {
@@ -38,13 +39,13 @@ public class GrowRoot extends TextureEffect {
     @Override
     public void move() {
         if (this.sizeIncreasing) {
-            if (this.size < 15) {
+            if (this.size < 20) {
                 this.size += 0.2f;
             } else {
                 this.sizeIncreasing = false;
             }
         } else {
-            if (this.size > 10) {
+            if (this.size > 15) {
                 this.size -= 0.2f;
             } else {
                 this.sizeIncreasing = true;
