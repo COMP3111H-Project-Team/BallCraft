@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/game_activity_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+        
+	<android.opengl.GLSurfaceView
+	    android:id="@+id/end_game_menu_gl_view"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" />
+        
+    <TextView
+        android:id="@+id/end_game_menu_end_game_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="18pt" />
+        
+    <TextView
+        android:id="@+id/end_game_menu_end_game_score_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/end_game_menu_end_game_title"
+        android:gravity="center"
+        android:textSize="16pt"
+        android:textColor="#CCCC00" />
+        
+    <TextView
+        android:id="@+id/end_game_menu_end_game_exp_earned"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/end_game_menu_end_game_score_view"
+        android:gravity="center"
+        android:textColor="#FF0000"
+        android:textSize="16pt" />
+        
+    <Button
+        android:id="@+id/end_game_menu_end_game_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:textSize="12pt"
+        android:text="OK" />
+        
+</RelativeLayout>
