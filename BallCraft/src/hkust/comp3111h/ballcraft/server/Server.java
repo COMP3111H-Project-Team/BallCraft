@@ -36,16 +36,19 @@ public class Server extends IntentService {
     
     static private String gameMode = "Limited Score";
     
-    static private int limitValue = 100;
+    static private int limitValue = 1;
     
     static private int currScore;
     
     static private long initTime;
     static private long currTime;
     
+    static private boolean firstFewSecond;
+    
     public Server() 
     {
         super("Server");
+        firstFewSecond = true;
     }
 
     public static void setState(String string)
@@ -93,24 +96,30 @@ public class Server extends IntentService {
             String temp = new String(msg);
 			msg = "";
 
+			if (time - initTime > 3000) firstFewSecond = false;
 	        
-	        for (int i = 0; i < BallCraft.maxPlayer; i++)
+	        for (int i = 0; i < BallCraft.maxPlayer && !firstFewSecond; i++)
 	        {		        
 				ServerAdapter.processServerMsg(temp + ";" 
 				        + generateGameUpdater().toSerializedString(), i);	
 	        }
 
-            try {
-                currTime = System.currentTimeMillis();
+            try 
+            {
+            	if (!firstFewSecond) currTime = System.currentTimeMillis();
                 long sleep = 30 + time - currTime;
-                if (sleep > 0 ) {
+                if (sleep > 0) 
+                {
                     Thread.sleep(sleep);
                 }
-            } catch (InterruptedException e) {
+            }
+            catch (InterruptedException e) 
+            {
                 e.printStackTrace();
             }
             
-            if (isGameEnded()) {
+            if (isGameEnded())
+            {
                 ServerAdapter.sendEndGameMessageToClient();
             }
         }

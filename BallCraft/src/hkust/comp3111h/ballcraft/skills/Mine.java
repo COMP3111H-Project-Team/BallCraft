@@ -25,7 +25,7 @@ public class Mine extends Skill {
 	@Override
 	public String getInitMsg()
 	{
-		return position.x * Unit.rate + "," + position.y * Unit.rate + "," + skillID;
+		return position.x * Unit.rate + "," + position.y * Unit.rate + "," + skillID + "," + player;
 	}
 	
 	@Override
