@@ -5,10 +5,42 @@
 	<width>400</width>
 	<terrain>1</terrain>
 	<mode>0</mode>
-	<initPosition>100,100</initPosition>
-	<initPosition>-100,100</initPosition>
-	<initPosition>100,-100</initPosition>
-	<initPosition>-100,-100</initPosition>
-	<plane>-200,-50,200,50</plane>
-	<plane>-50,-200,50,200</plane>
+	<pattern>tian</pattern>
+	<initPosition>0,0</initPosition>
+	<wall>-160,-200,-20,-200</wall>
+	<wall>20,-200,160,-200</wall>
+	<wall>-160,200,-20,200</wall>
+	<wall>20,200,160,200</wall>
+	<wall>-200,-160,-200,-20</wall>
+	<wall>200,-160,200,-20</wall>
+	<wall>-200,20,-200,160</wall>
+	<wall>200,20,200,160</wall>
+
+	<wall>-30,-120,-30,-30</wall>
+	<wall>30,-120,30,-30</wall>
+	<wall>-120,-30,-30,-30</wall>
+	<wall>30,-30,120,-30</wall>
+	<wall>-30,30,-30,120</wall>
+	<wall>30,30,30,120</wall>
+	<wall>-120,30,-30,30</wall>
+	<wall>30,30,120,30</wall>
+	<wall>-120,-120,-30,-120</wall>
+	<wall>-120,-120,-120,-30</wall>
+	<wall>30,-120,120,-120</wall>
+	<wall>120,-120,120,-30</wall>
+	<wall>-120,30,-120,120</wall>
+	<wall>-120,120,-30,120</wall>
+	<wall>30,120,120,120</wall>
+	<wall>120,30,120,120</wall>
+	
+	<plane>-200,-200,-30,-120</plane>
+	<plane>-200,-120,-120,200</plane>
+	<plane>-30,-200,120,-120</plane>
+	<plane>120,-200,200,-30</plane>
+	<plane>-30,-120,30,-30</plane>
+	<plane>-120,-30,-30,30</plane>
+	<plane>-120,120,200,200</plane>
+	<plane>-30,-30,120,30</plane>
+	<plane>120,-30,200,120</plane>
+	<plane>-30,30,30,120</plane>
 </map>
