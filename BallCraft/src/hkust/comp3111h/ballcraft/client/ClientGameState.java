@@ -33,10 +33,7 @@ public class ClientGameState {
     private float enemyLastZPos;
     
     public int selfScoreEarned = 0;
-    private int selfCombo = 0;
-    
     public int enemyScoreEarned = 0;
-    private int enemyCombo = 0;
 
     private ClientGameState() {
         balls = new ArrayList<Ball>();
@@ -69,84 +66,6 @@ public class ClientGameState {
         String[] ballStrs = serialized.split("/");
         for (int i = 0; i < ballStrs.length; i++) {
             balls.get(i).updateFromString(ballStrs[i]);
-        }
-        
-        this.checkSelfBallState();
-        if (!BallCraft.isSinglePlayer()) {
-            this.checkEnemyBallState();
-        }
-    }
-    
-    private void sendScore() {
-        if (BallCraft.isServer) {
-            ServerAdapter.sendScoreToServer(
-                    Math.max(this.selfScoreEarned, this.enemyScoreEarned));
-        }
-    }
-    
-    private void checkSelfBallState() {
-        Ball self = balls.get(BallCraft.myself);
-        float zPos = self.z;
-	        
-        if (selfLastZPos <= 0 && zPos > 0) { // just died
-            this.selfCombo = 0;
-            this.enemyCombo++;
-            this.enemyScoreEarned += this.enemyCombo;
-            GameActivity.skillDisableHandler.sendEmptyMessage(0);
-        } else if (selfLastZPos > 0 && zPos <= 0) { // just respawned
-            GameActivity.skillEnableHandler.sendEmptyMessage(0);
-        }
-        
-        if (selfLastZPos <= 200 && zPos > 200) {
-            Message msg = new Message();
-            if (BallCraft.isSinglePlayer()) { // single player, no need to display score
-                msg.what = 2;
-                GameActivity.loseViewHanlder.sendMessage(msg);
-            } else { // multi-player
-	            msg.what = 1;
-	            msg.arg1 = this.selfScoreEarned;
-	            msg.arg2 = this.enemyScoreEarned;
-	            GameActivity.loseViewHanlder.sendMessage(msg);
-            }
-        } else if (selfLastZPos > 200 && zPos <= 200) {
-            Message msg = new Message();
-            msg.what = 0;
-            GameActivity.loseViewHanlder.sendMessage(msg);
-        }
-        
-        selfLastZPos = zPos;
-        this.sendScore();
-    }
-    
-    private void checkEnemyBallState() {
-        Ball enemy;
-        // only 2 players for now
-        for (int i = 0; i < BallCraft.maxPlayer; i++) {
-            if (i != BallCraft.myself) {
-                enemy = balls.get(i);
-		        float zPos = enemy.z;
-		        
-		        if (enemyLastZPos <= 0 && zPos > 0) { // enemy just died
-		            this.enemyCombo = 0;
-		            this.selfCombo++;
-		            this.selfScoreEarned += this.selfCombo;
-		        }
-		        
-		        if (enemyLastZPos <= 200 && zPos > 200) {
-		            Message msg = new Message();
-		            msg.what = 1;
-		            msg.arg1 = this.selfScoreEarned;
-		            msg.arg2 = this.enemyScoreEarned;
-		            GameActivity.loseViewHanlder.sendMessage(msg);
-		        } else if (enemyLastZPos > 200 && zPos <= 200) {
-		            Message msg = new Message();
-		            msg.what = 0;
-		            GameActivity.loseViewHanlder.sendMessage(msg);
-		        }
-		        
-		        enemyLastZPos = zPos;
-		        this.sendScore();
-            }
         }
     }
 
@@ -191,6 +110,10 @@ public class ClientGameState {
         walls.clear();
         planes.clear();
         skillEffects.clear();
+    }
+    
+    public void setScoreEarned(int s) {
+    	this.selfScoreEarned = s;
     }
 
 }

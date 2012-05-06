@@ -441,6 +441,7 @@ public class BluetoothService {
 	        this.stop();
 	    	if(D)Log.e(TAG,"service destroy");
     		GameActivity.endGame();
+    		
     	}
     }
     

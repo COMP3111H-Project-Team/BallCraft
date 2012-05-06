@@ -12,6 +12,7 @@ import hkust.comp3111h.ballcraft.graphics.particles.FireBallParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.FlameThrowParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.MassOverlordParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.NaturesCureParticle;
+import hkust.comp3111h.ballcraft.graphics.particles.PoisonParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.RockBumpParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.SlipperyParticle;
 import hkust.comp3111h.ballcraft.graphics.particles.WaterBallParticle;
@@ -38,7 +39,6 @@ import org.jbox2d.common.Vec3;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
-import android.util.Log;
 
 public class GameRenderer implements GLSurfaceView.Renderer {
 
@@ -119,6 +119,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
         FlameThrowParticle.loadTexture(gl, context);
         ExplosionParticle.loadTexture(gl, context);
         RockBumpParticle.loadTexture(gl, context);
+        PoisonParticle.loadTexture(gl, context);
         FlashBang.loadTexture(gl, context);
     }
     

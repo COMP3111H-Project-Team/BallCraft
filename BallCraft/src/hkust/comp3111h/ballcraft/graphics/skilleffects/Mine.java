@@ -15,11 +15,14 @@ public class Mine extends TextureEffect {
 
     private static int [] textures = new int[1];
     
+    public int playerID;
+    
     public Mine(Vec2 pos, int id) {
         super();
         this.x = pos.x;
         this.y = pos.y;
         this.z = 1;
+        this.playerID = id;
     }
 
     public static void loadTexture(GL10 gl, Context context) {

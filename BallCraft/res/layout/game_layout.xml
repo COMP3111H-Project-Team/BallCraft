@@ -9,18 +9,6 @@
 	    android:id="@+id/game_activity_gl_surface_view"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent" />
-	   
-	<!--
-	<TextView 
-	    android:id="@+id/game_activity_status_dispaly"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:gravity="center"
-	    android:text="Normal"
-	    android:textColor="#FFF"
-	    android:textSize="9pt"
-	    android:background="#000" />
-    -->
 	
 	<Button
 	    android:id="@+id/game_activity_skill_1_button"
@@ -75,16 +63,7 @@
         android:textColor="#FF0000"
         android:textStyle="bold"
         android:text="You Lose" />
-    
-    <!--
-    <RelativeLayout
-        android:id="@+id/game_activity_flashbang_mask"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="#FFFFFF">
-    </RelativeLayout>
-    -->
-    
+
     <TextView
         android:id="@+id/game_activity_remaining_time_view"
         android:layout_width="wrap_content"
@@ -111,15 +90,6 @@
 	    android:padding="20dp"
 	    android:paddingBottom="20dp"
 	    android:background="#FFFFFF">
-	    
-	    <TextView
-	        android:id="@+id/game_activity_pause_button"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_centerHorizontal="true"
-	        android:text="Pause"
-	        android:textColor="#000000"
-	        android:textSize="18pt" />
 	    
 	    <TextView
 	        android:id="@+id/game_activity_resume_button"

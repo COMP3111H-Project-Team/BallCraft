@@ -6,6 +6,9 @@ import hkust.comp3111h.ballcraft.BallDef;
 import hkust.comp3111h.ballcraft.R;
 import hkust.comp3111h.ballcraft.SkillDef;
 import hkust.comp3111h.ballcraft.graphics.GameRenderer;
+import hkust.comp3111h.ballcraft.server.Server;
+import hkust.comp3111h.ballcraft.server.ServerAdapter;
+import hkust.comp3111h.ballcraft.server.ServerGameState;
 import hkust.comp3111h.ballcraft.skills.Skill;
 import android.app.Activity;
 import android.content.Intent;
@@ -41,8 +44,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 
     private static RelativeLayout backScreen;
     
-    private static RelativeLayout endGameLayout;
-    
     private GameRenderer renderer;
     
     private static TextView loseView = null;
@@ -59,7 +60,6 @@ public class GameActivity extends Activity implements SensorEventListener {
     private static int skill1;
     private static int skill2;
     
-    private static TextView pauseButton;
     private static TextView resumeButton;
     private static TextView exitButton;
 
@@ -186,18 +186,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 
         backScreen = (RelativeLayout) this.findViewById(R.id.game_activity_menu);
         backScreen.setVisibility(View.INVISIBLE);
-        
-        pauseButton = (TextView) this
-                .findViewById(R.id.game_activity_pause_button);
-        pauseButton.setTypeface(MyApplication.getFont());
-        pauseButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                // TODO
-            }
-            
-        });
         
         resumeButton = (TextView) this
                 .findViewById(R.id.game_activity_resume_button);
@@ -331,7 +319,6 @@ public class GameActivity extends Activity implements SensorEventListener {
             screenAnim.setFillAfter(true);
             backScreen.setAnimation(screenAnim);
             
-	        pauseButton.setEnabled(true);
 	        resumeButton.setEnabled(true);
 	        exitButton.setEnabled(true);
 	        
@@ -347,7 +334,6 @@ public class GameActivity extends Activity implements SensorEventListener {
             screenAnim.setFillAfter(true);
             backScreen.setAnimation(screenAnim);
             
-	        pauseButton.setEnabled(false);
 	        resumeButton.setEnabled(false);
 	        exitButton.setEnabled(false);
 	        
